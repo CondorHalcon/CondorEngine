@@ -6,11 +6,12 @@
 $(SolutionDir)thirdparty\;%(AdditionalIncludedDirectories)
 ```
 
-### `Linker\Additional Dependencies`
+### `Linker\Input\Additional Dependencies`
 ```
 glfw3.lib
-glfw32s.lib
+glew32s.lib
 opengl32.lib
+%(AdditionalDependencies)
 ```
 
 ### `Linker\General\Additional Library Directories`
