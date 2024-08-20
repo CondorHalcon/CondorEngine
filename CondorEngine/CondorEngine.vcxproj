@@ -135,9 +135,11 @@
   <ItemGroup>
     <ClCompile Include="CondorEngine.cpp" />
     <ClCompile Include="context.cpp" />
+    <ClCompile Include="diagnostics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context.h" />
+    <ClInclude Include="diagnostics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
