@@ -22,7 +22,7 @@ bool Context::init(int width, int height, const char* title)
 	glFrontFace(GL_CCW); // winding order for determining which direction the normal is on a triangle
 	glCullFace(GL_BACK);
 
-	glClearColor(1, 0, 1, 1);
+	glClearColor(.4f, .4f, .4f, 1);
 	return true;
 }
 

@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include "renderer.h"
 #include <vector>
 #include <fstream> // for reading from files
@@ -157,7 +158,7 @@ std::string ReadFile(const char* path) {
 	fstream stream(path, std::ios_base::in);
 	std::string source;
 
-	//TODO: add error checkong and validation if you are reading from a text file.
+	//TODO: add error checking and validation if you are reading from a text file.
 
 	while (!stream.eof()) {
 		std::string thisLine;
@@ -218,7 +219,70 @@ void SetUniform(const Shader& shader, GLuint location, const vec3& value)
 
 Texture MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels)
 {
-	//TODO: return
+	GLenum oglFormat = GL_RGBA;
+	switch (channels)
+	{
+	case 1:
+		oglFormat = GL_RED;
+		break;
+	case 2:
+		oglFormat = GL_RG;
+		break;
+	case 3:
+		oglFormat = GL_RGB;
+		break;
+	default:
+		oglFormat = GL_RGBA;
+		break;
+	}
+	// 0 for handle, may change if you want more than one texture per mesh
+	Texture texObject = { 0, width, height, channels };
+	// generate the texture on the GPU with the struct we made.
+	glGenTextures(1, &texObject.handle);
+	// bind and buffer texture
+	glBindTexture(GL_TEXTURE_2D, texObject.handle);
+	glTexImage2D(GL_TEXTURE_2D, 0, oglFormat, width, height, 0, oglFormat, GL_UNSIGNED_BYTE, pixels);
+	// configure texture settings
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// unbind and return the object
+	glBindTexture(GL_TEXTURE_2D, 0);
+	return texObject;
+}
+
+Texture LoadTexture(const char* imagePath)
+{
+	// setup variables to store texture data
+	int imageWidth = -1;
+	int imageHeight = -1;
+	int imageFormat = -1;
+	unsigned char* imagePixels = nullptr;
+
+	Texture newTex = {};
+	// load the data!
+	stbi_set_flip_vertically_on_load(true); // load using OpenGL conventions
+	imagePixels = stbi_load(
+		imagePath,
+		&imageWidth,
+		&imageHeight,
+		&imageFormat,
+		STBI_default ); // detect channels
+	// NOTE: stbi_load() will return a nullptr if it failed to load
+
+	// pass the data to OpenGL
+	newTex = MakeTexture(imageWidth, imageHeight, imageFormat, imagePixels);
+	// free the RAM
+	stbi_image_free(imagePixels);
+	imagePixels = nullptr;
+
+	// return the texture
+	return newTex;
+}
+
+void FreeTexture(Texture& tex)
+{
+	glDeleteTextures(1, &tex.handle);
+	tex = { };
 }
 
 #pragma endregion
