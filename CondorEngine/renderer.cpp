@@ -28,7 +28,7 @@ Geometry MakeGeometry(const Vertex* const verts, GLsizei vertCount, const GLuint
 
 	// use vertex data if using vectors.. the GPU manufaturer determins how to draw it
 	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Vertex), verts, GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(Vertex), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
 #pragma region Enable Vertex Attributes
 	// describe the buffer

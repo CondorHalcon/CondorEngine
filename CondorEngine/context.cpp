@@ -2,6 +2,7 @@
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
+#include "diagnostics.h"
 
 bool Context::init(int width, int height, const char* title)
 {
@@ -21,6 +22,10 @@ bool Context::init(int width, int height, const char* title)
 	glDepthFunc(GL_LEQUAL); // depth testing for deciding which objects are infront of one another
 	glFrontFace(GL_CCW); // winding order for determining which direction the normal is on a triangle
 	glCullFace(GL_BACK);
+
+	// enable OpenGL debug output
+	glEnable(GL_DEBUG_OUTPUT);
+	glDebugMessageCallback(diagnostics::MessageCallback, 0);
 
 	glClearColor(.4f, .4f, .4f, 1);
 	return true;

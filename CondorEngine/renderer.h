@@ -79,8 +79,8 @@ void FreeShader(Shader& shader);
 
 #pragma region Uniform Functions
 
-void SetUniform(const Shader& shader, GLuint location, const mat4& value); // transforms
-void SetUniform(const Shader& shader, GLuint location, const Texture& value, int textureSlot);
+void SetUniform(const Shader& shader, GLuint location, const mat4& value); // for transforms
+void SetUniform(const Shader& shader, GLuint location, const Texture& value, int textureSlot); // for textures
 void SetUniform(const Shader& shader, GLuint location, const vec4& value); // for color and quaternions
 void SetUniform(const Shader& shader, GLuint location, const vec3& value); // for rgb color & positions
 

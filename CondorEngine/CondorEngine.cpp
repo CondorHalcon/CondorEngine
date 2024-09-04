@@ -1,9 +1,9 @@
-//#include <iostream>
 #include "diagnostics.h"
 #include "context.h"
 #include "renderer.h"
 #include "primitive.h"
 #include "camera.h"
+#include "importer.h"
 // external
 #include <iostream>
 #include "glm/ext.hpp"
@@ -30,9 +30,11 @@ int main()
     //Shader basicShader = Primitive::LoadNormalShader();
 
     // Geometry
-    Geometry face = Primitive::MakeCube();
+    //Geometry face = Primitive::MakeCube();
     mat4 modelTransform = glm::identity<mat4>();
+    modelTransform = glm::scale(modelTransform, vec3{ .1f,.1f,.1f});
     Texture sampleTex = LoadTexture("textures/wet_koala.jpg");
+    Geometry mesh = MakeGeometryFromFile("meshes/Bunny.obj");
 
     // Lights
     Light light = {
@@ -59,7 +61,9 @@ int main()
 
         modelTransform = glm::rotate(modelTransform, 0.01f, vec3{ 0,1,0 });
         SetUniform(basicShader, 2, modelTransform);
-        DrawGeometry(basicShader, face);
+        //DrawGeometry(basicShader, face);
+
+        DrawGeometry(basicShader, mesh);
     }
 
     context.terminate();

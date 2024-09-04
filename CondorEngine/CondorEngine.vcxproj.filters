@@ -33,6 +33,9 @@
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="importer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="context.h">
@@ -50,10 +53,33 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="importer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.frag" />
     <None Include="shaders\basic.vert" />
     <None Include="shaders\uv.frag" />
+    <None Include="bin\assimp-vc143-mt.dll" />
+    <None Include="bin\assimp-vc143-mt.pdb" />
+    <None Include="bin\assimp-vc143-mtd.dll" />
+    <None Include="bin\assimp-vc143-mtd.pdb" />
+    <None Include="shaders\diffuse.frag" />
+    <None Include="shaders\directional.vert" />
+    <None Include="shaders\normal.frag" />
+    <None Include="shaders\phong.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="bin\assimp-vc143-mt.lib" />
+    <Library Include="bin\assimp-vc143-mtd.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\PNG.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\wet_koala.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
