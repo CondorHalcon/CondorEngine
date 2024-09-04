@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+2 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/Users/s239056/Downloads/assimp-5.4.3/out/build/x64-Release/code/CMakeFiles/assimp.dir/embed.manifest"
