@@ -25,7 +25,7 @@ bool Context::init(int width, int height, const char* title)
 
 	// enable OpenGL debug output
 	glEnable(GL_DEBUG_OUTPUT);
-	glDebugMessageCallback(diagnostics::MessageCallback, 0);
+	glDebugMessageCallback(CondorEngine::diagnostics::MessageCallback, 0);
 
 	glClearColor(.4f, .4f, .4f, 1);
 	return true;

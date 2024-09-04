@@ -1,5 +1,6 @@
 #include "diagnostics.h"
 #include "context.h"
+#include "core.h"
 #include "renderer.h"
 #include "primitive.h"
 #include "camera.h"
@@ -11,6 +12,28 @@
 using glm::mat4;
 using glm::vec3;
 
+#pragma region Implimentaion Classes
+
+class ShapeMesh : public CondorEngine::Mesh {
+public:
+    ShapeMesh(Shape* shape) : Mesh(shape) {
+        sampleTex = &LoadTexture("textures/wet_koala.jpg");
+    }
+public:
+    Texture* sampleTex;
+public:
+    void PreDraw() override {
+        Mesh::PreDraw();
+
+        SetUniform(*getShader(), 3, *sampleTex, 0);
+        SetUniform(*getShader(), 4, getSceneObject()->getScene()->ambientLight);
+        SetUniform(*getShader(), 5, getSceneObject()->getScene()->light->color);
+        SetUniform(*getShader(), 6, getSceneObject()->getScene()->light->direction);
+        SetUniform(*getShader(), 7, Camera::Instance()->position);
+    }
+};
+#pragma endregion
+
 int main()
 {
     const unsigned windowWidth = 640;
@@ -18,7 +41,12 @@ int main()
     Context context;
     context.init(windowWidth, windowHeight, "CondorEngine");
 
-    diagnostics::Environment();
+    CondorEngine::diagnostics::Environment();
+
+    // Scene
+    CondorEngine::Scene scene;
+    CondorEngine::SceneObject* shape = scene.Instanciate(new CondorEngine::SceneObject());
+    CondorEngine::Component* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile())
 
     // Camera
     Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });

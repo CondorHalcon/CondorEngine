@@ -1,4 +1,7 @@
 #pragma once
+#include "core.h"
+
+// third party
 #include "glew/glew.h"
 #include "glm/glm.hpp"
 #include <vector> // for the daring
@@ -11,7 +14,34 @@ using glm::vec3;
 using glm::vec2;
 
 #pragma region Struct Definitions
-
+namespace CondorEngine {
+	class Mesh : public Component {
+	public:
+		Mesh(SceneObject* owner);
+		Mesh(SceneObject* owner, const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount);
+		Mesh(SceneObject* owner, const std::vector<Vertex> verts, const std::vector<GLuint> indices);
+		static Mesh LoadMeshFromFile(SceneObject* owner, const char* filename);
+		~Mesh();
+	private:
+		/// <summary> vertex array object </summary>
+		GLuint vao;
+		/// <summary> vertex buffer object </summary>
+		GLuint vbo;
+		/// <summary> index buffer object </summary>
+		GLuint ibo;
+		/// <summary> index count </summary>
+		GLuint size;
+		/// <summary> Render shader for the mesh. </summary>
+		Shader shader;
+	public:
+		/// <summary> PreDraw calls. Best used for setting shader uniforms. </summary>
+		virtual void PreDraw();
+		void Draw();
+		void Update() override;
+		Shader* getShader();
+		void setShader(Shader shader);
+	};
+}
 struct Vertex {
 	/// <summary> vertex position </summary>
 	vec4 pos;

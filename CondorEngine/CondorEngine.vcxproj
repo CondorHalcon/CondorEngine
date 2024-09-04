@@ -144,6 +144,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="CondorEngine.cpp" />
     <ClCompile Include="context.cpp" />
+    <ClCompile Include="core.cpp" />
     <ClCompile Include="diagnostics.cpp" />
     <ClCompile Include="importer.cpp" />
     <ClCompile Include="primitive.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="context.h" />
+    <ClInclude Include="core.h" />
     <ClInclude Include="diagnostics.h" />
     <ClInclude Include="importer.h" />
     <ClInclude Include="primitive.h" />

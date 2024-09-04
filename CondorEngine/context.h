@@ -1,4 +1,5 @@
 #pragma once
+#include "core.h"
 class Context
 {
 	struct GLFWwindow* window;
@@ -10,5 +11,7 @@ public:
 	void clear();
 	void terminate();
 	bool shouldClose();
+public:
+	static Scene activeScene;
 };
 

@@ -2,7 +2,7 @@
 #include "glew/glew.h"
 #include <iostream>
 
-void diagnostics::Environment()
+void CondorEngine::diagnostics::Environment()
 {
 	std::cout << "OpenGL version: " << (const char*)glGetString(GL_VERSION) << std::endl;
 	std::cout << "GLEW version: " << (const char*)glewGetString(GLEW_VERSION) << std::endl;
@@ -11,7 +11,7 @@ void diagnostics::Environment()
 	std::cout << "GLSL: " << (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 }
 
-void GLAPIENTRY diagnostics::MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
+void GLAPIENTRY CondorEngine::diagnostics::MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
 	std::cout << std::endl;
 	fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
