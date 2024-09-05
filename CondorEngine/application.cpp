@@ -1,10 +1,10 @@
-#include "context.h"
+#include "application.h"
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
 #include "diagnostics.h"
 
-bool Context::init(int width, int height, const char* title)
+bool Application::init(int width, int height, const char* title)
 {
 	// window handling
 	// TODO: add error handling
@@ -31,25 +31,39 @@ bool Context::init(int width, int height, const char* title)
 	return true;
 }
 
-void Context::tick()
+void Application::tick()
 {
 	glfwSwapBuffers(window); // swap frame buffer
 	glfwPollEvents(); // poll hardware inputs
 }
 
-void Context::clear()
+void Application::clear()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the sceen buffer and the depth buffer each frame
 }
 
-void Context::terminate()
+void Application::update()
+{
+	if (activeScene != nullptr) {
+		activeScene->InternalUpdate();
+	}
+}
+
+void Application::lateUpdate()
+{
+	if (activeScene != nullptr) {
+		activeScene->InternalLateUpdate();
+	}
+}
+
+void Application::terminate()
 {
 	glfwDestroyWindow(window);
 	window = nullptr;
 	glfwTerminate();
 }
 
-bool Context::shouldClose()
+bool Application::shouldClose()
 {
 	return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
 }

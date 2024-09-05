@@ -1,32 +1,29 @@
 #include "primitive.h"
+// third party
+#include "glew/glew.h"
+#include "glm/glm.hpp"
 
-Shader Primitive::LoadBasicShader()
+CondorEngine::Primitive::Primitive(PrimitiveType type)
 {
-    return LoadShader("shaders/basic.vert", "shaders/basic.frag");
-}
-Shader Primitive::LoadDiffuseShader()
-{
-    return LoadShader("shaders/directional.vert", "shaders/phong.frag");
-}
-
-Shader Primitive::LoadUVShader()
-{
-    return LoadShader("shaders/basic.vert", "shaders/uv.frag");
-}
-Shader Primitive::LoadNormalShader(bool isObjectSpace)
-{
-    if (isObjectSpace) {
-        return LoadShader("shaders/basic.vert", "shaders/normal.frag");
+    switch (type)
+    {
+    case CondorEngine::SimpleCube:
+        mesh = &MakeSimpleCube();
+        break;
+    case CondorEngine::Cube:
+        mesh = &MakeCube();
+        break;
+    default:
+        mesh = nullptr;
+        break;
     }
-    else {
-        return LoadShader("shaders/directional.vert", "shaders/normal.frag");
-    }
+    AddComponent(mesh);
 }
 
-Geometry Primitive::MakeSimpleCube()
+CondorEngine::Mesh CondorEngine::Primitive::MakeSimpleCube()
 {
     // Mesh
-    Vertex verts[] =
+    std::vector<Vertex> verts = std::vector<Vertex>
     {
         { // 0: vertex
             vec4{-.5f, -.5f, .5f, 1}, // position
@@ -77,7 +74,7 @@ Geometry Primitive::MakeSimpleCube()
             vec3{.7f,.7f,-.7f}  // vertex normal
         },
     };
-    GLuint indicies[] = {
+    std::vector<GLuint> indicies = {
         0, 1, 2,  2, 1, 3,
         0, 4, 1,  1, 4, 5,
         4, 6, 5,  5, 6, 7,
@@ -85,12 +82,11 @@ Geometry Primitive::MakeSimpleCube()
         0, 2, 6,  6, 4, 0,
         1, 5, 3,  3, 5, 7
     };
-    return MakeGeometry(verts, 8, indicies, 36);
 }
 
-Geometry Primitive::MakeCube()
+CondorEngine::Mesh CondorEngine::Primitive::MakeCube()
 {
-    Vertex verts[] =
+    std::vector<Vertex> verts = std::vector<Vertex>
     {
         // Face: 0 (front)
         { // 0: vertex
@@ -243,7 +239,7 @@ Geometry Primitive::MakeCube()
             vec3{-1,0,0}  // vertex normal
         }, // C
     };
-    GLuint indicies[] = {
+    std::vector<GLuint> indicies = {
         0, 1, 2,   2, 1, 3,
         4, 5, 6,   6, 5, 7,
         8, 9, 10,  10, 9, 11,
@@ -251,5 +247,4 @@ Geometry Primitive::MakeCube()
         16, 17, 18,   18, 17, 19,
         20, 21, 22,   22, 21, 23
         };
-    return MakeGeometry(verts, 24, indicies, 36);
 }

@@ -1,15 +1,40 @@
 #include "core.h"
+#include "renderer.h"
 
 #pragma region Scene
 
 CondorEngine::Scene::Scene()
 {
+    hasDoneFirstUpdate = false;
+    light = new Light{ glm::vec3{1,1,1}, glm::vec3{0, 0, -1} };
 }
 
 CondorEngine::Scene::~Scene()
 {
     for (int i = 0; i < hiearchy.size(); i++) {
         delete hiearchy[i];
+    }
+}
+
+void CondorEngine::Scene::InternalUpdate()
+{
+    if (!hasDoneFirstUpdate) {
+        hasDoneFirstUpdate = true;
+        Start();
+    }
+    Update();
+
+    for (int i = 0; i < hiearchy.size(); i++) {
+        hiearchy[i]->InternalUpdate();
+    }
+}
+
+void CondorEngine::Scene::InternalLateUpdate()
+{
+    LateUpdate();
+
+    for (int i = 0; i < hiearchy.size(); i++) {
+        hiearchy[i]->InternalLateUpdate();
     }
 }
 
@@ -43,7 +68,8 @@ CondorEngine::SceneObject::~SceneObject()
 
 void CondorEngine::SceneObject::InternalUpdate()
 {
-    if (hasDoneFirstUpdate) {
+    if (!hasDoneFirstUpdate) {
+        hasDoneFirstUpdate = true;
         Start();
     } 
     Update();
@@ -81,6 +107,7 @@ CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 CondorEngine::Component* CondorEngine::SceneObject::AddComponent(Component* component)
 {
     components.push_back(component);
+    component->setSceneObject(this);
     return component;
 }
 
@@ -88,14 +115,16 @@ CondorEngine::Component* CondorEngine::SceneObject::AddComponent(Component* comp
 
 #pragma region Component
 
-CondorEngine::Component::Component(SceneObject* owner)
+CondorEngine::Component::Component()
 {
-    this->sceneObject = owner;
+    this->sceneObject = nullptr;
+    this->hasDoneFirstUpdate = false;
 }
 
 void CondorEngine::Component::InternalUpdate()
 {
     if (!hasDoneFirstUpdate) {
+        hasDoneFirstUpdate = true;
         Start();
     }
     Update();
@@ -104,6 +133,11 @@ void CondorEngine::Component::InternalUpdate()
 void CondorEngine::Component::InternalLateUpdate()
 {
     LateUpdate();
+}
+
+void CondorEngine::Component::setSceneObject(SceneObject* sceneObject)
+{
+    this->sceneObject = sceneObject;
 }
 
 CondorEngine::SceneObject* CondorEngine::Component::getSceneObject()

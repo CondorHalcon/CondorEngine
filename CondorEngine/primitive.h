@@ -1,14 +1,23 @@
 #pragma once
 #include "renderer.h"
+#include "core.h"
+// std
+#include <vector>
+// third party
+#include "glew/glew.h"
 
-static class Primitive
-{
-public:
-	static Shader LoadBasicShader();
-	static Shader LoadDiffuseShader();
-	static Shader LoadUVShader();
-	static Shader LoadNormalShader(bool isObjectSpace = false);
-	static Geometry MakeSimpleCube();
-	static Geometry MakeCube();
-};
-
+namespace CondorEngine {
+	enum PrimitiveType {
+		SimpleCube,
+		Cube
+	};
+	class Primitive : public SceneObject
+	{
+	public:
+		Primitive(PrimitiveType type);
+		Mesh* mesh;
+	private:
+		static Mesh MakeSimpleCube();
+		static Mesh MakeCube();
+	};
+}

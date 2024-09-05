@@ -1,6 +1,7 @@
 #pragma once
 #include "core.h"
-class Context
+
+class Application
 {
 	struct GLFWwindow* window;
 
@@ -9,9 +10,11 @@ public:
 	/// <summary> Update for the window. </summary>
 	void tick();
 	void clear();
+	void update();
+	void lateUpdate();
 	void terminate();
 	bool shouldClose();
 public:
-	static Scene activeScene;
+	static CondorEngine::Scene* activeScene;
 };
 

@@ -1,10 +1,9 @@
 #include "diagnostics.h"
-#include "context.h"
+#include "application.h"
 #include "core.h"
 #include "renderer.h"
 #include "primitive.h"
 #include "camera.h"
-#include "importer.h"
 // external
 #include <iostream>
 #include "glm/ext.hpp"
@@ -16,20 +15,23 @@ using glm::vec3;
 
 class ShapeMesh : public CondorEngine::Mesh {
 public:
-    ShapeMesh(Shape* shape) : Mesh(shape) {
-        sampleTex = &LoadTexture("textures/wet_koala.jpg");
+    ShapeMesh() : CondorEngine::Mesh() { }
+};
+class ShapeMaterial : public CondorEngine::Material {
+public:
+    ShapeMaterial(CondorEngine::Shader* shader) : Material(shader) { 
+        sampleTex = &CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
     }
-public:
-    Texture* sampleTex;
-public:
-    void PreDraw() override {
-        Mesh::PreDraw();
 
-        SetUniform(*getShader(), 3, *sampleTex, 0);
-        SetUniform(*getShader(), 4, getSceneObject()->getScene()->ambientLight);
-        SetUniform(*getShader(), 5, getSceneObject()->getScene()->light->color);
-        SetUniform(*getShader(), 6, getSceneObject()->getScene()->light->direction);
-        SetUniform(*getShader(), 7, Camera::Instance()->position);
+    CondorEngine::Texture* sampleTex;
+
+    void Update() override {
+        Material::Update();
+        SetUniform(3, *sampleTex, 0);
+        SetUniform(4, Application::activeScene->ambientLight);
+        SetUniform(5, Application::activeScene->light->color);
+        SetUniform(6, Application::activeScene->light->direction);
+        SetUniform(7, Camera::Instance()->position);
     }
 };
 #pragma endregion
@@ -38,15 +40,16 @@ int main()
 {
     const unsigned windowWidth = 640;
     const unsigned windowHeight = 480;
-    Context context;
-    context.init(windowWidth, windowHeight, "CondorEngine");
+    Application app;
+    app.init(windowWidth, windowHeight, "CondorEngine");
 
     CondorEngine::diagnostics::Environment();
 
     // Scene
+    Application::activeScene = new CondorEngine::Scene();
     CondorEngine::Scene scene;
     CondorEngine::SceneObject* shape = scene.Instanciate(new CondorEngine::SceneObject());
-    CondorEngine::Component* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile())
+    CondorEngine::Component* meshComp = shape->AddComponent(&CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
 
     // Camera
     Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });
@@ -54,18 +57,18 @@ int main()
 
 #pragma region Basic Render
     // Shaders
-    Shader basicShader = Primitive::LoadDiffuseShader();
+    CondorEngine::Shader basicShader = CondorEngine::Shader::LoadDiffuseShader();
     //Shader basicShader = Primitive::LoadNormalShader();
 
     // Geometry
-    //Geometry face = Primitive::MakeCube();
+    CondorEngine::Primitive cube = CondorEngine::Primitive(CondorEngine::PrimitiveType::Cube);
     mat4 modelTransform = glm::identity<mat4>();
     modelTransform = glm::scale(modelTransform, vec3{ .1f,.1f,.1f});
-    Texture sampleTex = LoadTexture("textures/wet_koala.jpg");
-    Geometry mesh = MakeGeometryFromFile("meshes/Bunny.obj");
+    CondorEngine::Texture sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    CondorEngine::Mesh mesh = CondorEngine::Mesh::LoadMeshFromFile("meshes/Bunny.obj");
 
     // Lights
-    Light light = {
+    /*Light light = {
         vec3{1,1,1}, // color
         vec3{-.803046f, -0.0f, -.595917f} }; // direction
     vec3 AmbientLightColor = { .1,.1,.1 };
@@ -78,22 +81,24 @@ int main()
     SetUniform(basicShader, 4, AmbientLightColor);
     SetUniform(basicShader, 5, light.color);
     SetUniform(basicShader, 6, light.direction);
-    SetUniform(basicShader, 7, Camera::Instance()->position);
+    SetUniform(basicShader, 7, Camera::Instance()->position);*/
     
 
 #pragma endregion
 
-    while (!context.shouldClose()) {
-        context.tick();
-        context.clear();
+    while (!app.shouldClose()) {
+        app.tick();
+        app.clear();
+        app.update();
+        app.lateUpdate();
 
-        modelTransform = glm::rotate(modelTransform, 0.01f, vec3{ 0,1,0 });
+        /*modelTransform = glm::rotate(modelTransform, 0.01f, vec3{0,1,0});
         SetUniform(basicShader, 2, modelTransform);
         //DrawGeometry(basicShader, face);
 
-        DrawGeometry(basicShader, mesh);
+        DrawGeometry(basicShader, mesh);*/
     }
 
-    context.terminate();
+    app.terminate();
     return 0;
 }

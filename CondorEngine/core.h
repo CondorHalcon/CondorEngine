@@ -14,19 +14,6 @@ namespace CondorEngine {
 	class SceneObject;
 	class Component;
 
-	class Scene {
-	public:
-		Scene();
-		~Scene();
-	public:
-		vector<SceneObject*> hiearchy;
-		vector<SceneObject*> markedDelete;
-		vec3 ambientLight = { .1,.1,.1 };
-		Light* light;
-	public:
-		SceneObject* Instanciate(SceneObject* sceneObject);
-	};
-
 	class Object {
 	public:
 		bool enabled = true;
@@ -37,6 +24,23 @@ namespace CondorEngine {
 		virtual void Update() {}
 		/// <summary> Called after the tick/frame. </summary>
 		virtual void LateUpdate() {}
+	};
+
+	class Scene : public Object {
+	public:
+		Scene();
+		~Scene();
+		void InternalUpdate();
+		void InternalLateUpdate();
+	private:
+		bool hasDoneFirstUpdate = false;
+	public:
+		vector<SceneObject*> hiearchy;
+		vector<SceneObject*> markedDelete;
+		vec3 ambientLight = { .1,.1,.1 };
+		Light* light;
+	public:
+		SceneObject* Instanciate(SceneObject* sceneObject);
 	};
 	class SceneObject : public Object {
 	public:
@@ -49,8 +53,9 @@ namespace CondorEngine {
 		Scene* scene;
 	public:
 		mat4 transform;
-		vector<Component*> components;
 		vector<SceneObject*> children;
+	private:
+		vector<Component*> components;
 	public:
 		void setScene(Scene* scene);
 		Scene* getScene();
@@ -60,7 +65,7 @@ namespace CondorEngine {
 
 	class Component : public Object {
 	public:
-		Component(SceneObject* owner);
+		Component();
 	public:
 		void InternalUpdate();
 		void InternalLateUpdate();
@@ -68,6 +73,7 @@ namespace CondorEngine {
 		bool hasDoneFirstUpdate = false;
 		SceneObject* sceneObject;
 	public:
+		void setSceneObject(SceneObject* sceneObject);
 		SceneObject* getSceneObject();
 	};
 }
