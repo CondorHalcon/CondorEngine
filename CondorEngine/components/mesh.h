@@ -1,0 +1,100 @@
+#pragma once
+#include "../application.h"
+#include "../core.h"
+#include "../renderer.h"
+#include "../camera.h"
+
+// third party
+#include "glew/glew.h"
+#include "glm/glm.hpp"
+
+
+namespace CondorEngine {
+	class Material : public Object {
+	public:
+		Material(Shader* shader);
+		void Update() override;
+	private:
+		Shader* shader;
+		glm::mat4 transform;
+	public:
+		void setShader(Shader* shader);
+		Shader* getShader();
+		void setTransform(glm::mat4 transform);
+	protected:
+		void SetUniform(GLuint location, const mat4& value); // for transforms
+		void SetUniform(GLuint location, const Texture& value, int textureSlot); // for textures
+		void SetUniform(GLuint location, const vec4& value); // for color and quaternions
+		void SetUniform(GLuint location, const vec3& value); // for rgb color & positions
+	};
+
+	class Mesh : public Component {
+	public:
+		Mesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount);
+		Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices);
+		static Mesh* LoadMeshFromFile(const char* filename);
+		~Mesh();
+	private:
+		/// <summary> vertex array object </summary>
+		GLuint vao;
+		/// <summary> vertex buffer object </summary>
+		GLuint vbo;
+		/// <summary> index buffer object </summary>
+		GLuint ibo;
+		/// <summary> index count </summary>
+		GLuint size;
+		/// <summary> Render shader for the mesh. </summary>
+		Material* material;
+	public:
+		void Update() override;
+	};
+
+#pragma region Materials
+	class M_Unlit : public Material {
+	public:
+		M_Unlit() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/basic.frag")) {
+			sampleTex = nullptr;
+		}
+		void Update() override {
+			Material::Update(); 
+			SetUniform(3, *sampleTex, 0);
+		}
+		CondorEngine::Texture* sampleTex;
+	};
+	class M_Lit : public Material {
+	public:
+		M_Lit() : Material(Shader::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {
+			sampleTex = nullptr;
+		}
+		void Update() override {
+			Material::Update();
+			SetUniform(3, *sampleTex, 0);
+			SetUniform(4, Application::activeScene->ambientLight);
+			SetUniform(5, Application::activeScene->light->color);
+			SetUniform(6, Application::activeScene->light->direction);
+			SetUniform(7, Camera::Instance()->position);
+		}
+		Texture* sampleTex;
+	};
+	class M_UV : public Material {
+		M_UV() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/uv.frag")) {}
+		void Update() override {
+			Material::Update();
+		}
+	};
+	class M_Normal : public Material {
+		M_Normal() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/normal.frag")) {}
+		void Update() override {
+			Material::Update();
+		}
+	};
+	class M_ScreenNormal : public Material {
+		M_ScreenNormal() : Material(Shader::LoadShader("shaders/directional.vert", "shaders/normal.frag")) {}
+		void Update() override {
+			Material::Update();
+		}
+	};
+#pragma endregion
+
+}
+

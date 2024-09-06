@@ -146,7 +146,8 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="core.cpp" />
     <ClCompile Include="diagnostics.cpp" />
-    <ClCompile Include="primitive.cpp" />
+    <ClCompile Include="components\mesh.cpp" />
+    <ClCompile Include="sceneobjects\primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +155,8 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="diagnostics.h" />
-    <ClInclude Include="primitive.h" />
+    <ClInclude Include="components\mesh.h" />
+    <ClInclude Include="sceneobjects\primitive.h" />
     <ClInclude Include="renderer.h" />
   </ItemGroup>
   <ItemGroup>

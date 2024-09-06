@@ -2,10 +2,12 @@
 #include "application.h"
 #include "core.h"
 #include "renderer.h"
-#include "primitive.h"
 #include "camera.h"
-// external
+#include "sceneobjects/primitive.h"
+#include "components/mesh.h"
+// std
 #include <iostream>
+// third party
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"
 using glm::mat4;
@@ -27,7 +29,7 @@ public:
         SetUniform(4, Application::activeScene->ambientLight);
         SetUniform(5, Application::activeScene->light->color);
         SetUniform(6, Application::activeScene->light->direction);
-        SetUniform(7, Camera::Instance()->position);
+        SetUniform(7, CondorEngine::Camera::Instance()->position);
     }
 };
 #pragma endregion
@@ -48,12 +50,12 @@ int main()
     CondorEngine::Component* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
 
     // Camera
-    Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });
+    CondorEngine::Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });
 
 
 #pragma region Basic Render
     // Shaders
-    CondorEngine::Shader basicShader = CondorEngine::Shader::LoadDiffuseShader();
+    //CondorEngine::Shader basicShader = CondorEngine::Shader::LoadDiffuseShader();
     //Shader basicShader = Primitive::LoadNormalShader();
 
     // Geometry

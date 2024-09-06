@@ -1,6 +1,7 @@
 #pragma once
-#include "renderer.h"
-#include "core.h"
+#include "../renderer.h"
+#include "../core.h"
+#include "../components/mesh.h"
 // std
 #include <vector>
 // third party
