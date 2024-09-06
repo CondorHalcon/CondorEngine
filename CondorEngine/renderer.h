@@ -54,8 +54,8 @@ namespace CondorEngine {
 		unsigned height;
 		unsigned channels;
 
-		static Texture MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels);
-		static Texture LoadTexture(const char* imagePath);
+		static Texture* MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels);
+		static Texture* LoadTexture(const char* imagePath);
 		static void FreeTexture(Texture& tex);
 	};
 
@@ -69,10 +69,9 @@ namespace CondorEngine {
 
 	class Mesh : public Component {
 	public:
-		Mesh();
 		Mesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount);
 		Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices);
-		static Mesh LoadMeshFromFile(const char* filename);
+		static Mesh* LoadMeshFromFile(const char* filename);
 		~Mesh();
 	private:
 		/// <summary> vertex array object </summary>

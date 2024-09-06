@@ -128,7 +128,7 @@ CondorEngine::Shader CondorEngine::Shader::LoadNormalShader(bool isObjectSpace)
 
 #pragma region Texture
 
-CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels)
+CondorEngine::Texture* CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels)
 {
 	GLenum oglFormat = GL_RGBA;
 	switch (channels)
@@ -147,11 +147,11 @@ CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigne
 		break;
 	}
 	// 0 for handle, may change if you want more than one texture per mesh
-	Texture texObject = { 0, width, height, channels };
+	Texture* texObject = new Texture{ 0, width, height, channels };
 	// generate the texture on the GPU with the struct we made.
-	glGenTextures(1, &texObject.handle);
+	glGenTextures(1, &texObject->handle);
 	// bind and buffer texture
-	glBindTexture(GL_TEXTURE_2D, texObject.handle);
+	glBindTexture(GL_TEXTURE_2D, texObject->handle);
 	glTexImage2D(GL_TEXTURE_2D, 0, oglFormat, width, height, 0, oglFormat, GL_UNSIGNED_BYTE, pixels);
 	// configure texture settings
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -161,7 +161,7 @@ CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigne
 	return texObject;
 }
 
-CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath)
+CondorEngine::Texture* CondorEngine::Texture::LoadTexture(const char* imagePath)
 {
 	// setup variables to store texture data
 	int imageWidth = -1;
@@ -169,7 +169,7 @@ CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath)
 	int imageFormat = -1;
 	unsigned char* imagePixels = nullptr;
 
-	Texture newTex = {};
+	Texture* newTex = {};
 	// load the data!
 	stbi_set_flip_vertically_on_load(true); // load using OpenGL conventions
 	imagePixels = stbi_load(
@@ -200,13 +200,10 @@ void CondorEngine::Texture::FreeTexture(Texture& tex)
 
 #pragma region Mesh
 
-CondorEngine::Mesh::Mesh() : CondorEngine::Component()
-{
-	this->material = nullptr;
-}
-
 CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount)
 {
+	this->material = nullptr;
+
 	// create GPU instance
 	this->size = indexCount;
 
@@ -270,11 +267,10 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-CondorEngine::Mesh::Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices) : CondorEngine::Mesh::Mesh(verts.data(), verts.size(), indices.data(), indices.size())
-{
-}
+CondorEngine::Mesh::Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices) : 
+	CondorEngine::Mesh::Mesh(verts.data(), verts.size(), indices.data(), indices.size()) { }
 
-CondorEngine::Mesh CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
+CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 {
 	// read verticies from the model
 	const aiScene* scene = aiImportFile(filename, 0);
@@ -327,7 +323,7 @@ CondorEngine::Mesh CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 		vertices.push_back(vertex);
 	}
 
-	return Mesh(vertices.data(), numV, indices.data(), indices.size());
+	return new Mesh(vertices.data(), numV, indices.data(), indices.size());
 }
 
 CondorEngine::Mesh::~Mesh()

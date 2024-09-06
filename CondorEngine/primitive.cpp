@@ -8,10 +8,10 @@ CondorEngine::Primitive::Primitive(PrimitiveType type)
     switch (type)
     {
     case CondorEngine::SimpleCube:
-        mesh = &MakeSimpleCube();
+        mesh = MakeSimpleCube();
         break;
     case CondorEngine::Cube:
-        mesh = &MakeCube();
+        mesh = MakeCube();
         break;
     default:
         mesh = nullptr;
@@ -20,11 +20,9 @@ CondorEngine::Primitive::Primitive(PrimitiveType type)
     AddComponent(mesh);
 }
 
-CondorEngine::Mesh CondorEngine::Primitive::MakeSimpleCube()
+CondorEngine::Mesh* CondorEngine::Primitive::MakeSimpleCube()
 {
-    // Mesh
-    std::vector<Vertex> verts = std::vector<Vertex>
-    {
+    std::vector<Vertex> verts = std::vector<Vertex> {
         { // 0: vertex
             vec4{-.5f, -.5f, .5f, 1}, // position
             vec4{1,1,1,1}, // vertex color
@@ -82,12 +80,12 @@ CondorEngine::Mesh CondorEngine::Primitive::MakeSimpleCube()
         0, 2, 6,  6, 4, 0,
         1, 5, 3,  3, 5, 7
     };
+    return new Mesh(verts, indicies);
 }
 
-CondorEngine::Mesh CondorEngine::Primitive::MakeCube()
+CondorEngine::Mesh* CondorEngine::Primitive::MakeCube()
 {
-    std::vector<Vertex> verts = std::vector<Vertex>
-    {
+    std::vector<Vertex> verts = std::vector<Vertex> {
         // Face: 0 (front)
         { // 0: vertex
             vec4{-.5f, -.5f, .5f, 1}, // position
@@ -247,4 +245,5 @@ CondorEngine::Mesh CondorEngine::Primitive::MakeCube()
         16, 17, 18,   18, 17, 19,
         20, 21, 22,   22, 21, 23
         };
+    return new Mesh(verts, indicies);
 }

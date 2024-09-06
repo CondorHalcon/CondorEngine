@@ -50,10 +50,10 @@ CondorEngine::SceneObject* CondorEngine::Scene::Instanciate(CondorEngine::SceneO
 
 CondorEngine::SceneObject::SceneObject()
 {
-}
-
-CondorEngine::SceneObject::SceneObject()
-{
+    this->scene = nullptr;
+    this->transform = glm::identity<mat4>();
+    this->components = vector<Component*>();
+    this->children = vector<SceneObject*>();
 }
 
 CondorEngine::SceneObject::~SceneObject()

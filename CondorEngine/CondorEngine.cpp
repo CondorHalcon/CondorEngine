@@ -13,14 +13,10 @@ using glm::vec3;
 
 #pragma region Implimentaion Classes
 
-class ShapeMesh : public CondorEngine::Mesh {
-public:
-    ShapeMesh() : CondorEngine::Mesh() { }
-};
 class ShapeMaterial : public CondorEngine::Material {
 public:
     ShapeMaterial(CondorEngine::Shader* shader) : Material(shader) { 
-        sampleTex = &CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+        sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
     }
 
     CondorEngine::Texture* sampleTex;
@@ -49,7 +45,7 @@ int main()
     Application::activeScene = new CondorEngine::Scene();
     CondorEngine::Scene scene;
     CondorEngine::SceneObject* shape = scene.Instanciate(new CondorEngine::SceneObject());
-    CondorEngine::Component* meshComp = shape->AddComponent(&CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    CondorEngine::Component* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
 
     // Camera
     Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });
@@ -64,8 +60,8 @@ int main()
     CondorEngine::Primitive cube = CondorEngine::Primitive(CondorEngine::PrimitiveType::Cube);
     mat4 modelTransform = glm::identity<mat4>();
     modelTransform = glm::scale(modelTransform, vec3{ .1f,.1f,.1f});
-    CondorEngine::Texture sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Mesh mesh = CondorEngine::Mesh::LoadMeshFromFile("meshes/Bunny.obj");
+    CondorEngine::Texture sampleTex = *CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    CondorEngine::Mesh mesh = *CondorEngine::Mesh::LoadMeshFromFile("meshes/Bunny.obj");
 
     // Lights
     /*Light light = {

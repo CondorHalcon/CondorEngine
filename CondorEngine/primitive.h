@@ -17,7 +17,7 @@ namespace CondorEngine {
 		Primitive(PrimitiveType type);
 		Mesh* mesh;
 	private:
-		static Mesh MakeSimpleCube();
-		static Mesh MakeCube();
+		static Mesh* MakeSimpleCube();
+		static Mesh* MakeCube();
 	};
 }

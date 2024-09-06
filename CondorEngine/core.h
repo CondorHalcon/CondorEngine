@@ -8,9 +8,9 @@ using glm::vec3;
 #include <vector>
 using std::vector;
 
-struct Light;
 
 namespace CondorEngine {
+	struct Light;
 	class SceneObject;
 	class Component;
 
