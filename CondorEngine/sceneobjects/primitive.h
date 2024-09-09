@@ -15,6 +15,7 @@ namespace CondorEngine {
 	class Primitive : public SceneObject
 	{
 	public:
+		Primitive(PrimitiveType type, Material* matrial);
 		Primitive(PrimitiveType type);
 		Mesh* mesh;
 	private:

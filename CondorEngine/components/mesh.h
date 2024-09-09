@@ -43,9 +43,9 @@ namespace CondorEngine {
 		GLuint ibo;
 		/// <summary> index count </summary>
 		GLuint size;
+	public:
 		/// <summary> Render shader for the mesh. </summary>
 		Material* material;
-	public:
 		void Update() override;
 	};
 
@@ -56,8 +56,10 @@ namespace CondorEngine {
 			sampleTex = nullptr;
 		}
 		void Update() override {
-			Material::Update(); 
-			SetUniform(3, *sampleTex, 0);
+			Material::Update();
+			if (sampleTex != nullptr) {
+				SetUniform(3, *sampleTex, 0);
+			}
 		}
 		CondorEngine::Texture* sampleTex;
 	};
@@ -68,7 +70,9 @@ namespace CondorEngine {
 		}
 		void Update() override {
 			Material::Update();
-			SetUniform(3, *sampleTex, 0);
+			if (sampleTex != nullptr) {
+				SetUniform(3, *sampleTex, 0);
+			}
 			SetUniform(4, Application::activeScene->ambientLight);
 			SetUniform(5, Application::activeScene->light->color);
 			SetUniform(6, Application::activeScene->light->direction);
@@ -77,18 +81,21 @@ namespace CondorEngine {
 		Texture* sampleTex;
 	};
 	class M_UV : public Material {
+	public:
 		M_UV() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/uv.frag")) {}
 		void Update() override {
 			Material::Update();
 		}
 	};
 	class M_Normal : public Material {
+	public:
 		M_Normal() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/normal.frag")) {}
 		void Update() override {
 			Material::Update();
 		}
 	};
 	class M_ScreenNormal : public Material {
+	public:
 		M_ScreenNormal() : Material(Shader::LoadShader("shaders/directional.vert", "shaders/normal.frag")) {}
 		void Update() override {
 			Material::Update();

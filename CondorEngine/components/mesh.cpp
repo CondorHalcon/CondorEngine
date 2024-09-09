@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "../renderer.h"
 #include "../camera.h"
+#include "../debug.h"
 // third party
 #include <assimp/scene.h>
 #include <assimp/cimport.h>
@@ -143,6 +144,10 @@ CondorEngine::Mesh::~Mesh()
 
 void CondorEngine::Mesh::Update()
 {
+	if (material == nullptr) { 
+		Debug::LogError("No material set; failed to render.");
+		return; 
+	}
 	material->setTransform(getSceneObject()->transform);
 	material->Update();
 

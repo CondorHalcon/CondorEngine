@@ -2,7 +2,7 @@
 #include "glew/glew.h"
 
 namespace CondorEngine {
-	static class diagnostics
+	class diagnostics
 	{
 	public:
 		static void Environment();

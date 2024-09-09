@@ -154,6 +154,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="core.h" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="diagnostics.h" />
     <ClInclude Include="components\mesh.h" />
     <ClInclude Include="sceneobjects\primitive.h" />

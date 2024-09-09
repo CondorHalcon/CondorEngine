@@ -1,5 +1,6 @@
 #pragma once
 #include "core.h"
+using CondorEngine::Scene;
 
 class Application
 {
@@ -15,6 +16,6 @@ public:
 	void terminate();
 	bool shouldClose();
 public:
-	static CondorEngine::Scene* activeScene;
+	static Scene* activeScene;
 };
 

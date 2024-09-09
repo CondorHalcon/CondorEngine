@@ -1,8 +1,12 @@
 #include "application.h"
+#include "debug.h"
+// third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
 #include "diagnostics.h"
+
+Scene* Application::activeScene = nullptr;
 
 bool Application::init(int width, int height, const char* title)
 {
@@ -46,6 +50,8 @@ void Application::update()
 {
 	if (activeScene != nullptr) {
 		activeScene->InternalUpdate();
+	} else {
+		CondorEngine::Debug::LogWarning("No active scene to update.");
 	}
 }
 
