@@ -7,6 +7,23 @@
 #include "diagnostics.h"
 
 Scene* Application::activeScene = nullptr;
+Application* Application::instance = nullptr;
+
+Application::Application() {
+	
+}
+Application::~Application()
+{
+	delete instance;
+}
+
+Application* Application::Instance()
+{
+	if (instance == nullptr) {
+		instance = new Application();
+	}
+	return instance;
+}
 
 bool Application::init(int width, int height, const char* title)
 {
@@ -74,4 +91,9 @@ void Application::terminate()
 bool Application::shouldClose()
 {
 	return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
+}
+
+bool Application::Input(int key)
+{
+	return glfwGetKey(Instance()->window, key);
 }

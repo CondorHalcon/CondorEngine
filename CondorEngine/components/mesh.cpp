@@ -188,6 +188,7 @@ CondorEngine::Shader* CondorEngine::Material::getShader()
 
 void CondorEngine::Material::setTransform(glm::mat4 transform)
 {
+	this->transform = transform;
 }
 
 void CondorEngine::Material::SetUniform(GLuint location, const mat4& value)

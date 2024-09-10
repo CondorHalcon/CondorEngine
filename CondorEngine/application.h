@@ -5,6 +5,12 @@ using CondorEngine::Scene;
 class Application
 {
 	struct GLFWwindow* window;
+private:
+	Application();
+	~Application();
+	static Application* instance;
+public:
+	static Application* Instance();
 
 public:
 	/// <summary> Instatiate a new window. </summary>
@@ -15,12 +21,19 @@ public:
 	bool init(int width, int height, const char* title);
 	/// <summary> Update for the window. </summary>
 	void tick();
+	/// <summary> </summary>
 	void clear();
+	/// <summary> </summary>
 	void update();
+	/// <summary> </summary>
 	void lateUpdate();
+	/// <summary> </summary>
 	void terminate();
+	/// <summary> </summary>
 	bool shouldClose();
+
 public:
 	static Scene* activeScene;
+	static bool Input(int key);
 };
 
