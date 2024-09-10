@@ -40,7 +40,14 @@ namespace CondorEngine {
 		vec3 ambientLight = { .1,.1,.1 };
 		Light* light;
 	public:
-		SceneObject* Instanciate(SceneObject* sceneObject);
+		template <typename T> T* Instanciate(T* sceneObject) {
+			sceneObject->setScene(this);
+			this->hiearchy.push_back(sceneObject);
+			return sceneObject;
+		}
+		SceneObject* Instanciate(SceneObject* sceneObject) {
+			return Instanciate<SceneObject>(sceneObject);
+		}
 	};
 	class SceneObject : public Object {
 	public:
@@ -51,16 +58,25 @@ namespace CondorEngine {
 	private:
 		bool hasDoneFirstUpdate = false;
 		Scene* scene;
-	public:
+	protected:
+		SceneObject* parent;
 		mat4 transform;
-		vector<SceneObject*> children;
 	private:
 		vector<Component*> components;
+		vector<SceneObject*> children;
 	public:
-		void setScene(Scene* scene);
 		Scene* getScene();
-	public:
-		Component* AddComponent(Component* component);
+		void setScene(Scene* scene);
+		mat4 getTransform();
+		void setTransform(mat4 transfrom);
+		template <typename T> T* AddComponent(T* component) {
+			components.push_back(component);
+			component->setSceneObject(this);
+			return component;
+		}
+		Component* AddComponent(Component* component) {
+			return AddComponent<Component>(component);
+		}
 	};
 
 	class Component : public Object {

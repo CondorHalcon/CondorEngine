@@ -148,7 +148,7 @@ void CondorEngine::Mesh::Update()
 		Debug::LogError("No material set; failed to render.");
 		return; 
 	}
-	material->setTransform(getSceneObject()->transform);
+	material->setTransform(getSceneObject()->getTransform());
 	material->Update();
 
 	// specify which shader to use

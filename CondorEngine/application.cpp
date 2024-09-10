@@ -49,16 +49,18 @@ void Application::clear()
 void Application::update()
 {
 	if (activeScene != nullptr) {
-		activeScene->InternalUpdate();
-	} else {
-		CondorEngine::Debug::LogWarning("No active scene to update.");
+		if (activeScene->enabled) {
+			activeScene->InternalUpdate();
+		}
 	}
 }
 
 void Application::lateUpdate()
 {
 	if (activeScene != nullptr) {
-		activeScene->InternalLateUpdate();
+		if (activeScene->enabled) {
+			activeScene->InternalLateUpdate();
+		}
 	}
 }
 

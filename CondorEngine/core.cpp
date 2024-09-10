@@ -25,7 +25,9 @@ void CondorEngine::Scene::InternalUpdate()
     Update();
 
     for (int i = 0; i < hiearchy.size(); i++) {
-        hiearchy[i]->InternalUpdate();
+        if (hiearchy[i]->enabled) {
+            hiearchy[i]->InternalUpdate();
+        }
     }
 }
 
@@ -34,14 +36,10 @@ void CondorEngine::Scene::InternalLateUpdate()
     LateUpdate();
 
     for (int i = 0; i < hiearchy.size(); i++) {
-        hiearchy[i]->InternalLateUpdate();
+        if (hiearchy[i]->enabled) {
+            hiearchy[i]->InternalLateUpdate();
+        }
     }
-}
-
-CondorEngine::SceneObject* CondorEngine::Scene::Instanciate(CondorEngine::SceneObject* sceneObject)
-{
-    sceneObject->setScene(this);
-    return sceneObject;
 }
 
 #pragma endregion
@@ -94,21 +92,24 @@ void CondorEngine::SceneObject::InternalLateUpdate()
     }
 }
 
+CondorEngine::Scene* CondorEngine::SceneObject::getScene()
+{
+    return this->scene;
+}
+
 void CondorEngine::SceneObject::setScene(Scene* scene)
 {
     this->scene = scene;
 }
 
-CondorEngine::Scene* CondorEngine::SceneObject::getScene()
+mat4 CondorEngine::SceneObject::getTransform()
 {
-    return scene;
+    return this->transform;
 }
 
-CondorEngine::Component* CondorEngine::SceneObject::AddComponent(Component* component)
+void CondorEngine::SceneObject::setTransform(mat4 transfrom)
 {
-    components.push_back(component);
-    component->setSceneObject(this);
-    return component;
+    this->transform = transfrom;
 }
 
 #pragma endregion
