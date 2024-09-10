@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# unignore list
+!thirdparty/glew/lib/x64/
+!thirdparty/glew/lib/Win32/
+!thirdparty/glfw/lib/x64/
