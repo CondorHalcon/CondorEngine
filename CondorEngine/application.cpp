@@ -10,7 +10,7 @@ Scene* Application::activeScene = nullptr;
 Application* Application::instance = nullptr;
 
 Application::Application() {
-	
+	this->window = nullptr;
 }
 Application::~Application()
 {

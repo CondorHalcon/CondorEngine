@@ -1,5 +1,5 @@
 #pragma once
-#include "core.h"
+#include "math.h"
 // thirdparty
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"

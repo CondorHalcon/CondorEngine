@@ -1,5 +1,5 @@
 #include "camera.h"
-#include "core.h"
+#include "math.h"
 
 CondorEngine::Camera* CondorEngine::Camera::instance = nullptr;
 

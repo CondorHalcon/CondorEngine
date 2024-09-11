@@ -1,4 +1,5 @@
 #include "core.h"
+#include "math.h"
 #include "renderer.h"
 
 
@@ -117,10 +118,30 @@ void CondorEngine::SceneObject::setScene(Scene* scene)
 
 CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 {
+    return parent != nullptr ? parent->getTransform() * this->transform : this->transform;
+}
+
+CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
+{
     return this->transform;
 }
 
-void CondorEngine::SceneObject::setTransform(Transform transform)
+CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
+{
+    return Math::TransformToPosition(getTransform());
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
+{
+    return Math::TransformToPosition(getLocalTransform());
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getEulerRotation()
+{
+    return Vector3();
+}
+
+void CondorEngine::SceneObject::setLocalTransform(Transform transform)
 {
     this->transform = transform;
 }
