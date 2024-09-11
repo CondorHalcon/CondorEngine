@@ -49,28 +49,23 @@ int main()
     CondorEngine::diagnostics::Environment();
 
     // Scene
-    Application::activeScene = new CondorEngine::Scene();
-    CondorEngine::Scene scene;
+    Scene* scene = Application::activeScene = new CondorEngine::Scene();
     // Camera
     CondorEngine::Camera::Init(CondorEngine::Vector3{ 0, 0, 3 }, CondorEngine::Vector3{ 0,0,0, });
 
     // imported mesh
     CondorEngine::Mesh* meshComp = CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj");
     meshComp->material = new CondorEngine::M_Lit();
-    Rotatable* shape = scene.Instantiate<Rotatable>(new Rotatable(meshComp));
-    //Application::activeScene->hierarchy.push_back(shape);
+    Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable(meshComp));
 
     // primitive mesh
-    //CondorEngine::Primitive* prim = scene.Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
-
-    CondorEngine::Transform transform = glm::identity<CondorEngine::Transform>();
+    scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
     
 
     while (!app->shouldClose()) {
         app->tick();
         app->clear();
         app->update();
-        app->lateUpdate();
         app->lateUpdate();
     }
 
