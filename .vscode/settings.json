@@ -1,0 +1,9 @@
+{
+    "cSpell.words": [
+        "GLFW"
+    ],
+    "files.associations": {
+        "*.css": "tailwindcss",
+        "vector": "cpp"
+    }
+}

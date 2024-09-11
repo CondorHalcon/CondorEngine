@@ -16,16 +16,29 @@ namespace CondorEngine {
 		void Update() override;
 	private:
 		Shader* shader;
-		glm::mat4 transform;
+		Transform transform;
 	public:
 		void setShader(Shader* shader);
 		Shader* getShader();
-		void setTransform(glm::mat4 transform);
+		void setTransform(Transform transform);
 	protected:
-		void SetUniform(GLuint location, const mat4& value); // for transforms
+		/// <summary> Set shader uniforms for transformations. </summary>
+		/// <param name="location"></param>
+		/// <param name="value"></param>
+		void SetUniform(GLuint location, const Transform& value); // for transforms
+		/// <summary> Set shader uniforms for textures. </summary>
+		/// <param name="location"></param>
+		/// <param name="value"></param>
+		/// <param name="textureSlot"></param>
 		void SetUniform(GLuint location, const Texture& value, int textureSlot); // for textures
-		void SetUniform(GLuint location, const vec4& value); // for color and quaternions
-		void SetUniform(GLuint location, const vec3& value); // for rgb color & positions
+		/// <summary> Set Shader uniforms for positions and rgb colors. </summary>
+		/// <param name="location"></param>
+		/// <param name="value"></param>
+		void SetUniform(GLuint location, const glm::vec3& value); // for rgb color & positions
+		/// <summary> Set shader uniform for colors and quaternions. </summary>
+		/// <param name="location"></param>
+		/// <param name="value"></param>
+		void SetUniform(GLuint location, const glm::vec4& value); // for color and quaternions
 	};
 
 	class Mesh : public Component {

@@ -108,25 +108,25 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 	std::vector<Vertex> vertices = std::vector<Vertex>();
 	for (int i = 0; i < numV; i++) {
 		Vertex vertex;
-		vertex.pos = glm::vec4{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
+		vertex.pos = Vector4{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
 		if (mesh->HasVertexColors(i)) {
 			aiColor4D* vertColor = mesh->mColors[i];
-			vertex.col = glm::vec4{ vertColor->r, vertColor->g, vertColor->b, vertColor->a };
+			vertex.col = Color{ vertColor->r, vertColor->g, vertColor->b, vertColor->a };
 		}
 		else {
-			vertex.col = vec4{ 1,1,1,1 };
+			vertex.col = Color{ 1,1,1,1 };
 		}
 		if (mesh->HasTextureCoords(i)) {
-			vertex.uv = glm::vec2{ mesh->mTextureCoords[i]->x, mesh->mTextureCoords[i]->y };
+			vertex.uv = Vector2{ mesh->mTextureCoords[i]->x, mesh->mTextureCoords[i]->y };
 		}
 		else {
-			vertex.uv = glm::vec2{ 0,0 };
+			vertex.uv = Vector2{ 0,0 };
 		}
 		if (mesh->HasNormals()) {
-			vertex.normal = glm::vec3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
+			vertex.normal = Vector3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
 		}
 		else {
-			vertex.normal = glm::vec3{ 0,0,1 };
+			vertex.normal = Vector3{ 0,0,1 };
 		}
 		vertices.push_back(vertex);
 	}
@@ -166,7 +166,7 @@ void CondorEngine::Mesh::Update()
 CondorEngine::Material::Material(Shader* shader)
 {
 	this->shader = shader;
-	this->transform = glm::identity<mat4>();
+	this->transform = glm::identity<Transform>();
 }
 
 void CondorEngine::Material::Update()
@@ -186,12 +186,12 @@ CondorEngine::Shader* CondorEngine::Material::getShader()
 	return this->shader;
 }
 
-void CondorEngine::Material::setTransform(glm::mat4 transform)
+void CondorEngine::Material::setTransform(Transform transform)
 {
 	this->transform = transform;
 }
 
-void CondorEngine::Material::SetUniform(GLuint location, const mat4& value)
+void CondorEngine::Material::SetUniform(GLuint location, const Transform& value)
 {
 	glProgramUniformMatrix4fv(shader->program, location, 1, GL_FALSE, glm::value_ptr(value));
 }
@@ -203,14 +203,14 @@ void CondorEngine::Material::SetUniform(GLuint location, const Texture& value, i
 	glProgramUniform1i(shader->program, location, textureSlot);
 }
 
-void CondorEngine::Material::SetUniform(GLuint location, const vec4& value)
-{
-	glProgramUniform4fv(shader->program, location, 1, glm::value_ptr(value));
-}
-
-void CondorEngine::Material::SetUniform(GLuint location, const vec3& value)
+void CondorEngine::Material::SetUniform(GLuint location, const glm::vec3& value)
 {
 	glProgramUniform3fv(shader->program, location, 1, glm::value_ptr(value));
+}
+
+void CondorEngine::Material::SetUniform(GLuint location, const glm::vec4& value)
+{
+	glProgramUniform4fv(shader->program, location, 1, glm::value_ptr(value));
 }
 
 #pragma endregion

@@ -6,6 +6,8 @@
 #include <fstream> // for reading from files
 #include <string>
 // third party
+#include "glew/glew.h"
+#include "glm/glm.hpp"
 #include "glm/ext.hpp"
 #include "stb/stb_image.h" // for image loading
 

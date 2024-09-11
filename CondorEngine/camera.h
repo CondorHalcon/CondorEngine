@@ -1,8 +1,8 @@
 #pragma once
+#include "core.h"
+// thirdparty
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"
-using glm::mat4;
-using glm::vec3;
 
 namespace CondorEngine {
 	class Camera
@@ -13,16 +13,16 @@ namespace CondorEngine {
 		static Camera* instance;
 
 	public:
-		static void Init(vec3 pos, vec3 lookAt);
+		static void Init(Vector3 pos, Vector3 lookAt);
 		static Camera* Instance();
-		static void SetPositionAndLookAt(vec3 pos, vec3 lookAt);
-		static void SetPosition(vec3 pos);
-		static void LookAt(vec3 lookAt);
+		static void SetPositionAndLookAt(Vector3 pos, Vector3 lookAt);
+		static void SetPosition(Vector3 pos);
+		static void LookAt(Vector3 lookAt);
 
 	public:
-		vec3 position;
-		mat4 viewMatrix;
-		mat4 projectionMatrix;
+		Vector3 position;
+		Transform viewMatrix;
+		Transform projectionMatrix;
 	};
 }
 

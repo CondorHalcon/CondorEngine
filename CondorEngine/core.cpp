@@ -1,43 +1,53 @@
 #include "core.h"
 #include "renderer.h"
 
+
+CondorEngine::Object::Object()
+{
+    this->name = "CondorEngine::Object";
+    this->enabled = true;
+}
+
 #pragma region Scene
 
 CondorEngine::Scene::Scene()
 {
+    this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
-    light = new Light{ glm::vec3{1,1,1}, glm::vec3{0, 0, -1} };
+    light = new Light{ Vector3{1,1,1}, Vector3{0, 0, -1} };
 }
 
 CondorEngine::Scene::~Scene()
 {
-    for (int i = 0; i < hiearchy.size(); i++) {
-        delete hiearchy[i];
+    for (int i = 0; i < hierarchy.size(); i++) {
+        delete hierarchy[i];
     }
 }
 
 void CondorEngine::Scene::InternalUpdate()
 {
+    if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
         hasDoneFirstUpdate = true;
         Start();
     }
     Update();
 
-    for (int i = 0; i < hiearchy.size(); i++) {
-        if (hiearchy[i]->enabled) {
-            hiearchy[i]->InternalUpdate();
+    for (int i = 0; i < hierarchy.size(); i++) {
+        if (hierarchy[i]->enabled) {
+            hierarchy[i]->InternalUpdate();
         }
     }
 }
 
 void CondorEngine::Scene::InternalLateUpdate()
 {
+    if (!enabled) { return; }
     LateUpdate();
 
-    for (int i = 0; i < hiearchy.size(); i++) {
-        if (hiearchy[i]->enabled) {
-            hiearchy[i]->InternalLateUpdate();
+    for (int i = 0; i < hierarchy.size(); i++) {
+        if (hierarchy[i]->enabled) {
+            hierarchy[i]->InternalLateUpdate();
         }
     }
 }
@@ -48,8 +58,9 @@ void CondorEngine::Scene::InternalLateUpdate()
 
 CondorEngine::SceneObject::SceneObject()
 {
+    this->name = "CondorEngine::SceneObject";
     this->scene = nullptr;
-    this->transform = glm::identity<mat4>();
+    this->transform = glm::identity<Transform>();
     this->components = vector<Component*>();
     this->children = vector<SceneObject*>();
 }
@@ -66,6 +77,7 @@ CondorEngine::SceneObject::~SceneObject()
 
 void CondorEngine::SceneObject::InternalUpdate()
 {
+    if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
         hasDoneFirstUpdate = true;
         Start();
@@ -82,6 +94,7 @@ void CondorEngine::SceneObject::InternalUpdate()
 
 void CondorEngine::SceneObject::InternalLateUpdate()
 {
+    if (!enabled) { return; }
     LateUpdate();
 
     for (int i = 0; i < components.size(); i++) {
@@ -102,14 +115,14 @@ void CondorEngine::SceneObject::setScene(Scene* scene)
     this->scene = scene;
 }
 
-mat4 CondorEngine::SceneObject::getTransform()
+CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 {
     return this->transform;
 }
 
-void CondorEngine::SceneObject::setTransform(mat4 transfrom)
+void CondorEngine::SceneObject::setTransform(Transform transform)
 {
-    this->transform = transfrom;
+    this->transform = transform;
 }
 
 #pragma endregion
@@ -124,6 +137,7 @@ CondorEngine::Component::Component()
 
 void CondorEngine::Component::InternalUpdate()
 {
+    if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
         hasDoneFirstUpdate = true;
         Start();
@@ -133,6 +147,7 @@ void CondorEngine::Component::InternalUpdate()
 
 void CondorEngine::Component::InternalLateUpdate()
 {
+    if (!enabled) { return; }
     LateUpdate();
 }
 
@@ -147,5 +162,4 @@ CondorEngine::SceneObject* CondorEngine::Component::getSceneObject()
 }
 
 #pragma endregion
-
 

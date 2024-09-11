@@ -28,52 +28,52 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeSimpleCube()
 {
     std::vector<Vertex> verts = std::vector<Vertex> {
         { // 0: vertex
-            vec4{-.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{-.7f,-.7f,.7f}  // vertex normal
+            Vector4{-.5f, -.5f, .5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{-.7f,-.7f,.7f}  // vertex normal
         },
         { // 1: vertex
-            vec4{.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{.7f,-.7f,.7f}  // vertex normal
+            Vector4{.5f, -.5f, .5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{.7f,-.7f,.7f}  // vertex normal
         },
         { // 2: vertex
-            vec4{-.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{-.7f,.7f,.7f}  // vertex normal
+            Vector4{-.5f, .5f, .5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{-.7f,.7f,.7f}  // vertex normal
         },
         { // 3: vertex
-            vec4{.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{.7f,.7f,.7f}  // vertex normal
+            Vector4{.5f, .5f, .5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{.7f,.7f,.7f}  // vertex normal
         },
         { // 4: vertex
-            vec4{-.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{-1.0f,0.0f}, // vertex uv
-            vec3{-.7f,-.7f,-.7f}  // vertex normal
+            Vector4{-.5f, -.5f, -.5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{-1.0f,0.0f}, // vertex uv
+            Vector3{-.7f,-.7f,-.7f}  // vertex normal
         },
         { // 5: vertex
-            vec4{.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0,0.0f}, // vertex uv
-            vec3{.7f,-.7f,-.7f}  // vertex normal
+            Vector4{.5f, -.5f, -.5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{0.0,0.0f}, // vertex uv
+            Vector3{.7f,-.7f,-.7f}  // vertex normal
         },
         { // 6: vertex
-            vec4{-.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{-1.0f,1.0f}, // vertex uv
-            vec3{-.7f,.7f,-.7f}  // vertex normal
+            Vector4{-.5f, .5f, -.5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{-1.0f,1.0f}, // vertex uv
+            Vector3{-.7f,.7f,-.7f}  // vertex normal
         },
         { // 7: vertex
-            vec4{.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{.7f,.7f,-.7f}  // vertex normal
+            Vector4{.5f, .5f, -.5f, 1}, // position
+            Vector4{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{.7f,.7f,-.7f}  // vertex normal
         },
     };
     std::vector<GLuint> indicies = {
@@ -92,153 +92,153 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeCube()
     std::vector<Vertex> verts = std::vector<Vertex> {
         // Face: 0 (front)
         { // 0: vertex
-            vec4{-.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{0,0,1}  // vertex normal
+            Vector4{-.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{0,0,1}  // vertex normal
         }, // A
         { // 1: vertex
-            vec4{.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{0,0,1}  // vertex normal
+            Vector4{.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{0,0,1}  // vertex normal
         }, // B
         { // 2: vertex
-            vec4{-.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{0,0,1}  // vertex normal
+            Vector4{-.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{0,0,1}  // vertex normal
         }, // C
         { // 3: vertex
-            vec4{.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{0,0,1}  // vertex normal
+            Vector4{.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{0,0,1}  // vertex normal
         }, // D
         // Face: 1 (bottom)
         { // 4: vertex
-            vec4{-.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{0,-1,0}  // vertex normal
+            Vector4{-.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{0,-1,0}  // vertex normal
         }, // E
         { // 5: vertex
-            vec4{.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{0,-1,0}  // vertex normal
+            Vector4{.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{0,-1,0}  // vertex normal
         }, // F
         { // 6: vertex
-            vec4{-.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{0,-1,0}  // vertex normal
+            Vector4{-.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{0,-1,0}  // vertex normal
         }, // A
         { // 7: vertex
-            vec4{.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{0,-1,0}  // vertex normal
+            Vector4{.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{0,-1,0}  // vertex normal
         }, // B
         // Face: 2 (back)
         { // 8: vertex
-            vec4{-.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{0,0,-1}  // vertex normal
+            Vector4{-.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{0,0,-1}  // vertex normal
         }, // G
         { // 9: vertex
-            vec4{.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0,1.0f}, // vertex uv
-            vec3{0,0,-1}  // vertex normal
+            Vector4{.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0,1.0f}, // vertex uv
+            Vector3{0,0,-1}  // vertex normal
         }, // H
         { // 10: vertex
-            vec4{-.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{0,0,-1}  // vertex normal
+            Vector4{-.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{0,0,-1}  // vertex normal
         }, // E
         { // 11: vertex
-            vec4{.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{0,0,-1}  // vertex normal
+            Vector4{.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{0,0,-1}  // vertex normal
         }, // F
         // Face: 3 (top)
         { // 12: vertex
-            vec4{-.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{0,1,0}  // vertex normal
+            Vector4{-.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{0,1,0}  // vertex normal
         }, // C
         { // 13: vertex
-            vec4{.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{0,1,0}  // vertex normal
+            Vector4{.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{0,1,0}  // vertex normal
         }, // D
         { // 14: vertex
-            vec4{-.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{0,1,0}  // vertex normal
+            Vector4{-.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{0,1,0}  // vertex normal
         }, // G
         { // 15: vertex
-            vec4{.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{0,1,0}  // vertex normal
+            Vector4{.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{0,1,0}  // vertex normal
         }, // H
         // Face: 4 (right)
         { // 16: vertex
-            vec4{.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{1,0,0}  // vertex normal
+            Vector4{.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{1,0,0}  // vertex normal
         }, // B
         { // 17: vertex
-            vec4{.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{1,0,0}  // vertex normal
+            Vector4{.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{1,0,0}  // vertex normal
         }, // F
         { // 18: vertex
-            vec4{.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{1,0,0}  // vertex normal
+            Vector4{.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{1,0,0}  // vertex normal
         }, // D
         { // 19: vertex
-            vec4{.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{1,0,0}  // vertex normal
+            Vector4{.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{1,0,0}  // vertex normal
         }, // H
         // Face: 5 (left)
         { // 20: vertex
-            vec4{-.5f, -.5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,0.0f}, // vertex uv
-            vec3{-1,0,0}  // vertex normal
+            Vector4{-.5f, -.5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,0.0f}, // vertex uv
+            Vector3{-1,0,0}  // vertex normal
         }, // E
         { // 21: vertex
-            vec4{-.5f, -.5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,0.0f}, // vertex uv
-            vec3{-1,0,0}  // vertex normal
+            Vector4{-.5f, -.5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,0.0f}, // vertex uv
+            Vector3{-1,0,0}  // vertex normal
         }, // A
         { // 22: vertex
-            vec4{-.5f, .5f, -.5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{0.0f,1.0f}, // vertex uv
-            vec3{-1,0,0}  // vertex normal
+            Vector4{-.5f, .5f, -.5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{0.0f,1.0f}, // vertex uv
+            Vector3{-1,0,0}  // vertex normal
         }, // G
         { // 23: vertex
-            vec4{-.5f, .5f, .5f, 1}, // position
-            vec4{1,1,1,1}, // vertex color
-            vec2{1.0f,1.0f}, // vertex uv
-            vec3{-1,0,0}  // vertex normal
+            Vector4{-.5f, .5f, .5f, 1}, // position
+            Color{1,1,1,1}, // vertex color
+            Vector2{1.0f,1.0f}, // vertex uv
+            Vector3{-1,0,0}  // vertex normal
         }, // C
     };
     std::vector<GLuint> indicies = {

@@ -12,29 +12,27 @@
 // third party
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"
-using glm::mat4;
-using glm::vec3;
 
-#pragma region Implimentaion Classes
+#pragma region Implementation Classes
 
 class Rotatable : public CondorEngine::SceneObject {
 public:
     Rotatable(CondorEngine::Mesh* mesh) : SceneObject() {
-        this->mesh = AddComponent(mesh);
+        this->mesh = AddComponent<CondorEngine::Mesh>(mesh);
     }
     CondorEngine::Mesh* mesh;
     void Update() override {
         if (Application::Input(GLFW_KEY_W)) {
-            transform = glm::rotate(transform, .01f, vec3{ -1, 0, 0 });
+            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ -1, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_A)) {
-            transform = glm::rotate(transform, .01f, vec3{ 0, -1, 0 });
+            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 0, -1, 0 });
         }
         if (Application::Input(GLFW_KEY_S)) {
-            transform = glm::rotate(transform, .01f, vec3{ 1, 0, 0 });
+            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 1, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_D)) {
-            transform = glm::rotate(transform, .01f, vec3{ 0, 1, 0 });
+            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 0, 1, 0 });
         }
     }
 };
@@ -54,18 +52,18 @@ int main()
     Application::activeScene = new CondorEngine::Scene();
     CondorEngine::Scene scene;
     // Camera
-    CondorEngine::Camera::Init(vec3{ 0, 0, 3 }, vec3{ 0,0,0, });
+    CondorEngine::Camera::Init(CondorEngine::Vector3{ 0, 0, 3 }, CondorEngine::Vector3{ 0,0,0, });
 
     // imported mesh
     CondorEngine::Mesh* meshComp = CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj");
     meshComp->material = new CondorEngine::M_Lit();
-    Rotatable* shape = scene.Instanciate(new Rotatable(meshComp));
-    Application::activeScene->hiearchy.push_back(shape);
+    Rotatable* shape = scene.Instantiate<Rotatable>(new Rotatable(meshComp));
+    //Application::activeScene->hierarchy.push_back(shape);
 
     // primitive mesh
-    //CondorEngine::Primitive* prim = scene.Instanciate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
+    //CondorEngine::Primitive* prim = scene.Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
 
-    mat4 transform = glm::identity<mat4>();
+    CondorEngine::Transform transform = glm::identity<CondorEngine::Transform>();
     
 
     while (!app->shouldClose()) {

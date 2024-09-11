@@ -3,28 +3,23 @@
 
 // third party
 #include "glew/glew.h"
-#include "glm/glm.hpp"
+// std
 #include <vector> // for the daring
 #include <string>
-
 using std::string;
-using glm::mat4;
-using glm::vec4;
-using glm::vec3;
-using glm::vec2;
 
 namespace CondorEngine {
 
 #pragma region Struct Definitions
 	struct Vertex {
 		/// <summary> vertex position </summary>
-		vec4 pos;
+		Vector4 pos;
 		/// <summary> vertex color </summary>
-		vec4 col;
+		Color col;
 		/// <summary> uv </summary>
-		vec2 uv;
+		Vector2 uv;
 		/// <summary> vertex normal </summary>
-		vec3 normal;
+		Vector3 normal;
 	};
 
 	struct Shader
@@ -54,8 +49,8 @@ namespace CondorEngine {
 
 	struct Light
 	{
-		vec3 color;
-		vec3 direction;
+		Vector3 color;
+		Vector3 direction;
 	};
 
 #pragma endregion
