@@ -49,7 +49,7 @@ namespace CondorEngine {
 
 	struct Light
 	{
-		Vector3 color;
+		ColorRGB color;
 		Vector3 direction;
 	};
 

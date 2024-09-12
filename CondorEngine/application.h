@@ -13,7 +13,7 @@ public:
 	static Application* Instance();
 
 public:
-	/// <summary> Instatiate a new window. </summary>
+	/// <summary> Instantiate a new window. </summary>
 	/// <param name="width"></param>
 	/// <param name="height"></param>
 	/// <param name="title"></param>

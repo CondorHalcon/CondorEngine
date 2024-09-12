@@ -2,7 +2,6 @@
 
 // std
 #include <string>
-using std::string;
 // third party
 #include "glm/ext.hpp"
 
@@ -30,22 +29,20 @@ namespace CondorEngine {
 class Math
 {
 public:
-    static Transform EulerToTransform(Vector3 vector);
+	static Transform TransformSetPosition(Transform transform, Vector3 position);
     static Vector3 TransformToPosition(Transform transform);
-    static Vector3 TransformToEulerRotation(Transform transform);
 };
-
-#pragma region Utilities
-
-string to_string(Color color);
-string to_string(ColorRGB color);
-string to_string(Vector2 vector);
-string to_string(Vector3 vector);
-string to_string(Vector4 vector);
-string to_string(Quaternion quaternion);
-string to_string(Transform transfrom);
-
-#pragma endregion
 
 }
 
+#pragma region Utilities
+
+std::string to_string(CondorEngine::Color color);
+std::string to_string(CondorEngine::ColorRGB color);
+std::string to_string(CondorEngine::Vector2 vector);
+std::string to_string(CondorEngine::Vector3 vector);
+std::string to_string(CondorEngine::Vector4 vector);
+std::string to_string(CondorEngine::Quaternion quaternion);
+std::string to_string(CondorEngine::Transform transform);
+
+#pragma endregion

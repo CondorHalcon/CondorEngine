@@ -3,8 +3,9 @@
 #include "glew/glew.h"
 #include "glm/glm.hpp"
 
-CondorEngine::Primitive::Primitive(PrimitiveType type, Material* matrial)
+CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
 {
+    this->name = "CondorEngine::Primitive";
     switch (type)
     {
     case CondorEngine::SimpleCube:
@@ -18,7 +19,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* matrial)
         break;
     }
     AddComponent(mesh);
-    mesh->material = matrial;
+    mesh->material = material;
 }
 
 CondorEngine::Primitive::Primitive(PrimitiveType type) : 

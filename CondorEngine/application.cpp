@@ -37,10 +37,10 @@ bool Application::init(int width, int height, const char* title)
 	// set flags for openGL features
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE); // optimization featues
+	glEnable(GL_CULL_FACE); // optimization features
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDepthFunc(GL_LEQUAL); // depth testing for deciding which objects are infront of one another
+	glDepthFunc(GL_LEQUAL); // depth testing for deciding which objects are in front of one another
 	glFrontFace(GL_CCW); // winding order for determining which direction the normal is on a triangle
 	glCullFace(GL_BACK);
 
@@ -60,14 +60,14 @@ void Application::tick()
 
 void Application::clear()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the sceen buffer and the depth buffer each frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
 }
 
 void Application::update()
 {
 	if (activeScene != nullptr) {
 		if (activeScene->enabled) {
-			activeScene->InternalUpdate();
+			activeScene->HierarchyUpdate();
 		}
 	}
 }
@@ -76,7 +76,7 @@ void Application::lateUpdate()
 {
 	if (activeScene != nullptr) {
 		if (activeScene->enabled) {
-			activeScene->InternalLateUpdate();
+			activeScene->HierarchyLateUpdate();
 		}
 	}
 }

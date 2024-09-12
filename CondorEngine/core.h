@@ -41,13 +41,13 @@ namespace CondorEngine {
 	public:
 		Scene();
 		~Scene();
-		void InternalUpdate();
-		void InternalLateUpdate();
+		void HierarchyUpdate();
+		void HierarchyLateUpdate();
 	private:
 		bool hasDoneFirstUpdate = false;
 		/// <summary> Scene objects marked for deletion during Scene::LateUpdate(). </summary>
 		vector<SceneObject*> markedDelete;
-	public:
+	protected:
 		/// <summary> Root scene objects in the scene. </summary>
 		vector<SceneObject*> hierarchy;
 	public:
@@ -77,8 +77,8 @@ namespace CondorEngine {
 	public:
 		SceneObject();
 		~SceneObject();
-		void InternalUpdate();
-		void InternalLateUpdate();
+		void HierarchyUpdate();
+		void HierarchyLateUpdate();
 	private:
 		bool hasDoneFirstUpdate = false;
 		Scene* scene;
@@ -91,8 +91,6 @@ namespace CondorEngine {
 		Transform getTransform();
 		Transform getLocalTransform();
 		Vector3 getPosition();
-		Vector3 getLocalPosition();
-		Vector3 getEulerRotation();
 		Vector3 getLocalEulerRotation();
 		void setLocalTransform(Transform transform);
 	private:
@@ -114,8 +112,8 @@ namespace CondorEngine {
 	public:
 		Component();
 	public:
-		void InternalUpdate();
-		void InternalLateUpdate();
+		void HierarchyUpdate();
+		void HierarchyLateUpdate();
 	private:
 		bool hasDoneFirstUpdate = false;
 		SceneObject* sceneObject;

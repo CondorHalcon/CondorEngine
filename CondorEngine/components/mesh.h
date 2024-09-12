@@ -2,7 +2,7 @@
 #include "../application.h"
 #include "../core.h"
 #include "../renderer.h"
-#include "../camera.h"
+#include "camera.h"
 
 // third party
 #include "glew/glew.h"
@@ -86,10 +86,20 @@ namespace CondorEngine {
 			if (sampleTex != nullptr) {
 				SetUniform(3, *sampleTex, 0);
 			}
-			SetUniform(4, Application::activeScene->ambientLight);
-			SetUniform(5, Application::activeScene->light->color);
-			SetUniform(6, Application::activeScene->light->direction);
-			SetUniform(7, Camera::Instance()->position);
+			if (Application::activeScene != nullptr) {
+				SetUniform(4, Application::activeScene->ambientLight);
+				SetUniform(5, Application::activeScene->light->color);
+				SetUniform(6, Application::activeScene->light->direction);
+			} else {
+				SetUniform(4, ColorRGB{ .5f, .5f, .5f });
+				SetUniform(5, ColorRGB{ .5f, .5f, .5f });
+				SetUniform(6, Vector3{ .3f, .3f, .3f });
+			}
+			if (Camera::Main() != nullptr) {
+				SetUniform(7, Camera::Main()->getPosition());
+			} else {
+				SetUniform(7, Vector3{ 0,0,0 });
+			}
 		}
 		Texture* sampleTex;
 	};

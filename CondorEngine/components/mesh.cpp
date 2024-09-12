@@ -5,11 +5,13 @@
 // third party
 #include <assimp/scene.h>
 #include <assimp/cimport.h>
+#include "glm/ext.hpp"
 
 #pragma region Mesh
 
 CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount)
 {
+	this->name = "CondorEngine::Mesh";
 	this->material = nullptr;
 
 	// create GPU instance
@@ -25,7 +27,7 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
 
-	// use vertex data if using vectors.. the GPU manufaturer determins how to draw it
+	// use vertex data if using vectors.. the GPU manufacturer determins how to draw it
 	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Vertex), verts, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
@@ -34,8 +36,8 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glEnableVertexAttribArray(0); // attribute index for enabling positions
 	glVertexAttribPointer(
 		0, // attribute index
-		4, // no. of componenrts
-		GL_FLOAT, // type of componenetd
+		4, // no. of components
+		GL_FLOAT, // type of component
 		GL_FALSE, // should be normalized?
 		sizeof(Vertex), // size/stride in bites of each vertex position
 		(void*)0);
@@ -43,8 +45,8 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glEnableVertexAttribArray(1); // attribute index for enabling positions
 	glVertexAttribPointer(
 		1, // attribute index
-		4, // no. of componenrts
-		GL_FLOAT, // type of componenetd
+		4, // no. of components
+		GL_FLOAT, // type of component
 		GL_FALSE, // should be normalized?
 		sizeof(Vertex), // size/stride in bites of each vertex position
 		(void*)offsetof(Vertex, col));
@@ -53,8 +55,8 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glEnableVertexAttribArray(2); // attribute index for enabling positions
 	glVertexAttribPointer(
 		2, // attribute index
-		2, // no. of componenrts
-		GL_FLOAT, // type of componenetd
+		2, // no. of components
+		GL_FLOAT, // type of component
 		GL_FALSE, // should be normalized?
 		sizeof(Vertex), // size/stride in bites of each vertex position
 		(void*)offsetof(Vertex, uv));
@@ -62,8 +64,8 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 	glEnableVertexAttribArray(3); // attribute index for enabling positions
 	glVertexAttribPointer(
 		3, // attribute index
-		3, // no. of componenrts
-		GL_FLOAT, // type of componenetd
+		3, // no. of components
+		GL_FLOAT, // type of component
 		GL_FALSE, // should be normalized?
 		sizeof(Vertex), // size/stride in bites of each vertex position
 		(void*)offsetof(Vertex, normal));
@@ -80,7 +82,7 @@ CondorEngine::Mesh::Mesh(const std::vector<Vertex> verts, const std::vector<GLui
 
 CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 {
-	// read verticies from the model
+	// read vertices from the model
 	const aiScene* scene = aiImportFile(filename, 0);
 
 	// just use the first mesh we find for now
@@ -95,7 +97,7 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 		indices.push_back(mesh->mFaces[i].mIndices[1]);
 		indices.push_back(mesh->mFaces[i].mIndices[2]);
 
-		// generate second trianle for quads
+		// generate second triangle for quads
 		if (mesh->mFaces[i].mNumIndices == 4) {
 			indices.push_back(mesh->mFaces[i].mIndices[0]);
 			indices.push_back(mesh->mFaces[i].mIndices[2]);
@@ -136,7 +138,7 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 
 CondorEngine::Mesh::~Mesh()
 {
-	// reverse the order so we don't ose acces to ibo and vbo
+	// reverse the order so we don't ose access to ibo and vbo
 	glDeleteBuffers(1, &ibo);
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
@@ -165,14 +167,24 @@ void CondorEngine::Mesh::Update()
 
 CondorEngine::Material::Material(Shader* shader)
 {
+	this->name = "CondorEngine::Material";
 	this->shader = shader;
 	this->transform = glm::identity<Transform>();
 }
 
 void CondorEngine::Material::Update()
 {
-	SetUniform(0, CondorEngine::Camera::Instance()->projectionMatrix);
-	SetUniform(1, CondorEngine::Camera::Instance()->viewMatrix);
+	if (Camera::Main() != nullptr) {
+		SetUniform(0, CondorEngine::Camera::Main()->getProjectionMatrix());
+		SetUniform(1, CondorEngine::Camera::Main()->getViewMatrix());
+	} else {
+		SetUniform(0, glm::perspective(glm::radians(60.0f), 640 / (float)480, .01f, 10.0f));
+		SetUniform(1, glm::lookAt(
+		Vector3{ 0,0,0 }, // camera position
+		Vector3{ 0,0,1 }, // look at postion
+		Vector3{ 0,1,0 }) // up vector
+		);
+	}
 	SetUniform(2, transform);
 }
 

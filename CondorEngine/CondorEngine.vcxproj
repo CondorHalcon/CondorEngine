@@ -150,6 +150,7 @@
     <ClCompile Include="math.cpp" />
     <ClCompile Include="sceneobjects\primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="sceneobjects\spectatorcam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="math.h" />
     <ClInclude Include="sceneobjects\primitive.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="sceneobjects\spectatorcam.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\assimp-vc143-mt.dll" />

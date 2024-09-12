@@ -25,7 +25,7 @@ CondorEngine::Scene::~Scene()
     }
 }
 
-void CondorEngine::Scene::InternalUpdate()
+void CondorEngine::Scene::HierarchyUpdate()
 {
     if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
@@ -36,19 +36,19 @@ void CondorEngine::Scene::InternalUpdate()
 
     for (int i = 0; i < hierarchy.size(); i++) {
         if (hierarchy[i]->enabled) {
-            hierarchy[i]->InternalUpdate();
+            hierarchy[i]->HierarchyUpdate();
         }
     }
 }
 
-void CondorEngine::Scene::InternalLateUpdate()
+void CondorEngine::Scene::HierarchyLateUpdate()
 {
     if (!enabled) { return; }
     LateUpdate();
 
     for (int i = 0; i < hierarchy.size(); i++) {
         if (hierarchy[i]->enabled) {
-            hierarchy[i]->InternalLateUpdate();
+            hierarchy[i]->HierarchyLateUpdate();
         }
     }
 }
@@ -64,6 +64,7 @@ CondorEngine::SceneObject::SceneObject()
     this->transform = glm::identity<Transform>();
     this->components = vector<Component*>();
     this->children = vector<SceneObject*>();
+    this->parent = nullptr;
 }
 
 CondorEngine::SceneObject::~SceneObject()
@@ -76,7 +77,7 @@ CondorEngine::SceneObject::~SceneObject()
     }
 }
 
-void CondorEngine::SceneObject::InternalUpdate()
+void CondorEngine::SceneObject::HierarchyUpdate()
 {
     if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
@@ -86,23 +87,23 @@ void CondorEngine::SceneObject::InternalUpdate()
     Update();
 
     for (int i = 0; i < components.size(); i++) {
-        components[i]->InternalUpdate();
+        components[i]->HierarchyUpdate();
     }
     for (int i = 0; i < children.size(); i++) {
-        components[i]->InternalUpdate();
+        components[i]->HierarchyUpdate();
     }
 }
 
-void CondorEngine::SceneObject::InternalLateUpdate()
+void CondorEngine::SceneObject::HierarchyLateUpdate()
 {
     if (!enabled) { return; }
     LateUpdate();
 
     for (int i = 0; i < components.size(); i++) {
-        components[i]->InternalLateUpdate();
+        components[i]->HierarchyLateUpdate();
     }
     for (int i = 0; i < children.size(); i++) {
-        components[i]->InternalLateUpdate();
+        components[i]->HierarchyLateUpdate();
     }
 }
 
@@ -131,16 +132,6 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
     return Math::TransformToPosition(getTransform());
 }
 
-CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
-{
-    return Math::TransformToPosition(getLocalTransform());
-}
-
-CondorEngine::Vector3 CondorEngine::SceneObject::getEulerRotation()
-{
-    return Vector3();
-}
-
 void CondorEngine::SceneObject::setLocalTransform(Transform transform)
 {
     this->transform = transform;
@@ -152,11 +143,12 @@ void CondorEngine::SceneObject::setLocalTransform(Transform transform)
 
 CondorEngine::Component::Component()
 {
+    this->name = "CondorEngine::Component";
     this->sceneObject = nullptr;
     this->hasDoneFirstUpdate = false;
 }
 
-void CondorEngine::Component::InternalUpdate()
+void CondorEngine::Component::HierarchyUpdate()
 {
     if (!enabled) { return; }
     if (!hasDoneFirstUpdate) {
@@ -166,7 +158,7 @@ void CondorEngine::Component::InternalUpdate()
     Update();
 }
 
-void CondorEngine::Component::InternalLateUpdate()
+void CondorEngine::Component::HierarchyLateUpdate()
 {
     if (!enabled) { return; }
     LateUpdate();

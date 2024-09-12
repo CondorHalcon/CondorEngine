@@ -1,9 +1,10 @@
 #include "diagnostics.h"
+#include "math.h"
 #include "core.h"
 #include "application.h"
 #include "renderer.h"
-#include "camera.h"
 #include "debug.h"
+#include "sceneobjects/spectatorcam.h"
 #include "sceneobjects/primitive.h"
 #include "components/mesh.h"
 // std
@@ -49,9 +50,9 @@ int main()
     CondorEngine::diagnostics::Environment();
 
     // Scene
-    Scene* scene = Application::activeScene = new CondorEngine::Scene();
+    CondorEngine::Scene* scene = Application::activeScene = new CondorEngine::Scene();
     // Camera
-    CondorEngine::Camera::Init(CondorEngine::Vector3{ 0, 0, 3 }, CondorEngine::Vector3{ 0,0,0, });
+    CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
 
     // imported mesh
     CondorEngine::Mesh* meshComp = CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj");
