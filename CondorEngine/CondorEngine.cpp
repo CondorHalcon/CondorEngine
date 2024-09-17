@@ -18,22 +18,27 @@
 
 class Rotatable : public CondorEngine::SceneObject {
 public:
+    Rotatable() : SceneObject() {
+        this->name = "Rotatable";
+        this->mesh = nullptr;
+    }
     Rotatable(CondorEngine::Mesh* mesh) : SceneObject() {
+        this->name = "Rotatable";
         this->mesh = AddComponent<CondorEngine::Mesh>(mesh);
     }
     CondorEngine::Mesh* mesh;
     void Update() override {
         if (Application::Input(GLFW_KEY_W)) {
-            Rotate(CondorEngine::Vector3{ -.01, 0, 0 });
+            Rotate(CondorEngine::Vector3{ -.1, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_A)) {
-            Rotate(CondorEngine::Vector3{ 0, -.01, 0 });
+            Rotate(CondorEngine::Vector3{ 0, -.1, 0 });
         }
         if (Application::Input(GLFW_KEY_S)) {
-            Rotate(CondorEngine::Vector3{ .01, 0, 0 });
+            Rotate(CondorEngine::Vector3{ .1, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_D)) {
-            Rotate(CondorEngine::Vector3{ 0, .01, 0 });
+            Rotate(CondorEngine::Vector3{ 0, .1, 0 });
         }
     }
 };
@@ -52,11 +57,13 @@ int main()
     // Camera
     CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,3 });
+    camera->enabled = false;
 
     // imported mesh
-    //Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable(meshComp));
-    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
-    CondorEngine::Mesh* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
+    //CondorEngine::Mesh* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    CondorEngine::Mesh* meshComp = shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
     meshComp->material = new CondorEngine::M_Lit();
 
     // primitive mesh

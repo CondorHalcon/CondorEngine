@@ -172,7 +172,7 @@ bool CondorEngine::SceneObject::isRoot()
 
 void CondorEngine::SceneObject::Move(Vector3 vector)
 {
-    setLocalTransform(Math::TransformTranslate(getLocalTransform(), vector));
+    setLocalTransform(Math::TransformTranslate(transform, vector));
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {

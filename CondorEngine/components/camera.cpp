@@ -47,8 +47,7 @@ CondorEngine::Transform CondorEngine::Camera::getViewMatrix()
     return glm::lookAt(
 		getPosition(), // camera position
 		lookPos, // look at postion
-		Vector3{ 0,1,0 }); // up vector*/
-	//return this->getSceneObject() != nullptr ? this->getSceneObject()->getTransform() : glm::identity<Transform>();
+		Vector3{ 0,1,0 }); // up vector
 }
 
 CondorEngine::Transform CondorEngine::Camera::getProjectionMatrix()
