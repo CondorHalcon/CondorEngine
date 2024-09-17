@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="components\camera.cpp" />
     <ClCompile Include="CondorEngine.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="core.cpp" />
@@ -153,8 +153,8 @@
     <ClCompile Include="sceneobjects\spectatorcam.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
     <ClInclude Include="application.h" />
+    <ClInclude Include="components\camera.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="diagnostics.h" />

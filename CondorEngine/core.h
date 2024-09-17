@@ -86,13 +86,17 @@ namespace CondorEngine {
 		SceneObject* parent;
 		Transform transform;
 	public:
+		Vector3 getForward();
 		Scene* getScene();
 		void setScene(Scene* scene);
 		Transform getTransform();
 		Transform getLocalTransform();
-		Vector3 getPosition();
-		Vector3 getLocalEulerRotation();
 		void setLocalTransform(Transform transform);
+		Vector3 getPosition();
+		void setParent(SceneObject* newParent);
+		SceneObject* getParent();
+		SceneObject* getRoot();
+		bool isRoot();
 	private:
 		vector<Component*> components;
 		vector<SceneObject*> children;
@@ -104,6 +108,25 @@ namespace CondorEngine {
 		}
 		Component* AddComponent(Component* component) {
 			return AddComponent<Component>(component);
+		}
+		template <typename T> T* AddChild(T* child) {
+			children.push_back(child);
+			child->parent = this;
+			return child;
+		}
+		SceneObject* AddChild(SceneObject* child) {
+			return AddChild<SceneObject>(child);
+		}
+		void Move(Vector3 vector);
+		void Rotate(Vector3 vector);
+	private:
+		SceneObject* RemoveChild(SceneObject* child) {
+			for (int i = 0; i < children.size(); i++) {
+				if (children[i] == this) {
+					children.erase(std::next(children.begin(), i));
+				}
+			}
+			return child;
 		}
 	};
 

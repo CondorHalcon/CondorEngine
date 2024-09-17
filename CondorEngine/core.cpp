@@ -57,6 +57,7 @@ void CondorEngine::Scene::HierarchyLateUpdate()
 
 #pragma region SceneObject
 
+
 CondorEngine::SceneObject::SceneObject()
 {
     this->name = "CondorEngine::SceneObject";
@@ -107,6 +108,11 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
     }
 }
 
+CondorEngine::Vector3 CondorEngine::SceneObject::getForward()
+{
+    return Math::TransformForward(getTransform());
+}
+
 CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 {
     return this->scene;
@@ -127,16 +133,51 @@ CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
     return this->transform;
 }
 
-CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
-{
-    return Math::TransformToPosition(getTransform());
-}
-
 void CondorEngine::SceneObject::setLocalTransform(Transform transform)
 {
     this->transform = transform;
 }
 
+CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
+{
+    Vector3 pos;
+    Quaternion rot;
+    Vector3 scale;
+    Math::TransformSplit(getTransform(), pos, rot, scale);
+    return pos;
+}
+
+void CondorEngine::SceneObject::setParent(SceneObject* newParent)
+{
+    if (parent != nullptr) {
+        parent->RemoveChild(this);
+    }
+    newParent->AddChild(this);
+}
+
+CondorEngine::SceneObject* CondorEngine::SceneObject::getParent()
+{
+    return parent;
+}
+
+CondorEngine::SceneObject* CondorEngine::SceneObject::getRoot()
+{
+    return parent == nullptr ? this : parent->getRoot();
+}
+
+bool CondorEngine::SceneObject::isRoot()
+{
+    return parent == nullptr;
+}
+
+void CondorEngine::SceneObject::Move(Vector3 vector)
+{
+    setLocalTransform(Math::TransformTranslate(getLocalTransform(), vector));
+}
+
+void CondorEngine::SceneObject::Rotate(Vector3 vector) {
+    transform = Math::TransformRotate(transform, vector);
+}
 #pragma endregion
 
 #pragma region Component

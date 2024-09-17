@@ -24,16 +24,16 @@ public:
     CondorEngine::Mesh* mesh;
     void Update() override {
         if (Application::Input(GLFW_KEY_W)) {
-            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ -1, 0, 0 });
+            Rotate(CondorEngine::Vector3{ -.01, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_A)) {
-            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 0, -1, 0 });
+            Rotate(CondorEngine::Vector3{ 0, -.01, 0 });
         }
         if (Application::Input(GLFW_KEY_S)) {
-            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 1, 0, 0 });
+            Rotate(CondorEngine::Vector3{ .01, 0, 0 });
         }
         if (Application::Input(GLFW_KEY_D)) {
-            transform = glm::rotate(transform, .01f, CondorEngine::Vector3{ 0, 1, 0 });
+            Rotate(CondorEngine::Vector3{ 0, .01, 0 });
         }
     }
 };
@@ -42,10 +42,8 @@ public:
 
 int main()
 {
-    const unsigned windowWidth = 640;
-    const unsigned windowHeight = 480;
     Application* app = Application::Instance();
-    app->init(windowWidth, windowHeight, "CondorEngine");
+    app->init(640, 480, "CondorEngine");
 
     CondorEngine::diagnostics::Environment();
 
@@ -53,11 +51,13 @@ int main()
     CondorEngine::Scene* scene = Application::activeScene = new CondorEngine::Scene();
     // Camera
     CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
+    camera->Move(CondorEngine::Vector3{ 0,0,3 });
 
     // imported mesh
-    CondorEngine::Mesh* meshComp = CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj");
+    //Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable(meshComp));
+    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    CondorEngine::Mesh* meshComp = shape->AddComponent(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
     meshComp->material = new CondorEngine::M_Lit();
-    Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable(meshComp));
 
     // primitive mesh
     scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));

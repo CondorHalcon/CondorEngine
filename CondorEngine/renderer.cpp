@@ -1,6 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "renderer.h"
-#include "camera.h"
+#include "components/camera.h"
 // std
 #include <vector>
 #include <fstream> // for reading from files

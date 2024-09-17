@@ -1,5 +1,7 @@
 #pragma once
 #include "core.h"
+#include "math.h"
+
 using CondorEngine::Scene;
 
 class Application
@@ -11,6 +13,11 @@ private:
 	static Application* instance;
 public:
 	static Application* Instance();
+private:
+	int windowWidth;
+	int windowHieght;
+public:
+	CondorEngine::Vector2 getWindowDimentions();
 
 public:
 	/// <summary> Instantiate a new window. </summary>

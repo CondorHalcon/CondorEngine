@@ -1,6 +1,6 @@
 #include "mesh.h"
 #include "../renderer.h"
-#include "../camera.h"
+#include "../components/camera.h"
 #include "../debug.h"
 // third party
 #include <assimp/scene.h>

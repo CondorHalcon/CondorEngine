@@ -11,6 +11,8 @@ Application* Application::instance = nullptr;
 
 Application::Application() {
 	this->window = nullptr;
+	this->windowWidth = 640;
+	this->windowHieght = 480;
 }
 Application::~Application()
 {
@@ -25,8 +27,15 @@ Application* Application::Instance()
 	return instance;
 }
 
+CondorEngine::Vector2 Application::getWindowDimentions()
+{
+	return CondorEngine::Vector2{ windowWidth, windowHieght };
+}
+
 bool Application::init(int width, int height, const char* title)
 {
+	this->windowWidth = width;
+	this->windowHieght = height;
 	// window handling
 	// TODO: add error handling
 	glfwInit();
