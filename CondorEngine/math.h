@@ -29,10 +29,14 @@ namespace CondorEngine {
 class Math
 {
 public:
+	/// <summary> Transform vector from local space to world space. </summary>
+	static Vector3 TransformVector(Transform transform, Vector3 vector);
 	static Vector3 TransformForward(Transform transform);
+	static Vector3 TransformRight(Transform transform);
 	static Transform TransformRotate(Transform transform, Vector3 vector);
 	static void TransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
 	static Transform TransformTranslate(Transform transform, Vector3 vector);
+	static Vector3 TransformUp(Transform transform);
 };
 
 #pragma region Utilities

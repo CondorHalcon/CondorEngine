@@ -87,6 +87,8 @@ namespace CondorEngine {
 		Transform transform;
 	public:
 		Vector3 getForward();
+		Vector3 getRight();
+		Vector3 getUp();
 		Scene* getScene();
 		void setScene(Scene* scene);
 		Transform getTransform();

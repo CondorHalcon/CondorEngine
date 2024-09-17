@@ -113,6 +113,16 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getForward()
     return Math::TransformForward(getTransform());
 }
 
+CondorEngine::Vector3 CondorEngine::SceneObject::getRight()
+{
+    return Math::TransformRight(getTransform());
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getUp()
+{
+    return Math::TransformUp(getTransform());
+}
+
 CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 {
     return this->scene;
@@ -172,7 +182,7 @@ bool CondorEngine::SceneObject::isRoot()
 
 void CondorEngine::SceneObject::Move(Vector3 vector)
 {
-    setLocalTransform(Math::TransformTranslate(transform, vector));
+    transform = Math::TransformTranslate(transform, vector * Vector3{ -1,1,1 });
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {

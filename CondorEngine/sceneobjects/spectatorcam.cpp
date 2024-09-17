@@ -1,5 +1,6 @@
 #include "spectatorcam.h"
 #include "../application.h"
+#include "../debug.h"
 
 CondorEngine::SpectatorCam::SpectatorCam()
 {
@@ -11,31 +12,31 @@ void CondorEngine::SpectatorCam::Update()
 {
     // move forwad back
     if (Application::Input(GLFW_KEY_W)) {
-        Move(CondorEngine::Vector3{ 0, 0, -.01 });
+        Move(getForward() * .01f);
     }
     if (Application::Input(GLFW_KEY_S)) {
-        Move(CondorEngine::Vector3{ 0, 0, .01 });
+        Move(getForward() * -.01f);
     }
     // move right left
-    if (Application::Input(GLFW_KEY_A)) {
-        Move(CondorEngine::Vector3{ -.01, 0, 0 });
-    }
     if (Application::Input(GLFW_KEY_D)) {
-        Move(CondorEngine::Vector3{ .01, 0, 0 });
+        Move(getRight() * .01f);
+    }
+    if (Application::Input(GLFW_KEY_A)) {
+        Move(getRight() * -.01f);
     }
     // move up down
-    if (Application::Input(GLFW_KEY_Q)) {
-        Move(CondorEngine::Vector3{ 0, -.01, 0 });
-    }
     if (Application::Input(GLFW_KEY_E)) {
-        Move(CondorEngine::Vector3{ 0, .01, 0 });
+        Move(getUp() * .01f);
+    }
+    if (Application::Input(GLFW_KEY_Q)) {
+        Move(getUp() * -.01f);
     }
     // rotate up down
     if (Application::Input(GLFW_KEY_UP)) {
-        Rotate(CondorEngine::Vector3{ .1, 0, 0 });
+        Rotate(CondorEngine::Vector3{ -.1, 0, 0 });
     }
     if (Application::Input(GLFW_KEY_DOWN)) {
-        Rotate(CondorEngine::Vector3{ -.1, 0, 0 });
+        Rotate(CondorEngine::Vector3{ .1, 0, 0 });
     }
     // rotate left right
     if (Application::Input(GLFW_KEY_RIGHT)) {

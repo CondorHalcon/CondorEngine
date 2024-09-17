@@ -133,7 +133,9 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 		vertices.push_back(vertex);
 	}
 
-	return new Mesh(vertices.data(), numV, indices.data(), indices.size());
+	Mesh* final = new Mesh(vertices.data(), numV, indices.data(), indices.size());
+	final->material = new M_Lit();
+	return final;
 }
 
 CondorEngine::Mesh::~Mesh()
