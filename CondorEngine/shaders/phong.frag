@@ -7,10 +7,14 @@ in vec3 vNorm;
 
 out vec4 fragColor;
 
-layout (location = 3) uniform sampler2D mainTex;
-layout (location = 4) uniform vec3 ambient;
-layout (location = 5) uniform vec3 dirLightColor;
-layout (location = 6) uniform vec3 dirLightDirection;
+struct DirLight {
+    vec3 color;
+    vec3 direction;
+}
+
+layout (location = 3) uniform vec3 ambient;
+layout (location = 4) uniform DirLight dirLight;
+layout (location = 6) uniform sampler2D mainTex;
 layout (location = 7) uniform vec3 cameraPos;
 
 void main() 
@@ -18,7 +22,7 @@ void main()
     vec4 baseLit = vec4(ambient.rgb, 1.0);
 
     vec3 n = normalize(vNorm);
-    vec3 L = normalize(dirLightDirection);
+    vec3 L = normalize(dirLight.direction);
 
     // lambertTerm
     float lambert = max(0, dot(n, -L));
@@ -32,9 +36,9 @@ void main()
     float specularPower = 64.0;
     float specularTermination = pow(max(0, dot(R,V)), specularPower);
     // set w to 0 because we will be adding the vec4 to another vec4
-    vec4 specular = vec4(dirLightColor * specularTermination, 0);
+    vec4 specular = vec4(dirLight.color * specularTermination, 0);
 
-    vec4 litColor = vec4(dirLightColor, 1.0);
+    vec4 litColor = vec4(dirLight.color, 1.0);
 
     // texture and vertex color
     vec4 color = texture(mainTex, vUV);

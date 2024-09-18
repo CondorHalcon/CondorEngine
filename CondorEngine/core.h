@@ -12,7 +12,7 @@ using std::vector;
 
 namespace CondorEngine {
 
-	struct Light;
+	struct DirectionalLight;
 	class SceneObject;
 	class Component;
 
@@ -54,7 +54,7 @@ namespace CondorEngine {
 		/// <summary> Scene ambient light. </summary>
 		ColorRGB ambientLight = ColorRGB{ .1,.1,.1 };
 		/// <summary> *Temporary* Scene light. </summary>
-		Light* light;
+		DirectionalLight* light;
 	public:
 		/// <summary> Instantiate the scene object into the active scene. </summary>
 		/// <typeparam name="T"> Scene object type; must inherit from CondorEngine::SceneObject. </typeparam>

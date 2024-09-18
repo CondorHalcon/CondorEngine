@@ -83,17 +83,17 @@ namespace CondorEngine {
 		}
 		void Update() override {
 			Material::Update();
-			if (sampleTex != nullptr) {
-				SetUniform(3, *sampleTex, 0);
-			}
 			if (Application::activeScene != nullptr) {
-				SetUniform(4, Application::activeScene->ambientLight);
-				SetUniform(5, Application::activeScene->light->color);
-				SetUniform(6, Application::activeScene->light->direction);
+				SetUniform(3, Application::activeScene->ambientLight);
+				SetUniform(4, Application::activeScene->light->color);
+				SetUniform(5, Application::activeScene->light->direction);
 			} else {
+				SetUniform(3, ColorRGB{ .5f, .5f, .5f });
 				SetUniform(4, ColorRGB{ .5f, .5f, .5f });
-				SetUniform(5, ColorRGB{ .5f, .5f, .5f });
-				SetUniform(6, Vector3{ .3f, .3f, .3f });
+				SetUniform(5, Vector3{ .3f, .3f, .3f });
+			}
+			if (sampleTex != nullptr) {
+				SetUniform(6, *sampleTex, 0);
 			}
 			if (Camera::Main() != nullptr) {
 				SetUniform(7, Camera::Main()->getPosition());

@@ -47,7 +47,7 @@ namespace CondorEngine {
 		static void FreeTexture(Texture& tex);
 	};
 
-	struct Light
+	struct DirectionalLight
 	{
 		ColorRGB color;
 		Vector3 direction;

@@ -15,7 +15,7 @@ CondorEngine::Scene::Scene()
 {
     this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
-    light = new Light{ Vector3{1,1,1}, Vector3{0, 0, -1} };
+    light = new DirectionalLight{ Vector3{1,1,1}, Vector3{0, 0, -1} };
 }
 
 CondorEngine::Scene::~Scene()
