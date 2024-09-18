@@ -1,4 +1,4 @@
-#include "scenelight.h"
+#include "light.h"
 
 CondorEngine::Light::Light()
 {
