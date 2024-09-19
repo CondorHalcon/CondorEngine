@@ -82,9 +82,11 @@ namespace CondorEngine {
 	private:
 		bool hasDoneFirstUpdate = false;
 		Scene* scene;
+		Vector3 position;
+		Vector3 rotation;
+		Vector3 scale;
 	protected:
 		SceneObject* parent;
-		Transform transform;
 	public:
 		Vector3 getForward();
 		Vector3 getRight();
@@ -93,7 +95,6 @@ namespace CondorEngine {
 		void setScene(Scene* scene);
 		Transform getTransform();
 		Transform getLocalTransform();
-		void setLocalTransform(Transform transform);
 		Vector3 getPosition();
 		void setParent(SceneObject* newParent);
 		SceneObject* getParent();

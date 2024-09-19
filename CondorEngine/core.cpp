@@ -1,6 +1,7 @@
 #include "core.h"
 #include "math.h"
 #include "renderer.h"
+#include "debug.h"
 
 
 CondorEngine::Object::Object()
@@ -62,7 +63,9 @@ CondorEngine::SceneObject::SceneObject()
 {
     this->name = "CondorEngine::SceneObject";
     this->scene = nullptr;
-    this->transform = glm::identity<Transform>();
+    this->position = Vector3{ 0,0,0 };
+    this->rotation = Vector3{ 0,0,0 };
+    this->scale = Vector3{ 1,1,1 };
     this->components = vector<Component*>();
     this->children = vector<SceneObject*>();
     this->parent = nullptr;
@@ -135,17 +138,15 @@ void CondorEngine::SceneObject::setScene(Scene* scene)
 
 CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 {
-    return parent != nullptr ? parent->getTransform() * this->transform : this->transform;
+    return parent != nullptr ? parent->getTransform() * getLocalTransform() : getLocalTransform();
 }
 
 CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
 {
-    return this->transform;
-}
-
-void CondorEngine::SceneObject::setLocalTransform(Transform transform)
-{
-    this->transform = transform;
+    Transform scl = glm::scale(glm::identity<Transform>(), this->scale);
+    Transform rot = glm::rotate(glm::identity<Transform>(), glm::radians(glm::length(this->rotation)), glm::normalize(this->rotation));
+    Transform pos = glm::translate(glm::identity<Transform>(), this->position);
+    return scl * rot * pos;
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
@@ -182,11 +183,11 @@ bool CondorEngine::SceneObject::isRoot()
 
 void CondorEngine::SceneObject::Move(Vector3 vector)
 {
-    transform = Math::TransformTranslate(transform, vector * Vector3{ -1,1,1 });
+    position += vector;
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {
-    transform = Math::TransformRotate(transform, vector);
+    rotation += vector;
 }
 #pragma endregion
 

@@ -167,11 +167,16 @@
     <ClInclude Include="sceneobjects\spectatorcam.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\assimp-vc143-mt.dll" />
+    <None Include="bin\assimp-vc143-mt.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </None>
     <None Include="bin\assimp-vc143-mt.pdb" />
     <None Include="bin\assimp-vc143-mtd.dll">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
     <None Include="bin\assimp-vc143-mtd.pdb" />
     <None Include="shaders\basic.frag" />

@@ -28,11 +28,12 @@ public:
     }
     CondorEngine::Mesh* mesh;
     void Update() override {
+        CondorEngine::Debug::Log(this->name + CondorEngine::to_string(this->getPosition()));
         /*CondorEngine::Debug::Log(
             "forward: " + CondorEngine::to_string(getForward()) +
             "; right: " + CondorEngine::to_string(getRight()) +
             "; up: " + CondorEngine::to_string(getUp())
-        );*/
+        );
         // move forwad back
         if (Application::Input(GLFW_KEY_W)) {
             Move(getForward() * .01f);
@@ -67,7 +68,7 @@ public:
         }
         if (Application::Input(GLFW_KEY_LEFT)) {
             Rotate(CondorEngine::Vector3{ 0, .2, 0 });
-        }
+        }*/
     }
 };
 
@@ -85,19 +86,20 @@ int main()
     // Camera
     CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,-3 });
-    camera->enabled = false;
+    //camera->enabled = false;
 
     // imported mesh
     Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
     shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
     //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
     //shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    //shape->mesh->material = new CondorEngine::M_Unlit();
     CondorEngine::Debug::Log(
         "forward: " + CondorEngine::to_string(shape->getForward()) +
         "; right: " + CondorEngine::to_string(shape->getRight()) +
         "; up: " + CondorEngine::to_string(shape->getUp())
     );
-    shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
+    //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
     CondorEngine::Debug::Log(
         "forward: " + CondorEngine::to_string(shape->getForward()) +
         "; right: " + CondorEngine::to_string(shape->getRight()) +
