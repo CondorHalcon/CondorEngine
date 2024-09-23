@@ -2,6 +2,9 @@
 #include "math.h"
 #include "renderer.h"
 #include "debug.h"
+#include "application.h"
+// std
+#include <string>
 
 #pragma region Object
 
@@ -39,20 +42,28 @@ void CondorEngine::Scene::HierarchyUpdate()
     Update();
 
     for (int i = 0; i < hierarchy.size(); i++) {
-        if (hierarchy[i]->enabled) {
-            hierarchy[i]->HierarchyUpdate();
+        try {
+            if (hierarchy[i]->enabled) {
+                hierarchy[i]->HierarchyUpdate();
+            }
+        } catch (...) {
+            Debug::LogError("Failed SceneObject Update : Failed to update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
 }
 
 void CondorEngine::Scene::HierarchyLateUpdate()
 {
-    if (!enabled) { return; }
+    if (!enabled || !hasDoneFirstUpdate) { return; }
     LateUpdate();
 
     for (int i = 0; i < hierarchy.size(); i++) {
-        if (hierarchy[i]->enabled) {
-            hierarchy[i]->HierarchyLateUpdate();
+        try {
+            if (hierarchy[i]->enabled) {
+                hierarchy[i]->HierarchyLateUpdate();
+            }
+        } catch (...) {
+            Debug::LogError("Failed SceneObject LateUpdate : Failed to late update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -95,23 +106,39 @@ void CondorEngine::SceneObject::HierarchyUpdate()
     Update();
 
     for (int i = 0; i < components.size(); i++) {
-        components[i]->HierarchyUpdate();
+        try {
+            components[i]->HierarchyUpdate();
+        } catch (...) {
+            Debug::LogError("Failed Component Update : Failed to update Component in SceneObject(" + name +  ") at index[" + std::to_string(i) + "].");
+        }
     }
     for (int i = 0; i < children.size(); i++) {
-        components[i]->HierarchyUpdate();
+        try {
+            children[i]->HierarchyUpdate();
+        } catch (...) {
+            Debug::LogError("Failed Child SceneObject Update : Failed to update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
+        }
     }
 }
 
 void CondorEngine::SceneObject::HierarchyLateUpdate()
 {
-    if (!enabled) { return; }
+    if (!enabled || !hasDoneFirstUpdate) { return; }
     LateUpdate();
 
     for (int i = 0; i < components.size(); i++) {
-        components[i]->HierarchyLateUpdate();
+        try {
+            components[i]->HierarchyLateUpdate();
+        } catch (...) {
+            Debug::LogError("Failed Component LateUpdate : Failed to late update Component in SceneObject(" + name +  ") at index[" + std::to_string(i) + "].");
+        }
     }
     for (int i = 0; i < children.size(); i++) {
-        components[i]->HierarchyLateUpdate();
+        try {
+            children[i]->HierarchyLateUpdate();
+        } catch (...) {
+            Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
+        }
     }
 }
 
@@ -122,7 +149,11 @@ CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 
 void CondorEngine::SceneObject::setScene(Scene* scene)
 {
-    this->scene = scene;
+    if (parent != nullptr) {
+        throw("Cannot use setScene(Scene*) on a non root SceneObject.");
+    }
+    this->scene->RemoveSceneObject(this);
+    scene->Instantiate(this);
 }
 
 CondorEngine::SceneObject* CondorEngine::SceneObject::getParent()
@@ -135,7 +166,11 @@ void CondorEngine::SceneObject::setParent(SceneObject* newParent)
     if (parent != nullptr) {
         parent->RemoveChild(this);
     }
-    newParent->AddChild(this);
+    if (newParent != nullptr) {
+        newParent->AddChild(this);
+    } else {
+        Application::activeScene->Instantiate(this);
+    }
 }
 
 CondorEngine::SceneObject* CondorEngine::SceneObject::getRoot()
@@ -228,13 +263,8 @@ void CondorEngine::Component::HierarchyUpdate()
 
 void CondorEngine::Component::HierarchyLateUpdate()
 {
-    if (!enabled) { return; }
+    if (!enabled || !hasDoneFirstUpdate) { return; }
     LateUpdate();
-}
-
-void CondorEngine::Component::setSceneObject(SceneObject* sceneObject)
-{
-    this->sceneObject = sceneObject;
 }
 
 CondorEngine::SceneObject* CondorEngine::Component::getSceneObject()

@@ -1,7 +1,8 @@
 {
     "cSpell.words": [
         "GLEW",
-        "GLFW"
+        "GLFW",
+        "Lsizei"
     ],
     "files.associations": {
         "*.css": "tailwindcss",

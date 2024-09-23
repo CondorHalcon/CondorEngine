@@ -51,39 +51,45 @@ CondorEngine::Vector3 CondorEngine::Math::TransformUp(Transform transform)
 
 #pragma region Utilities
 
-std::string CondorEngine::to_string(CondorEngine::Vector2 vector)
+std::string CondorEngine::to_string(CondorEngine::Vector2 value)
 {
     return std::string(
         "(" +
-        std::to_string(vector.x) + "," +
-        std::to_string(vector.y) + ")"
+        std::to_string(value.x) + "," +
+        std::to_string(value.y) + ")"
     );
 }
 
-std::string CondorEngine::to_string(CondorEngine::Vector3 vector)
+std::string CondorEngine::to_string(glm::vec3 value)
 {
     return std::string(
         "(" +
-        std::to_string(vector.x) + ", " +
-        std::to_string(vector.y) + ", " +
-        std::to_string(vector.z) + ")"
+        std::to_string(value.x) + ", " +
+        std::to_string(value.y) + ", " +
+        std::to_string(value.z) + ")"
     );
 }
 
-std::string CondorEngine::to_string(CondorEngine::Vector4 vector)
+std::string CondorEngine::to_string(CondorEngine::Vector4 value)
 {
     return std::string(
         "(" +
-        std::to_string(vector.x) + ", " +
-        std::to_string(vector.y) + ", " +
-        std::to_string(vector.z) + ", " +
-        std::to_string(vector.w) + ")"
+        std::to_string(value.x) + ", " +
+        std::to_string(value.y) + ", " +
+        std::to_string(value.z) + ", " +
+        std::to_string(value.w) + ")"
     );
 }
 
-std::string CondorEngine::to_string(CondorEngine::Transform transform)
+std::string CondorEngine::to_string(CondorEngine::Quaternion value)
 {
-    return std::string();
+    return std::string(
+        "(" +
+        std::to_string(value.w) + ", " +
+        std::to_string(value.x) + ", " +
+        std::to_string(value.y) + ", " +
+        std::to_string(value.z) + ")"
+    );
 }
 
 #pragma endregion

@@ -4,43 +4,57 @@
 
 using CondorEngine::Scene;
 
+/// @brief Application handler class for window, active scene, and input.
 class Application
 {
+	/// @brief Application window.
 	struct GLFWwindow* window;
 private:
+	/// @brief Class constructor.
 	Application();
+	/// @brief Class deconstructor.
 	~Application();
+	/// @brief Class singleton.
 	static Application* instance;
 public:
+	/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
+	/// @return Class singleton.
 	static Application* Instance();
 private:
 	int windowWidth;
 	int windowHeight;
 public:
+	/// @brief Get application window dimensions.
+	/// @return Window width and height as an integer vector 2.
 	CondorEngine::Vector2Int getWindowDimensions();
 
 public:
-	/// <summary> Instantiate a new window. </summary>
-	/// <param name="width"></param>
-	/// <param name="height"></param>
-	/// <param name="title"></param>
-	/// <returns></returns>
+	/// @brief Instantiate a new window.
+	/// @param width Set the window's width.
+	/// @param height Set the window's height.
+	/// @param title Set the window's title.
+	/// @return True if initialization was successful.
 	bool init(int width, int height, const char* title);
-	/// <summary> Update for the window. </summary>
+	/// @brief Update for the window and frame buffers.
 	void tick();
-	/// <summary> </summary>
+	/// @brief Clear screen and depth buffers.
 	void clear();
-	/// <summary> </summary>
+	/// @brief Application Update call. (Updates active scene.)
 	void update();
-	/// <summary> </summary>
+	/// @brief Application LateUpdate call. (Late updates active scene.)
 	void lateUpdate();
-	/// <summary> </summary>
+	/// @brief Application termination.
 	void terminate();
-	/// <summary> </summary>
+	/// @brief Check termination conditions.
+	/// @return True if the application should terminate.
 	bool shouldClose();
 
 public:
+	/// @brief Current active scene the application will update.
 	static Scene* activeScene;
+	/// @brief Check hardware input.
+	/// @param key The key to check.
+	/// @return True if the key has been pressed.
 	static bool Input(int key);
 };
 

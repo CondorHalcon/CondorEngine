@@ -16,14 +16,17 @@ CondorEngine::Material::Material(Shader* shader)
 	this->transform = glm::identity<Transform>();
 }
 
+CondorEngine::Material::~Material()
+{
+	delete shader;
+}
+
 void CondorEngine::Material::Update()
 {
 	if (Camera::Main() != nullptr) {
-		Debug::Log("Camera::Main() != nullptr");
 		SetUniform(0, CondorEngine::Camera::Main()->getProjectionMatrix());
 		SetUniform(1, CondorEngine::Camera::Main()->getViewMatrix());
 	} else {
-		Debug::Log("Camera::Main() == nullptr");
 		SetUniform(0, glm::perspective(glm::radians(60.0f), 640 / (float)480, .01f, 10.0f));
 		SetUniform(1, glm::lookAt(
 		Vector3{ 0,0,0 }, // camera position
@@ -36,6 +39,7 @@ void CondorEngine::Material::Update()
 
 void CondorEngine::Material::setShader(Shader* shader)
 {
+	delete shader;
 	this->shader = shader;
 }
 

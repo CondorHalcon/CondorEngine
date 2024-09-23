@@ -10,7 +10,6 @@ CondorEngine::SpectatorCam::SpectatorCam()
 
 void CondorEngine::SpectatorCam::Update()
 {
-    CondorEngine::Debug::Log(this->name + CondorEngine::to_string(this->getPosition()));
     // move forwad back
     if (Application::Input(GLFW_KEY_W)) {
         Move(getForward() * .01f);

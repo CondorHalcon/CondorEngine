@@ -18,19 +18,24 @@ namespace CondorEngine {
 
 #pragma region Object
 
-	/// <summary> Base engine object class. </summary>
+	/// @brief Base engine object class.
 	class Object {
 	public:
+		/// @brief Class constructor.
 		Object();
+		/// @brief Object name.
 		std::string name;
+		/// @brief Object enabled status. Used to prevent update calls on the object.
 		bool enabled;
 	public:
-		/// <summary> Called before the first Update(). </summary>
+		/// @brief Called before the first Update().
 		virtual void Start() {}
-		/// <summary> Every tick/frame. </summary>
+		/// @brief Every tick/frame.
 		virtual void Update() {}
-		/// <summary> Called after the tick/frame. </summary>
+		/// @brief Called after the tick/frame.
 		virtual void LateUpdate() {}
+		/// @brief Object to string.
+		/// @return String value of the object. (default value is the name of the object.)
 		virtual std::string to_string() {
 			return name;
 		}
@@ -39,40 +44,58 @@ namespace CondorEngine {
 
 #pragma region Scene
 
-	/// <summary> Base engine scene class. </summary>
+	/// @brief Base engine scene class.
 	class Scene : public Object {
+		friend SceneObject;
 	public:
+		/// @brief Class constructor.
 		Scene();
+		/// @brief Class deconstructor.
 		~Scene();
+		/// @brief Update this Scene and its hierarchy.
 		void HierarchyUpdate();
+		/// @brief Late update this Scene and its hierarchy.
 		void HierarchyLateUpdate();
 	private:
+		/// @brief Check for first update call on the Scene. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;
-		/// <summary> Scene objects marked for deletion during Scene::LateUpdate(). </summary>
+		/// @brief Scene objects marked for deletion during before `Scene::LateUpdate()`.
 		vector<SceneObject*> markedDelete;
 	protected:
-		/// <summary> Root scene objects in the scene. </summary>
+		/// @brief Root SceneObjects in this Scene.
 		vector<SceneObject*> hierarchy;
 	public:
-		/// <summary> Scene ambient light. </summary>
+		/// @brief Scene ambient light.
 		ColorRGB ambientLight = ColorRGB{ .1,.1,.1 };
-		/// <summary> *Temporary* Scene light. </summary>
+		/// @brief *Temporary* Scene directional light.
 		DirectionalLight* light;
 	public:
-		/// <summary> Instantiate the scene object into the active scene. </summary>
-		/// <typeparam name="T"> Scene object type; must inherit from CondorEngine::SceneObject. </typeparam>
-		/// <param name="sceneObject"></param>
-		/// <returns> The instantiated scene object. </returns>
+		/// @brief Instantiate a SceneObject into this Scene.
+		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.
+		/// @param sceneObject The SceneObject to instantiate.
+		/// @return The instantiated SceneObject.
 		template <typename T> T* Instantiate(T* sceneObject) {
-			sceneObject->setScene(this);
+			sceneObject->scene = this;
 			this->hierarchy.push_back(sceneObject);
 			return sceneObject;
 		}
-		/// <summary> Instantiate the scene object into the active scene. </summary>
-		/// <param name="sceneObject"></param>
-		/// <returns></returns>
+		/// @brief Instantiate a SceneObject into this scene.
+		/// @param sceneObject The SceneObject to instantiate.
+		/// @return The instantiated SceneObject.
 		SceneObject* Instantiate(SceneObject* sceneObject) {
 			return Instantiate<SceneObject>(sceneObject);
+		}
+	private:
+		/// @brief Remove a SceneObject from this Scene's hierarchy.
+		/// @param sceneObject The SceneObject to remove.
+		/// @return The removed SceneObject.
+		SceneObject* RemoveSceneObject(SceneObject* sceneObject) {
+			for (int i = 0; i < hierarchy.size(); i++) {
+				if (hierarchy[i] == sceneObject) {
+					hierarchy.erase(std::next(hierarchy.begin(), i));
+				}
+			}
+			return sceneObject;
 		}
 	};
 
@@ -80,49 +103,97 @@ namespace CondorEngine {
 
 #pragma region SceneObject
 
-	/// <summary> Base engine scene object class. </summary>
+	/// @brief Base engine SceneObject class.
 	class SceneObject : public Object {
+		friend Scene;
 	public:
+		/// @brief Class constructor.
 		SceneObject();
+		/// @brief Class deconstructor.
 		~SceneObject();
+		/// @brief Update this SceneObject, its components, and its children.
 		void HierarchyUpdate();
+		/// @brief Late update this SceneObject, its components, and its children.
 		void HierarchyLateUpdate();
 	private:
+		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;
+		/// @brief The Scene this SceneObject has been instantiated into.
 		Scene* scene;
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scale;
 	protected:
+		/// @brief This SceneObject's parent if it is not a root object.
 		SceneObject* parent;
+		/// @brief This SceneObject's local transformation matrix.
 		Transform transform;
 	public:
+		/// @brief Get the Scene this SceneObject has been instantiated into.
+		/// @return Present Scene.
 		Scene* getScene();
+		/// @brief Set the Scene this SceneObject is in.
+		/// @param scene The scene this SceneObject will be set to.
 		void setScene(Scene* scene);
+		/// @brief Get this SceneObject's parent.
+		/// @return The parent.
 		SceneObject* getParent();
+		/// @brief Set this SceneObject's parent.
+		/// @param newParent The new parent. (Set to `nullptr` to make this as a root SceneObject)
 		void setParent(SceneObject* newParent);
+		/// @brief Get this SceneObject's root SceneObject. Self if this SceneObject does not have a parent.
+		/// @return Root SceneObject.
 		SceneObject* getRoot();
+		/// @brief Check if this is a root SceneObject.
+		/// @return True if root, false if this SceneObject has a parent.
 		bool isRoot();
 	public:
+		/// @brief Get the world relative forward direction of this SceneObject.
+		/// @return Forward direction.
 		Vector3 getForward();
+		/// @brief Get the world relative right direction of this SceneObject.
+		/// @return Right direction.
 		Vector3 getRight();
+		/// @brief Get the world relative up direction of this SceneObject.
+		/// @return Up direction.
 		Vector3 getUp();
+		/// @brief Get this SceneObject's world transform matrix. (Identical to the local transform matrix if this is the root SceneObject.)
+		/// @return Transform matrix.
 		Transform getTransform();
+		/// @brief Get this SceneObject's local transform matrix. (Identical to the world transform matrix if this is the root SceneObject.)
+		/// @return Transform matrix.
 		Transform getLocalTransform();
+		/// @brief Get this SceneObject's world position. (Identical to the world position if this is the root SceneObject.)
+		/// @return World position.
 		Vector3 getPosition();
+		/// @brief Get this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
+		/// @return Local position.
 		Vector3 getLocalPosition();
 	private:
+		/// @brief List of Components on this SceneObject.
 		vector<Component*> components;
+		/// @brief List of child SceneObjects on this SceneObject.
 		vector<SceneObject*> children;
 	public:
+		/// @brief Add a Component to this SceneObject.
+		/// @tparam T Component type; must inherit from `CondorEngine::Component`.
+		/// @param component Component to add.
+		/// @return Added Component.
 		template <typename T> T* AddComponent(T* component) {
 			components.push_back(component);
-			component->setSceneObject(this);
+			component->sceneObject = this;
 			return component;
 		}
+		/// @brief Add a Component to this SceneObject.
+		/// @param component Component object to add.
+		/// @return Added Component object.
 		Component* AddComponent(Component* component) {
 			return AddComponent<Component>(component);
 		}
+		/// @brief Find a Component of type on this SceneObject.
+		/// @tparam T Component type.
+		/// @param component out Component.
+		/// @return True if it found a Component of type `T`, false if it did not.
 		template <typename T> bool TryFindComponent(T& component) {
 			component = nullptr;
 			for (int i = 0; i < this->components.size(); i++) {
@@ -133,20 +204,35 @@ namespace CondorEngine {
 			}
 			return false;
 		}
+		/// @brief Add a child to this SceneObject.
+		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
+		/// @param child Child SceneObject to add.
+		/// @return Added child of type `T`.
 		template <typename T> T* AddChild(T* child) {
 			children.push_back(child);
 			child->parent = this;
 			return child;
 		}
+		/// @brief Add a child to this SceneObject.
+		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
+		/// @param child Child SceneObject to add.
+		/// @return Added child of type `SceneObject`.
 		SceneObject* AddChild(SceneObject* child) {
 			return AddChild<SceneObject>(child);
 		}
+		/// @brief Translate this SceneObject.
+		/// @param vector Translation.
 		void Move(Vector3 vector);
+		/// @brief Rotate this SceneObject.
+		/// @param vector Euler rotation.
 		void Rotate(Vector3 vector);
 	private:
+		/// @brief Remove a child SceneObject form this SceneObject.
+		/// @param child The child to remove.
+		/// @return Removed child.
 		SceneObject* RemoveChild(SceneObject* child) {
 			for (int i = 0; i < children.size(); i++) {
-				if (children[i] == this) {
+				if (children[i] == child) {
 					children.erase(std::next(children.begin(), i));
 				}
 			}
@@ -158,18 +244,25 @@ namespace CondorEngine {
 
 #pragma region Component
 
-	/// <summary> Base engine scene object component class. </summary>
+	/// @brief Base engine scene object component class.
 	class Component : public Object {
+		friend SceneObject;
 	public:
+		/// @brief Class constructor.
 		Component();
 	public:
+		/// @brief Update this component.
 		void HierarchyUpdate();
+		/// @brief Late update this component.
 		void HierarchyLateUpdate();
 	private:
+		/// @brief Check for first update call on this Component. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;
+		/// @brief The SceneObject this Component is on.
 		SceneObject* sceneObject;
 	public:
-		void setSceneObject(SceneObject* sceneObject);
+		/// @brief Get this Component's SceneObject.
+		/// @return SceneObject.
 		SceneObject* getSceneObject();
 	};
 
