@@ -15,10 +15,16 @@ namespace CondorEngine {
 	typedef glm::vec3 ColorRGB;
 	/// <summary> 2 dimensional vector. (Abstract of glm::vec2) </summary>
 	typedef glm::vec2 Vector2;
+	/// <summary> 2 dimensional integer vector. (Abstract of glm::ivec2) </summary>
+	typedef glm::ivec2 Vector2Int;
 	/// <summary> 3 dimensional vector. (Abstract of glm::vec3) </summary>
 	typedef glm::vec3 Vector3;
+	/// <summary> 3 dimensional integer vector. (Abstract of glm::ivec3) </summary>
+	typedef glm::ivec3 Vector3Int;
 	/// <summary> 4 dimensional vector. (Abstract of glm::vec4) </summary>
 	typedef glm::vec4 Vector4;
+	/// <summary> 4 dimensional integer vector. (Abstract of glm::ivec4) </summary>
+	typedef glm::ivec4 Vector4Int;
 	/// <summary> Rotational information. (Abstract of glm::vec4) </summary>
 	typedef glm::quat Quaternion;
 	/// <summary> Transformation matrix 4x4. (Abstract of glm::mat4) </summary>

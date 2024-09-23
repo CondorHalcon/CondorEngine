@@ -3,6 +3,7 @@
 #include "renderer.h"
 #include "debug.h"
 
+#pragma region Object
 
 CondorEngine::Object::Object()
 {
@@ -10,13 +11,15 @@ CondorEngine::Object::Object()
     this->enabled = true;
 }
 
+#pragma endregion
+
 #pragma region Scene
 
 CondorEngine::Scene::Scene()
 {
     this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
-    light = new DirectionalLight{ Vector3{1,1,1}, Vector3{0, 0, -1} };
+    light = new DirectionalLight{ ColorRGB{ 1,1,1 }, Vector3{ 0,0,-1 } };
 }
 
 CondorEngine::Scene::~Scene()
@@ -63,6 +66,7 @@ CondorEngine::SceneObject::SceneObject()
 {
     this->name = "CondorEngine::SceneObject";
     this->scene = nullptr;
+    this->transform = glm::identity<Transform>();
     this->position = Vector3{ 0,0,0 };
     this->rotation = Vector3{ 0,0,0 };
     this->scale = Vector3{ 1,1,1 };
@@ -111,6 +115,39 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
     }
 }
 
+CondorEngine::Scene* CondorEngine::SceneObject::getScene()
+{
+    return this->scene;
+}
+
+void CondorEngine::SceneObject::setScene(Scene* scene)
+{
+    this->scene = scene;
+}
+
+CondorEngine::SceneObject* CondorEngine::SceneObject::getParent()
+{
+    return parent;
+}
+
+void CondorEngine::SceneObject::setParent(SceneObject* newParent)
+{
+    if (parent != nullptr) {
+        parent->RemoveChild(this);
+    }
+    newParent->AddChild(this);
+}
+
+CondorEngine::SceneObject* CondorEngine::SceneObject::getRoot()
+{
+    return parent == nullptr ? this : parent->getRoot();
+}
+
+bool CondorEngine::SceneObject::isRoot()
+{
+    return parent == nullptr;
+}
+
 CondorEngine::Vector3 CondorEngine::SceneObject::getForward()
 {
     return Math::TransformForward(getTransform());
@@ -126,16 +163,6 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getUp()
     return Math::TransformUp(getTransform());
 }
 
-CondorEngine::Scene* CondorEngine::SceneObject::getScene()
-{
-    return this->scene;
-}
-
-void CondorEngine::SceneObject::setScene(Scene* scene)
-{
-    this->scene = scene;
-}
-
 CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 {
     return parent != nullptr ? parent->getTransform() * getLocalTransform() : getLocalTransform();
@@ -143,10 +170,11 @@ CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 
 CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
 {
-    Transform scl = glm::scale(glm::identity<Transform>(), this->scale);
-    Transform rot = glm::rotate(glm::identity<Transform>(), glm::radians(glm::length(this->rotation)), glm::normalize(this->rotation));
-    Transform pos = glm::translate(glm::identity<Transform>(), this->position);
-    return scl * rot * pos;
+    /*
+    Transform t = glm::scale(glm::identity<Transform>(), this->scale);
+    t = glm::rotate(t, glm::radians(glm::length(this->rotation)), glm::normalize(this->rotation));
+    t = glm::translate(t, this->position);*/
+    return transform;
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
@@ -158,35 +186,23 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
     return pos;
 }
 
-void CondorEngine::SceneObject::setParent(SceneObject* newParent)
+CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
 {
-    if (parent != nullptr) {
-        parent->RemoveChild(this);
-    }
-    newParent->AddChild(this);
-}
-
-CondorEngine::SceneObject* CondorEngine::SceneObject::getParent()
-{
-    return parent;
-}
-
-CondorEngine::SceneObject* CondorEngine::SceneObject::getRoot()
-{
-    return parent == nullptr ? this : parent->getRoot();
-}
-
-bool CondorEngine::SceneObject::isRoot()
-{
-    return parent == nullptr;
+    Vector3 pos;
+    Quaternion rot;
+    Vector3 scale;
+    Math::TransformSplit(getLocalTransform(), pos, rot, scale);
+    return pos;
 }
 
 void CondorEngine::SceneObject::Move(Vector3 vector)
 {
+    transform = glm::translate(transform, vector);
     position += vector;
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {
+    transform = glm::rotate(transform, glm::radians(glm::length(vector)), glm::normalize(vector));
     rotation += vector;
 }
 #pragma endregion

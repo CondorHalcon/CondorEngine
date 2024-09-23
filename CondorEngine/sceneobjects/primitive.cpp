@@ -23,7 +23,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
 }
 
 CondorEngine::Primitive::Primitive(PrimitiveType type) : 
-    CondorEngine::Primitive::Primitive(type, new M_Unlit()) { }
+    CondorEngine::Primitive::Primitive(type, new M_Lit()) { }
 
 CondorEngine::Mesh* CondorEngine::Primitive::MakeSimpleCube()
 {

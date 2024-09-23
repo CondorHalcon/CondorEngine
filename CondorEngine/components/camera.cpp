@@ -38,20 +38,17 @@ CondorEngine::Vector3 CondorEngine::Camera::getPosition()
 CondorEngine::Transform CondorEngine::Camera::getViewMatrix()
 {
 	// TODO: fix this mess
-	bool isValidObject = this->getSceneObject() != nullptr;
-	Transform t = isValidObject ? this->getSceneObject()->getTransform() : glm::identity<Transform>();
-	Vector3 forward = isValidObject ? this->getSceneObject()->getForward() : Math::TransformForward(t);
-	t = Math::TransformTranslate(t, forward);
+	Transform t = Math::TransformTranslate(this->getSceneObject()->getTransform(), this->getSceneObject()->getForward());
 	Vector3 lookPos; Quaternion rot; Vector3 scale;
 	Math::TransformSplit(t, lookPos, rot, scale);
     return glm::lookAt(
 		getPosition(), // camera position
 		lookPos, // look at postion
-		Vector3{ 0,1,0 }); // up vector
+		this->getSceneObject()->getUp()); // up vector
 }
 
 CondorEngine::Transform CondorEngine::Camera::getProjectionMatrix()
 {
-	Vector2 windowDimentions = Application::Instance()->getWindowDimentions();
-    return glm::perspective(glm::radians(fov), windowDimentions.x/ (float)windowDimentions.y, nearClippingPlane, farClippingPlane);
+	Vector2Int windowDimensions = Application::Instance()->getWindowDimensions();
+    return glm::perspective(glm::radians(fov), windowDimensions.x/ (float)windowDimensions.y, nearClippingPlane, farClippingPlane);
 }

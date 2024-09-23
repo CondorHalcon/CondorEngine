@@ -15,9 +15,9 @@ public:
 	static Application* Instance();
 private:
 	int windowWidth;
-	int windowHieght;
+	int windowHeight;
 public:
-	CondorEngine::Vector2 getWindowDimentions();
+	CondorEngine::Vector2Int getWindowDimensions();
 
 public:
 	/// <summary> Instantiate a new window. </summary>

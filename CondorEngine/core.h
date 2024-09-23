@@ -16,7 +16,7 @@ namespace CondorEngine {
 	class SceneObject;
 	class Component;
 
-#pragma region Base Classes
+#pragma region Object
 
 	/// <summary> Base engine object class. </summary>
 	class Object {
@@ -35,6 +35,9 @@ namespace CondorEngine {
 			return name;
 		}
 	};
+#pragma endregion
+
+#pragma region Scene
 
 	/// <summary> Base engine scene class. </summary>
 	class Scene : public Object {
@@ -72,6 +75,11 @@ namespace CondorEngine {
 			return Instantiate<SceneObject>(sceneObject);
 		}
 	};
+
+#pragma endregion
+
+#pragma region SceneObject
+
 	/// <summary> Base engine scene object class. </summary>
 	class SceneObject : public Object {
 	public:
@@ -87,19 +95,22 @@ namespace CondorEngine {
 		Vector3 scale;
 	protected:
 		SceneObject* parent;
+		Transform transform;
+	public:
+		Scene* getScene();
+		void setScene(Scene* scene);
+		SceneObject* getParent();
+		void setParent(SceneObject* newParent);
+		SceneObject* getRoot();
+		bool isRoot();
 	public:
 		Vector3 getForward();
 		Vector3 getRight();
 		Vector3 getUp();
-		Scene* getScene();
-		void setScene(Scene* scene);
 		Transform getTransform();
 		Transform getLocalTransform();
 		Vector3 getPosition();
-		void setParent(SceneObject* newParent);
-		SceneObject* getParent();
-		SceneObject* getRoot();
-		bool isRoot();
+		Vector3 getLocalPosition();
 	private:
 		vector<Component*> components;
 		vector<SceneObject*> children;
@@ -111,6 +122,16 @@ namespace CondorEngine {
 		}
 		Component* AddComponent(Component* component) {
 			return AddComponent<Component>(component);
+		}
+		template <typename T> bool TryFindComponent(T& component) {
+			component = nullptr;
+			for (int i = 0; i < this->components.size(); i++) {
+				if (typeid(this->components[i]) == typeid(T)) {
+					component = this->components[i];
+					return true;
+				}
+			}
+			return false;
 		}
 		template <typename T> T* AddChild(T* child) {
 			children.push_back(child);
@@ -132,6 +153,10 @@ namespace CondorEngine {
 			return child;
 		}
 	};
+
+#pragma endregion
+
+#pragma region Component
 
 	/// <summary> Base engine scene object component class. </summary>
 	class Component : public Object {

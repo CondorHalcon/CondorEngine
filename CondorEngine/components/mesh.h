@@ -3,6 +3,7 @@
 #include "../core.h"
 #include "../renderer.h"
 #include "camera.h"
+#include "../debug.h"
 
 // third party
 #include "glew/glew.h"
@@ -10,6 +11,8 @@
 
 
 namespace CondorEngine {
+#pragma region Material
+
 	class Material : public Object {
 	public:
 		Material(Shader* shader);
@@ -41,6 +44,10 @@ namespace CondorEngine {
 		void SetUniform(GLuint location, const glm::vec4& value); // for color and quaternions
 	};
 
+#pragma endregion 
+
+#pragma region Mesh
+
 	class Mesh : public Component {
 	public:
 		Mesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount);
@@ -62,7 +69,9 @@ namespace CondorEngine {
 		void Update() override;
 	};
 
-#pragma region Materials
+#pragma endregion
+
+#pragma region Preset Materials
 	class M_Unlit : public Material {
 	public:
 		M_Unlit() : Material(Shader::LoadShader("shaders/basic.vert", "shaders/basic.frag")) {
@@ -83,22 +92,27 @@ namespace CondorEngine {
 		}
 		void Update() override {
 			Material::Update();
+			// lighting
 			if (Application::activeScene != nullptr) {
+				Debug::Log("Application::activeScene != nullptr");
 				SetUniform(3, Application::activeScene->ambientLight);
 				SetUniform(4, Application::activeScene->light->color);
 				SetUniform(5, Application::activeScene->light->direction);
 			} else {
+				Debug::Log("Application::activeScene == nullptr");
 				SetUniform(3, ColorRGB{ .5f, .5f, .5f });
 				SetUniform(4, ColorRGB{ .5f, .5f, .5f });
 				SetUniform(5, Vector3{ .3f, .3f, .3f });
 			}
-			if (sampleTex != nullptr) {
-				SetUniform(6, *sampleTex, 0);
-			}
+			// camera position
 			if (Camera::Main() != nullptr) {
-				SetUniform(7, Camera::Main()->getPosition());
+				SetUniform(6, Camera::Main()->getPosition());
 			} else {
-				SetUniform(7, Vector3{ 0,0,0 });
+				SetUniform(6, Vector3{ 0,0,0 });
+			}
+			// texture
+			if (sampleTex != nullptr) {
+				SetUniform(7, *sampleTex, 0);
 			}
 		}
 		Texture* sampleTex;
