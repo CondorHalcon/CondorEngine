@@ -89,16 +89,16 @@ int main()
     //camera->enabled = false;
 
     // imported mesh
-    /*Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
-    shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
-    //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
-    //shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
-    //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });*/
+    //Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
+    //shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // primitive mesh
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
-    delete primitive->mesh->material;
-    primitive->mesh->material = new CondorEngine::M_Unlit();
+    //CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
+    //delete primitive->mesh->material;
+    //primitive->mesh->material = new CondorEngine::M_Unlit();
     
 
     while (!app->shouldClose()) {
