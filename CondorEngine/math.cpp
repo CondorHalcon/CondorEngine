@@ -20,11 +20,27 @@ CondorEngine::Vector3 CondorEngine::Math::TransformVector(Transform transform, V
 
 CondorEngine::Vector3 CondorEngine::Math::TransformAxis(Transform transform, Axis axis)
 {
+    switch (axis)
+    {
+    case Axis::Right:
+        return glm::normalize(TransformVector(transform, Vector3{1, 0, 0}));
+    case Axis::Up:
+        return glm::normalize(TransformVector(transform, Vector3{0, 1, 0}));
+    default:
+        return glm::normalize(TransformVector(transform, Vector3{0, 0, 1}));
+    }
+
+    // TODO FIX: should work but broken
     return glm::normalize(Vector3(transform[axis]));
 }
 
 CondorEngine::Vector3 CondorEngine::Math::TransformPosition(Transform transform)
 {
+    Vector3 pos; Quaternion rotation; Vector3 scale;
+    Math::TransformSplit(transform, pos, rotation, scale);
+    return pos;
+
+    // TODO FIX: should work but broken
     return glm::normalize(Vector3(transform[3]));
 }
 

@@ -288,6 +288,12 @@ void CondorEngine::SceneObject::Move(Vector3 vector)
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {
     transform = glm::rotate(transform, glm::radians(glm::length(vector)), glm::normalize(vector));
 }
+
+void CondorEngine::SceneObject::Scale(Vector3 scaler)
+{
+    transform = glm::scale(transform, scaler);
+}
+
 #pragma endregion
 
 #pragma region Component

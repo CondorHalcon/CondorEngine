@@ -262,6 +262,9 @@ namespace CondorEngine {
 		/// @brief Rotate this SceneObject.
 		/// @param vector Euler rotation.
 		void Rotate(Vector3 vector);
+		/// @brief Scale this SceneObject.
+		/// @param scaler Scaler.
+		void Scale(Vector3 scaler);
 	private:
 		/// @brief Remove a child SceneObject form this SceneObject.
 		/// @param child The child to remove.

@@ -32,18 +32,14 @@ void CondorEngine::Camera::SetMainCamera(Camera* camera)
 
 CondorEngine::Vector3 CondorEngine::Camera::getPosition()
 {
-	return this->getSceneObject() != nullptr ? this->getSceneObject()->getPosition() : Vector3{0, 0, 3};
+	return this->getSceneObject()->getPosition();
 }
 
 CondorEngine::Transform CondorEngine::Camera::getViewMatrix()
 {
-	// TODO: fix this mess
-	Transform t = Math::TransformTranslate(this->getSceneObject()->getTransform(), this->getSceneObject()->getForward());
-	Vector3 lookPos; Quaternion rot; Vector3 scale;
-	Math::TransformSplit(t, lookPos, rot, scale);
     return glm::lookAt(
-		getPosition(), // camera position
-		lookPos, // look at postion
+		this->getSceneObject()->getPosition(), // camera position
+		this->getSceneObject()->getPosition() + this->getSceneObject()->getForward(), // look at postion
 		this->getSceneObject()->getUp()); // up vector
 }
 
