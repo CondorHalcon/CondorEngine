@@ -27,7 +27,8 @@ public:
 	/// @brief Get application window dimensions.
 	/// @return Window width and height as an integer vector 2.
 	CondorEngine::Vector2Int getWindowDimensions();
-
+	/// @brief Color to clear the screen buffer.
+	CondorEngine::ColorRGB clearColor;
 public:
 	/// @brief Instantiate a new window.
 	/// @param width Set the window's width.

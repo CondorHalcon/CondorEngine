@@ -13,6 +13,7 @@ Application::Application() {
 	this->window = nullptr;
 	this->windowWidth = 640;
 	this->windowHeight = 480;
+	this->clearColor = CondorEngine::ColorRGB{.4, .4, .4};
 }
 Application::~Application()
 {
@@ -69,6 +70,7 @@ void Application::tick()
 
 void Application::clear()
 {
+	glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
 }
 
