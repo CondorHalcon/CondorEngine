@@ -27,11 +27,8 @@ public:
 	/// @brief Get application window dimensions.
 	/// @return Window width and height as an integer vector 2.
 	CondorEngine::Vector2Int getWindowDimensions();
-	CondorEngine::Color clearColor;
 
 public:
-	/// @brief Application loop until close condition is reached. (Can be used if custom frame control is not needed.)
-	void Loop();
 	/// @brief Instantiate a new window.
 	/// @param width Set the window's width.
 	/// @param height Set the window's height.

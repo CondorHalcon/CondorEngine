@@ -1,14 +1,10 @@
 #include "application.h"
 #include "debug.h"
-#include "diagnostics.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
-#include "imgui/imgui.h"
-#include "imgui/backends/imgui_impl_glfw.h"
-#include "imgui/backends/imgui_impl_opengl3.h"
-
+#include "diagnostics.h"
 
 Scene* Application::activeScene = nullptr;
 Application* Application::instance = nullptr;
@@ -17,7 +13,6 @@ Application::Application() {
 	this->window = nullptr;
 	this->windowWidth = 640;
 	this->windowHeight = 480;
-	this->clearColor = CondorEngine::Color{.4,.4,.4,.4};
 }
 Application::~Application()
 {
@@ -35,16 +30,6 @@ Application* Application::Instance()
 CondorEngine::Vector2Int Application::getWindowDimensions()
 {
 	return CondorEngine::Vector2Int{ windowWidth, windowHeight };
-}
-
-void Application::Loop()
-{
-	while (!shouldClose()) {
-        tick();
-        clear();
-        update();
-        lateUpdate();
-    }
 }
 
 bool Application::init(int width, int height, const char* title)
@@ -72,14 +57,6 @@ bool Application::init(int width, int height, const char* title)
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(CondorEngine::diagnostics::MessageCallback, 0);
 
-	// ImGui
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 430 core");
-
 	glClearColor(.4f, .4f, .4f, 1);
 	return true;
 }
@@ -92,7 +69,6 @@ void Application::tick()
 
 void Application::clear()
 {
-	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
 }
 

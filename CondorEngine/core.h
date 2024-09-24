@@ -15,7 +15,6 @@ namespace CondorEngine {
 	struct DirectionalLight;
 	class SceneObject;
 	class Component;
-	class Canvas;
 
 #pragma region Object
 
@@ -65,9 +64,6 @@ namespace CondorEngine {
 	protected:
 		/// @brief Root SceneObjects in this Scene.
 		vector<SceneObject*> hierarchy;
-	public:
-		/// @brief Canvases used for the GUI.
-		vector<Canvas*> canvases;
 	public:
 		/// @brief Scene ambient light.
 		ColorRGB ambientLight = ColorRGB{ .1,.1,.1 };
@@ -268,26 +264,6 @@ namespace CondorEngine {
 		/// @brief Get this Component's SceneObject.
 		/// @return SceneObject.
 		SceneObject* getSceneObject();
-	};
-
-#pragma endregion
-
-#pragma region Canvas
-
-	/// @brief Base engine UI Canvas class.
-	class Canvas : public Object {
-	public:
-		/// @brief Class constructor.
-		Canvas();
-		/// @brief Class deconstructor.
-		~Canvas();
-		/// @brief Update this Canvas.
-		void HierarchyUpdate();
-		/// @brief Late update this Canvas.
-		void HierarchyLateUpdate();
-	private:
-		/// @brief Check for first update call on this Canvas. If false, Start should be called first.
-		bool hasDoneFirstUpdate = false;
 	};
 
 #pragma endregion

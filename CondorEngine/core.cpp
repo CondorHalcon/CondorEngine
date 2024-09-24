@@ -21,10 +21,8 @@ CondorEngine::Object::Object()
 CondorEngine::Scene::Scene()
 {
     this->name = "CondorEngine::Scene";
-    this->hasDoneFirstUpdate = false;
-    this->light = new DirectionalLight{ ColorRGB{ 1,1,1 }, Vector3{ 0,0,-1 } };
-    this->hierarchy = std::vector<SceneObject*>();
-    this->canvases = std::vector<Canvas *>();
+    hasDoneFirstUpdate = false;
+    light = new DirectionalLight{ ColorRGB{ 1,1,1 }, Vector3{ 0,0,-1 } };
 }
 
 CondorEngine::Scene::~Scene()
@@ -41,10 +39,8 @@ void CondorEngine::Scene::HierarchyUpdate()
         hasDoneFirstUpdate = true;
         Start();
     }
-    // update self
     Update();
 
-    // update SceneObject hierarchy
     for (int i = 0; i < hierarchy.size(); i++) {
         try {
             if (hierarchy[i]->enabled) {
@@ -54,25 +50,13 @@ void CondorEngine::Scene::HierarchyUpdate()
             Debug::LogError("Failed SceneObject Update : Failed to update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
-    // update GUI
-    for (int i = 0; i < canvases.size(); i++) {
-        try {
-            if (canvases[i]->enabled) {
-                canvases[i]->HierarchyUpdate();
-            }
-        } catch (...) {
-            Debug::LogError("Failed Canvas Update : Failed to update Canvas in Scene(" + name + ") at index[" + std::to_string(i) + "].");
-        }
-    }
 }
 
 void CondorEngine::Scene::HierarchyLateUpdate()
 {
     if (!enabled || !hasDoneFirstUpdate) { return; }
-    // late update self
     LateUpdate();
 
-    // late update SceneObject hierarchy
     for (int i = 0; i < hierarchy.size(); i++) {
         try {
             if (hierarchy[i]->enabled) {
@@ -80,16 +64,6 @@ void CondorEngine::Scene::HierarchyLateUpdate()
             }
         } catch (...) {
             Debug::LogError("Failed SceneObject LateUpdate : Failed to late update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
-        }
-    }
-    // late update GUI Canvases
-    for (int i = 0; i < canvases.size(); i++) {
-        try {
-            if (canvases[i]->enabled) {
-                canvases[i]->HierarchyLateUpdate();
-            }
-        } catch (...) {
-            Debug::LogError("Failed Canvas LateUpdate : Failed to late update Canvas in Scene(" + name + ") at index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -300,31 +274,3 @@ CondorEngine::SceneObject* CondorEngine::Component::getSceneObject()
 
 #pragma endregion
 
-#pragma region Canvas
-
-CondorEngine::Canvas::Canvas()
-{
-    this->hasDoneFirstUpdate = false;
-}
-
-CondorEngine::Canvas::~Canvas()
-{
-}
-
-void CondorEngine::Canvas::HierarchyUpdate()
-{
-    if (!enabled) { return; }
-    if (!hasDoneFirstUpdate) {
-        hasDoneFirstUpdate = true;
-        Start();
-    }
-    Update();
-}
-
-void CondorEngine::Canvas::HierarchyLateUpdate()
-{
-    if (!enabled || !hasDoneFirstUpdate) { return; }
-    LateUpdate();
-}
-
-#pragma endregion
