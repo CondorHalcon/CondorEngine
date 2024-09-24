@@ -10,7 +10,7 @@ CondorEngine::SpectatorCam::SpectatorCam()
 
 void CondorEngine::SpectatorCam::Update()
 {
-    // move forwad back
+    // move forward back
     if (Application::Input(GLFW_KEY_W)) {
         Move(getForward() * .01f);
     }
@@ -19,10 +19,10 @@ void CondorEngine::SpectatorCam::Update()
     }
     // move right left
     if (Application::Input(GLFW_KEY_D)) {
-        Move(getRight() * .01f);
+        Move(getRight() * -.01f);
     }
     if (Application::Input(GLFW_KEY_A)) {
-        Move(getRight() * -.01f);
+        Move(getRight() * .01f);
     }
     // move up down
     if (Application::Input(GLFW_KEY_E)) {

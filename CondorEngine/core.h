@@ -12,6 +12,8 @@ using std::vector;
 
 namespace CondorEngine {
 
+	typedef std::string String;
+
 	struct DirectionalLight;
 	class SceneObject;
 	class Component;
@@ -24,7 +26,7 @@ namespace CondorEngine {
 		/// @brief Class constructor.
 		Object();
 		/// @brief Object name.
-		std::string name;
+		String name;
 		/// @brief Object enabled status. Used to prevent update calls on the object.
 		bool enabled;
 	public:
@@ -36,7 +38,7 @@ namespace CondorEngine {
 		virtual void LateUpdate() {}
 		/// @brief Object to string.
 		/// @return String value of the object. (default value is the name of the object.)
-		virtual std::string to_string() {
+		virtual String to_string() {
 			return name;
 		}
 	};
@@ -85,6 +87,9 @@ namespace CondorEngine {
 		SceneObject* Instantiate(SceneObject* sceneObject) {
 			return Instantiate<SceneObject>(sceneObject);
 		}
+		SceneObject* Destroy(SceneObject *sceneObject) {
+			
+		}
 	private:
 		/// @brief Remove a SceneObject from this Scene's hierarchy.
 		/// @param sceneObject The SceneObject to remove.
@@ -120,9 +125,6 @@ namespace CondorEngine {
 		bool hasDoneFirstUpdate = false;
 		/// @brief The Scene this SceneObject has been instantiated into.
 		Scene* scene;
-		Vector3 position;
-		Vector3 rotation;
-		Vector3 scale;
 	protected:
 		/// @brief This SceneObject's parent if it is not a root object.
 		SceneObject* parent;
@@ -147,6 +149,9 @@ namespace CondorEngine {
 		/// @brief Check if this is a root SceneObject.
 		/// @return True if root, false if this SceneObject has a parent.
 		bool isRoot();
+		/// @brief Get number of child SceneObjects in this SceneObject.
+		/// @return Number of children.
+		unsigned int getChildCount();
 	public:
 		/// @brief Get the world relative forward direction of this SceneObject.
 		/// @return Forward direction.
@@ -169,6 +174,18 @@ namespace CondorEngine {
 		/// @brief Get this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
 		/// @return Local position.
 		Vector3 getLocalPosition();
+		/// @brief Get this SceneObject's world rotation. (Identical to the local rotation if this is the root SceneObject.)
+		/// @return World rotation.
+		Quaternion getRotation();
+		/// @brief Get this SceneObject's local rotation. (Identical to the world rotation if this is the root SceneObject.)
+		/// @return Local rotation.
+		Quaternion getLocalRotation();
+		/// @brief Get this SceneObject's world scale. (Identical to the local scale if this is the root SceneObject.)
+		/// @return World scale.
+		Vector3 getScale();
+		/// @brief Get this SceneObject's local scale. (Identical to the world scale if this is the root SceneObject.)
+		/// @return Local scale.
+		Vector3 getLocalScale();
 	private:
 		/// @brief List of Components on this SceneObject.
 		vector<Component*> components;
@@ -191,8 +208,8 @@ namespace CondorEngine {
 			return AddComponent<Component>(component);
 		}
 		/// @brief Find a Component of type on this SceneObject.
-		/// @tparam T Component type.
-		/// @param component out Component.
+		/// @tparam T Type of Component to find.
+		/// @param component out Component object.
 		/// @return True if it found a Component of type `T`, false if it did not.
 		template <typename T> bool TryFindComponent(T& component) {
 			component = nullptr;
@@ -204,11 +221,30 @@ namespace CondorEngine {
 			}
 			return false;
 		}
+		/// @brief Find a Component of type on this SceneObject or its children. `WARNING`: This is a recursive function that loops through every component on every child.
+		/// @tparam T Type of Component to find.
+		/// @param component out Component object.
+		/// @return True if it found a Component of type `T`, false if it did not.
+		template <typename T> bool TryFindComponentInChildren(T& component) {
+			component = nullptr;
+			if (TryFindComponent<T>(component)) {
+				return true;
+			}
+			for (int i = 0; i < this->children.size(); i++) {
+				if (children[i]->TryFindComponentInChildren<T>(component)) {
+					return true;
+				}
+			}
+			return false;
+		}
 		/// @brief Add a child to this SceneObject.
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
 		/// @param child Child SceneObject to add.
 		/// @return Added child of type `T`.
 		template <typename T> T* AddChild(T* child) {
+			if (child == this) {
+				throw(String("SceneObject::AddChild(T*) failed : Cannot add a SceneObject as its own child"));
+			}
 			children.push_back(child);
 			child->parent = this;
 			return child;

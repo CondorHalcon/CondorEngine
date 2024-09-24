@@ -7,7 +7,7 @@
 
 namespace CondorEngine {
 
-#pragma region Types
+#pragma region GLM Types
 
 	
 	/// @brief RGBA values for color. (Abstract of glm::vec4)
@@ -33,62 +33,74 @@ namespace CondorEngine {
 
 #pragma endregion
 
-class Math
-{
-public:
-	/// @brief Transform vector from local space to world space.
-	/// @param transform The relative transform matrix.
-	/// @param vector The local space vector.
-	/// @return Global space vector.
-	static Vector3 TransformVector(Transform transform, Vector3 vector);
-	/// @brief Get transform forward direction.
-	/// @param transform Transform matrix.
-	/// @return Forward direction.
-	static Vector3 TransformForward(Transform transform);
-	/// @brief Get transform right direction.
-	/// @param transform Transform matrix.
-	/// @return Right direction.
-	static Vector3 TransformRight(Transform transform);
-	/// @brief Rotate transform with euler angles.
-	/// @param transform Transform matrix.
-	/// @param vector Euler rotation.
-	/// @return Rotated transform matrix.
-	static Transform TransformRotate(Transform transform, Vector3 vector);
-	/// @brief Extract the position, rotation, and scale of a transform.
-	/// @param transform Transform matrix.
-	/// @param position out Transform position.
-	/// @param rotation out Transform rotation.
-	/// @param scale out Transform scale.
-	static void TransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
-	/// @brief Translate a transform.
-	/// @param transform Transform matrix.
-	/// @param vector Translation.
-	/// @return Translated transform matrix.
-	static Transform TransformTranslate(Transform transform, Vector3 vector);
-	/// @brief Get transform up direction.
-	/// @param transform Transform matrix.
-	/// @return Up direction.
-	static Vector3 TransformUp(Transform transform);
-};
+#pragma region Enums
+
+	enum Axis
+	{
+		Right = 0,
+		Up = 1,
+		Forward = 2
+	};
+
+#pragma endregion
+
+#pragma region Math
+
+	class Math
+	{
+	public:
+		/// @brief Transform vector from local space to world space.
+		/// @param transform The relative transform matrix.
+		/// @param vector The local space vector.
+		/// @return Global space vector.
+		static Vector3 TransformVector(Transform transform, Vector3 vector);
+		/// @brief Get transform rotation axis.
+		/// @param transform Transform matrix.
+		/// @param axis Axis to get.
+		/// @return Axis direction.
+		static Vector3 TransformAxis(Transform transform, Axis axis);
+		/// @brief Get transform position.
+		/// @param transform Transform matrix.
+		/// @return Transform position.
+		static Vector3 TransformPosition(Transform transform);
+		/// @brief Rotate transform with euler angles.
+		/// @param transform Transform matrix.
+		/// @param vector Euler rotation.
+		/// @return Rotated transform matrix.
+		static Transform TransformRotate(Transform transform, Vector3 vector);
+		/// @brief Extract the position, rotation, and scale of a transform.
+		/// @param transform Transform matrix.
+		/// @param position out Transform position.
+		/// @param rotation out Transform rotation.
+		/// @param scale out Transform scale.
+		static void TransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
+		/// @brief Translate a transform.
+		/// @param transform Transform matrix.
+		/// @param vector Translation.
+		/// @return Translated transform matrix.
+		static Transform TransformTranslate(Transform transform, Vector3 vector);
+	};
+
+#pragma endregion
 
 #pragma region Utilities
 
-/// @brief String value of a `Vector2`.
-/// @param value 
-/// @return 
-std::string to_string(glm::vec2 value);
-/// @brief String value of a `Vector3` and `ColorRGB`.
-/// @param value 
-/// @return 
-std::string to_string(glm::vec3 value);
-/// @brief String value of a `Vector4` and `Color`.
-/// @param value 
-/// @return 
-std::string to_string(glm::vec4 value);
-/// @brief String value of a `Quaternion`.
-/// @param value 
-/// @return 
-std::string to_string(glm::quat value);
+	/// @brief String value of a `Vector2`.
+	/// @param value 
+	/// @return 
+	std::string to_string(glm::vec2 value);
+	/// @brief String value of a `Vector3` and `ColorRGB`.
+	/// @param value 
+	/// @return 
+	std::string to_string(glm::vec3 value);
+	/// @brief String value of a `Vector4` and `Color`.
+	/// @param value 
+	/// @return 
+	std::string to_string(glm::vec4 value);
+	/// @brief String value of a `Quaternion`.
+	/// @param value 
+	/// @return 
+	std::string to_string(glm::quat value);
 
 #pragma endregion
 

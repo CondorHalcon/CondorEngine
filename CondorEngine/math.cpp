@@ -1,5 +1,6 @@
 #include "math.h"
 #include "debug.h"
+#include "core.h"
 //std
 #include <cmath>
 #include <string>
@@ -17,14 +18,14 @@ CondorEngine::Vector3 CondorEngine::Math::TransformVector(Transform transform, V
     return Vector3{ out.x, out.y, out.z };
 }
 
-CondorEngine::Vector3 CondorEngine::Math::TransformForward(Transform transform)
+CondorEngine::Vector3 CondorEngine::Math::TransformAxis(Transform transform, Axis axis)
 {
-    return Math::TransformVector(transform, Vector3{ 0,0,1 });
+    return glm::normalize(Vector3(transform[axis]));
 }
 
-CondorEngine::Vector3 CondorEngine::Math::TransformRight(Transform transform)
+CondorEngine::Vector3 CondorEngine::Math::TransformPosition(Transform transform)
 {
-    return Math::TransformVector(transform, Vector3{ 1,0,0 });
+    return glm::normalize(Vector3(transform[3]));
 }
 
 CondorEngine::Transform CondorEngine::Math::TransformRotate(Transform transform, Vector3 vector)
@@ -44,25 +45,20 @@ CondorEngine::Transform CondorEngine::Math::TransformTranslate(Transform transfo
     return glm::translate(transform, vector);
 }
 
-CondorEngine::Vector3 CondorEngine::Math::TransformUp(Transform transform)
-{
-    return Math::TransformVector(transform, Vector3{ 0,1,0 });
-}
-
 #pragma region Utilities
 
-std::string CondorEngine::to_string(CondorEngine::Vector2 value)
+CondorEngine::String CondorEngine::to_string(CondorEngine::Vector2 value)
 {
-    return std::string(
+    return String(
         "(" +
         std::to_string(value.x) + "," +
         std::to_string(value.y) + ")"
     );
 }
 
-std::string CondorEngine::to_string(glm::vec3 value)
+CondorEngine::String CondorEngine::to_string(glm::vec3 value)
 {
-    return std::string(
+    return String(
         "(" +
         std::to_string(value.x) + ", " +
         std::to_string(value.y) + ", " +
@@ -70,9 +66,9 @@ std::string CondorEngine::to_string(glm::vec3 value)
     );
 }
 
-std::string CondorEngine::to_string(CondorEngine::Vector4 value)
+CondorEngine::String CondorEngine::to_string(CondorEngine::Vector4 value)
 {
-    return std::string(
+    return String(
         "(" +
         std::to_string(value.x) + ", " +
         std::to_string(value.y) + ", " +
@@ -81,9 +77,9 @@ std::string CondorEngine::to_string(CondorEngine::Vector4 value)
     );
 }
 
-std::string CondorEngine::to_string(CondorEngine::Quaternion value)
+CondorEngine::String CondorEngine::to_string(CondorEngine::Quaternion value)
 {
-    return std::string(
+    return String(
         "(" +
         std::to_string(value.w) + ", " +
         std::to_string(value.x) + ", " +

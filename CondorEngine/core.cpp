@@ -46,7 +46,11 @@ void CondorEngine::Scene::HierarchyUpdate()
             if (hierarchy[i]->enabled) {
                 hierarchy[i]->HierarchyUpdate();
             }
-        } catch (...) {
+        }
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed SceneObject Update : Failed to update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
@@ -62,7 +66,11 @@ void CondorEngine::Scene::HierarchyLateUpdate()
             if (hierarchy[i]->enabled) {
                 hierarchy[i]->HierarchyLateUpdate();
             }
-        } catch (...) {
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed SceneObject LateUpdate : Failed to late update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
@@ -78,9 +86,6 @@ CondorEngine::SceneObject::SceneObject()
     this->name = "CondorEngine::SceneObject";
     this->scene = nullptr;
     this->transform = glm::identity<Transform>();
-    this->position = Vector3{ 0,0,0 };
-    this->rotation = Vector3{ 0,0,0 };
-    this->scale = Vector3{ 1,1,1 };
     this->components = vector<Component*>();
     this->children = vector<SceneObject*>();
     this->parent = nullptr;
@@ -108,14 +113,22 @@ void CondorEngine::SceneObject::HierarchyUpdate()
     for (int i = 0; i < components.size(); i++) {
         try {
             components[i]->HierarchyUpdate();
-        } catch (...) {
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed Component Update : Failed to update Component in SceneObject(" + name +  ") at index[" + std::to_string(i) + "].");
         }
     }
     for (int i = 0; i < children.size(); i++) {
         try {
             children[i]->HierarchyUpdate();
-        } catch (...) {
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed Child SceneObject Update : Failed to update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
@@ -129,14 +142,22 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
     for (int i = 0; i < components.size(); i++) {
         try {
             components[i]->HierarchyLateUpdate();
-        } catch (...) {
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed Component LateUpdate : Failed to late update Component in SceneObject(" + name +  ") at index[" + std::to_string(i) + "].");
         }
     }
     for (int i = 0; i < children.size(); i++) {
         try {
             children[i]->HierarchyLateUpdate();
-        } catch (...) {
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
             Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
@@ -183,19 +204,24 @@ bool CondorEngine::SceneObject::isRoot()
     return parent == nullptr;
 }
 
+unsigned int CondorEngine::SceneObject::getChildCount()
+{
+    return this->children.size();
+}
+
 CondorEngine::Vector3 CondorEngine::SceneObject::getForward()
 {
-    return Math::TransformForward(getTransform());
+    return Math::TransformAxis(getTransform(), Axis::Forward);
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getRight()
 {
-    return Math::TransformRight(getTransform());
+    return Math::TransformAxis(getTransform(), Axis::Right);
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getUp()
 {
-    return Math::TransformUp(getTransform());
+    return Math::TransformAxis(getTransform(), Axis::Up);
 }
 
 CondorEngine::Transform CondorEngine::SceneObject::getTransform()
@@ -205,40 +231,62 @@ CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 
 CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
 {
-    /*
-    Transform t = glm::scale(glm::identity<Transform>(), this->scale);
-    t = glm::rotate(t, glm::radians(glm::length(this->rotation)), glm::normalize(this->rotation));
-    t = glm::translate(t, this->position);*/
     return transform;
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
 {
+    return Math::TransformPosition(getTransform());
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
+{
+    return Math::TransformPosition(getLocalTransform());
+}
+
+CondorEngine::Quaternion CondorEngine::SceneObject::getRotation()
+{
     Vector3 pos;
     Quaternion rot;
     Vector3 scale;
     Math::TransformSplit(getTransform(), pos, rot, scale);
-    return pos;
+    return rot;
 }
 
-CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
+CondorEngine::Quaternion CondorEngine::SceneObject::getLocalRotation()
 {
     Vector3 pos;
     Quaternion rot;
     Vector3 scale;
     Math::TransformSplit(getLocalTransform(), pos, rot, scale);
-    return pos;
+    return rot;
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getScale()
+{
+    Vector3 pos;
+    Quaternion rot;
+    Vector3 scale;
+    Math::TransformSplit(getTransform(), pos, rot, scale);
+    return scale;
+}
+
+CondorEngine::Vector3 CondorEngine::SceneObject::getLocalScale()
+{
+    Vector3 pos;
+    Quaternion rot;
+    Vector3 scale;
+    Math::TransformSplit(getLocalTransform(), pos, rot, scale);
+    return scale;
 }
 
 void CondorEngine::SceneObject::Move(Vector3 vector)
 {
     transform = glm::translate(transform, vector);
-    position += vector;
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector) {
     transform = glm::rotate(transform, glm::radians(glm::length(vector)), glm::normalize(vector));
-    rotation += vector;
 }
 #pragma endregion
 

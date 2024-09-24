@@ -6,9 +6,9 @@
 // std
 #include <vector> // for the daring
 #include <string>
-using std::string;
 
 namespace CondorEngine {
+
 
 #pragma region Struct Definitions
 	/// @brief Mesh vertex struct
@@ -38,7 +38,7 @@ namespace CondorEngine {
 		/// @param vertShader Vertex shader.
 		/// @param fragShader Fragment shader.
 		/// @return Compiled shader.
-		static Shader* MakeShader(const string& vertShader, const string& fragShader);
+		static Shader* MakeShader(const String& vertShader, const String& fragShader);
 		/// @brief Load and compile a shader in OpenGl.
 		/// @param vertShader Vertex shader file path.
 		/// @param fragShader Fragment shader file path.

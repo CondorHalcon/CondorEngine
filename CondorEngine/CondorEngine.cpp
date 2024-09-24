@@ -28,31 +28,22 @@ public:
     }
     CondorEngine::Mesh* mesh;
     void Update() override {
-        CondorEngine::Debug::Log(
-            "forward: " + CondorEngine::to_string(getForward()) +
-            "; right: " + CondorEngine::to_string(getRight()) +
-            "; up: " + CondorEngine::to_string(getUp())
-        );
-        // move forward back
-        if (Application::Input(GLFW_KEY_W)) {
-            Move(getForward() * .01f);
-        }
-        if (Application::Input(GLFW_KEY_S)) {
-            Move(getForward() * -.01f);
-        }
-        // move right left
-        if (Application::Input(GLFW_KEY_D)) {
-            Move(getRight() * .01f);
-        }
-        if (Application::Input(GLFW_KEY_A)) {
-            Move(getRight() * -.01f);
-        }
-        // move up down
-        if (Application::Input(GLFW_KEY_E)) {
-            Move(getUp() * .01f);
-        }
-        if (Application::Input(GLFW_KEY_Q)) {
-            Move(getUp() * -.01f);
+        static CondorEngine::Vector3 forward = getForward();
+        static CondorEngine::Vector3 right = getRight();
+        static CondorEngine::Vector3 up = getUp();
+        CondorEngine::Vector3 f = getForward();
+        CondorEngine::Vector3 r = getRight();
+        CondorEngine::Vector3 u = getUp();
+        
+        if (forward != f || right != r || up != u) {
+            forward = getForward();
+            right = getRight();
+            up = getUp();
+            CondorEngine::Debug::Log(
+                "forward: " + CondorEngine::to_string(forward) +
+                "; right: " + CondorEngine::to_string(right) +
+                "; up: " + CondorEngine::to_string(up)
+            );
         }
         // rotate up down
         if (Application::Input(GLFW_KEY_UP)) {
@@ -85,14 +76,19 @@ int main()
     // Camera
     CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,-3 });
-    camera->enabled = false;
+    //camera->enabled = false;
 
     // imported mesh
-    Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
-    shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
-    //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
-    //shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
-    shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
+    //Rotatable* shape = scene->Instantiate<Rotatable>(new Rotatable());
+    //shape->mesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
+    CondorEngine::Debug::Log(
+        "forward: " + CondorEngine::to_string(shape->getForward()) +
+        "; right: " + CondorEngine::to_string(shape->getRight()) +
+        "; up: " + CondorEngine::to_string(shape->getUp())
+    );
 
     // primitive mesh
     //CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
