@@ -13,6 +13,9 @@
 // third party
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"
+#include "imgui/imgui.h"
+#include "imgui/backends/imgui_impl_glfw.h"
+#include "imgui/backends/imgui_impl_opengl3.h"
 
 #pragma region Implementation Classes
 
@@ -71,7 +74,22 @@ public:
     }
 };
 
+class DemoUI : public CondorEngine::Canvas {
+public:
+    DemoUI() : CondorEngine::Canvas() {
+        
+    }
+    void Update() override {
+        //ImGui::Begin("Hello World");
+        //ImGui::Text("Some possibly useful text...");
+        //ImGui::End();
+        //ImGui::ColorEdit3("Clear Color", glm::value_ptr(Application::Instance()->clearColor));
+    }
+};
+
 #pragma endregion
+
+#pragma region Main
 
 int main()
 {
@@ -98,7 +116,12 @@ int main()
     //CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::SimpleCube));
     //delete primitive->mesh->material;
     //primitive->mesh->material = new CondorEngine::M_Unlit();
-    
+
+    // gui
+
+    DemoUI* demo = new DemoUI();
+    //CondorEngine::Canvas* canvas = new CondorEngine::Canvas();
+    //scene->canvases.push_back(canvas);
 
     while (!app->shouldClose()) {
         app->tick();
@@ -110,3 +133,5 @@ int main()
     app->terminate();
     return 0;
 }
+
+#pragma endregion
