@@ -17,6 +17,7 @@ namespace CondorEngine {
 	struct DirectionalLight;
 	class SceneObject;
 	class Component;
+	class Light;
 
 #pragma region Object
 
@@ -71,6 +72,7 @@ namespace CondorEngine {
 		ColorRGB ambientLight = ColorRGB{ .1,.1,.1 };
 		/// @brief *Temporary* Scene directional light.
 		DirectionalLight* light;
+		vector<Light*> sceneLights;
 	public:
 		/// @brief Instantiate a SceneObject into this Scene.
 		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.

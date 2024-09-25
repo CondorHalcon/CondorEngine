@@ -4,6 +4,7 @@
 #include "../renderer.h"
 #include "camera.h"
 #include "../debug.h"
+#include "light.h"
 
 // third party
 #include "glew/glew.h"
@@ -23,7 +24,7 @@ namespace CondorEngine {
 		~Material();
 		/// @brief Update material.
 		void Update() override;
-	private:
+	protected:
 		/// @brief Material Shader reference.
 		Shader* shader;
 		/// @brief Model transform matrix.
@@ -56,6 +57,11 @@ namespace CondorEngine {
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
 		void SetUniform(GLuint location, const glm::vec4& value); // for color and quaternions
+		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` arrays.
+		/// @param location Shader layout location.
+		/// @param count Length of array
+		/// @param values Uniform value.
+		void SetUniform(GLuint location, int count, const glm::vec3 &values);
 	};
 
 #pragma endregion 
@@ -75,6 +81,11 @@ namespace CondorEngine {
 		/// @param verts Mesh vertices.
 		/// @param indices Mesh indices.
 		Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices);
+		/// @brief Load a mesh from and `.obj` file.
+		/// @param filename Mesh file path.
+		/// @param material Material to assign to the mesh.
+		/// @return Loaded mesh.
+		static Mesh* LoadMeshFromFile(const char* filename, Material* material);
 		/// @brief Load a mesh from and `.obj` file.
 		/// @param filename Mesh file path.
 		/// @return Loaded mesh.
@@ -119,11 +130,15 @@ namespace CondorEngine {
 	};
 	/// @brief Simple lit material.
 	class M_Lit : public Material {
-	public:
-		/// @brief Class constructor.
-		M_Lit() : Material(Shader::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {
+	protected:
+		/// @brief Class constructor
+		/// @param shader Shader this material will use.
+		M_Lit(Shader* shader) : Material(shader) {
 			sampleTex = nullptr;
 		}
+	public:
+		/// @brief Class constructor.
+		M_Lit() : M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong.frag")) { }
 		/// @brief Update shader uniforms.
 		void Update() override {
 			Material::Update();
@@ -150,6 +165,49 @@ namespace CondorEngine {
 		}
 		/// @brief Albedo texture.
 		Texture* sampleTex;
+	};
+	class M_ComplexLit : public M_Lit {
+	public:
+		/// @brief Class constructor.
+		M_ComplexLit() : M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong_multi-light.frag")) {
+			Debug::Log("M_ComplexLit()");
+		}
+		void Update() override {
+			Material::Update();
+			// lighting
+			ColorRGB lightColors[25];
+			Vector3 lightDirections[25];
+			if (Application::activeScene != nullptr) {
+				lightColors[0] = Application::activeScene->light->color;
+				lightDirections[0] = Application::activeScene->light->direction;
+				for (int i = 0; i < 24; i++) {
+					if (i < Application::activeScene->sceneLights.size()) {
+						lightColors[i+1] = Application::activeScene->sceneLights[i]->getLightColor();
+						lightDirections[i+1] = Application::activeScene->sceneLights[i]->getLightDirection();
+					} else {
+					lightColors[i+1] = ColorRGB{0, 0, 0};
+					lightDirections[i+1] = Vector3{1, 0, 0};
+					}
+				}
+			} else {
+				for (int i = 0; i < 25; i++) {
+					lightColors[i] = ColorRGB{.04, .04, 0};
+					lightDirections[i] = Vector3{1, 0, 0};
+				}
+			}
+			SetUniform(4, 25, *lightColors);
+			SetUniform(5, 25, *lightDirections);
+			// camera position
+			if (Camera::Main() != nullptr) {
+				SetUniform(6, Camera::Main()->getPosition());
+			} else {
+				SetUniform(6, Vector3{ 0,0,0 });
+			}
+			// texture
+			if (sampleTex != nullptr) {
+				SetUniform(7, *sampleTex, 0);
+			}
+		}
 	};
 	/// @brief UV material.
 	class M_UV : public Material {

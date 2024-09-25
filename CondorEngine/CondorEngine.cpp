@@ -4,6 +4,7 @@
 #include "application.h"
 #include "renderer.h"
 #include "debug.h"
+#include "sceneobjects/scenelight.h"
 #include "sceneobjects/spectatorcam.h"
 #include "sceneobjects/primitive.h"
 #include "components/mesh.h"
@@ -58,27 +59,30 @@ int main()
     CondorEngine::Scene* scene = Application::activeScene = new CondorEngine::Scene();
 
     // Camera
-    CondorEngine::SpectatorCam *camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
+    CondorEngine::SpectatorCam* camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,5 });
     camera->Rotate(CondorEngine::Vector3{0, 180, 0});
 
+    // second light
+    CondorEngine::SceneLight *light = scene->Instantiate<CondorEngine::SceneLight>(new CondorEngine::SceneLight(
+        CondorEngine::ColorRGB{.5, .5, .5}, CondorEngine::Vector3{-.7, -.7, 0}));
+
     // simple SceneObject
-    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
-    CondorEngine::Mesh* shapeMesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
-    shape->Move(CondorEngine::Vector3{-2, 0, 1});
-    shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
+    //CondorEngine::M_Lit* sMat = new CondorEngine::M_Lit();
+    //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    //CondorEngine::Mesh* shapeMesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", sMat));
+    //shape->Move(CondorEngine::Vector3{-2, 0, 1});
+    //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // primitive mesh
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube));
+    CondorEngine::M_Lit* pMat = new CondorEngine::M_ComplexLit();
+    pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube, pMat));
     primitive->Move(CondorEngine::Vector3{3, 1, 0});
-    delete primitive->mesh->material;
-    CondorEngine::M_Lit* texMat = new CondorEngine::M_Lit();
-    texMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    primitive->mesh->material = texMat;
 
     // rotatable
-    Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
-    rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj"));
+    //Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
+    //rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Unlit()));
 
     while (!app->shouldClose()) {
         app->tick();

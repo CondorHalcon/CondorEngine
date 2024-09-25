@@ -1,5 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "renderer.h"
+#include "debug.h"
 #include "core.h"
 #include "components/camera.h"
 // std
@@ -65,6 +66,13 @@ CondorEngine::Shader* CondorEngine::Shader::MakeShader(const char* vertShader, c
 	//NOTE: this is where you would detect if something is wrong
 	glCompileShader(vertexPortion);
 	glCompileShader(fragPortion);
+
+	// check compile status
+	GLint vertParam;
+	GLint fragParam;
+	glGetShaderiv(vertexPortion, GL_COMPILE_STATUS, &vertParam);
+	glGetShaderiv(vertexPortion, GL_COMPILE_STATUS, &fragParam);
+	Debug::Log("Shader Compile Status: Vertex[" + std::to_string(vertParam) + "]; Fragment[" + std::to_string(fragParam) + "]");
 
 	// assemble the final shader from the two shaders
 	glAttachShader(shader->program, vertexPortion);

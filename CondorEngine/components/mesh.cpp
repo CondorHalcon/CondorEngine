@@ -75,6 +75,11 @@ void CondorEngine::Material::SetUniform(GLuint location, const glm::vec4& value)
 	glProgramUniform4fv(shader->program, location, 1, glm::value_ptr(value));
 }
 
+void CondorEngine::Material::SetUniform(GLuint location, int count, const glm::vec3 &values)
+{
+	glProgramUniform3fv(shader->program, location, (GLsizei)count, glm::value_ptr(values));
+}
+
 #pragma endregion
 
 #pragma region Mesh
@@ -150,7 +155,7 @@ CondorEngine::Mesh::Mesh(const Vertex* const verts, GLsizei vertCount, const GLu
 CondorEngine::Mesh::Mesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices) :
 	CondorEngine::Mesh::Mesh(verts.data(), verts.size(), indices.data(), indices.size()) { }
 
-CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
+CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename, Material* material)
 {
 	// read vertices from the model
 	const aiScene* scene = aiImportFile(filename, 0);
@@ -204,8 +209,13 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename)
 	}
 
 	Mesh* final = new Mesh(vertices.data(), numV, indices.data(), indices.size());
-	final->material = new M_Lit();
+	final->material = material;
 	return final;
+}
+
+CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char *filename)
+{
+	return LoadMeshFromFile(filename, new M_Lit());
 }
 
 CondorEngine::Mesh::~Mesh()

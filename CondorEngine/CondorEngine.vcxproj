@@ -149,6 +149,7 @@
     <ClCompile Include="components\mesh.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="components\light.cpp" />
+    <ClCompile Include="sceneobjects\scenelight.cpp" />
     <ClCompile Include="sceneobjects\primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="sceneobjects\spectatorcam.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="components\mesh.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="components\light.h" />
+    <ClInclude Include="sceneobjects\scenelight.h" />
     <ClInclude Include="sceneobjects\primitive.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sceneobjects\spectatorcam.h" />

@@ -3,6 +3,7 @@
 #include "renderer.h"
 #include "debug.h"
 #include "application.h"
+#include "components/light.h"
 // std
 #include <string>
 
@@ -23,6 +24,7 @@ CondorEngine::Scene::Scene()
     this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
     light = new DirectionalLight{ ColorRGB{ 1,1,1 }, Vector3{ 0,0,-1 } };
+    sceneLights = vector<Light*>();
 }
 
 CondorEngine::Scene::~Scene()

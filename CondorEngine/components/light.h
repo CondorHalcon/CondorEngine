@@ -17,7 +17,10 @@ namespace CondorEngine {
 	public:
 		/// @brief Class constructor.
 		Light();
-	private:
+		/// @brief Class deconstructor.
+		~Light();
+	// TODO add accessors and make private
+	public:
 		/// @brief Light Color.
 		ColorRGB color;
 		/// @brief Light direction.
