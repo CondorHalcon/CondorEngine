@@ -120,6 +120,11 @@
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\glfw\lib\$(PlatformShortName);$(SolutionDir)thirdparty\glew\lib\$(PlatformShortName);$(SolutionDir)thirdparty\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)thirdparty\assimp\out\install\x64-$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CondorEngine\meshes" "$(TargetDir)\meshes\" /S /Y
+XCOPY "$(SolutionDir)CondorEngine\textures" "$(TargetDir)\textures\" /S /Y
+XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -139,6 +144,11 @@
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\glfw\lib\$(PlatformShortName);$(SolutionDir)thirdparty\glew\lib\$(PlatformShortName);$(SolutionDir)thirdparty\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)thirdparty\assimp\out\install\x64-$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)CondorEngine\meshes" "$(TargetDir)\meshes\" /S /Y
+XCOPY "$(SolutionDir)CondorEngine\textures" "$(TargetDir)\textures\" /S /Y
+XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="components\camera.cpp" />

@@ -15,7 +15,7 @@
 
 using std::fstream;
 
-#pragma region Shader Impementations
+#pragma region Shader Implementations
 
 void ReportCompileStatus(GLuint& shaderToReport) {
 	GLint compileStatus = 0;

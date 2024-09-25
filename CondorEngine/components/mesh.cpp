@@ -53,7 +53,12 @@ void CondorEngine::Material::setTransform(Transform transform)
 	this->transform = transform;
 }
 
-void CondorEngine::Material::SetUniform(GLuint location, const Transform& value)
+int CondorEngine::Material::GetUniformLocation(char *name)
+{
+	return glGetUniformLocation(shader->program, name);
+}
+
+void CondorEngine::Material::SetUniform(GLuint location, const Transform &value)
 {
 	glProgramUniformMatrix4fv(shader->program, location, 1, GL_FALSE, glm::value_ptr(value));
 }
@@ -193,8 +198,8 @@ CondorEngine::Mesh* CondorEngine::Mesh::LoadMeshFromFile(const char* filename, M
 		else {
 			vertex.col = Color{ 1,1,1,1 };
 		}
-		if (mesh->HasTextureCoords(i)) {
-			vertex.uv = Vector2{ mesh->mTextureCoords[i]->x, mesh->mTextureCoords[i]->y };
+		if (mesh->HasTextureCoords(0)) {
+			vertex.uv = Vector2{ mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y };
 		}
 		else {
 			vertex.uv = Vector2{ 0,0 };

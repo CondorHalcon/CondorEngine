@@ -40,6 +40,10 @@ namespace CondorEngine {
 		/// @param transform Model transform matrix.
 		void setTransform(Transform transform);
 	protected:
+		/// @brief Get the location of a uniform.
+		/// @param name Name of the uniform.
+		/// @return Uniform location.
+		int GetUniformLocation(char* name);
 		/// @brief Set shader uniforms for `Transform`.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
@@ -168,6 +172,7 @@ namespace CondorEngine {
 	};
 	class M_ComplexLit : public M_Lit {
 	public:
+		static const int MAX_LIGHTS = 2;
 		/// @brief Class constructor.
 		M_ComplexLit() : M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong_multi-light.frag")) {
 			Debug::Log("M_ComplexLit()");
@@ -175,12 +180,12 @@ namespace CondorEngine {
 		void Update() override {
 			Material::Update();
 			// lighting
-			ColorRGB lightColors[25];
-			Vector3 lightDirections[25];
+			ColorRGB lightColors[MAX_LIGHTS];
+			Vector3 lightDirections[MAX_LIGHTS];
 			if (Application::activeScene != nullptr) {
 				lightColors[0] = Application::activeScene->light->color;
 				lightDirections[0] = Application::activeScene->light->direction;
-				for (int i = 0; i < 24; i++) {
+				for (int i = 0; i < MAX_LIGHTS - 1; i++) {
 					if (i < Application::activeScene->sceneLights.size()) {
 						lightColors[i+1] = Application::activeScene->sceneLights[i]->getLightColor();
 						lightDirections[i+1] = Application::activeScene->sceneLights[i]->getLightDirection();
@@ -190,13 +195,13 @@ namespace CondorEngine {
 					}
 				}
 			} else {
-				for (int i = 0; i < 25; i++) {
+				for (int i = 0; i < MAX_LIGHTS; i++) {
 					lightColors[i] = ColorRGB{.04, .04, 0};
 					lightDirections[i] = Vector3{1, 0, 0};
 				}
 			}
-			SetUniform(4, 25, *lightColors);
-			SetUniform(5, 25, *lightDirections);
+			SetUniform(4, MAX_LIGHTS, *lightColors);
+			SetUniform(5, MAX_LIGHTS, *lightDirections);
 			// camera position
 			if (Camera::Main() != nullptr) {
 				SetUniform(6, Camera::Main()->getPosition());

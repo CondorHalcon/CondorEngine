@@ -40,5 +40,5 @@ void main()
     vec4 color = texture(mainTex, vUV);
     vec4 texCol = (color != vec4(0,0,0,1) ? color : vec4(1,1,1,1)) * vCol * litColor;
 
-    fragColor = texCol * lum + texCol * baseLit + specular;
+    fragColor = (texCol * lum) + (texCol * baseLit) + specular;
 }
