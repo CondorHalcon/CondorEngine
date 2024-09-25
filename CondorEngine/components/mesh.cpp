@@ -53,7 +53,7 @@ void CondorEngine::Material::setTransform(Transform transform)
 	this->transform = transform;
 }
 
-int CondorEngine::Material::GetUniformLocation(char *name)
+int CondorEngine::Material::GetUniformLocation(const char *name)
 {
 	return glGetUniformLocation(shader->program, name);
 }

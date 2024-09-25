@@ -43,7 +43,7 @@ namespace CondorEngine {
 		/// @brief Get the location of a uniform.
 		/// @param name Name of the uniform.
 		/// @return Uniform location.
-		int GetUniformLocation(char* name);
+		int GetUniformLocation(const char* name);
 		/// @brief Set shader uniforms for `Transform`.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
@@ -200,17 +200,17 @@ namespace CondorEngine {
 					lightDirections[i] = Vector3{1, 0, 0};
 				}
 			}
-			SetUniform(4, MAX_LIGHTS, *lightColors);
-			SetUniform(5, MAX_LIGHTS, *lightDirections);
+			SetUniform(GetUniformLocation("lightColor"), MAX_LIGHTS, *lightColors);
+			SetUniform(GetUniformLocation("lightDirection"), MAX_LIGHTS, *lightDirections);
 			// camera position
 			if (Camera::Main() != nullptr) {
-				SetUniform(6, Camera::Main()->getPosition());
+				SetUniform(4, Camera::Main()->getPosition());
 			} else {
-				SetUniform(6, Vector3{ 0,0,0 });
+				SetUniform(4, Vector3{ 0,0,0 });
 			}
 			// texture
 			if (sampleTex != nullptr) {
-				SetUniform(7, *sampleTex, 0);
+				SetUniform(5, *sampleTex, 0);
 			}
 		}
 	};

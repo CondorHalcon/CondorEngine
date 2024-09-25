@@ -88,9 +88,9 @@ int main()
     shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // primitive mesh
-    //CondorEngine::M_Lit* pMat = new CondorEngine::M_ComplexLit();
-    //pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube, new CondorEngine::M_Lit()));
+    CondorEngine::M_Lit* pMat = new CondorEngine::M_ComplexLit();
+    pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube, pMat));
     primitive->Move(CondorEngine::Vector3{3, 1, 0});
     primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
