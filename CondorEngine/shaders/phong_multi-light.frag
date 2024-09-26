@@ -23,7 +23,9 @@ void main()
     vec4 specular = vec4(0, 0, 0, 0);
     vec4 litColor = vec4(0, 0, 0, 1.0);
 
-    for (int i = 0; i < 25; i++) {
+    float specularPower = 64.0;
+
+    for (int i = 0; i < MAX_LIGHTS; i++) {
         vec3 n = normalize(vNorm);
         vec3 L = normalize(lightDirection[i]);
 
@@ -36,17 +38,17 @@ void main()
         vec3 R = reflect(L, n);
 
         // calculate specular power
-        float specularPower = 64.0;
         float specularTermination = pow(max(0, dot(R,V)), specularPower);
         // set w to 0 because we will be adding the vec4 to another vec4
-        specular = vec4(lightColor[i] * specularTermination, 0);
+        specular += vec4(lightColor[i] * specularTermination, 0);
 
-        litColor = vec4(lightColor[i], 0);
+        litColor += vec4(lightColor[i], 0);
     }
 
     // texture and vertex color
     vec4 color = texture(mainTex, vUV);
     vec4 texCol = (color != vec4(0,0,0,1) ? color : vec4(1,1,1,1)) * vCol * litColor;
 
-    fragColor = (texCol * lum) + (texCol * baseLit) + specular;
+    vec4 col = (texCol * lum) + (texCol * baseLit) + specular;
+    fragColor = vec4(col.rgb, 1);
 }

@@ -28,20 +28,22 @@ public:
         this->mesh = AddComponent<CondorEngine::Mesh>(mesh);
     }
     CondorEngine::Mesh* mesh;
+    bool control = true;
     void Update() override {
-        // rotate up down
-        if (Application::Input(GLFW_KEY_UP)) {
-            Rotate(CondorEngine::Vector3{ .2, 0, 0 });
-        }
-        if (Application::Input(GLFW_KEY_DOWN)) {
-            Rotate(CondorEngine::Vector3{ -.2, 0, 0 });
-        }
-        // rotate left right
-        if (Application::Input(GLFW_KEY_RIGHT)) {
-            Rotate(CondorEngine::Vector3{ 0, -.2, 0 });
-        }
-        if (Application::Input(GLFW_KEY_LEFT)) {
-            Rotate(CondorEngine::Vector3{ 0, .2, 0 });
+        if (control) {// rotate up down
+            if (Application::Input(GLFW_KEY_UP)) {
+                Rotate(CondorEngine::Vector3{ .2, 0, 0 });
+            }
+            if (Application::Input(GLFW_KEY_DOWN)) {
+                Rotate(CondorEngine::Vector3{ -.2, 0, 0 });
+            }
+            // rotate left right
+            if (Application::Input(GLFW_KEY_RIGHT)) {
+                Rotate(CondorEngine::Vector3{ 0, -.2, 0 });
+            }
+            if (Application::Input(GLFW_KEY_LEFT)) {
+                Rotate(CondorEngine::Vector3{ 0, .2, 0 });
+            }
         }
     }
 };
@@ -59,6 +61,8 @@ public:
 };
 
 #pragma endregion
+
+#pragma region Main
 
 int main()
 {
@@ -80,7 +84,7 @@ int main()
         CondorEngine::ColorRGB{.5, .5, .5}, CondorEngine::Vector3{-.7, -.7, 0}));
 
     // simple SceneObject
-    CondorEngine::M_Lit* sMat = new CondorEngine::M_Lit();
+    CondorEngine::M_Lit* sMat = new CondorEngine::M_ComplexLit();
     sMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
     CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
     CondorEngine::Mesh* shapeMesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", sMat));
@@ -88,7 +92,7 @@ int main()
     shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // primitive mesh
-    CondorEngine::M_Lit* pMat = new CondorEngine::M_ComplexLit();
+    CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
     CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube, pMat));
     primitive->Move(CondorEngine::Vector3{3, 1, 0});
@@ -96,7 +100,7 @@ int main()
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
-    rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Unlit()));
+    rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
 
     while (!app->shouldClose()) {
         app->tick();
@@ -108,3 +112,5 @@ int main()
     app->terminate();
     return 0;
 }
+
+#pragma endregion
