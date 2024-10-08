@@ -14,6 +14,9 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
     case CondorEngine::Cube:
         mesh = MakeCube();
         break;
+    case CondorEngine::Plane:
+        mesh = MakePlane();
+        break;
     case CondorEngine::Sphere:
         mesh = MakeSphere();
         break;
@@ -340,6 +343,7 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeSphere()
         }
     }
 
+    // TODO fix sphere
     return new Mesh(verts, indices);
 }
 
@@ -359,5 +363,40 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeCylinder()
     }
 
     std::vector<Vertex> verts;
+    // TODO complete
     return nullptr;
+}
+
+CondorEngine::Mesh* CondorEngine::Primitive::MakePlane()
+{
+    std::vector<Vertex> verts = {
+        { // 0: vertex
+            Vector4{.5f, 0, .5f, 1}, // position
+            Vector4{1, 1, 1, 1}, // vertex color
+            Vector2{0.0f, 0.0f}, // vertex uv
+            Vector3{0, 1, 0}  // vertex normal
+        },
+        { // 1: vertex
+            Vector4{-.5f, 0, .5f, 1}, // position
+            Vector4{1, 1, 1, 1}, // vertex color
+            Vector2{1.0f, 0.0f}, // vertex uv
+            Vector3{0, 1, 0}  // vertex normal
+        },
+        { // 2: vertex
+            Vector4{.5f, 0, -.5f, 1}, // position
+            Vector4{1, 1, 1, 1}, // vertex color
+            Vector2{0.0f, 1.0f}, // vertex uv
+            Vector3{0, 1, 0}  // vertex normal
+        },
+        { // 3: vertex
+            Vector4{-.5f, 0, -.5f, 1}, // position
+            Vector4{1, 1, 1, 1}, // vertex color
+            Vector2{1.0f, 1.0f}, // vertex uv
+            Vector3{0, 1, 0}  // vertex normal
+        },
+    };
+    std::vector<GLuint> indicies = {
+        0, 2, 1,  2, 3, 1,
+    };
+    return new Mesh(verts, indicies);
 }

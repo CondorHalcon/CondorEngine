@@ -1,5 +1,6 @@
 #include "application.h"
 #include "debug.h"
+#include "time.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
@@ -28,6 +29,22 @@ Application* Application::Instance()
 	return instance;
 }
 
+void Application::Run()
+{
+	while (this->shouldClose()) {
+        this->tick();
+        this->clear();
+		if (CondorEngine::accumulatedFixedTime >= CondorEngine::fixedTimeStep) {
+			this->fixedUpdate();
+			CondorEngine::accumulatedFixedTime -= CondorEngine::fixedTimeStep;
+		}
+        this->update();
+        this->lateUpdate();
+
+		CondorEngine::timeUpdate();
+	}
+}
+
 CondorEngine::Vector2Int Application::getWindowDimensions()
 {
 	return CondorEngine::Vector2Int{ windowWidth, windowHeight };
@@ -35,6 +52,8 @@ CondorEngine::Vector2Int Application::getWindowDimensions()
 
 bool Application::init(int width, int height, const char* title)
 {
+	CondorEngine::timeInit();
+
 	this->windowWidth = width;
 	this->windowHeight = height;
 	// window handling
@@ -83,6 +102,14 @@ void Application::update()
 	}
 }
 
+void Application::fixedUpdate()
+{
+	if (activeScene != nullptr) {
+		if (activeScene->enabled) {
+			activeScene->HierarchyFixedUpdate();
+		}
+	}
+}
 void Application::lateUpdate()
 {
 	if (activeScene != nullptr) {

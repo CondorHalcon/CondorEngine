@@ -20,6 +20,8 @@ public:
 	/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
 	/// @return Class singleton.
 	static Application* Instance();
+	/// @brief While application should run.
+	void Run();
 private:
 	int windowWidth;
 	int windowHeight;
@@ -42,6 +44,8 @@ public:
 	void clear();
 	/// @brief Application Update call. (Updates active scene.)
 	void update();
+	/// @brief Application fixed update call.
+	void fixedUpdate();
 	/// @brief Application LateUpdate call. (Late updates active scene.)
 	void lateUpdate();
 	/// @brief Application termination.

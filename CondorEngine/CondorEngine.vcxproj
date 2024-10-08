@@ -159,10 +159,13 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClCompile Include="components\mesh.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="components\light.cpp" />
+    <ClCompile Include="components\rigidbody.cpp" />
+    <ClCompile Include="physics.cpp" />
     <ClCompile Include="sceneobjects\scenelight.cpp" />
     <ClCompile Include="sceneobjects\primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="sceneobjects\spectatorcam.cpp" />
+    <ClCompile Include="time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
@@ -173,10 +176,13 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClInclude Include="components\mesh.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="components\light.h" />
+    <ClInclude Include="components\rigidbody.h" />
+    <ClInclude Include="physics.h" />
     <ClInclude Include="sceneobjects\scenelight.h" />
     <ClInclude Include="sceneobjects\primitive.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sceneobjects\spectatorcam.h" />
+    <ClInclude Include="time.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\assimp-vc143-mt.dll">

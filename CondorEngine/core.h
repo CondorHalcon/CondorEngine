@@ -35,6 +35,8 @@ namespace CondorEngine {
 		virtual void Start() {}
 		/// @brief Every tick/frame.
 		virtual void Update() {}
+		/// @brief Physics fixed update.
+		virtual void FixedUpdate() {}
 		/// @brief Called after the tick/frame.
 		virtual void LateUpdate() {}
 		/// @brief Object to string.
@@ -57,6 +59,8 @@ namespace CondorEngine {
 		~Scene();
 		/// @brief Update this Scene and its hierarchy.
 		void HierarchyUpdate();
+		/// @brief Fixed update this scene and its hierarchy.
+		void HierarchyFixedUpdate();
 		/// @brief Late update this Scene and its hierarchy.
 		void HierarchyLateUpdate();
 	private:
@@ -120,6 +124,8 @@ namespace CondorEngine {
 		~SceneObject();
 		/// @brief Update this SceneObject, its components, and its children.
 		void HierarchyUpdate();
+		/// @brief Fixed update this SceneObject, its components, and its children.
+		void HierarchyFixedUpdate();
 		/// @brief Late update this SceneObject, its components, and its children.
 		void HierarchyLateUpdate();
 	private:
@@ -294,6 +300,8 @@ namespace CondorEngine {
 	public:
 		/// @brief Update this component.
 		void HierarchyUpdate();
+		/// @brief Fixed update this component.
+		void HierarchyFixedUpdate();
 		/// @brief Late update this component.
 		void HierarchyLateUpdate();
 	private:

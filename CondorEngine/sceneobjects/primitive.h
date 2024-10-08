@@ -13,8 +13,6 @@ namespace CondorEngine {
 		SimpleCube,
 		Cube,
 		Plane,
-		Line, 
-		Box,
 		Sphere,
 		Cylinder
 	};
@@ -41,8 +39,11 @@ namespace CondorEngine {
 		/// @brief Make a primitive sphere mesh.
 		/// @return Primitive sphere mesh.
 		static Mesh* MakeSphere();
-		/// @brief Make a primitive Cylinder mesh.
+		/// @brief Make a primitive cylinder mesh.
 		/// @return Primitive cylinder mesh.
 		static Mesh* MakeCylinder();
+		/// @brief Make a primitive plane mesh.
+		/// @return Primitive plane mesh.
+		static Mesh* MakePlane();
 	};
 }

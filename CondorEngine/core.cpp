@@ -58,6 +58,26 @@ void CondorEngine::Scene::HierarchyUpdate()
     }
 }
 
+void CondorEngine::Scene::HierarchyFixedUpdate()
+{
+    if (!enabled || !hasDoneFirstUpdate) { return; }
+    FixedUpdate();
+
+    for (int i = 0; i < hierarchy.size(); i++) {
+        try {
+            if (hierarchy[i]->enabled) {
+                hierarchy[i]->HierarchyFixedUpdate();
+            }
+        }
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
+            Debug::LogError("Failed SceneObject FixedUpdate : Failed to fixed update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
+        }
+    }
+}
+
 void CondorEngine::Scene::HierarchyLateUpdate()
 {
     if (!enabled || !hasDoneFirstUpdate) { return; }
@@ -132,6 +152,35 @@ void CondorEngine::SceneObject::HierarchyUpdate()
         } 
         catch (...) {
             Debug::LogError("Failed Child SceneObject Update : Failed to update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
+        }
+    }
+}
+
+void CondorEngine::SceneObject::HierarchyFixedUpdate()
+{
+    if (!enabled || !hasDoneFirstUpdate) { return; }
+    FixedUpdate();
+
+    for (int i = 0; i < components.size(); i++) {
+        try {
+            components[i]->HierarchyFixedUpdate();
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
+            Debug::LogError("Failed Component FixedUpdate : Failed to fixed update Component in SceneObject(" + name +  ") at index[" + std::to_string(i) + "].");
+        }
+    }
+    for (int i = 0; i < children.size(); i++) {
+        try {
+            children[i]->HierarchyFixedUpdate();
+        } 
+        catch (String msg) {
+            Debug::LogError(msg);
+        } 
+        catch (...) {
+            Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -315,6 +364,12 @@ void CondorEngine::Component::HierarchyUpdate()
         Start();
     }
     Update();
+}
+
+void CondorEngine::Component::HierarchyFixedUpdate()
+{
+    if (!enabled || !hasDoneFirstUpdate) { return; }
+    FixedUpdate();
 }
 
 void CondorEngine::Component::HierarchyLateUpdate()

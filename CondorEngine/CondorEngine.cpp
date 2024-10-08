@@ -1,3 +1,8 @@
+// third party
+#include "glew/glew.h"
+#include "glm/ext.hpp"
+#include "glfw/glfw3.h"
+// internal
 #include "diagnostics.h"
 #include "math.h"
 #include "core.h"
@@ -8,12 +13,10 @@
 #include "sceneobjects/spectatorcam.h"
 #include "sceneobjects/primitive.h"
 #include "components/mesh.h"
+#include "time.h"
 // std
 #include <iostream>
 #include <string>
-// third party
-#include "glm/ext.hpp"
-#include "glfw/glfw3.h"
 
 #pragma region Implementation Classes
 
@@ -59,6 +62,13 @@ public:
         SetUniform(3, COUNT, *colors);
     }
 };
+class FixedTimePrinter : public CondorEngine::SceneObject {
+    public:
+    FixedTimePrinter() : SceneObject() {}
+    void FixedUpdate() override {
+        CondorEngine::Debug::Log(std::to_string(CondorEngine::time()));
+    }
+};
 
 #pragma endregion
 
@@ -94,20 +104,19 @@ int main()
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Sphere, pMat));
-    primitive->Move(CondorEngine::Vector3{3, 1, 0});
-    primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Plane, pMat));
+    primitive->Move(CondorEngine::Vector3{0, -1, 0});
+    //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
     rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
+    rotatable->Move(CondorEngine::Vector3{ 2, 0, 1 });
 
-    while (!app->shouldClose()) {
-        app->tick();
-        app->clear();
-        app->update();
-        app->lateUpdate();
-    }
+    CondorEngine::fixedTimeStep = 1.0;
+    FixedTimePrinter* timePrinter = scene->Instantiate<FixedTimePrinter>(new FixedTimePrinter());
+
+    app->Run();
 
     app->terminate();
     return 0;
