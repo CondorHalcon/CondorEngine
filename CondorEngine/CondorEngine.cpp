@@ -94,7 +94,7 @@ int main()
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::Cube, pMat));
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Sphere, pMat));
     primitive->Move(CondorEngine::Vector3{3, 1, 0});
     primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 

@@ -49,6 +49,10 @@ namespace CondorEngine {
 	class Math
 	{
 	public:
+		/// @brief Good old PI (3.14)
+		const static float PI;
+
+	public:
 		/// @brief Transform vector from local space to world space.
 		/// @param transform The relative transform matrix.
 		/// @param vector The local space vector.

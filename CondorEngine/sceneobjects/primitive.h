@@ -11,7 +11,12 @@ namespace CondorEngine {
 	/// @brief Primitive mesh type.
 	enum PrimitiveType {
 		SimpleCube,
-		Cube
+		Cube,
+		Plane,
+		Line, 
+		Box,
+		Sphere,
+		Cylinder
 	};
 	/// @brief SceneObject with primitive mesh.
 	class Primitive : public SceneObject
@@ -33,5 +38,11 @@ namespace CondorEngine {
 		/// @brief Make a primitive cube.
 		/// @return Primitive cube mesh.
 		static Mesh* MakeCube();
+		/// @brief Make a primitive sphere mesh.
+		/// @return Primitive sphere mesh.
+		static Mesh* MakeSphere();
+		/// @brief Make a primitive Cylinder mesh.
+		/// @return Primitive cylinder mesh.
+		static Mesh* MakeCylinder();
 	};
 }

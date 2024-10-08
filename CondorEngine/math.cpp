@@ -9,6 +9,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/matrix_decompose.hpp"
 
+const float CondorEngine::Math::PI = 3.14159265358979323846264338327950288f;
 
 CondorEngine::Vector3 CondorEngine::Math::TransformVector(Transform transform, Vector3 vector)
 {
