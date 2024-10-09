@@ -1,30 +1,33 @@
 #include "time.h"
 #include "glfw/glfw3.h"
-#include "debug.h"
+double CondorEngine::Time::lastFrameTime = 0.0;
+double CondorEngine::Time::accumulatedFixedTime = 0.0;
+float CondorEngine::Time::fixedTimeStep = 0.02f;
 
-#include <string>
-
-void CondorEngine::timeInit()
+void CondorEngine::Time::timeInit()
 {
-    Debug::Log("init fixedTimeStep" + std::to_string(fixedTimeStep));
     fixedTimeStep = 0.0166f;
-    Debug::Log("init fixedTimeStep" + std::to_string(fixedTimeStep));
     lastFrameTime = glfwGetTime();
     accumulatedFixedTime = 0;
 }
 
-void CondorEngine::timeUpdate()
+void CondorEngine::Time::timeUpdate()
 {
     lastFrameTime = glfwGetTime();
 }
 
-float CondorEngine::time() {
+float CondorEngine::Time::time() {
     return glfwGetTime();
 }
 
-float CondorEngine::deltaTime() 
+float CondorEngine::Time::deltaTime() 
 {
     double currentTime = glfwGetTime();
     float deltaTime = (currentTime - lastFrameTime);
     return deltaTime;
+}
+
+float CondorEngine::Time::fixedDeltaTime() 
+{
+    return (float)accumulatedFixedTime;
 }

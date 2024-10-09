@@ -15,7 +15,7 @@ namespace CondorEngine
     {
     public:
         Collider();
-        virtual void FixedUpdate() override;
+        ~Collider();
         float radius;
     private:
         ColliderType type;

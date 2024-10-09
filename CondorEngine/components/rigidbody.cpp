@@ -7,11 +7,12 @@ CondorEngine::Rigidbody::Rigidbody() : CondorEngine::Component()
     this->mass = 1.0f;
     this->useGravity = true;
     this->velocity = Vector3{0, 0, 0};
+    Physics::AddRigidbody(this);
 }
 
-void CondorEngine::Rigidbody::FixedUpdate()
+CondorEngine::Rigidbody::~Rigidbody()
 {
-    Physics::AddRigidbody(this);
+    Physics::RemoveRigidbody(this);
 }
 
 void CondorEngine::Rigidbody::AddForce(Vector3 force)

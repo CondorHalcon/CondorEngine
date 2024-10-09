@@ -2,6 +2,7 @@
 #include "debug.h"
 #include "time.h"
 #include "physics.h"
+#include "debug.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
@@ -35,16 +36,16 @@ void Application::Run()
 	while (!this->shouldClose()) {
         this->tick();
         this->clear();
-		CondorEngine::accumulatedFixedTime += CondorEngine::deltaTime();
-		if (CondorEngine::accumulatedFixedTime >= CondorEngine::fixedTimeStep) {
+		CondorEngine::Time::accumulatedFixedTime += CondorEngine::Time::deltaTime();
+		while (CondorEngine::Time::accumulatedFixedTime >= CondorEngine::Time::fixedTimeStep) {
 			this->fixedUpdate();
 			CondorEngine::Physics::PhysicsUpdate();
-			CondorEngine::accumulatedFixedTime -= CondorEngine::fixedTimeStep;
+			CondorEngine::Time::accumulatedFixedTime -= CondorEngine::Time::fixedTimeStep;
 		}
         this->update();
         this->lateUpdate();
 
-		CondorEngine::timeUpdate();
+		CondorEngine::Time::timeUpdate();
 	}
 }
 
@@ -55,7 +56,7 @@ CondorEngine::Vector2Int Application::getWindowDimensions()
 
 bool Application::init(int width, int height, const char* title)
 {
-	CondorEngine::timeInit();
+	CondorEngine::Time::timeInit();
 
 	this->windowWidth = width;
 	this->windowHeight = height;

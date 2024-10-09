@@ -4,12 +4,13 @@
 CondorEngine::Collider::Collider() : CondorEngine::Component()
 {
     this->type = ColliderType::Sphere;
-    this->radius = 10;
+    this->radius = .5f;
+    Physics::AddCollider(this);
 }
 
-void CondorEngine::Collider::FixedUpdate()
+CondorEngine::Collider::~Collider()
 {
-    Physics::AddCollider(this);
+    Physics::RemoveCollider(this);
 }
 
 CondorEngine::ColliderType CondorEngine::Collider::getType()

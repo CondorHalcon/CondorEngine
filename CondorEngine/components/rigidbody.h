@@ -9,12 +9,12 @@ namespace CondorEngine
 	public:
 		/// @brief Class constructor
 		Rigidbody();
+		/// @brief Class deconstructor.
+		~Rigidbody();
 		/// @brief Mass of the rigidbody in kg(s).
 		float mass;
 		/// @brief Apply world gravity to this rigidbody.
 		bool useGravity;
-		/// @brief Physics update.
-		void FixedUpdate() override;
 		/// @brief Add force to this rigidbody.
 		/// @param force Force to add.
 		void AddForce(Vector3 force);

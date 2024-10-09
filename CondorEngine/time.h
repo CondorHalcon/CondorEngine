@@ -3,11 +3,16 @@
 
 namespace CondorEngine 
 {
-    static double lastFrameTime = 0.0;
-    static double accumulatedFixedTime = 0.0;
-    void timeInit();
-    void timeUpdate();
-    static float fixedTimeStep = 0.02f;
-    float time();
-    float deltaTime();
+    class Time
+    {
+    public:
+        static double lastFrameTime;
+        static double accumulatedFixedTime;
+        static void timeInit();
+        static void timeUpdate();
+        static float fixedTimeStep;
+        static float time();
+        static float deltaTime();
+        static float fixedDeltaTime();
+    };
 }

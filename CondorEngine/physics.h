@@ -17,7 +17,9 @@ namespace CondorEngine
         static std::vector<Rigidbody*> rigidbodies;
     public:
         static void AddCollider(Collider* collider);
+        static void RemoveCollider(Collider *collider);
         static void AddRigidbody(Rigidbody* rigidbody);
+        static void RemoveRigidbody(Rigidbody *rigidbody);
         static void PhysicsUpdate();
     };
 }

@@ -35,20 +35,21 @@ public:
     }
     CondorEngine::Mesh* mesh;
     bool control = true;
+    float rotationSpeed = 10;
     void Update() override {
         if (control) {// rotate up down
             if (Application::Input(GLFW_KEY_UP)) {
-                Rotate(CondorEngine::Vector3{ .2, 0, 0 });
+                Rotate(CondorEngine::Vector3{ 1, 0, 0 } * rotationSpeed * CondorEngine::Time::deltaTime());
             }
             if (Application::Input(GLFW_KEY_DOWN)) {
-                Rotate(CondorEngine::Vector3{ -.2, 0, 0 });
+                Rotate(CondorEngine::Vector3{ -1, 0, 0 } * rotationSpeed * CondorEngine::Time::deltaTime());
             }
             // rotate left right
             if (Application::Input(GLFW_KEY_RIGHT)) {
-                Rotate(CondorEngine::Vector3{ 0, -.2, 0 });
+                Rotate(CondorEngine::Vector3{ 0, -1, 0 } * rotationSpeed * CondorEngine::Time::deltaTime());
             }
             if (Application::Input(GLFW_KEY_LEFT)) {
-                Rotate(CondorEngine::Vector3{ 0, .2, 0 });
+                Rotate(CondorEngine::Vector3{ 0, 1, 0 } * rotationSpeed * CondorEngine::Time::deltaTime());
             }
         }
     }
@@ -68,9 +69,14 @@ public:
 class FixedTimePrinter : public CondorEngine::SceneObject {
     public:
     FixedTimePrinter() : SceneObject() {}
-    /*void FixedUpdate() override {
-        //CondorEngine::Debug::Log(std::to_string(CondorEngine::time()));
-    }*/
+    void FixedUpdate() override {
+        CondorEngine::Debug::Log("FixedTime: time: " +
+            std::to_string(CondorEngine::Time::time()) + 
+            "; deltaTime: " + std::to_string(CondorEngine::Time::deltaTime()) + 
+            "; fixedTimeStep: " + std::to_string(CondorEngine::Time::fixedTimeStep) +
+            "; fixedDeltaTime: " + std::to_string(CondorEngine::Time::fixedDeltaTime())
+        );
+    }
 };
 
 #pragma endregion
@@ -91,18 +97,19 @@ int main()
     CondorEngine::SpectatorCam* camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,5 });
     camera->Rotate(CondorEngine::Vector3{0, 180, 0});
+    camera->enabled = false;
 
     // second light
-    CondorEngine::SceneLight *light = scene->Instantiate<CondorEngine::SceneLight>(new CondorEngine::SceneLight(
-        CondorEngine::ColorRGB{.5, .5, .5}, CondorEngine::Vector3{-.7, -.7, 0}));
+    //CondorEngine::SceneLight *light = scene->Instantiate<CondorEngine::SceneLight>(new CondorEngine::SceneLight(
+    //    CondorEngine::ColorRGB{.5, .5, .5}, CondorEngine::Vector3{-.7, -.7, 0}));
 
     // simple SceneObject
-    CondorEngine::M_Lit* sMat = new CondorEngine::M_ComplexLit();
-    sMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
-    CondorEngine::Mesh* shapeMesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", sMat));
-    shape->Move(CondorEngine::Vector3{-2, 0, 1});
-    shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
+    //CondorEngine::M_Lit* sMat = new CondorEngine::M_ComplexLit();
+    //sMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    //CondorEngine::SceneObject* shape = scene->Instantiate<CondorEngine::SceneObject>(new CondorEngine::SceneObject());
+    //CondorEngine::Mesh* shapeMesh = shape->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", sMat));
+    //shape->Move(CondorEngine::Vector3{-2, 0, 1});
+    //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
@@ -111,18 +118,23 @@ int main()
     CondorEngine::Collider *primitiveCol = primitive->AddComponent(new CondorEngine::Collider());
     CondorEngine::Rigidbody *primitiveRb = primitive->AddComponent(new CondorEngine::Rigidbody());
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
-    primitiveRb->AddForce(CondorEngine::Vector3{1, 0, 0});
+    primitiveRb->AddForce(CondorEngine::Vector3{0, 1, 0} * .1f);
     //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
+
+    // primitive mesh 2
+    CondorEngine::Primitive *prim2 = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereShape, pMat));
+    CondorEngine::Collider *prim2Col = prim2->AddComponent(new CondorEngine::Collider());
+    prim2->Move(CondorEngine::Vector3{0, 2, 0});
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
     rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
     rotatable->Move(CondorEngine::Vector3{ 2, 0, 1 });
 
-    CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::fixedTimeStep));
-    CondorEngine::fixedTimeStep = 1.0f;
-    CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::fixedTimeStep));
-    FixedTimePrinter* timePrinter = scene->Instantiate<FixedTimePrinter>(new FixedTimePrinter());
+    //CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::Time::fixedTimeStep));
+    //CondorEngine::Time::fixedTimeStep = 1.0f;
+    //CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::Time::fixedTimeStep));
+    //FixedTimePrinter* timePrinter = scene->Instantiate<FixedTimePrinter>(new FixedTimePrinter());
 
     app->Run();
 

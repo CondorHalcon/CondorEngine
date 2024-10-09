@@ -11,6 +11,8 @@ namespace CondorEngine {
 		SpectatorCam();
 		/// @brief Camera component.
 		Camera* camera;
+		float moveSpeed;
+		float rotationSpeed;
 		/// @brief Update spectator camera.
 		void Update() override;
 	};
