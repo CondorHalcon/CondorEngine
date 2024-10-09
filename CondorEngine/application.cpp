@@ -1,6 +1,7 @@
 #include "application.h"
 #include "debug.h"
 #include "time.h"
+#include "physics.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
@@ -31,11 +32,13 @@ Application* Application::Instance()
 
 void Application::Run()
 {
-	while (this->shouldClose()) {
+	while (!this->shouldClose()) {
         this->tick();
         this->clear();
+		CondorEngine::accumulatedFixedTime += CondorEngine::deltaTime();
 		if (CondorEngine::accumulatedFixedTime >= CondorEngine::fixedTimeStep) {
 			this->fixedUpdate();
+			CondorEngine::Physics::PhysicsUpdate();
 			CondorEngine::accumulatedFixedTime -= CondorEngine::fixedTimeStep;
 		}
         this->update();

@@ -9,6 +9,8 @@ namespace CondorEngine
 	public:
 		/// @brief Class constructor
 		Rigidbody();
+		/// @brief Mass of the rigidbody in kg(s).
+		float mass;
 		/// @brief Apply world gravity to this rigidbody.
 		bool useGravity;
 		/// @brief Physics update.
@@ -19,7 +21,8 @@ namespace CondorEngine
 	private:
 		/// @brief Current velocity.
 		Vector3 velocity;
-		/// @brief OnCollision event.
-		void OnCollision();
+	public:
+		Vector3 getVelocity();
+		void setVelocity(Vector3 velocity);
 	};
 }

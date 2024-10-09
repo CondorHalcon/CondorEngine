@@ -151,6 +151,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="components\collider.cpp" />
     <ClCompile Include="components\camera.cpp" />
     <ClCompile Include="CondorEngine.cpp" />
     <ClCompile Include="application.cpp" />
@@ -169,6 +170,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="components\collider.h" />
     <ClInclude Include="components\camera.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="debug.h" />

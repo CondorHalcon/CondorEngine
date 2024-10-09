@@ -2,17 +2,22 @@
 #include "core.h"
 #include "math.h"
 #include "components/rigidbody.h"
+#include "components/collider.h"
+// std
+#include <vector>
 
 namespace CondorEngine
 {
-    class PhysicsScene
+    class Physics
     {
     public:
-        PhysicsScene();
-        ~PhysicsScene();
-
-        std::vector<SceneObject> sceneObjects;
-        void AddSceneObject(SceneObject*);
-        void RemoveSceneObject(SceneObject*);
+        static void init();
+    private:
+        static std::vector<Collider*> colliders;
+        static std::vector<Rigidbody*> rigidbodies;
+    public:
+        static void AddCollider(Collider* collider);
+        static void AddRigidbody(Rigidbody* rigidbody);
+        static void PhysicsUpdate();
     };
 }

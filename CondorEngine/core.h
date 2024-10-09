@@ -18,6 +18,7 @@ namespace CondorEngine {
 	class SceneObject;
 	class Component;
 	class Light;
+	class Collider;
 
 #pragma region Object
 
@@ -128,6 +129,8 @@ namespace CondorEngine {
 		void HierarchyFixedUpdate();
 		/// @brief Late update this SceneObject, its components, and its children.
 		void HierarchyLateUpdate();
+		void ObjectOnCollision(Collider* other);
+		virtual void OnCollision(Collider* other) {}
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;
@@ -304,6 +307,7 @@ namespace CondorEngine {
 		void HierarchyFixedUpdate();
 		/// @brief Late update this component.
 		void HierarchyLateUpdate();
+		virtual void OnCollision(Collider* other) {}
 	private:
 		/// @brief Check for first update call on this Component. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;

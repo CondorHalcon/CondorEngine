@@ -1,3 +1,4 @@
+#pragma once
 // third party
 #include "glew/glew.h"
 #include "glm/ext.hpp"
@@ -13,6 +14,8 @@
 #include "sceneobjects/spectatorcam.h"
 #include "sceneobjects/primitive.h"
 #include "components/mesh.h"
+#include "components/rigidbody.h"
+#include "components/collider.h"
 #include "time.h"
 // std
 #include <iostream>
@@ -65,9 +68,9 @@ public:
 class FixedTimePrinter : public CondorEngine::SceneObject {
     public:
     FixedTimePrinter() : SceneObject() {}
-    void FixedUpdate() override {
-        CondorEngine::Debug::Log(std::to_string(CondorEngine::time()));
-    }
+    /*void FixedUpdate() override {
+        //CondorEngine::Debug::Log(std::to_string(CondorEngine::time()));
+    }*/
 };
 
 #pragma endregion
@@ -104,8 +107,11 @@ int main()
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Plane, pMat));
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Cube, pMat));
+    CondorEngine::Collider *primitiveCol = primitive->AddComponent(new CondorEngine::Collider());
+    CondorEngine::Rigidbody *primitiveRb = primitive->AddComponent(new CondorEngine::Rigidbody());
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
+    primitiveRb->AddForce(CondorEngine::Vector3{1, 0, 0});
     //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
     // rotatable
@@ -113,7 +119,9 @@ int main()
     rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
     rotatable->Move(CondorEngine::Vector3{ 2, 0, 1 });
 
-    CondorEngine::fixedTimeStep = 1.0;
+    CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::fixedTimeStep));
+    CondorEngine::fixedTimeStep = 1.0f;
+    CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::fixedTimeStep));
     FixedTimePrinter* timePrinter = scene->Instantiate<FixedTimePrinter>(new FixedTimePrinter());
 
     app->Run();

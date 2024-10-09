@@ -17,7 +17,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
     case CondorEngine::Plane:
         mesh = MakePlane();
         break;
-    case CondorEngine::Sphere:
+    case CondorEngine::SphereShape:
         mesh = MakeSphere();
         break;
     default:

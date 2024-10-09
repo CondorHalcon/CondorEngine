@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "application.h"
 #include "components/light.h"
+#include "components/collider.h"
 // std
 #include <string>
 
@@ -211,6 +212,14 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
         catch (...) {
             Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
+    }
+}
+
+void CondorEngine::SceneObject::ObjectOnCollision(Collider* other)
+{
+    OnCollision(other);
+    for (int i = 0; i < components.size(); i++) {
+        components[i]->OnCollision(other);
     }
 }
 

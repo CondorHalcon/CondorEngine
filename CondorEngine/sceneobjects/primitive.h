@@ -13,7 +13,7 @@ namespace CondorEngine {
 		SimpleCube,
 		Cube,
 		Plane,
-		Sphere,
+		SphereShape,
 		Cylinder
 	};
 	/// @brief SceneObject with primitive mesh.

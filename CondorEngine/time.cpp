@@ -1,10 +1,16 @@
 #include "time.h"
 #include "glfw/glfw3.h"
+#include "debug.h"
+
+#include <string>
 
 void CondorEngine::timeInit()
 {
-	fixedTimeStep = 0.0166f;
+    Debug::Log("init fixedTimeStep" + std::to_string(fixedTimeStep));
+    fixedTimeStep = 0.0166f;
+    Debug::Log("init fixedTimeStep" + std::to_string(fixedTimeStep));
     lastFrameTime = glfwGetTime();
+    accumulatedFixedTime = 0;
 }
 
 void CondorEngine::timeUpdate()
@@ -13,12 +19,12 @@ void CondorEngine::timeUpdate()
 }
 
 float CondorEngine::time() {
-    return glfwGetTime() / 1000.0f;
+    return glfwGetTime();
 }
 
 float CondorEngine::deltaTime() 
 {
     double currentTime = glfwGetTime();
-    float deltaTime = (currentTime - lastFrameTime) / 1000.0f;
+    float deltaTime = (currentTime - lastFrameTime);
     return deltaTime;
 }
