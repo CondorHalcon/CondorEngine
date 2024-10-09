@@ -97,7 +97,6 @@ int main()
     CondorEngine::SpectatorCam* camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,5 });
     camera->Rotate(CondorEngine::Vector3{0, 180, 0});
-    camera->enabled = false;
 
     // second light
     //CondorEngine::SceneLight *light = scene->Instantiate<CondorEngine::SceneLight>(new CondorEngine::SceneLight(
@@ -114,7 +113,7 @@ int main()
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::Cube, pMat));
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereShape, pMat));
     CondorEngine::Collider *primitiveCol = primitive->AddComponent(new CondorEngine::Collider());
     CondorEngine::Rigidbody *primitiveRb = primitive->AddComponent(new CondorEngine::Rigidbody());
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
@@ -130,6 +129,7 @@ int main()
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
     rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
     rotatable->Move(CondorEngine::Vector3{ 2, 0, 1 });
+    rotatable->control = false;
 
     //CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::Time::fixedTimeStep));
     //CondorEngine::Time::fixedTimeStep = 1.0f;

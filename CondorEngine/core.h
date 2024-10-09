@@ -222,21 +222,22 @@ namespace CondorEngine {
 		/// @tparam T Type of Component to find.
 		/// @param component out Component object.
 		/// @return True if it found a Component of type `T`, false if it did not.
-		template <typename T> bool TryFindComponent(T& component) {
-			component = nullptr;
+		template <typename T> bool TryFindComponent(T* component) {
 			for (int i = 0; i < this->components.size(); i++) {
+				std::cout << name << ": " << (typeid(this->components[i]) == typeid(T)) << std::endl;
 				if (typeid(this->components[i]) == typeid(T)) {
-					component = this->components[i];
+					//component = this->components[i];
 					return true;
 				}
 			}
+			//component = nullptr;
 			return false;
 		}
 		/// @brief Find a Component of type on this SceneObject or its children. `WARNING`: This is a recursive function that loops through every component on every child.
 		/// @tparam T Type of Component to find.
 		/// @param component out Component object.
 		/// @return True if it found a Component of type `T`, false if it did not.
-		template <typename T> bool TryFindComponentInChildren(T& component) {
+		template <typename T> bool TryFindComponentInChildren(T* component) {
 			component = nullptr;
 			if (TryFindComponent<T>(component)) {
 				return true;

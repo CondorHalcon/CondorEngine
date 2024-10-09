@@ -4,6 +4,7 @@
 
 CondorEngine::Rigidbody::Rigidbody() : CondorEngine::Component()
 {
+    this->name = "CondorEngine::Rigidbody";
     this->mass = 1.0f;
     this->useGravity = true;
     this->velocity = Vector3{0, 0, 0};

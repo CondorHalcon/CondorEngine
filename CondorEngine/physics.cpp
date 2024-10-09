@@ -65,12 +65,25 @@ void CondorEngine::Physics::PhysicsUpdate()
                 std::to_string(colliders[j]->radius)
                 );*/
             if (distance <= colliders[i]->radius + colliders[j]->radius) {
-                /*Debug::Log("colliders[" + std::to_string(i) + "] is hitting " +
+                Debug::Log("colliders[" + std::to_string(i) + "] is hitting " +
                 "colliders[" + std::to_string(j) + "]" + 
                 " at a distance of " +  std::to_string(distance)
-                );*/
+                );
+
+                // on collision triggers
                 colliders[i]->getSceneObject()->ObjectOnCollision(colliders[j]);
                 colliders[j]->getSceneObject()->ObjectOnCollision(colliders[i]);
+
+                // collision resolution
+                Rigidbody *rbA = nullptr;
+                Rigidbody *rbB = nullptr;
+                bool aHasRb = colliders[i]->getSceneObject()->TryFindComponent<Rigidbody>(rbA);
+                //bool bHasRb = colliders[j]->getSceneObject()->TryFindComponent<Rigidbody>(rbB);
+                Debug::Log(colliders[i]->name + ": " + std::to_string(aHasRb));
+                if (aHasRb) 
+                {
+                    // TODO continue here
+                }
             }
         }
     }

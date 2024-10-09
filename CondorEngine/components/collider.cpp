@@ -3,6 +3,7 @@
 
 CondorEngine::Collider::Collider() : CondorEngine::Component()
 {
+    this->name = "CondorEngine::Collider";
     this->type = ColliderType::Sphere;
     this->radius = .5f;
     Physics::AddCollider(this);
