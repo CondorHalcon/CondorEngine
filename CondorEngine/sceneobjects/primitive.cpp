@@ -8,16 +8,16 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
     this->name = "CondorEngine::Primitive";
     switch (type)
     {
-    case CondorEngine::SimpleCube:
+    case CondorEngine::SimpleCubeMesh:
         mesh = MakeSimpleCube();
         break;
-    case CondorEngine::Cube:
+    case CondorEngine::CubeMesh:
         mesh = MakeCube();
         break;
-    case CondorEngine::Plane:
+    case CondorEngine::PlaneMesh:
         mesh = MakePlane();
         break;
-    case CondorEngine::SphereShape:
+    case CondorEngine::SphereMesh:
         mesh = MakeSphere();
         break;
     default:

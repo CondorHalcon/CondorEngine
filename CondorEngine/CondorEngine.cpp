@@ -113,7 +113,7 @@ int main()
     // primitive mesh
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereShape, pMat));
+    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
     CondorEngine::Collider *primitiveCol = primitive->AddComponent(new CondorEngine::Collider());
     CondorEngine::Rigidbody *primitiveRb = primitive->AddComponent(new CondorEngine::Rigidbody());
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
@@ -121,7 +121,7 @@ int main()
     //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
     // primitive mesh 2
-    CondorEngine::Primitive *prim2 = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereShape, pMat));
+    CondorEngine::Primitive *prim2 = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
     CondorEngine::Collider *prim2Col = prim2->AddComponent(new CondorEngine::Collider());
     prim2->Move(CondorEngine::Vector3{0, 2, 0});
 
