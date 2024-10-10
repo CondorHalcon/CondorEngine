@@ -117,7 +117,7 @@ int main()
     CondorEngine::Collider *primitiveCol = primitive->AddComponent(new CondorEngine::Collider());
     CondorEngine::Rigidbody *primitiveRb = primitive->AddComponent(new CondorEngine::Rigidbody());
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
-    primitiveRb->AddForce(CondorEngine::Vector3{0, 1, 0} * .1f);
+    primitiveRb->AddForce(CondorEngine::Vector3{0, 1, 0} * .3f);
     //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
     // primitive mesh 2

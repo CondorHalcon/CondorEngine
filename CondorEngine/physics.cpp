@@ -75,14 +75,15 @@ void CondorEngine::Physics::PhysicsUpdate()
                 colliders[j]->getSceneObject()->ObjectOnCollision(colliders[i]);
 
                 // collision resolution
-                Rigidbody *rbA = nullptr;
-                Rigidbody *rbB = nullptr;
-                bool aHasRb = colliders[i]->getSceneObject()->TryFindComponent<Rigidbody>(rbA);
-                //bool bHasRb = colliders[j]->getSceneObject()->TryFindComponent<Rigidbody>(rbB);
-                Debug::Log(colliders[i]->name + ": " + std::to_string(aHasRb));
-                if (aHasRb) 
+                Rigidbody *rbA = colliders[i]->getSceneObject()->GetComponent<Rigidbody>();
+                Rigidbody *rbB = colliders[j]->getSceneObject()->GetComponent<Rigidbody>();
+                if (rbA != nullptr && rbB != nullptr) 
                 {
-                    // TODO continue here
+                    Debug::Log("A and B have rigidbodies: " + rbA->name + " & " + rbB->name);
+                } else if (rbA != nullptr) {
+                    Debug::Log("Only A has a rigidbody: " + rbA->name);
+                } else if (rbB != nullptr) {
+                    Debug::Log("Only B has a rigidbody: " + rbB->name);
                 }
             }
         }

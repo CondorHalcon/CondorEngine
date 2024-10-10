@@ -222,23 +222,31 @@ namespace CondorEngine {
 		/// @tparam T Type of Component to find.
 		/// @param component out Component object.
 		/// @return True if it found a Component of type `T`, false if it did not.
-		template <typename T> bool TryFindComponent(T* component) {
+		template <typename T> bool TryFindComponent(T** component) {
 			for (int i = 0; i < this->components.size(); i++) {
-				std::cout << name << ": " << (typeid(this->components[i]) == typeid(T)) << std::endl;
-				if (typeid(this->components[i]) == typeid(T)) {
-					//component = this->components[i];
+				if (dynamic_cast<T*>(components[i])) {
+					*component = dynamic_cast<T*>(components[i]);
 					return true;
 				}
 			}
-			//component = nullptr;
+			*component = nullptr;
 			return false;
+		}
+		/// @brief Find a Component of type in this SceneObject.
+		/// @tparam T Type of Component to find.
+		/// @return Component if found, nullptr if the Component type doesn't exist on this SceneObject.
+		template <typename T> T* GetComponent() {
+			T *component;
+			if (TryFindComponent<T>(&component)) {
+				return component;
+			}
+			return nullptr;
 		}
 		/// @brief Find a Component of type on this SceneObject or its children. `WARNING`: This is a recursive function that loops through every component on every child.
 		/// @tparam T Type of Component to find.
 		/// @param component out Component object.
 		/// @return True if it found a Component of type `T`, false if it did not.
-		template <typename T> bool TryFindComponentInChildren(T* component) {
-			component = nullptr;
+		template <typename T> bool TryFindComponentInChildren(T** component) {
 			if (TryFindComponent<T>(component)) {
 				return true;
 			}
@@ -247,7 +255,18 @@ namespace CondorEngine {
 					return true;
 				}
 			}
+			*component = nullptr;
 			return false;
+		}
+		/// @brief Find a Component of type on this SceneObject or its children. `WARNING`: This is a recursive function that loops through every component on every child.
+		/// @tparam T Type of Component to find.
+		/// @return Component if found, nullptr if the Component type doesn't exist on this SceneObject or it's children.
+		template <typename T> T* GetComponentInChildren() {
+			T *component;
+			if (TryFindComponentInChildren<T>(&component)) {
+				return component;
+			}
+			return nullptr;
 		}
 		/// @brief Add a child to this SceneObject.
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
