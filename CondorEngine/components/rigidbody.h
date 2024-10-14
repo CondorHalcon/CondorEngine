@@ -6,6 +6,7 @@ namespace CondorEngine
 {
 	class Rigidbody : public Component
 	{
+		friend class Physics;
 	public:
 		/// @brief Class constructor
 		Rigidbody();

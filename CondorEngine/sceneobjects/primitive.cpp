@@ -6,26 +6,34 @@
 CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
 {
     this->name = "CondorEngine::Primitive";
+    this->rigidbody = new Rigidbody();
     switch (type)
     {
     case CondorEngine::SimpleCubeMesh:
-        mesh = MakeSimpleCube();
+        this->mesh = MakeSimpleCube();
+        this->collider = new Collider(ColliderType::Box);
         break;
     case CondorEngine::CubeMesh:
-        mesh = MakeCube();
+        this->mesh = MakeCube();
+        this->collider = new Collider(ColliderType::Box);
         break;
     case CondorEngine::PlaneMesh:
-        mesh = MakePlane();
+        this->mesh = MakePlane();
+        this->collider = new Collider(ColliderType::Box);
         break;
     case CondorEngine::SphereMesh:
-        mesh = MakeSphere();
+        this->mesh = MakeSphere();
+        this->collider = new Collider(ColliderType::Sphere);
         break;
     default:
-        mesh = nullptr;
+        this->mesh = nullptr;
+        this->collider = nullptr;
         break;
     }
     AddComponent(mesh);
-    mesh->material = material;
+    AddComponent(rigidbody);
+    AddComponent(collider);
+    this->mesh->material = material;
 }
 
 CondorEngine::Primitive::Primitive(PrimitiveType type) : 

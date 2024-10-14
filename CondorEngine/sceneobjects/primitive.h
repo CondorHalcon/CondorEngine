@@ -2,6 +2,8 @@
 #include "../renderer.h"
 #include "../core.h"
 #include "../components/mesh.h"
+#include "../components/rigidbody.h"
+#include "../components/collider.h"
 // std
 #include <vector>
 // third party
@@ -29,6 +31,8 @@ namespace CondorEngine {
 		Primitive(PrimitiveType type);
 		/// @brief Primitive mesh component.
 		Mesh* mesh;
+		Rigidbody *rigidbody;
+		Collider* collider;
 	private:
 		/// @brief Make a simple primitive cube.
 		/// @return Simple primitive cube mesh.

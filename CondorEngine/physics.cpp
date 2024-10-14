@@ -51,19 +51,9 @@ void CondorEngine::Physics::PhysicsUpdate()
     // collision
     for (int i = 0; i < colliders.size() - 1; i++) {
         for (int j = i + 1; j < colliders.size(); j++) {
-            // TODO collision check
+            // collision check
             Vector3 offset = colliders[i]->getSceneObject()->getPosition() - colliders[j]->getSceneObject()->getPosition();
             float distance = glm::length(offset);
-            /*Debug::Log(
-                "colliders[" + std::to_string(i) + "] is " + std::to_string(distance) +
-                " far from " +
-                "colliders[" + std::to_string(j) + "]\n" +
-
-                "colliders[" + std::to_string(i) + "]->radius " +
-                std::to_string(colliders[i]->radius) + "; " +
-                "colliders[" + std::to_string(j) + "]->radius " +
-                std::to_string(colliders[j]->radius)
-                );*/
             if (distance <= colliders[i]->radius + colliders[j]->radius) {
                 Debug::Log("colliders[" + std::to_string(i) + "] is hitting " +
                 "colliders[" + std::to_string(j) + "]" + 
@@ -74,16 +64,25 @@ void CondorEngine::Physics::PhysicsUpdate()
                 colliders[i]->getSceneObject()->ObjectOnCollision(colliders[j]);
                 colliders[j]->getSceneObject()->ObjectOnCollision(colliders[i]);
 
-                // collision resolution
+                // collision rigidbodies
                 Rigidbody *rbA = colliders[i]->getSceneObject()->GetComponent<Rigidbody>();
                 Rigidbody *rbB = colliders[j]->getSceneObject()->GetComponent<Rigidbody>();
-                if (rbA != nullptr && rbB != nullptr) 
+
+                // collision resolution
+                Vector3 normal = glm::normalize(offset);
+                if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
                 {
-                    Debug::Log("A and B have rigidbodies: " + rbA->name + " & " + rbB->name);
-                } else if (rbA != nullptr) {
-                    Debug::Log("Only A has a rigidbody: " + rbA->name);
-                } else if (rbB != nullptr) {
-                    Debug::Log("Only B has a rigidbody: " + rbB->name);
+                    float joules = (2 * glm::dot(rbA->velocity - rbB->velocity, normal)) / (glm::dot(normal, normal) * ((1 / rbA->mass) + (1 / rbB->mass)));
+                    rbA->velocity -= (joules / rbA->mass) * normal;
+                    rbB->velocity += (joules / rbB->mass) * normal;
+                } 
+                else if (rbA != nullptr && rbA->enabled) {
+                    float joules = (2 * glm::dot(rbA->velocity, normal)) / (glm::dot(normal, normal) * (1 / rbA->mass));
+                    rbA->velocity -= joules * normal;
+                } 
+                else if (rbB != nullptr && rbB->enabled) {
+                    float joules = (2 * glm::dot(rbB->velocity, normal)) / (glm::dot(normal, normal) * (1 / rbB->mass));
+                    rbB->velocity -= joules * normal;
                 }
             }
         }

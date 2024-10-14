@@ -14,7 +14,7 @@ namespace CondorEngine
     class Collider : public Component
     {
     public:
-        Collider();
+        Collider(ColliderType type);
         ~Collider();
         float radius;
     private:

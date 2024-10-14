@@ -1,10 +1,10 @@
 #include "collider.h"
 #include "../physics.h"
 
-CondorEngine::Collider::Collider() : CondorEngine::Component()
+CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::Component()
 {
     this->name = "CondorEngine::Collider";
-    this->type = ColliderType::Sphere;
+    this->type = t;
     this->radius = .5f;
     Physics::AddCollider(this);
 }
