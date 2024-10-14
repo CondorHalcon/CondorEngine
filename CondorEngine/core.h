@@ -268,6 +268,30 @@ namespace CondorEngine {
 			}
 			return nullptr;
 		}
+		/// @brief Find a Component of type on this SceneObject or its parents. `WARNING`: This is a recursive function that loops through every component on every parent.
+		/// @tparam T Type of Component to find.
+		/// @param component out Component object.
+		/// @return True if it found a Component of type `T`, false if it did not.
+		template <typename T> bool TryFindComponentInParent(T** component) {
+			if (TryFindComponent<T>(component)) {
+				return true;
+			}
+			if (parent != nullptr) {
+				return parent->TryFindComponentInParent<T>(component);
+			}
+			*component = nullptr;
+			return false;
+		}
+		/// @brief Find a Component of type on this SceneObject or its children. `WARNING`: This is a recursive function that loops through every component on every child.
+		/// @tparam T Type of Component to find.
+		/// @return Component if found, nullptr if the Component type doesn't exist on this SceneObject or it's parents.
+		template <typename T> T* GetComponentInParent() {
+			T *component;
+			if (TryFindComponentInParent<T>(&component)) {
+				return component;
+			}
+			return nullptr;
+		}
 		/// @brief Add a child to this SceneObject.
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
 		/// @param child Child SceneObject to add.

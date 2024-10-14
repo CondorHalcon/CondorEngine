@@ -65,8 +65,8 @@ void CondorEngine::Physics::PhysicsUpdate()
                 colliders[j]->getSceneObject()->ObjectOnCollision(colliders[i]);
 
                 // collision rigidbodies
-                Rigidbody *rbA = colliders[i]->getSceneObject()->GetComponent<Rigidbody>();
-                Rigidbody *rbB = colliders[j]->getSceneObject()->GetComponent<Rigidbody>();
+                Rigidbody *rbA = colliders[i]->getSceneObject()->GetComponentInParent<Rigidbody>();
+                Rigidbody *rbB = colliders[j]->getSceneObject()->GetComponentInParent<Rigidbody>();
 
                 // collision resolution
                 Vector3 normal = glm::normalize(offset);
