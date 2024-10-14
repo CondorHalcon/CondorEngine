@@ -72,16 +72,16 @@ void CondorEngine::Physics::PhysicsUpdate()
                 Vector3 normal = glm::normalize(offset);
                 if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
                 {
-                    float joules = (2 * glm::dot(rbA->velocity - rbB->velocity, normal)) / (glm::dot(normal, normal) * ((1 / rbA->mass) + (1 / rbB->mass)));
+                    float joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
                     rbA->velocity -= (joules / rbA->mass) * normal;
                     rbB->velocity += (joules / rbB->mass) * normal;
                 } 
                 else if (rbA != nullptr && rbA->enabled) {
-                    float joules = (2 * glm::dot(rbA->velocity, normal)) / (glm::dot(normal, normal) * (1 / rbA->mass));
+                    float joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
                     rbA->velocity -= joules * normal;
                 } 
                 else if (rbB != nullptr && rbB->enabled) {
-                    float joules = (2 * glm::dot(rbB->velocity, normal)) / (glm::dot(normal, normal) * (1 / rbB->mass));
+                    float joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
                     rbB->velocity -= joules * normal;
                 }
             }

@@ -115,13 +115,13 @@ int main()
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
     CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
     primitive->Move(CondorEngine::Vector3{0, -1, 0});
-    primitive->rigidbody->AddForce(CondorEngine::Vector3{0, 1, 0} * .1f);
+    //primitive->rigidbody->AddForce(CondorEngine::Vector3{0, 1, 0} * .1f);
     //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
 
     // primitive mesh 2
     CondorEngine::Primitive *prim2 = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
-    prim2->rigidbody->AddForce(CondorEngine::Vector3{ 0, 1, 0 } * -.1f);
-    prim2->Move(CondorEngine::Vector3{0, 2, 0});
+    prim2->rigidbody->AddForce(CondorEngine::Vector3{ -.5, 1, 0 } * -.1f);
+    prim2->Move(CondorEngine::Vector3{-1, 2, 0});
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
