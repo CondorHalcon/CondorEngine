@@ -1,4 +1,5 @@
 #include "light.h"
+// internal
 #include "../application.h"
 
 CondorEngine::Light::Light()

@@ -151,6 +151,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="component.cpp" />
     <ClCompile Include="components\collider.cpp" />
     <ClCompile Include="components\camera.cpp" />
     <ClCompile Include="CondorEngine.cpp" />
@@ -158,10 +159,14 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClCompile Include="core.cpp" />
     <ClCompile Include="diagnostics.cpp" />
     <ClCompile Include="components\mesh.cpp" />
+    <ClCompile Include="material.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="components\light.cpp" />
     <ClCompile Include="components\rigidbody.cpp" />
+    <ClCompile Include="object.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="scene.cpp" />
+    <ClCompile Include="sceneobject.cpp" />
     <ClCompile Include="sceneobjects\scenelight.cpp" />
     <ClCompile Include="sceneobjects\primitive.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -170,16 +175,21 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />
+    <ClInclude Include="component.h" />
     <ClInclude Include="components\collider.h" />
     <ClInclude Include="components\camera.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="diagnostics.h" />
     <ClInclude Include="components\mesh.h" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="components\light.h" />
     <ClInclude Include="components\rigidbody.h" />
+    <ClInclude Include="object.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="scene.h" />
+    <ClInclude Include="sceneobject.h" />
     <ClInclude Include="sceneobjects\scenelight.h" />
     <ClInclude Include="sceneobjects\primitive.h" />
     <ClInclude Include="renderer.h" />

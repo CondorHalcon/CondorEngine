@@ -1,6 +1,7 @@
 #pragma once
+// internal
 #include "../math.h"
-#include "../core.h"
+#include "../component.h"
 // third party
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"

@@ -1,12 +1,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "renderer.h"
+// internal
 #include "debug.h"
-#include "core.h"
 #include "components/camera.h"
 // std
-#include <vector>
 #include <fstream> // for reading from files
-#include <string>
 // third party
 #include "glew/glew.h"
 #include "glm/glm.hpp"
@@ -25,14 +23,14 @@ void ReportCompileStatus(GLuint& shaderToReport) {
 	}
 }
 
-CondorEngine::String ReadFile(const char* path) {
+std::string ReadFile(const char* path) {
 	fstream stream(path, std::ios_base::in);
-	CondorEngine::String source;
+	std::string source;
 
 	//TODO: add error checking and validation if you are reading from a text file.
 
 	while (!stream.eof()) {
-		CondorEngine::String thisLine;
+		std::string thisLine;
 		std::getline(stream, thisLine);
 		source += thisLine + "\n";
 	}
@@ -88,15 +86,15 @@ CondorEngine::Shader* CondorEngine::Shader::MakeShader(const char* vertShader, c
 	return shader;
 }
 
-CondorEngine::Shader* CondorEngine::Shader::MakeShader(const String& vertShader, const String& fragShader)
+CondorEngine::Shader* CondorEngine::Shader::MakeShader(const std::string& vertShader, const std::string& fragShader)
 {
 	return CondorEngine::Shader::MakeShader(vertShader.c_str(), fragShader.c_str());
 }
 
 CondorEngine::Shader* CondorEngine::Shader::LoadShader(const char* vertPath, const char* fragPath)
 {
-	String vertSource = ReadFile(vertPath);
-	String fragSource = ReadFile(fragPath);
+	std::string vertSource = ReadFile(vertPath);
+	std::string fragSource = ReadFile(fragPath);
 
 	return CondorEngine::Shader::MakeShader(vertSource, fragSource);
 }

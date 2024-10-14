@@ -1,5 +1,7 @@
 #include "rigidbody.h"
+// internal
 #include "../physics.h"
+// third party
 #include "glm/ext.hpp"
 
 CondorEngine::Rigidbody::Rigidbody() : CondorEngine::Component()

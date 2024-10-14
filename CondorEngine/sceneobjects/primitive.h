@@ -1,6 +1,7 @@
 #pragma once
+// third party
 #include "../renderer.h"
-#include "../core.h"
+#include "../sceneobject.h"
 #include "../components/mesh.h"
 #include "../components/rigidbody.h"
 #include "../components/collider.h"

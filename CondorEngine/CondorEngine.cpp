@@ -1,22 +1,21 @@
-#pragma once
 // third party
 #include "glew/glew.h"
 #include "glm/ext.hpp"
 #include "glfw/glfw3.h"
 // internal
 #include "diagnostics.h"
+#include "debug.h"
+#include "time.h"
 #include "math.h"
-#include "core.h"
 #include "application.h"
 #include "renderer.h"
-#include "debug.h"
-#include "sceneobjects/scenelight.h"
+#include "scene.h"
+#include "sceneobject.h"
+#include "material.h"
 #include "sceneobjects/spectatorcam.h"
 #include "sceneobjects/primitive.h"
 #include "components/mesh.h"
 #include "components/rigidbody.h"
-#include "components/collider.h"
-#include "time.h"
 // std
 #include <iostream>
 #include <string>
@@ -54,18 +53,6 @@ public:
         }
     }
 };
-class M_Test : public CondorEngine::Material {
-public:
-    static const unsigned COUNT = 2;
-    M_Test() : Material(CondorEngine::Shader::LoadShader("shaders/directional.vert", "shaders/test.frag")) { }
-    void Update() override {
-        Material::Update();
-        CondorEngine::ColorRGB colors[COUNT];
-        colors[0] = CondorEngine::ColorRGB{1, 0, 0};
-        colors[1] = CondorEngine::ColorRGB{0, 1, 0};
-        SetUniform(3, COUNT, *colors);
-    }
-};
 class FixedTimePrinter : public CondorEngine::SceneObject {
     public:
     FixedTimePrinter() : SceneObject() {}
@@ -97,10 +84,6 @@ int main()
     CondorEngine::SpectatorCam* camera = scene->Instantiate<CondorEngine::SpectatorCam>(new CondorEngine::SpectatorCam());
     camera->Move(CondorEngine::Vector3{ 0,0,5 });
     camera->Rotate(CondorEngine::Vector3{0, 180, 0});
-
-    // second light
-    //CondorEngine::SceneLight *light = scene->Instantiate<CondorEngine::SceneLight>(new CondorEngine::SceneLight(
-    //    CondorEngine::ColorRGB{.5, .5, .5}, CondorEngine::Vector3{-.7, -.7, 0}));
 
     // simple SceneObject
     //CondorEngine::M_Lit* sMat = new CondorEngine::M_ComplexLit();

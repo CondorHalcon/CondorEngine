@@ -1,9 +1,8 @@
 #include "camera.h"
-#include "../math.h"
-#include "../core.h"
-#include "../application.h"
-
+// internal
 #include "../debug.h"
+#include "../application.h"
+#include "../sceneobject.h"
 
 CondorEngine::Camera* CondorEngine::Camera::main = nullptr;
 

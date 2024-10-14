@@ -1,5 +1,7 @@
 #include "time.h"
+// third party
 #include "glfw/glfw3.h"
+
 double CondorEngine::Time::lastFrameTime = 0.0;
 double CondorEngine::Time::accumulatedFixedTime = 0.0;
 float CondorEngine::Time::fixedTimeStep = 0.02f;

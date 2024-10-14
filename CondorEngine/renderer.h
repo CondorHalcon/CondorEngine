@@ -1,11 +1,11 @@
 #pragma once
-#include "core.h"
-
+// internal
+#include "math.h"
+// std
+#include <vector>
+#include <string>
 // third party
 #include "glew/glew.h"
-// std
-#include <vector> // for the daring
-#include <string>
 
 namespace CondorEngine {
 
@@ -38,7 +38,7 @@ namespace CondorEngine {
 		/// @param vertShader Vertex shader.
 		/// @param fragShader Fragment shader.
 		/// @return Compiled shader.
-		static Shader* MakeShader(const String& vertShader, const String& fragShader);
+		static Shader* MakeShader(const std::string& vertShader, const std::string& fragShader);
 		/// @brief Load and compile a shader in OpenGl.
 		/// @param vertShader Vertex shader file path.
 		/// @param fragShader Fragment shader file path.

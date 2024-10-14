@@ -1,5 +1,5 @@
 #pragma once
-#include "core.h"
+// third party
 #include "math.h"
 #include "components/rigidbody.h"
 #include "components/collider.h"

@@ -1,4 +1,5 @@
 #include "collider.h"
+//internal
 #include "../physics.h"
 
 CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::Component()

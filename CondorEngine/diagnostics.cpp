@@ -1,6 +1,8 @@
 #include "diagnostics.h"
-#include "glew/glew.h"
+// std
 #include <iostream>
+// third party
+#include "glew/glew.h"
 
 void CondorEngine::diagnostics::Environment()
 {

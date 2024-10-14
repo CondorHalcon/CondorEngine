@@ -1,5 +1,6 @@
 #pragma once
-#include "../core.h"
+// internal
+#include "../sceneobject.h"
 #include "../components/camera.h"
 
 namespace CondorEngine {

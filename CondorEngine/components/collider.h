@@ -1,6 +1,6 @@
 #pragma once
-#include "../math.h"
-#include "../core.h"
+// internal
+#include "../component.h"
 
 namespace CondorEngine
 {

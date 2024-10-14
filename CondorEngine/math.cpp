@@ -1,11 +1,8 @@
 #include "math.h"
 #include "debug.h"
-#include "core.h"
 //std
 #include <cmath>
-#include <string>
 // third party
-#include "glm/ext.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/matrix_decompose.hpp"
 
@@ -64,18 +61,18 @@ CondorEngine::Transform CondorEngine::Math::TransformTranslate(Transform transfo
 
 #pragma region Utilities
 
-CondorEngine::String CondorEngine::to_string(CondorEngine::Vector2 value)
+std::string CondorEngine::to_string(CondorEngine::Vector2 value)
 {
-    return String(
+    return std::string(
         "(" +
         std::to_string(value.x) + "," +
         std::to_string(value.y) + ")"
     );
 }
 
-CondorEngine::String CondorEngine::to_string(glm::vec3 value)
+std::string CondorEngine::to_string(glm::vec3 value)
 {
-    return String(
+    return std::string(
         "(" +
         std::to_string(value.x) + ", " +
         std::to_string(value.y) + ", " +
@@ -83,9 +80,9 @@ CondorEngine::String CondorEngine::to_string(glm::vec3 value)
     );
 }
 
-CondorEngine::String CondorEngine::to_string(CondorEngine::Vector4 value)
+std::string CondorEngine::to_string(CondorEngine::Vector4 value)
 {
-    return String(
+    return std::string(
         "(" +
         std::to_string(value.x) + ", " +
         std::to_string(value.y) + ", " +
@@ -94,9 +91,9 @@ CondorEngine::String CondorEngine::to_string(CondorEngine::Vector4 value)
     );
 }
 
-CondorEngine::String CondorEngine::to_string(CondorEngine::Quaternion value)
+std::string CondorEngine::to_string(CondorEngine::Quaternion value)
 {
-    return String(
+    return std::string(
         "(" +
         std::to_string(value.w) + ", " +
         std::to_string(value.x) + ", " +

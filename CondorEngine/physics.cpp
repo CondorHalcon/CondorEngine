@@ -1,8 +1,12 @@
 #include "physics.h"
-#include "glm/ext.hpp"
+// internal
 #include "time.h"
-#include "debug.h"
+#include "debug.h" // TODO remove
+#include "sceneobject.h"
+// std
 #include <string>
+// third party
+#include "glm/ext.hpp"
 
 std::vector<CondorEngine::Collider *> CondorEngine::Physics::colliders = std::vector<CondorEngine::Collider *>();
 std::vector<CondorEngine::Rigidbody *> CondorEngine::Physics::rigidbodies = std::vector<CondorEngine::Rigidbody *>();

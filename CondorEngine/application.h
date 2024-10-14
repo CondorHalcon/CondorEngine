@@ -1,8 +1,7 @@
 #pragma once
-#include "core.h"
+// internal
 #include "math.h"
-
-using CondorEngine::Scene;
+#include "scene.h"
 
 /// @brief Application handler class for window, active scene, and input.
 class Application
@@ -56,7 +55,7 @@ public:
 
 public:
 	/// @brief Current active scene the application will update.
-	static Scene* activeScene;
+	static CondorEngine::Scene* activeScene;
 	/// @brief Check hardware input.
 	/// @param key The key to check.
 	/// @return True if the key has been pressed.

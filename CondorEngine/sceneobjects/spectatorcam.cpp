@@ -1,7 +1,7 @@
 #include "spectatorcam.h"
-#include "../application.h"
-#include "../debug.h"
+// internal
 #include "../time.h"
+#include "../application.h"
 
 CondorEngine::SpectatorCam::SpectatorCam()
 {

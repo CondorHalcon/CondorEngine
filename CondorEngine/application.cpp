@@ -1,15 +1,14 @@
 #include "application.h"
-#include "debug.h"
+// internal
 #include "time.h"
 #include "physics.h"
-#include "debug.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
 #include "diagnostics.h"
 
-Scene* Application::activeScene = nullptr;
+CondorEngine::Scene* Application::activeScene = nullptr;
 Application* Application::instance = nullptr;
 
 Application::Application() {
