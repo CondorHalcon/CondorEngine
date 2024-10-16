@@ -1,6 +1,6 @@
 #include "mesh.h"
 // internal
-#include "../debug.h"
+#include "../debug.hpp"
 #include "../renderer.h"
 #include "../sceneobject.h"
 #include "../components/camera.h"

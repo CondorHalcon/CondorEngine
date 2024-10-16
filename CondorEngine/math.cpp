@@ -1,5 +1,5 @@
 #include "math.h"
-#include "debug.h"
+#include "debug.hpp"
 //std
 #include <cmath>
 // third party
@@ -56,7 +56,10 @@ void CondorEngine::Math::TransformSplit(Transform transform, Vector3& position, 
 
 CondorEngine::Transform CondorEngine::Math::TransformTranslate(Transform transform, Vector3 vector)
 {
-    return glm::translate(transform, vector);
+    transform[3].x += vector.x;
+    transform[3].y += vector.y;
+    transform[3].z += vector.z;
+    return transform;
 }
 
 #pragma region Utilities

@@ -19,7 +19,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
         break;
     case CondorEngine::PlaneMesh:
         this->mesh = MakePlane();
-        this->collider = new Collider(ColliderType::Box);
+        this->collider = new Collider(ColliderType::Plane);
         break;
     case CondorEngine::SphereMesh:
         this->mesh = MakeSphere();

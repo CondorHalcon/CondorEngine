@@ -7,6 +7,7 @@ namespace CondorEngine
     enum ColliderType
     {
         Sphere,
+        Plane,
         Box,
         Capsule
     };

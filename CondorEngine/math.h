@@ -77,7 +77,7 @@ namespace CondorEngine {
 		/// @param rotation out Transform rotation.
 		/// @param scale out Transform scale.
 		static void TransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
-		/// @brief Translate a transform.
+		/// @brief Translate a transform in global space.
 		/// @param transform Transform matrix.
 		/// @param vector Translation.
 		/// @return Translated transform matrix.

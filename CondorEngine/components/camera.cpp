@@ -1,6 +1,6 @@
 #include "camera.h"
 // internal
-#include "../debug.h"
+#include "../debug.hpp"
 #include "../application.h"
 #include "../sceneobject.h"
 

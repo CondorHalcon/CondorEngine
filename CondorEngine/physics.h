@@ -8,6 +8,9 @@
 
 namespace CondorEngine
 {
+    typedef bool(*CollisionCheckFn)(Collider* collider1, Collider* collider2);
+    typedef void(*CollisionResolutionFn)(Collider* collider1, Collider* collider2);
+
     class Physics
     {
     public:
@@ -21,5 +24,10 @@ namespace CondorEngine
         static void AddRigidbody(Rigidbody* rigidbody);
         static void RemoveRigidbody(Rigidbody *rigidbody);
         static void PhysicsUpdate();
+    private:
+        static bool sphereToSphereCheck(Collider* collider1, Collider* collider2);
+        static void sphereToSphereResolution(Collider* collider1, Collider* collider2);
+        static bool sphereToPlaneCheck(Collider* collider1, Collider* collider2);
+        static void sphereToPlaneResolution(Collider* collider1, Collider* collider2);
     };
 }

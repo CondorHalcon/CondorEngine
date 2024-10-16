@@ -4,7 +4,7 @@
 #include "glfw/glfw3.h"
 // internal
 #include "diagnostics.h"
-#include "debug.h"
+#include "debug.hpp"
 #include "time.h"
 #include "math.h"
 #include "application.h"
@@ -93,23 +93,29 @@ int main()
     //shape->Move(CondorEngine::Vector3{-2, 0, 1});
     //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
-    // primitive mesh
+    // koala material
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
     pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
-    CondorEngine::Primitive* primitive = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
-    primitive->Move(CondorEngine::Vector3{0, -1, 0});
-    //primitive->rigidbody->AddForce(CondorEngine::Vector3{0, 1, 0} * .1f);
-    //primitive->Rotate(CondorEngine::Vector3{ 15, 45, 0 });
+
+    // primitive mesh
+    CondorEngine::Primitive* prim = scene->Instantiate(
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
+        CondorEngine::Vector3{0, 2, 0});
+    prim->rigidbody->AddForce(CondorEngine::Vector3{0, -1, 0} * .1f);
 
     // primitive mesh 2
-    CondorEngine::Primitive *prim2 = scene->Instantiate(new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat));
-    prim2->rigidbody->AddForce(CondorEngine::Vector3{ -.5, 1, 0 } * -.1f);
-    prim2->Move(CondorEngine::Vector3{-1, 2, 0});
+    /*CondorEngine::Primitive* prim2 = scene->Instantiate(
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
+        CondorEngine::Vector3{0, 0, 0});*/
+
+    // primitive mesh 3
+    CondorEngine::Primitive *prim3 = scene->Instantiate(
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::PlaneMesh, pMat), 
+        CondorEngine::Vector3{0, -1.5, 0});
 
     // rotatable
-    Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable());
+    Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable(), CondorEngine::Vector3{ 2, 0, 1 });
     rotatable->mesh = rotatable->AddComponent<CondorEngine::Mesh>(CondorEngine::Mesh::LoadMeshFromFile("meshes/suzane.obj", new CondorEngine::M_Lit()));
-    rotatable->Move(CondorEngine::Vector3{ 2, 0, 1 });
     rotatable->control = false;
 
     //CondorEngine::Debug::Log("fixedTimeStep " + std::to_string(CondorEngine::Time::fixedTimeStep));

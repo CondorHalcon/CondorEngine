@@ -179,7 +179,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClInclude Include="components\collider.h" />
     <ClInclude Include="components\camera.h" />
     <ClInclude Include="core.h" />
-    <ClInclude Include="debug.h" />
+    <ClInclude Include="debug.hpp" />
     <ClInclude Include="diagnostics.h" />
     <ClInclude Include="components\mesh.h" />
     <ClInclude Include="material.h" />

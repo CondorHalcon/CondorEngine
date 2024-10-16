@@ -1,6 +1,6 @@
 #include "scene.h"
 // internal
-#include "debug.h"
+#include "debug.hpp"
 #include "renderer.h"
 // std
 #include <string>

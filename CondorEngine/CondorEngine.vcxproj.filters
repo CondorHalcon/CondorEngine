@@ -98,7 +98,7 @@
     <ClInclude Include="components\mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
+    <ClInclude Include="debug.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="math.h">

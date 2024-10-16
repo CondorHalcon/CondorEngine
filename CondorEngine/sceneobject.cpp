@@ -1,6 +1,6 @@
 #include "sceneobject.h"
 // internal
-#include "debug.h"
+#include "debug.hpp"
 #include "application.h"
 #include "scene.h"
 #include "component.h"
