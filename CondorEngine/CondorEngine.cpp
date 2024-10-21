@@ -100,8 +100,8 @@ int main()
     // primitive mesh
     CondorEngine::Primitive* prim = scene->Instantiate(
         new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
-        CondorEngine::Vector3{0, 2, 0});
-    prim->rigidbody->AddForce(CondorEngine::Vector3{0, -1, 0} * .1f);
+        CondorEngine::Vector3{-2, 2, 0});
+    prim->rigidbody->AddForce(CondorEngine::Vector3{1, -1, 0} * .1f);
 
     // primitive mesh 2
     /*CondorEngine::Primitive* prim2 = scene->Instantiate(

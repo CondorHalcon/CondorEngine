@@ -291,7 +291,7 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeSphere()
 
     for (int i = 0; i <= latCount; i++) 
     {
-        latAngle = Math::PI / 20.f - (float)i * latStep; // starting from 0 to 2pi
+        latAngle = Math::PI / 2.f - (float)i * latStep; // starting from 0 to 2pi
         xy = radius * cosf(latAngle); // r * cos(u)
         z = radius * sinf(latAngle); // r * sin(u)
 
@@ -328,12 +328,12 @@ CondorEngine::Mesh* CondorEngine::Primitive::MakeSphere()
     std::vector<GLuint> indices;
 
     int k1, k2; // index count shorthand
-    for (int i = 0; i < latCount; i++)
+    for (int i = 0; i < latCount; ++i)
     {
         k1 = i * (longCount + 1); // beginning of current stack
         k2 = k1 + longCount + 1; // beginning of next stack
 
-        for (int j = 0; j < longCount; j++, k1++, k2++)
+        for (int j = 0; j < longCount; ++j, k1++, k2++)
         {
             // 2 triangles for each face excluding first and last loops
             // k1 => k2 => k1+1

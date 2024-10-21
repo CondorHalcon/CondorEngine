@@ -2,6 +2,7 @@
 // internal
 #include "debug.hpp"
 #include "application.h"
+#include "physics.h"
 #include "scene.h"
 #include "component.h"
 #include "components/collider.h"
@@ -120,12 +121,16 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
     }
 }
 
-void CondorEngine::SceneObject::ObjectOnCollision(Collider* other)
+void CondorEngine::SceneObject::ObjectOnCollision(Collision collision)
 {
-    OnCollision(other);
+    OnCollision(collision);
     for (int i = 0; i < components.size(); i++) {
-        components[i]->OnCollision(other);
+        components[i]->OnCollision(collision);
     }
+}
+
+void CondorEngine::SceneObject::OnCollision(Collision collision)
+{
 }
 
 CondorEngine::Scene* CondorEngine::SceneObject::getScene()

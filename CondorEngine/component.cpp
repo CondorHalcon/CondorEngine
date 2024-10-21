@@ -1,4 +1,5 @@
 #include "component.h"
+#include "physics.h"
 
 CondorEngine::Component::Component()
 {
@@ -21,6 +22,10 @@ void CondorEngine::Component::HierarchyFixedUpdate()
 {
     if (!enabled || !hasDoneFirstUpdate) { return; }
     FixedUpdate();
+}
+
+void CondorEngine::Component::OnCollision(Collision collision)
+{
 }
 
 void CondorEngine::Component::HierarchyLateUpdate()

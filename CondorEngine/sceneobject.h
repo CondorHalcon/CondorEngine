@@ -11,7 +11,7 @@
 #define SCENE_OBJECT_H
 namespace CondorEngine {
 	class Scene;
-	class Collider;
+	struct Collision;
 
     /// @brief Base engine SceneObject class.
 	class SceneObject : public Object {
@@ -27,8 +27,11 @@ namespace CondorEngine {
 		void HierarchyFixedUpdate();
 		/// @brief Late update this SceneObject, its components, and its children.
 		void HierarchyLateUpdate();
-		void ObjectOnCollision(Collider* other);
-		virtual void OnCollision(Collider* other) {}
+		/// @brief Call OnCollision event on this SceneObject and its components.
+		/// @param collision Collision data.
+		void ObjectOnCollision(Collision collision);
+		/// @brief OnCollision event.
+		virtual void OnCollision(Collision collision);
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;

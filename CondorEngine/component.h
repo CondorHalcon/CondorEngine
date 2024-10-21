@@ -5,6 +5,7 @@
 namespace CondorEngine {
 	class SceneObject;
 	class Collider;
+	struct Collision;
 
     /// @brief Base engine scene object component class.
 	class Component : public Object {
@@ -19,7 +20,9 @@ namespace CondorEngine {
 		void HierarchyFixedUpdate();
 		/// @brief Late update this component.
 		void HierarchyLateUpdate();
-		virtual void OnCollision(Collider* other) {}
+		/// @brief OnCollision event.
+		/// @param other Collision data.
+		virtual void OnCollision(Collision collision);
 	private:
 		/// @brief Check for first update call on this Component. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;

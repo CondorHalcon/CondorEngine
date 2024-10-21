@@ -7,6 +7,7 @@ CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::C
     this->name = "CondorEngine::Collider";
     this->type = t;
     this->radius = .5f;
+    this->isTrigger = false;
     Physics::AddCollider(this);
 }
 

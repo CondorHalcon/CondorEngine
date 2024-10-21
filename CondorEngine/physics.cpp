@@ -58,11 +58,18 @@ void CondorEngine::Physics::PhysicsUpdate()
 
     static CollisionCheckFn collisionChecks[] = {
         sphereToSphereCheck,
-        sphereToPlaneCheck
+        sphereToPlaneCheck,
+        nullptr
+    };
+    static CollisionTriggerFn collisionTriggers[] = {
+        sphereToSphereTrigger,
+        sphereToPlaneTrigger,
+        nullptr
     };
     static CollisionResolutionFn collisionResolution[] = {
         sphereToSphereResolution,
-        sphereToPlaneResolution
+        sphereToPlaneResolution,
+        nullptr
     };
 
     for (int i = 0; i < colliders.size() - 1; i++)
@@ -71,15 +78,14 @@ void CondorEngine::Physics::PhysicsUpdate()
             // collision check
             int typeSum = (int)colliders[i]->getType() + (int)colliders[j]->getType();
             CollisionCheckFn check = collisionChecks[typeSum];
-            if (check == nullptr) {
-                Debug::LogError("Physics::PhysicsUpdate() : Collision check not implemented for Collider types " + std::to_string(colliders[i]->getType()) + " and " + std::to_string(colliders[j]->getType()));
-                continue; 
-            }
+            if (check == nullptr) { continue; } // no collision check implemented
             if (check(colliders[i], colliders[j])) {
-                Debug::LogError("Physics::PhysicsUpdate() : Collision check ["+ std::to_string(typeSum) + "] for Collider types " + std::to_string(colliders[i]->getType()) + " and " + std::to_string(colliders[j]->getType()));
+
                 // on collision triggers
-                colliders[i]->getSceneObject()->ObjectOnCollision(colliders[j]);
-                colliders[j]->getSceneObject()->ObjectOnCollision(colliders[i]);
+                CollisionResolutionFn trigger = collisionTriggers[typeSum];
+                if (trigger != nullptr) {
+                    trigger(colliders[i], colliders[j]);
+                }
 
                 // collision resolution
                 CollisionResolutionFn resolution = collisionResolution[typeSum];
@@ -87,7 +93,9 @@ void CondorEngine::Physics::PhysicsUpdate()
                     Debug::LogError("Physics::PhysicsUpdate() : Collision resolution not implemented for Collider types " + std::to_string(colliders[i]->getType()) + " and " + std::to_string(colliders[j]->getType()));
                     continue;
                 }
-                resolution(colliders[i], colliders[j]);
+                if (!colliders[i]->isTrigger && !colliders[j]->isTrigger) {
+                    resolution(colliders[i], colliders[j]);
+                }
             }
         }
     }
@@ -97,6 +105,16 @@ bool CondorEngine::Physics::sphereToSphereCheck(Collider *collider1, Collider *c
 {
     Vector3 offset = collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition();
     return glm::length(offset) <= collider1->radius + collider2->radius;
+}
+
+void CondorEngine::Physics::sphereToSphereTrigger(Collider *collider1, Collider *collider2)
+{
+    Vector3 normal = glm::normalize(collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition());
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
+    collider1->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
+    collider2->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
 }
 
 void CondorEngine::Physics::sphereToSphereResolution(Collider *collider1, Collider *collider2)
@@ -139,10 +157,29 @@ bool CondorEngine::Physics::sphereToPlaneCheck(Collider* collider1, Collider* co
     return distance <= 0 && distance >= -(sphere->radius * 2);
 }
 
+void CondorEngine::Physics::sphereToPlaneTrigger(Collider *collider1, Collider *collider2)
+{
+    Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
+    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+
+    Vector3 normal = plane->getSceneObject()->getUp();
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
+    collider1->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
+    collider2->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
+}
+
 void CondorEngine::Physics::sphereToPlaneResolution(Collider* collider1, Collider* collider2)
 {
     Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
-    Debug::Log("Physics::sphereToPlaneResolution() : distance = " + std::to_string(glm::dot(sphere->getSceneObject()->getPosition() - plane->getSceneObject()->getPosition(), plane->getSceneObject()->getUp()) - sphere->radius));
+    // collision rigidbody
+    Rigidbody* rb = sphere->getSceneObject()->GetComponentInParent<Rigidbody>();
+
+    // collision resolution
+    Vector3 normal = plane->getSceneObject()->getUp();
+    float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
+    rb->velocity -= joules * normal;
 }
