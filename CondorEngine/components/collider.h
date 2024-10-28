@@ -7,10 +7,10 @@ namespace CondorEngine
     /// @brief Collider type enumeration.
     enum ColliderType
     {
-        Sphere,
-        Plane,
-        Box,
-        Capsule
+        Sphere = 1,
+        Plane = 2,
+        AABB = 4,
+        Capsule = 8
     };
 
     /// @brief Collider component class.

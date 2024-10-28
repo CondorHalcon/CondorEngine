@@ -1,9 +1,5 @@
 {
-    "cSpell.words": [
-        "GLEW",
-        "GLFW",
-        "Lsizei"
-    ],
+    "cSpell.words": ["AABB", "GLEW", "GLFW", "Lsizei"],
     "files.associations": {
         "*.css": "tailwindcss",
         "vector": "cpp",

@@ -50,8 +50,17 @@ namespace CondorEngine
         static bool sphereToSphereCheck(Collider* collider1, Collider* collider2);
         static void sphereToSphereTrigger(Collider* collider1, Collider* collider2);
         static void sphereToSphereResolution(Collider* collider1, Collider* collider2);
-        static bool sphereToPlaneCheck(Collider* collider1, Collider* collider2);
-        static void sphereToPlaneTrigger(Collider* collider1, Collider* collider2);
-        static void sphereToPlaneResolution(Collider* collider1, Collider* collider2);
+        static bool planeToSphereCheck(Collider* collider1, Collider* collider2);
+        static void planeToSphereTrigger(Collider* collider1, Collider* collider2);
+        static void planeToSphereResolution(Collider* collider1, Collider* collider2);
+        static bool aabbToSphereCheck(Collider* collider1, Collider* collider2);
+        static void aabbToSphereTrigger(Collider* collider1, Collider* collider2);
+        static void aabbToSphereResolution(Collider* collider1, Collider* collider2);
+        static bool aabbToPlaneCheck(Collider* collider1, Collider* collider2);
+        static void aabbToPlaneTrigger(Collider* collider1, Collider* collider2);
+        static void aabbToPlaneResolution(Collider* collider1, Collider* collider2);
+        static bool aabbToAABBCheck(Collider* collider1, Collider* collider2);
+        static void aabbToAABBTrigger(Collider* collider1, Collider* collider2);
+        static void aabbToAABBResolution(Collider* collider1, Collider* collider2);
     };
 }

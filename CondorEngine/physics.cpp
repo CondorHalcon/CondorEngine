@@ -45,6 +45,7 @@ void CondorEngine::Physics::RemoveRigidbody(Rigidbody *rigidbody)
     }
 }
 
+#pragma region Physics Update
 void CondorEngine::Physics::PhysicsUpdate()
 {
     // rigidbody
@@ -54,24 +55,63 @@ void CondorEngine::Physics::PhysicsUpdate()
         rigidbodies[i]->getSceneObject()->Move(rigidbodies[i]->getVelocity() * Time::fixedDeltaTime());
     }
 
-    // collision
-
+    // collision function pointers
     static CollisionCheckFn collisionChecks[] = {
-        sphereToSphereCheck,
-        sphereToPlaneCheck,
-        nullptr
+        nullptr,                // 0 : Invalid
+        nullptr,                // 1 : Sphere to Invalid
+        sphereToSphereCheck,    // 2 : Sphere to Sphere
+        planeToSphereCheck,     // 3 : Plane to Sphere
+        nullptr,                // 4 : Plane to Plane
+        aabbToSphereCheck,       // 5 : AABB to Sphere
+        aabbToPlaneCheck,        // 6 : AABB to Plane
+        nullptr,                // 7 : AABB to Invalid
+        aabbToAABBCheck,          // 8 : AABB to AABB
+        nullptr,                // 9 : Capsule to Sphere
+        nullptr,                // 10 : Capsule to Plane
+        nullptr,                // 11 : Capsule to Invalid
+        nullptr,                // 12 : Capsule to AABB
+        nullptr,                // 13 : Capsule to Invalid
+        nullptr,                // 15 : Capsule to Invalid
+        nullptr,                // 16 : Capsule to Capsule
     };
     static CollisionTriggerFn collisionTriggers[] = {
-        sphereToSphereTrigger,
-        sphereToPlaneTrigger,
-        nullptr
+        nullptr,                // 0 : Invalid
+        nullptr,                // 1 : Sphere to Invalid
+        sphereToSphereTrigger,  // 2 : Sphere to Sphere
+        planeToSphereTrigger,   // 3 : Plane to Sphere
+        nullptr,                // 4 : Plane to Plane
+        aabbToSphereTrigger,     // 5 : AABB to Sphere
+        aabbToPlaneTrigger,      // 6 : AABB to Plane
+        nullptr,                // 7 : AABB to Invalid
+        aabbToAABBTrigger,        // 8 : AABB to AABB
+        nullptr,                // 9 : Capsule to Sphere
+        nullptr,                // 10 : Capsule to Plane
+        nullptr,                // 11 : Capsule to Invalid
+        nullptr,                // 12 : Capsule to AABB
+        nullptr,                // 13 : Capsule to Invalid
+        nullptr,                // 15 : Capsule to Invalid
+        nullptr,                // 16 : Capsule to Capsule 
     };
     static CollisionResolutionFn collisionResolution[] = {
-        sphereToSphereResolution,
-        sphereToPlaneResolution,
-        nullptr
+        nullptr,                    // 0 : Invalid
+        nullptr,                    // 1 : Sphere to Invalid
+        sphereToSphereResolution,   // 2 : Sphere to Sphere
+        planeToSphereResolution,    // 3 : Plane to Sphere
+        nullptr,                    // 4 : Plane to Plane
+        aabbToSphereResolution,      // 5 : AABB to Sphere
+        aabbToPlaneResolution,       // 6 : AABB to Plane
+        nullptr,                    // 7 : AABB to Invalid
+        aabbToAABBResolution,         // 8 : AABB to AABB
+        nullptr,                    // 9 : Capsule to Sphere
+        nullptr,                    // 10 : Capsule to Plane
+        nullptr,                    // 11 : Capsule to Invalid
+        nullptr,                    // 12 : Capsule to AABB
+        nullptr,                    // 13 : Capsule to Invalid
+        nullptr,                    // 15 : Capsule to Invalid
+        nullptr,                    // 16 : Capsule to Capsule  
     };
 
+    // collision
     for (int i = 0; i < colliders.size() - 1; i++)
     {
         for (int j = i + 1; j < colliders.size(); j++) {
@@ -100,7 +140,9 @@ void CondorEngine::Physics::PhysicsUpdate()
         }
     }
 }
+#pragma endregion
 
+#pragma region SphereToSphere
 bool CondorEngine::Physics::sphereToSphereCheck(Collider *collider1, Collider *collider2)
 {
     Vector3 offset = collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition();
@@ -141,8 +183,10 @@ void CondorEngine::Physics::sphereToSphereResolution(Collider *collider1, Collid
         rbB->velocity -= joules * normal;
     }
 }
+#pragma endregion
 
-bool CondorEngine::Physics::sphereToPlaneCheck(Collider* collider1, Collider* collider2)
+#pragma region PlaneToSphere
+bool CondorEngine::Physics::planeToSphereCheck(Collider* collider1, Collider* collider2)
 {
     Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
@@ -157,7 +201,7 @@ bool CondorEngine::Physics::sphereToPlaneCheck(Collider* collider1, Collider* co
     return distance <= 0 && distance >= -(sphere->radius * 2);
 }
 
-void CondorEngine::Physics::sphereToPlaneTrigger(Collider *collider1, Collider *collider2)
+void CondorEngine::Physics::planeToSphereTrigger(Collider *collider1, Collider *collider2)
 {
     Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
@@ -170,7 +214,7 @@ void CondorEngine::Physics::sphereToPlaneTrigger(Collider *collider1, Collider *
     collider2->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
 }
 
-void CondorEngine::Physics::sphereToPlaneResolution(Collider* collider1, Collider* collider2)
+void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collider* collider2)
 {
     Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
@@ -183,3 +227,54 @@ void CondorEngine::Physics::sphereToPlaneResolution(Collider* collider1, Collide
     float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
     rb->velocity -= joules * normal;
 }
+
+#pragma endregion
+
+#pragma region BoxToSphere
+
+bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *collider2)
+{
+    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+
+
+    return false;
+}
+void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *collider2)
+{
+}
+void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider *collider2)
+{
+}
+
+#pragma endregion
+
+#pragma region BoxToPlane
+
+bool CondorEngine::Physics::aabbToPlaneCheck(Collider *collider1, Collider *collider2)
+{
+    return false;
+}
+void CondorEngine::Physics::aabbToPlaneTrigger(Collider *collider1, Collider *collider2)
+{
+}
+void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider *collider2)
+{
+}
+
+#pragma endregion
+
+#pragma region BoxToBox
+
+bool CondorEngine::Physics::aabbToAABBCheck(Collider *collider1, Collider *collider2)
+{
+    return false;
+}
+void CondorEngine::Physics::aabbToAABBTrigger(Collider *collider1, Collider *collider2)
+{
+}
+void CondorEngine::Physics::aabbToAABBResolution(Collider *collider1, Collider *collider2)
+{
+}
+
+#pragma endregion

@@ -11,11 +11,11 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
     {
     case CondorEngine::SimpleCubeMesh:
         this->mesh = MakeSimpleCube();
-        this->collider = new Collider(ColliderType::Box);
+        this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::CubeMesh:
         this->mesh = MakeCube();
-        this->collider = new Collider(ColliderType::Box);
+        this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::PlaneMesh:
         this->mesh = MakePlane();
