@@ -22,7 +22,9 @@ public:
 	/// @brief While application should run.
 	void Run();
 private:
+	/// @brief Window width.
 	int windowWidth;
+	/// @brief Window height.
 	int windowHeight;
 public:
 	/// @brief Get application window dimensions.

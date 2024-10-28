@@ -13,7 +13,7 @@ namespace CondorEngine {
 	class Scene;
 	struct Collision;
 
-    /// @brief Base engine SceneObject class.
+    /// @brief Base SceneObject class.
 	class SceneObject : public Object {
 		friend Scene;
 	public:

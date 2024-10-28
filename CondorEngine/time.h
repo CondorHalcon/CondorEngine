@@ -18,7 +18,11 @@ namespace CondorEngine
         static float fixedTimeStep;
         /// @brief Get the current time.
         static float time();
+        /// @brief Get this frame's delta time.
+        /// @return Delta time in seconds.
         static float deltaTime();
+        /// @brief Get the fixed delta time.
+        /// @return Fixed delta time in seconds.
         static float fixedDeltaTime();
     };
 }

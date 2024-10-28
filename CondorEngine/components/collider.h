@@ -13,7 +13,7 @@ namespace CondorEngine
         Capsule
     };
 
-    /// @brief Engine collider component class.
+    /// @brief Collider component class.
     class Collider : public Component
     {
     public:

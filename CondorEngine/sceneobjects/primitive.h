@@ -32,7 +32,9 @@ namespace CondorEngine {
 		Primitive(PrimitiveType type);
 		/// @brief Primitive mesh component.
 		Mesh* mesh;
+		/// @brief Primitive rigidbody component.
 		Rigidbody *rigidbody;
+		/// @brief Primitive collider component.
 		Collider* collider;
 	private:
 		/// @brief Make a simple primitive cube.

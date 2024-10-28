@@ -5,6 +5,7 @@
 
 namespace CondorEngine
 {
+	/// @brief Rigidbody component class.
 	class Rigidbody : public Component
 	{
 		friend class Physics;
@@ -24,7 +25,11 @@ namespace CondorEngine
 		/// @brief Current velocity.
 		Vector3 velocity;
 	public:
+		/// @brief Get current rigidbody velocity.
+		/// @return Vector3 velocity.
 		Vector3 getVelocity();
+		/// @brief Set current rigidbody velocity.
+		/// @param velocity Vector3 velocity.
 		void setVelocity(Vector3 velocity);
 	};
 }

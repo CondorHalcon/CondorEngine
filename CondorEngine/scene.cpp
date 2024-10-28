@@ -67,6 +67,15 @@ void CondorEngine::Scene::HierarchyFixedUpdate()
 void CondorEngine::Scene::HierarchyLateUpdate()
 {
     if (!enabled || !hasDoneFirstUpdate) { return; }
+
+    // delete marked SceneObjects
+    for (int i = 0; i < markedDelete.size(); i++) {
+        RemoveSceneObject(markedDelete[i]);
+        delete markedDelete[i];
+    }
+    markedDelete.clear();
+    
+    // late update
     LateUpdate();
 
     for (int i = 0; i < hierarchy.size(); i++) {

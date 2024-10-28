@@ -10,7 +10,7 @@ namespace CondorEngine {
 	struct DirectionalLight;
 	class Light;
 
-    /// @brief Base engine scene class.
+    /// @brief Base scene class.
 	class Scene : public Object {
 		friend SceneObject;
 	public:
@@ -42,15 +42,21 @@ namespace CondorEngine {
 		/// @brief Instantiate a SceneObject into this Scene.
 		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.
 		/// @param sceneObject The SceneObject to instantiate.
+		/// @param position World position to instantiate the SceneObject.
+		/// @return The instantiated SceneObject.
+		template <typename T> T* Instantiate(T* sceneObject, Vector3 position) {
+			sceneObject->scene = this;
+			
+			this->hierarchy.push_back(sceneObject);
+			so->Move(position);
+			return so;
+		}
+		/// @brief Instantiate a SceneObject into this Scene.
+		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.
+		/// @param sceneObject The SceneObject to instantiate.
 		/// @return The instantiated SceneObject.
 		template <typename T> T* Instantiate(T* sceneObject) {
-			sceneObject->scene = this;
-			this->hierarchy.push_back(sceneObject);
-			return sceneObject;
-		}
-		template <typename T> T* Instantiate(T* sceneObject, Vector3 position) {
-			T* so = Instantiate(sceneObject);
-			so->Move(position);
+			T* so = Instantiate(sceneObject, Vector3{ 0,0,0 });
 			return so;
 		}
 		/// @brief Instantiate a SceneObject into this scene.
@@ -59,8 +65,10 @@ namespace CondorEngine {
 		SceneObject* Instantiate(SceneObject* sceneObject) {
 			return Instantiate<SceneObject>(sceneObject);
 		}
-		SceneObject* Destroy(SceneObject *sceneObject) {
-			
+		/// @brief Mark a SceneObject for deletion during the next `Scene::LateUpdate()`.
+		/// @param sceneObject SceneObject to delete.
+		void Destroy(SceneObject *sceneObject) {
+			markedDelete.push_back(sceneObject);
 		}
 	private:
 		/// @brief Remove a SceneObject from this Scene's hierarchy.
