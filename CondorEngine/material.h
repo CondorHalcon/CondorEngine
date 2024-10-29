@@ -68,10 +68,14 @@ namespace CondorEngine
 	public:
 		/// @brief Class constructor.
         M_Unlit();
+		/// @brief Class constructor.
+		/// @param texture Albedo texture.
+		M_Unlit(Texture* texture);
         /// @brief Update shader uniforms.
         void Update() override;
         /// @brief Albedo texture.
-		CondorEngine::Texture* sampleTex;
+		Texture* texture;
+		void setTexture(Texture* texture);
 	};
 	/// @brief Simple lit material.
 	class M_Lit : public Material {
@@ -82,10 +86,14 @@ namespace CondorEngine
     public:
 		/// @brief Class constructor.
         M_Lit();
+		/// @brief Class constructor.
+		/// @param texture Albedo texture.
+		M_Lit(Texture* texture);
         /// @brief Update shader uniforms.
         void Update() override;
         /// @brief Albedo texture.
-		Texture* sampleTex;
+		Texture* texture;
+		void setTexture(Texture* texture);
 	};
 	class M_ComplexLit : public M_Lit {
 	public:

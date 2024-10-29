@@ -84,23 +84,44 @@ void CondorEngine::Material::SetUniform(GLuint location, int count, const glm::v
 
 CondorEngine::M_Unlit::M_Unlit() : CondorEngine::Material(Shader::LoadShader("shaders/basic.vert", "shaders/basic.frag")) 
 {
-	sampleTex = nullptr;
+	texture = Texture::LoadTexture("textures/Blank.png");
+}
+
+CondorEngine::M_Unlit::M_Unlit(Texture *texture) : CondorEngine::M_Unlit() 
+{
+    setTexture(texture);
+}
+
+void CondorEngine::M_Unlit::setTexture(Texture *texture)
+{
+    if (this->texture != nullptr) {
+        Texture::FreeTexture(*this->texture);
+    }
+    this->texture = texture;
 }
 
 void CondorEngine::M_Unlit::Update()
 {
     Material::Update();
-    if (sampleTex != nullptr) {
-        SetUniform(3, *sampleTex, 0);
+    if (texture != nullptr) {
+        SetUniform(3, *texture, 0);
     }
 }
 
 CondorEngine::M_Lit::M_Lit(Shader* shader) : CondorEngine::Material(shader) 
 {
-    sampleTex = nullptr;
+    texture = Texture::LoadTexture("textures/Blank.png");
 }
 
 CondorEngine::M_Lit::M_Lit() : CondorEngine::M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong.frag")) { }
+
+CondorEngine::M_Lit::M_Lit(Texture *texture) : CondorEngine::M_Lit()
+{
+    if (this->texture != nullptr) {
+        Texture::FreeTexture(*this->texture);
+    }
+    this->texture = texture;
+}
 
 void CondorEngine::M_Lit::Update()
 {
@@ -122,9 +143,14 @@ void CondorEngine::M_Lit::Update()
         SetUniform(6, Vector3{ 0,0,0 });
     }
     // texture
-    if (sampleTex != nullptr) {
-        SetUniform(7, *sampleTex, 0);
+    if (texture != nullptr) {
+        SetUniform(7, *texture, 0);
     }
+}
+
+void CondorEngine::M_Lit::setTexture(Texture *texture)
+{
+    setTexture(texture);
 }
 
 CondorEngine::M_ComplexLit::M_ComplexLit() : CondorEngine::M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong_multi-light.frag")) {}
@@ -162,8 +188,8 @@ void CondorEngine::M_ComplexLit::Update()
         SetUniform(4, Vector3{ 0,0,0 });
     }
     // texture
-    if (sampleTex != nullptr) {
-        SetUniform(5, *sampleTex, 0);
+    if (texture != nullptr) {
+        SetUniform(5, *texture, 0);
     }
 }
 

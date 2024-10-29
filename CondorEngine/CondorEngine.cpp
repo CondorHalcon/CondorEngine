@@ -96,13 +96,13 @@ int main()
     //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
     // material
-    CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
-    pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/ColorGrid.png");
+    CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit(CondorEngine::Texture::LoadTexture("textures/ColorGrid.png"));
+    CondorEngine::M_Lit* pMat2 = new CondorEngine::M_Lit();
 
     // primitive mesh
     CondorEngine::Primitive* prim = scene->Instantiate(
-        new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
-        CondorEngine::Vector3{-2, 2, 0});
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::CubeMesh, pMat), 
+        CondorEngine::Vector3{-2.8, 2, 0});
     prim->rigidbody->AddForce(CondorEngine::Vector3{1, -1, 0} * .1f);
 
     // primitive mesh 2
@@ -112,7 +112,7 @@ int main()
 
     // primitive mesh 3
     CondorEngine::Primitive *prim3 = scene->Instantiate(
-        new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::CubeMesh, pMat2), 
         CondorEngine::Vector3{0, -1, 0});
 
     // rotatable
