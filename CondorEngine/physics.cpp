@@ -62,10 +62,10 @@ void CondorEngine::Physics::PhysicsUpdate()
         sphereToSphereCheck,    // 2 : Sphere to Sphere
         planeToSphereCheck,     // 3 : Plane to Sphere
         nullptr,                // 4 : Plane to Plane
-        aabbToSphereCheck,       // 5 : AABB to Sphere
-        aabbToPlaneCheck,        // 6 : AABB to Plane
+        aabbToSphereCheck,      // 5 : AABB to Sphere
+        aabbToPlaneCheck,       // 6 : AABB to Plane
         nullptr,                // 7 : AABB to Invalid
-        aabbToAABBCheck,          // 8 : AABB to AABB
+        aabbToAABBCheck,        // 8 : AABB to AABB
         nullptr,                // 9 : Capsule to Sphere
         nullptr,                // 10 : Capsule to Plane
         nullptr,                // 11 : Capsule to Invalid
@@ -80,10 +80,10 @@ void CondorEngine::Physics::PhysicsUpdate()
         sphereToSphereTrigger,  // 2 : Sphere to Sphere
         planeToSphereTrigger,   // 3 : Plane to Sphere
         nullptr,                // 4 : Plane to Plane
-        aabbToSphereTrigger,     // 5 : AABB to Sphere
-        aabbToPlaneTrigger,      // 6 : AABB to Plane
+        aabbToSphereTrigger,    // 5 : AABB to Sphere
+        aabbToPlaneTrigger,     // 6 : AABB to Plane
         nullptr,                // 7 : AABB to Invalid
-        aabbToAABBTrigger,        // 8 : AABB to AABB
+        aabbToAABBTrigger,      // 8 : AABB to AABB
         nullptr,                // 9 : Capsule to Sphere
         nullptr,                // 10 : Capsule to Plane
         nullptr,                // 11 : Capsule to Invalid
@@ -98,10 +98,10 @@ void CondorEngine::Physics::PhysicsUpdate()
         sphereToSphereResolution,   // 2 : Sphere to Sphere
         planeToSphereResolution,    // 3 : Plane to Sphere
         nullptr,                    // 4 : Plane to Plane
-        aabbToSphereResolution,      // 5 : AABB to Sphere
-        aabbToPlaneResolution,       // 6 : AABB to Plane
+        aabbToSphereResolution,     // 5 : AABB to Sphere
+        aabbToPlaneResolution,      // 6 : AABB to Plane
         nullptr,                    // 7 : AABB to Invalid
-        aabbToAABBResolution,         // 8 : AABB to AABB
+        aabbToAABBResolution,       // 8 : AABB to AABB
         nullptr,                    // 9 : Capsule to Sphere
         nullptr,                    // 10 : Capsule to Plane
         nullptr,                    // 11 : Capsule to Invalid
@@ -194,11 +194,15 @@ bool CondorEngine::Physics::planeToSphereCheck(Collider* collider1, Collider* co
     /* D = dot(c - d, n) - r
         D is the distance from the sphere's center to the plane
         c is the sphere's center
-        n is the plane's normal
         d is the plane's distance from the origin
+        n is the plane's normal
         r is the sphere's radius */
-    float distance = glm::dot(sphere->getSceneObject()->getPosition() - plane->getSceneObject()->getPosition(), plane->getSceneObject()->getUp()) - sphere->radius;
-    return distance <= 0 && distance >= -(sphere->radius * 2);
+    Vector3 c = sphere->getSceneObject()->getPosition();
+    Vector3 d = plane->getSceneObject()->getPosition();
+    Vector3 n = plane->getSceneObject()->getUp();
+    float r = sphere->radius;
+    float distance = glm::dot(c - d, n) - r;
+    return distance <= 0 && distance >= -(r * 2);
 }
 
 void CondorEngine::Physics::planeToSphereTrigger(Collider *collider1, Collider *collider2)
@@ -237,14 +241,51 @@ bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *col
     Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
+    Vector3 offset = sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition());
 
-    return false;
+    float distanceSquared = glm::length(offset) * glm::length(offset);
+    float radiusSquared = sphere->radius * sphere->radius;
+
+    return distanceSquared <= radiusSquared;
 }
 void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *collider2)
 {
+    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+
+    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition()));
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
+    collider1->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
+    collider2->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
 }
 void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider *collider2)
 {
+    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+
+    // collision rigidbodies
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+
+    // collision resolution
+    float joules = 0;
+    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition()));
+    if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
+    {
+        joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
+        rbA->velocity -= (joules / rbA->mass) * normal;
+        rbB->velocity += (joules / rbB->mass) * normal;
+    } 
+    else if (rbA != nullptr && rbA->enabled) {
+        joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
+        rbA->velocity -= joules * normal;
+    } 
+    else if (rbB != nullptr && rbB->enabled) {
+        joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
+        rbB->velocity -= joules * normal;
+    }
 }
 
 #pragma endregion

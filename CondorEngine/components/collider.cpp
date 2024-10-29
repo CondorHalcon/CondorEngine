@@ -1,5 +1,6 @@
 #include "collider.h"
 //internal
+#include "../sceneobject.h"
 #include "../physics.h"
 
 CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::Component()
@@ -7,6 +8,7 @@ CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::C
     this->name = "CondorEngine::Collider";
     this->type = t;
     this->radius = .5f;
+    this->size = Vector3{1,1,1};
     this->isTrigger = false;
     Physics::AddCollider(this);
 }
@@ -19,4 +21,40 @@ CondorEngine::Collider::~Collider()
 CondorEngine::ColliderType CondorEngine::Collider::getType()
 {
     return this->type;
+}
+
+CondorEngine::Vector3 CondorEngine::Collider::getClosestPoint(Vector3 point)
+{
+    float x = 0;
+    float y = 0;
+    float z = 0;
+    Vector3 offset;
+    Vector3 normal;
+    float distance;
+    switch (this->type)
+    {
+    case ColliderType::Sphere:
+        offset = point - this->getSceneObject()->getPosition();
+        normal = glm::normalize(offset);
+        return this->getSceneObject()->getPosition() + (normal * this->radius * this->getSceneObject()->getScale());
+    case ColliderType::Plane:
+        offset = point - this->getSceneObject()->getPosition();
+        normal = this->getSceneObject()->getUp();
+        distance = glm::dot(offset, normal);
+        return point - normal * distance;
+    case ColliderType::AABB:
+        Vector3 halfSize = this->size * .5f * this->getSceneObject()->getScale();
+        x = glm::fclamp(point.x, 
+            this->getSceneObject()->getPosition().x - halfSize.x, 
+            this->getSceneObject()->getPosition().x + halfSize.x);
+        y = glm::fclamp(point.y, 
+            this->getSceneObject()->getPosition().y - halfSize.y, 
+            this->getSceneObject()->getPosition().y + halfSize.y);
+        z = glm::fclamp(point.z, 
+            this->getSceneObject()->getPosition().z - halfSize.z, 
+            this->getSceneObject()->getPosition().z + halfSize.z);
+        return Vector3{x, y, z};
+    default:
+        return point;
+    }
 }

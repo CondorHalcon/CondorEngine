@@ -1,5 +1,6 @@
 #pragma once
 // internal
+#include "../math.h"
 #include "../component.h"
 
 namespace CondorEngine
@@ -24,6 +25,7 @@ namespace CondorEngine
         ~Collider();
         /// @brief Collider radius.
         float radius;
+        Vector3 size;
         /// @brief Collider height.
         bool isTrigger;
     private:
@@ -32,6 +34,10 @@ namespace CondorEngine
     public:
         /// @brief Get the collider type.
         ColliderType getType();
+        /// @brief Get the closest point on the collider to a given point.
+        /// @param point The reference point.
+        /// @return Point on the collider.
+        Vector3 getClosestPoint(Vector3 point);
     };
 }
 

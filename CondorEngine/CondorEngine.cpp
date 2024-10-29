@@ -9,6 +9,7 @@
 #include "math.h"
 #include "application.h"
 #include "renderer.h"
+#include "physics.h"
 #include "scene.h"
 #include "sceneobject.h"
 #include "material.h"
@@ -74,6 +75,7 @@ int main()
 {
     Application* app = Application::Instance();
     app->init(640, 480, "CondorEngine");
+    CondorEngine::Time::fixedTimeStep = .02f;
 
     CondorEngine::diagnostics::Environment();
 
@@ -93,9 +95,9 @@ int main()
     //shape->Move(CondorEngine::Vector3{-2, 0, 1});
     //shape->Rotate(CondorEngine::Vector3{ 0,90,0 });
 
-    // koala material
+    // material
     CondorEngine::M_Lit* pMat = new CondorEngine::M_Lit();
-    pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/wet_koala.jpg");
+    pMat->sampleTex = CondorEngine::Texture::LoadTexture("textures/ColorGrid.png");
 
     // primitive mesh
     CondorEngine::Primitive* prim = scene->Instantiate(
@@ -110,8 +112,8 @@ int main()
 
     // primitive mesh 3
     CondorEngine::Primitive *prim3 = scene->Instantiate(
-        new CondorEngine::Primitive(CondorEngine::PrimitiveType::PlaneMesh, pMat), 
-        CondorEngine::Vector3{0, -1.5, 0});
+        new CondorEngine::Primitive(CondorEngine::PrimitiveType::SphereMesh, pMat), 
+        CondorEngine::Vector3{0, -1, 0});
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable(), CondorEngine::Vector3{ 2, 0, 1 });

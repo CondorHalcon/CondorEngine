@@ -46,10 +46,9 @@ namespace CondorEngine {
 		/// @return The instantiated SceneObject.
 		template <typename T> T* Instantiate(T* sceneObject, Vector3 position) {
 			sceneObject->scene = this;
-			
 			this->hierarchy.push_back(sceneObject);
-			so->Move(position);
-			return so;
+			sceneObject->Move(position);
+			return sceneObject;
 		}
 		/// @brief Instantiate a SceneObject into this Scene.
 		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.
