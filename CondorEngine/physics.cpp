@@ -238,10 +238,10 @@ void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collide
 
 bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *collider2)
 {
-    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
-    Vector3 offset = sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition());
+    Vector3 offset = sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition());
 
     float distanceSquared = glm::length(offset) * glm::length(offset);
     float radiusSquared = sphere->radius * sphere->radius;
@@ -250,10 +250,10 @@ bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *col
 }
 void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *collider2)
 {
-    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
-    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition()));
+    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition()));
     Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
     Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
     Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
@@ -262,7 +262,7 @@ void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *c
 }
 void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider *collider2)
 {
-    Collider* box = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
     // collision rigidbodies
@@ -271,7 +271,7 @@ void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider
 
     // collision resolution
     float joules = 0;
-    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - box->getClosestPoint(sphere->getSceneObject()->getPosition()));
+    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition()));
     if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
     {
         joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
@@ -294,13 +294,59 @@ void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider
 
 bool CondorEngine::Physics::aabbToPlaneCheck(Collider *collider1, Collider *collider2)
 {
-    return false;
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* plane = collider2->getType() == ColliderType::Plane ? collider2 : collider1;
+
+    Vector3 planeClosestPoint = plane->getClosestPoint(aabb->getSceneObject()->getPosition());
+    Vector3 aabbClosestPoint = aabb->getClosestPoint(planeClosestPoint);
+
+    float aabbClosestPointDistance = glm::length(aabbClosestPoint - aabb->getSceneObject()->getPosition());
+
+    /*Debug::Log(
+        "\nplanePosition: " + to_string(plane->getSceneObject()->getPosition()) +
+        "\naabbPosition: " + to_string(aabb->getSceneObject()->getPosition()) +
+        "\n\nplaneClosestPoint: " + to_string(planeClosestPoint) +
+        "\naabbClosestPoint: " + to_string(aabbClosestPoint) +
+        "\n\naabbClosestPointDistance:" + std::to_string(aabbClosestPointDistance)
+        );*/
+
+    /* D = dot(c - d, n) - r
+        D is the distance from the sphere's center to the plane
+        c is the sphere's center
+        d is the plane's distance from the origin
+        n is the plane's normal
+        r is the sphere's radius */
+    Vector3 c = aabb->getSceneObject()->getPosition();
+    Vector3 d = plane->getSceneObject()->getPosition();
+    Vector3 n = plane->getSceneObject()->getUp();
+    float r = aabbClosestPointDistance;
+    float distance = glm::dot(c - d, n) - r;
+    return distance <= 0 && distance >= -(r * 2);
 }
 void CondorEngine::Physics::aabbToPlaneTrigger(Collider *collider1, Collider *collider2)
 {
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* plane = collider2->getType() == ColliderType::Plane ? collider2 : collider1;
+
+    Vector3 normal = plane->getSceneObject()->getUp();
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
+    aabb->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
+    plane->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
 }
 void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider *collider2)
 {
+    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
+    Collider* plane = collider2->getType() == ColliderType::Plane ? collider2 : collider1;
+
+    // collision rigidbody
+    Rigidbody* rb = aabb->getSceneObject()->GetComponentInParent<Rigidbody>();
+
+    // collision resolution
+    Vector3 normal = plane->getSceneObject()->getUp();
+    float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
+    rb->velocity -= joules * normal;
 }
 
 #pragma endregion
@@ -309,13 +355,48 @@ void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider 
 
 bool CondorEngine::Physics::aabbToAABBCheck(Collider *collider1, Collider *collider2)
 {
-    return false;
+    Vector3 aabb1Min = collider1->getSceneObject()->getPosition() - collider1->size * .5f;
+    Vector3 aabb1Max = collider1->getSceneObject()->getPosition() + collider1->size * .5f;
+    Vector3 aabb2Min = collider2->getSceneObject()->getPosition() - collider2->size * .5f;
+    Vector3 aabb2Max = collider2->getSceneObject()->getPosition() + collider2->size * .5f;
+
+    return aabb1Min.x <= aabb2Max.x && aabb1Max.x >= aabb2Min.x &&
+        aabb1Min.y <= aabb2Max.y && aabb1Max.y >= aabb2Min.y &&
+        aabb1Min.z <= aabb2Max.z && aabb1Max.z >= aabb2Min.z;
 }
 void CondorEngine::Physics::aabbToAABBTrigger(Collider *collider1, Collider *collider2)
 {
+    Debug::Log("aabbToAABBTrigger");
+    Vector3 normal = glm::normalize(collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition());
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
+    collider1->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
+    collider2->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
 }
 void CondorEngine::Physics::aabbToAABBResolution(Collider *collider1, Collider *collider2)
 {
+    // collision rigidbodies
+    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+
+    // collision resolution
+    float joules = 0;
+    Vector3 normal = glm::normalize(collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition());
+    if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
+    {
+        joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
+        rbA->velocity -= (joules / rbA->mass) * normal;
+        rbB->velocity += (joules / rbB->mass) * normal;
+    } 
+    else if (rbA != nullptr && rbA->enabled) {
+        joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
+        rbA->velocity -= joules * normal;
+    } 
+    else if (rbB != nullptr && rbB->enabled) {
+        joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
+        rbB->velocity -= joules * normal;
+    }
 }
 
 #pragma endregion
