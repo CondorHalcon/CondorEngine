@@ -1,0 +1,7 @@
+<map id="CondorEngine::SceneLight" name="CondorEngine::SceneLight">
+<area shape="rect" id="node1" title="Scene light object." alt="" coords="66,273,243,300"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene_object.html" title="Base SceneObject class." alt="" coords="5,132,192,159"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="65,5,214,32"/>
+<area shape="rect" id="node5" href="$class_condor_engine_1_1_component.html" title="Base engine scene object component class." alt="" coords="173,81,352,108"/>
+<area shape="rect" id="node4" href="$class_condor_engine_1_1_light.html" title="Light component class." alt="" coords="188,183,327,209"/>
+</map>

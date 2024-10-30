@@ -45,6 +45,7 @@ namespace CondorEngine {
 
 #pragma region Math
 
+	/// @brief Math utility class.
 	class Math
 	{
 	public:

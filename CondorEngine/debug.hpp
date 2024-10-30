@@ -4,6 +4,7 @@
 #include <iostream>
 
 namespace CondorEngine {
+	/// @brief Debugging utility class.
 	class Debug
 	{
 	public:

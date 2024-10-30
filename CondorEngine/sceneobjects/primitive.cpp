@@ -37,7 +37,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material* material)
 }
 
 CondorEngine::Primitive::Primitive(PrimitiveType type) : 
-    CondorEngine::Primitive::Primitive(type, new M_Lit()) { }
+    CondorEngine::Primitive::Primitive(type, new M_Lit(CondorEngine::Texture::LoadTexture("textures/ColorGrid.png"))) { }
 
 CondorEngine::Mesh* CondorEngine::Primitive::MakeSimpleCube()
 {

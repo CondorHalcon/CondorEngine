@@ -1,0 +1,10 @@
+<map id="CondorEngine::Material" name="CondorEngine::Material">
+<area shape="rect" id="node1" title="Mesh material class." alt="" coords="203,107,360,133"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_m___lit.html" title="Simple lit material." alt="" coords="442,5,586,32"/>
+<area shape="rect" id="node5" href="$class_condor_engine_1_1_m___normal.html" title="Object normal material." alt="" coords="428,56,600,83"/>
+<area shape="rect" id="node6" href="$class_condor_engine_1_1_m___screen_normal.html" title="Screen space normal material." alt="" coords="408,107,620,133"/>
+<area shape="rect" id="node7" href="$class_condor_engine_1_1_m___u_v.html" title="UV material." alt="" coords="440,157,588,184"/>
+<area shape="rect" id="node8" href="$class_condor_engine_1_1_m___unlit.html" title="Unlit material." alt="" coords="436,208,592,235"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,107,155,133"/>
+<area shape="rect" id="node4" href="$class_condor_engine_1_1_m___complex_lit.html" title="Multi&#45;light lit material." alt="" coords="668,5,864,32"/>
+</map>

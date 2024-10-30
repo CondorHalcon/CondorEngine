@@ -1,0 +1,7 @@
+<map id="CondorEngine::M_Unlit" name="CondorEngine::M_Unlit">
+<area shape="rect" id="node1" title="Unlit material." alt="" coords="178,187,334,213"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_material.html" title="Mesh material class." alt="" coords="88,96,245,123"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,5,155,32"/>
+<area shape="rect" id="node4" href="$struct_condor_engine_1_1_shader.html" title="Shader reference." alt="" coords="178,5,331,32"/>
+<area shape="rect" id="node5" href="$struct_condor_engine_1_1_texture.html" title="OpenGL texture &amp; metadata." alt="" coords="270,96,424,123"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="CondorEngine::M_UV" name="CondorEngine::M_UV">
+<area shape="rect" id="node1" title="UV material." alt="" coords="10,155,158,181"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_material.html" title="Mesh material class." alt="" coords="5,80,163,107"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="9,5,159,32"/>
+</map>

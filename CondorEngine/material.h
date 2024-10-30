@@ -75,6 +75,8 @@ namespace CondorEngine
         void Update() override;
         /// @brief Albedo texture.
 		Texture* texture;
+		/// @brief Cleanly set or change the albedo texture.
+		/// @param texture New albedo texture.
 		void setTexture(Texture* texture);
 	};
 	/// @brief Simple lit material.
@@ -93,13 +95,18 @@ namespace CondorEngine
         void Update() override;
         /// @brief Albedo texture.
 		Texture* texture;
+		/// @brief Cleanly set or change the albedo texture.
+		/// @param texture New albedo texture.
 		void setTexture(Texture* texture);
 	};
+	/// @brief Multi-light lit material.
 	class M_ComplexLit : public M_Lit {
 	public:
+		/// @brief Maximum number of lights.
 		static const int MAX_LIGHTS = 2;
 		/// @brief Class constructor.
         M_ComplexLit();
+        /// @brief Update shader uniforms.
         void Update() override;
     };
 	/// @brief UV material.

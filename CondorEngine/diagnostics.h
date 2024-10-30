@@ -3,6 +3,7 @@
 #include "glew/glew.h"
 
 namespace CondorEngine {
+	/// @brief OpenGL diagnostics utility class.
 	class diagnostics
 	{
 	public:
