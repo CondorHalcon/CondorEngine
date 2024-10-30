@@ -42,6 +42,7 @@ namespace CondorEngine {
 		SceneObject* parent;
 		/// @brief This SceneObject's local transformation matrix.
 		Transform transform;
+#pragma region Getters and Setters
 	public:
 		/// @brief Get the Scene this SceneObject has been instantiated into.
 		/// @return Present Scene.
@@ -83,9 +84,14 @@ namespace CondorEngine {
 		/// @brief Get this SceneObject's world position. (Identical to the world position if this is the root SceneObject.)
 		/// @return World position.
 		Vector3 getPosition();
+		/// @brief Set this SceneObject's world position. (Identical to the local position if this is the root SceneObject.)
+		void setPosition(Vector3 position);
 		/// @brief Get this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
 		/// @return Local position.
 		Vector3 getLocalPosition();
+		/// @brief Set this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
+		/// @param position Local position.
+		void setLocalPosition(Vector3 position);
 		/// @brief Get this SceneObject's world rotation. (Identical to the local rotation if this is the root SceneObject.)
 		/// @return World rotation.
 		Quaternion getRotation();
@@ -98,11 +104,13 @@ namespace CondorEngine {
 		/// @brief Get this SceneObject's local scale. (Identical to the world scale if this is the root SceneObject.)
 		/// @return Local scale.
 		Vector3 getLocalScale();
+#pragma endregion
 	private:
 		/// @brief List of Components on this SceneObject.
 		std::vector<Component*> components;
 		/// @brief List of child SceneObjects on this SceneObject.
 		std::vector<SceneObject*> children;
+#pragma region Component Methods
 	public:
 		/// @brief Add a Component to this SceneObject.
 		/// @tparam T Component type; must inherit from `CondorEngine::Component`.
@@ -193,6 +201,9 @@ namespace CondorEngine {
 			}
 			return nullptr;
 		}
+#pragma endregion
+
+#pragma region Child Methods
 		/// @brief Add a child to this SceneObject.
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
 		/// @param child Child SceneObject to add.
@@ -214,10 +225,10 @@ namespace CondorEngine {
 		}
 		/// @brief Translate this SceneObject.
 		/// @param vector Translation.
-		void Move(Vector3 vector);
+		void Move(Vector3 vector, bool worldSpace = true);
 		/// @brief Rotate this SceneObject.
 		/// @param vector Euler rotation.
-		void Rotate(Vector3 vector);
+		void Rotate(Vector3 vector, bool worldSpace = true);
 		/// @brief Scale this SceneObject.
 		/// @param scaler Scaler.
 		void Scale(Vector3 scaler);
@@ -234,5 +245,6 @@ namespace CondorEngine {
 			return child;
 		}
 	};
+#pragma endregion
 }
 #endif

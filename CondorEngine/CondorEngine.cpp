@@ -89,8 +89,7 @@ int main()
     Scene* scene = Application::activeScene = new Scene();
 
     // Camera
-    SpectatorCam* camera = scene->Instantiate<SpectatorCam>(new SpectatorCam());
-    camera->Move(Vector3{ 0,0,5 });
+    SpectatorCam* camera = scene->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{0, 0, 5});
     camera->Rotate(Vector3{0, 180, 0});
 
     // simple SceneObject
@@ -112,9 +111,9 @@ int main()
     prim->rigidbody->AddForce(Vector3{1, -1, 0} * .1f);
 
     // primitive mesh 2
-    /*Primitive* prim2 = scene->Instantiate(
+    Primitive* prim2 = scene->Instantiate(
         new Primitive(PrimitiveType::SphereMesh, pMat), 
-        Vector3{0, 0, 0});*/
+        Vector3{0, 0, 0});
 
     // primitive mesh 3
     Primitive *prim3 = scene->Instantiate(

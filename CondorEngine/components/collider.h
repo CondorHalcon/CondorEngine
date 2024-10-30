@@ -23,9 +23,13 @@ namespace CondorEngine
         Collider(ColliderType type);
         /// @brief Class destructor.
         ~Collider();
-        /// @brief Collider radius.
-        float radius;
-        Vector3 size;
+        /// @brief Collider size or radius.
+        union {
+            /// @brief Collider size.
+            Vector3 size;
+            /// @brief Collider radius.
+            float radius;
+        };
         /// @brief Collider height.
         bool isTrigger;
     private:

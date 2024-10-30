@@ -2,13 +2,14 @@
 // internal
 #include "../time.h"
 #include "../application.h"
+#include "../debug.hpp"
 
 CondorEngine::SpectatorCam::SpectatorCam()
 {
 	this->name = "CondorEngine::SpectatorCam";
 	this->camera = AddComponent<Camera>(new Camera());
     this->moveSpeed = 5;
-    this->rotationSpeed = 10;
+    this->rotationSpeed = 50;
 }
 
 void CondorEngine::SpectatorCam::Update()
@@ -18,11 +19,11 @@ void CondorEngine::SpectatorCam::Update()
         Move(getForward() * moveSpeed * Time::deltaTime());
     }
     if (Application::Input(GLFW_KEY_S)) {
-        Move(getForward() * moveSpeed * -Time::deltaTime());
+        Move(getForward() * -moveSpeed * Time::deltaTime());
     }
     // move right left
     if (Application::Input(GLFW_KEY_D)) {
-        Move(getRight() * moveSpeed * -Time::deltaTime());
+        Move(getRight() * -moveSpeed * Time::deltaTime());
     }
     if (Application::Input(GLFW_KEY_A)) {
         Move(getRight() * moveSpeed * Time::deltaTime());
@@ -32,7 +33,7 @@ void CondorEngine::SpectatorCam::Update()
         Move(getUp() * moveSpeed * Time::deltaTime());
     }
     if (Application::Input(GLFW_KEY_Q)) {
-        Move(getUp() * moveSpeed * -Time::deltaTime());
+        Move(getUp() * -moveSpeed * Time::deltaTime());
     }
     // rotate up down
     if (Application::Input(GLFW_KEY_UP)) {

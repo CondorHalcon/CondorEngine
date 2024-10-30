@@ -7,8 +7,15 @@ CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::C
 {
     this->name = "CondorEngine::Collider";
     this->type = t;
-    this->radius = .5f;
-    this->size = Vector3{1,1,1};
+    switch (t)
+    {
+    case ColliderType::Sphere:
+        this->radius = .5f;
+        break;
+    default:
+        this->size = Vector3{1,1,1};
+        break;
+    }
     this->isTrigger = false;
     Physics::AddCollider(this);
 }

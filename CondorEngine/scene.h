@@ -38,6 +38,7 @@ namespace CondorEngine {
 		/// @brief *Temporary* Scene directional light.
 		DirectionalLight* light;
 		std::vector<Light*> sceneLights;
+#pragma region SceneObject Methods
 	public:
 		/// @brief Instantiate a SceneObject into this Scene.
 		/// @tparam T SceneObject type; must inherit from `CondorEngine::SceneObject`.
@@ -47,7 +48,7 @@ namespace CondorEngine {
 		template <typename T> T* Instantiate(T* sceneObject, Vector3 position) {
 			sceneObject->scene = this;
 			this->hierarchy.push_back(sceneObject);
-			sceneObject->Move(position);
+			sceneObject->setPosition(position);
 			return sceneObject;
 		}
 		/// @brief Instantiate a SceneObject into this Scene.
@@ -81,5 +82,6 @@ namespace CondorEngine {
 			}
 			return sceneObject;
 		}
+#pragma endregion
 	};
 }

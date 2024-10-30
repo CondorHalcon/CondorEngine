@@ -133,6 +133,7 @@ void CondorEngine::SceneObject::OnCollision(Collision collision)
 {
 }
 
+#pragma region Getters and Setters
 CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 {
     return this->scene;
@@ -181,22 +182,22 @@ unsigned int CondorEngine::SceneObject::getChildCount()
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getForward()
 {
-    return Math::TransformAxis(getTransform(), Axis::Forward);
+    return getTransform()[2];
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getRight()
 {
-    return Math::TransformAxis(getTransform(), Axis::Right);
+    return getTransform()[0];
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getUp()
 {
-    return Math::TransformAxis(getTransform(), Axis::Up);
+    return getTransform()[1];
 }
 
 CondorEngine::Transform CondorEngine::SceneObject::getTransform()
 {
-    return parent != nullptr ? parent->getTransform() * getLocalTransform() : getLocalTransform();
+    return parent != nullptr ? parent->getTransform() * transform : transform;
 }
 
 CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
@@ -206,12 +207,22 @@ CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
 {
-    return Math::TransformPosition(getTransform());
+    return transform[3] + (parent != nullptr ? parent->transform[3] : Vector4{0,0,0,0});
+}
+
+void CondorEngine::SceneObject::setPosition(Vector3 position)
+{
+    transform[3] = Vector4(position, transform[3].w) + (parent != nullptr ? parent->transform[3] : Vector4{0,0,0,0});
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
 {
-    return Math::TransformPosition(getLocalTransform());
+    return transform[3];
+}
+
+void CondorEngine::SceneObject::setLocalPosition(Vector3 position)
+{
+    transform[3] = Vector4(position, transform[3].w);
 }
 
 CondorEngine::Quaternion CondorEngine::SceneObject::getRotation()
@@ -250,16 +261,22 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getLocalScale()
     return scale;
 }
 
-void CondorEngine::SceneObject::Move(Vector3 vector)
+void CondorEngine::SceneObject::Move(Vector3 vector, bool worldSpace)
 {
-    transform = glm::translate(transform, vector);
+    if (worldSpace) {
+        transform[3] = getTransform()[3] + Vector4(vector, 0);
+    } else {
+        transform[3] += Vector4(vector, 0);
+    }
 }
 
-void CondorEngine::SceneObject::Rotate(Vector3 vector) {
-    transform = glm::rotate(transform, glm::radians(glm::length(vector)), glm::normalize(vector));
+void CondorEngine::SceneObject::Rotate(Vector3 vector, bool worldSpace) {
+    transform = glm::rotate(worldSpace ? getTransform() : transform, glm::radians(glm::length(vector)), glm::normalize(vector));
 }
 
 void CondorEngine::SceneObject::Scale(Vector3 scaler)
 {
     transform = glm::scale(transform, scaler);
 }
+
+#pragma endregion
