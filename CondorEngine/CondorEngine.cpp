@@ -117,7 +117,7 @@ int main()
 
     // primitive mesh 3
     Primitive *prim3 = scene->Instantiate(
-        new Primitive(PrimitiveType::CubeMesh, pMat2), 
+        new Primitive(PrimitiveType::PlaneMesh, pMat2), 
         Vector3{0, -1, 0});
 
     // rotatable

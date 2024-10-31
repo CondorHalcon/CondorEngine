@@ -199,7 +199,7 @@ bool CondorEngine::Physics::planeToSphereCheck(Collider* collider1, Collider* co
         r is the sphere's radius */
     Vector3 c = sphere->getSceneObject()->getPosition();
     Vector3 d = plane->getSceneObject()->getPosition();
-    Vector3 n = plane->getSceneObject()->getUp();
+    Vector3 n = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float r = sphere->radius;
     float distance = glm::dot(c - d, n) - r;
     return distance <= 0 && distance >= -(r * 2);
@@ -210,7 +210,7 @@ void CondorEngine::Physics::planeToSphereTrigger(Collider *collider1, Collider *
     Collider* plane = collider1->getType() == ColliderType::Plane ? collider1 : collider2;
     Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
 
-    Vector3 normal = plane->getSceneObject()->getUp();
+    Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
     Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
     Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
@@ -227,7 +227,7 @@ void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collide
     Rigidbody* rb = sphere->getSceneObject()->GetComponentInParent<Rigidbody>();
 
     // collision resolution
-    Vector3 normal = plane->getSceneObject()->getUp();
+    Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
     rb->velocity -= joules * normal;
 }
@@ -318,7 +318,7 @@ bool CondorEngine::Physics::aabbToPlaneCheck(Collider *collider1, Collider *coll
         r is the sphere's radius */
     Vector3 c = aabb->getSceneObject()->getPosition();
     Vector3 d = plane->getSceneObject()->getPosition();
-    Vector3 n = plane->getSceneObject()->getUp();
+    Vector3 n = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float r = aabbClosestPointDistance;
     float distance = glm::dot(c - d, n) - r;
     return distance <= 0 && distance >= -(r * 2);
@@ -328,7 +328,7 @@ void CondorEngine::Physics::aabbToPlaneTrigger(Collider *collider1, Collider *co
     Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
     Collider* plane = collider2->getType() == ColliderType::Plane ? collider2 : collider1;
 
-    Vector3 normal = plane->getSceneObject()->getUp();
+    Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
     Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
     Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
@@ -344,7 +344,7 @@ void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider 
     Rigidbody* rb = aabb->getSceneObject()->GetComponentInParent<Rigidbody>();
 
     // collision resolution
-    Vector3 normal = plane->getSceneObject()->getUp();
+    Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
     rb->velocity -= joules * normal;
 }

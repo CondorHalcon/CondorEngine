@@ -3,6 +3,11 @@
 #include "../sceneobject.h"
 #include "../physics.h"
 
+CondorEngine::Vector3 CondorEngine::PlaneSize::getNormal(Transform transform)
+{
+    return Math::getTransformAxis(transform, axis);
+}
+
 CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::Component()
 {
     this->name = "CondorEngine::Collider";
@@ -11,6 +16,10 @@ CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::C
     {
     case ColliderType::Sphere:
         this->radius = .5f;
+        break;
+    case ColliderType::Plane:
+        this->plane.axis = Axis::Up;
+        this->plane.size = Vector2{1,1};
         break;
     default:
         this->size = Vector3{1,1,1};

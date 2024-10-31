@@ -14,6 +14,13 @@ namespace CondorEngine
         Capsule = 8
     };
 
+    struct PlaneSize
+    {
+        Axis axis;
+        Vector2 size;
+        Vector3 getNormal(Transform transform);
+    };
+
     /// @brief Collider component class.
     class Collider : public Component
     {
@@ -23,12 +30,14 @@ namespace CondorEngine
         Collider(ColliderType type);
         /// @brief Class destructor.
         ~Collider();
-        /// @brief Collider size or radius.
+        /// @brief Collider dimensions.
         union {
-            /// @brief Collider size.
+            /// @brief AABB & box collider size.
             Vector3 size;
-            /// @brief Collider radius.
+            /// @brief Sphere collider radius.
             float radius;
+            /// @brief Plane collider axis and size.
+            PlaneSize plane;
         };
         /// @brief Collider height.
         bool isTrigger;
