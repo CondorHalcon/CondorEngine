@@ -53,41 +53,68 @@ namespace CondorEngine {
 		const static float PI;
 
 	public:
-		/// @brief Transform vector from local space to world space.
-		/// @param transform The relative transform matrix.
-		/// @param vector The local space vector.
-		/// @return Global space vector.
-		static Vector3 TransformVector(Transform transform, Vector3 vector);
+#pragma region Transform Get/Set
 		/// @brief Get transform rotation axis.
 		/// @param transform Transform matrix.
 		/// @param axis Axis to get.
 		/// @return Axis direction.
-		static Vector3 TransformAxis(Transform transform, Axis axis);
+		static Vector3 getTransformAxis(Transform transform, Axis axis);
+		/// @brief Get transform euler rotation.
+		/// @param transform Transform matrix.
+		/// @return Vector3 euler rotation.
+		static Vector3 getTransformEulerRotation(Transform transform);
 		/// @brief Get transform position.
 		/// @param transform Transform matrix.
-		/// @return Transform position.
-		static Vector3 TransformPosition(Transform transform);
-		/// @brief Rotate transform with euler angles.
+		/// @return Vector3 position.
+		static Vector3 getTransformPosition(Transform transform);
+		/// @brief Set transform position.
+		/// @param transform Original transform matrix.
+		/// @param position Vector3 position.
+		/// @return New transform matrix.
+		static Transform setTransformPosition(Transform transform, Vector3 position);
+		/// @brief Get transform rotation.
 		/// @param transform Transform matrix.
-		/// @param vector Euler rotation.
-		/// @return Rotated transform matrix.
-		static Transform TransformRotate(Transform transform, Vector3 vector);
+		/// @return Quaternion rotation.
+		static Quaternion getTransformRotation(Transform transform);
+		/// @brief Set transform rotation.
+		/// @param transform Original transform matrix.
+		/// @param rotation Quaternion rotation.
+		/// @return New transform matrix.
+		static Transform setTransformRotation(Transform transform, Quaternion rotation);
+		/// @brief Get transform scale.
+		/// @param transform Transform matrix.
+		/// @return Vector3 scale.
+		static Vector3 getTransformScale(Transform transform);
 		/// @brief Extract the position, rotation, and scale of a transform.
 		/// @param transform Transform matrix.
 		/// @param position out Transform position.
 		/// @param rotation out Transform rotation.
 		/// @param scale out Transform scale.
-		static void TransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
+		static void getTransformSplit(Transform transform, Vector3& position, Quaternion& rotation, Vector3& scale);
+		/// @brief Transform vector from local space to world space.
+		/// @param transform The relative transform matrix.
+		/// @param vector The local space vector.
+		/// @return Global space vector.
+		static Vector3 getTransformVector(Transform transform, Vector3 vector);
+#pragma endregion
+		
+#pragma region Transform Manipulation
+		/// @brief Rotate transform with euler angles.
+		/// @param transform Transform matrix.
+		/// @param vector Euler rotation.
+		/// @return Rotated transform matrix.
+		static Transform TransformRotate(Transform transform, Vector3 vector);
 		/// @brief Translate a transform in global space.
 		/// @param transform Transform matrix.
 		/// @param vector Translation.
 		/// @return Translated transform matrix.
 		static Transform TransformTranslate(Transform transform, Vector3 vector);
+#pragma endregion
 	};
 
 #pragma endregion
 
-#pragma region Utilities
+#pragma region to_string
 
 	/// @brief String value of a `Vector2`.
 	/// @param value 
@@ -105,6 +132,10 @@ namespace CondorEngine {
 	/// @param value 
 	/// @return 
 	std::string to_string(glm::quat value);
+	/// @brief String value of a `Transform`.
+	/// @param value 
+	/// @return 
+	std::string to_string(glm::mat4 value, bool multiline = false);
 
 #pragma endregion
 

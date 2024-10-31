@@ -134,6 +134,7 @@ void CondorEngine::SceneObject::OnCollision(Collision collision)
 }
 
 #pragma region Getters and Setters
+
 CondorEngine::Scene* CondorEngine::SceneObject::getScene()
 {
     return this->scene;
@@ -207,17 +208,18 @@ CondorEngine::Transform CondorEngine::SceneObject::getLocalTransform()
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getPosition()
 {
-    return transform[3] + (parent != nullptr ? parent->transform[3] : Vector4{0,0,0,0});
+    return Vector3{getTransform()[3]};
 }
 
 void CondorEngine::SceneObject::setPosition(Vector3 position)
 {
-    transform[3] = Vector4(position, transform[3].w) + (parent != nullptr ? parent->transform[3] : Vector4{0,0,0,0});
+    Vector3 pos = parent != nullptr ? position - parent->getPosition() : position;
+    setLocalPosition(pos);
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getLocalPosition()
 {
-    return transform[3];
+    return Vector3{transform[3]};
 }
 
 void CondorEngine::SceneObject::setLocalPosition(Vector3 position)
@@ -227,39 +229,54 @@ void CondorEngine::SceneObject::setLocalPosition(Vector3 position)
 
 CondorEngine::Quaternion CondorEngine::SceneObject::getRotation()
 {
-    Vector3 pos;
-    Quaternion rot;
-    Vector3 scale;
-    Math::TransformSplit(getTransform(), pos, rot, scale);
-    return rot;
+    return glm::quat_cast(getTransform());
 }
 
 CondorEngine::Quaternion CondorEngine::SceneObject::getLocalRotation()
 {
-    Vector3 pos;
+    return glm::quat_cast(transform);
+}
+
+void CondorEngine::SceneObject::setRotation(Quaternion rotation)
+{
     Quaternion rot;
-    Vector3 scale;
-    Math::TransformSplit(getLocalTransform(), pos, rot, scale);
-    return rot;
+    if (parent != nullptr) {
+        rot = glm::inverse(glm::quat_cast(parent->getTransform())) * rotation;
+    } else {
+        rot = rotation;
+    }
+    setLocalRotation(rot);
+}
+
+void CondorEngine::SceneObject::setLocalRotation(Quaternion rotation)
+{
+    Transform t = glm::mat4_cast(rotation);
+    t = glm::scale(t, getLocalScale());
+    t[3] = transform[3];
+    transform = t;
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getScale()
 {
-    Vector3 pos;
-    Quaternion rot;
-    Vector3 scale;
-    Math::TransformSplit(getTransform(), pos, rot, scale);
-    return scale;
+    Transform t = getTransform();
+    return Vector3{
+        glm::length(Vector3{ t[0] }),
+        glm::length(Vector3{ t[1] }),
+        glm::length(Vector3{ t[2] })
+    };
 }
 
 CondorEngine::Vector3 CondorEngine::SceneObject::getLocalScale()
 {
-    Vector3 pos;
-    Quaternion rot;
-    Vector3 scale;
-    Math::TransformSplit(getLocalTransform(), pos, rot, scale);
-    return scale;
+    return Vector3{
+        glm::length(Vector3{transform[0]}),
+        glm::length(Vector3{transform[1]}),
+        glm::length(Vector3{transform[2]})};
 }
+
+#pragma endregion
+
+#pragma region Transformation
 
 void CondorEngine::SceneObject::Move(Vector3 vector, bool worldSpace)
 {

@@ -42,6 +42,12 @@ namespace CondorEngine {
 		SceneObject* parent;
 		/// @brief This SceneObject's local transformation matrix.
 		Transform transform;
+	private:
+		/// @brief List of Components on this SceneObject.
+		std::vector<Component*> components;
+		/// @brief List of child SceneObjects on this SceneObject.
+		std::vector<SceneObject*> children;
+
 #pragma region Getters and Setters
 	public:
 		/// @brief Get the Scene this SceneObject has been instantiated into.
@@ -67,49 +73,64 @@ namespace CondorEngine {
 		unsigned int getChildCount();
 	public:
 		/// @brief Get the world relative forward direction of this SceneObject.
-		/// @return Forward direction.
+		/// @return Forward Vector3 direction.
 		Vector3 getForward();
 		/// @brief Get the world relative right direction of this SceneObject.
-		/// @return Right direction.
+		/// @return Right Vector3 direction.
 		Vector3 getRight();
 		/// @brief Get the world relative up direction of this SceneObject.
-		/// @return Up direction.
+		/// @return Up Vector3 direction.
 		Vector3 getUp();
 		/// @brief Get this SceneObject's world transform matrix. (Identical to the local transform matrix if this is the root SceneObject.)
-		/// @return Transform matrix.
+		/// @return World Transform matrix.
 		Transform getTransform();
 		/// @brief Get this SceneObject's local transform matrix. (Identical to the world transform matrix if this is the root SceneObject.)
-		/// @return Transform matrix.
+		/// @return Local Transform matrix.
 		Transform getLocalTransform();
 		/// @brief Get this SceneObject's world position. (Identical to the world position if this is the root SceneObject.)
-		/// @return World position.
+		/// @return World Vector3 position.
 		Vector3 getPosition();
 		/// @brief Set this SceneObject's world position. (Identical to the local position if this is the root SceneObject.)
+		/// @param position World Vector3 position.
 		void setPosition(Vector3 position);
 		/// @brief Get this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
-		/// @return Local position.
+		/// @return Local Vector3 position.
 		Vector3 getLocalPosition();
 		/// @brief Set this SceneObject's local position. (Identical to the world position if this is the root SceneObject.)
-		/// @param position Local position.
+		/// @param position Local Vector3 position.
 		void setLocalPosition(Vector3 position);
 		/// @brief Get this SceneObject's world rotation. (Identical to the local rotation if this is the root SceneObject.)
-		/// @return World rotation.
+		/// @return World Quaternion rotation.
 		Quaternion getRotation();
+		/// @brief Set this SceneObject's world rotation. (Identical to the local rotation if this is the root SceneObject.)
+		/// @param rotation World Quaternion rotation.
+		void setRotation(Quaternion rotation);
 		/// @brief Get this SceneObject's local rotation. (Identical to the world rotation if this is the root SceneObject.)
-		/// @return Local rotation.
+		/// @return Local Quaternion rotation.
 		Quaternion getLocalRotation();
+		/// @brief Set this SceneObject's local rotation. (Identical to the world rotation if this is the root SceneObject.)
+		/// @param rotation Local Quaternion rotation.
+		void setLocalRotation(Quaternion rotation);
 		/// @brief Get this SceneObject's world scale. (Identical to the local scale if this is the root SceneObject.)
-		/// @return World scale.
+		/// @return World Vector3 scale.
 		Vector3 getScale();
 		/// @brief Get this SceneObject's local scale. (Identical to the world scale if this is the root SceneObject.)
-		/// @return Local scale.
+		/// @return Local Vector3 scale.
 		Vector3 getLocalScale();
 #pragma endregion
-	private:
-		/// @brief List of Components on this SceneObject.
-		std::vector<Component*> components;
-		/// @brief List of child SceneObjects on this SceneObject.
-		std::vector<SceneObject*> children;
+
+#pragma region Transformation
+		/// @brief Translate this SceneObject.
+		/// @param vector Translation.
+		void Move(Vector3 vector, bool worldSpace = true);
+		/// @brief Rotate this SceneObject.
+		/// @param vector Euler rotation.
+		void Rotate(Vector3 vector, bool worldSpace = true);
+		/// @brief Scale this SceneObject.
+		/// @param scaler Scaler.
+		void Scale(Vector3 scaler);
+#pragma endregion
+
 #pragma region Component Methods
 	public:
 		/// @brief Add a Component to this SceneObject.
@@ -223,15 +244,6 @@ namespace CondorEngine {
 		SceneObject* AddChild(SceneObject* child) {
 			return AddChild<SceneObject>(child);
 		}
-		/// @brief Translate this SceneObject.
-		/// @param vector Translation.
-		void Move(Vector3 vector, bool worldSpace = true);
-		/// @brief Rotate this SceneObject.
-		/// @param vector Euler rotation.
-		void Rotate(Vector3 vector, bool worldSpace = true);
-		/// @brief Scale this SceneObject.
-		/// @param scaler Scaler.
-		void Scale(Vector3 scaler);
 	private:
 		/// @brief Remove a child SceneObject form this SceneObject.
 		/// @param child The child to remove.
@@ -244,7 +256,7 @@ namespace CondorEngine {
 			}
 			return child;
 		}
-	};
 #pragma endregion
+	};
 }
 #endif
