@@ -1,15 +1,16 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "renderer.h"
-// internal
-#include "debug.hpp"
-#include "components/camera.h"
-// std
-#include <fstream> // for reading from files
 // third party
 #include "glew/glew.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 #include "stb/stb_image.h" // for image loading
+// std
+#include <fstream> // for reading from files
+// internal
+#include "debug.hpp"
+#include "components/camera.h"
+#include "components/mesh.h"
 
 using std::fstream;
 
@@ -180,3 +181,17 @@ void CondorEngine::Texture::FreeTexture(Texture& tex)
 
 #pragma endregion
 
+#pragma region Renderer
+
+std::vector<CondorEngine::Mesh *> CondorEngine::Renderer::meshes = std::vector<CondorEngine::Mesh *>();
+
+void CondorEngine::Renderer::Render()
+{
+	for (Mesh *mesh : meshes)
+	{
+		mesh->Render();
+	}
+	meshes.clear();
+}
+
+#pragma endregion

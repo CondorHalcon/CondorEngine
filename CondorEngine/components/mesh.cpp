@@ -151,11 +151,20 @@ CondorEngine::Mesh::~Mesh()
 	glDeleteVertexArrays(1, &vao);
 }
 
-void CondorEngine::Mesh::Update()
+void CondorEngine::Mesh::LateUpdate()
 {
-	if (material == nullptr) { 
+	if (enabled)
+	{
+		Renderer::meshes.push_back(this);
+	}
+}
+
+void CondorEngine::Mesh::Render()
+{
+	if (material == nullptr)
+	{
 		Debug::LogError("No material set; failed to render.");
-		return; 
+		return;
 	}
 	material->setTransform(getSceneObject()->getTransform());
 	material->Update();

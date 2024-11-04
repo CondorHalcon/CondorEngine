@@ -8,7 +8,7 @@
 #include "glew/glew.h"
 
 namespace CondorEngine {
-
+	class Mesh;
 
 #pragma region Struct Definitions
 	/// @brief Mesh vertex struct
@@ -81,6 +81,16 @@ namespace CondorEngine {
 		ColorRGB color;
 		/// @brief Light direction.
 		Vector3 direction;
+	};
+
+	/// @brief Render utility class.
+	class Renderer
+	{
+	public:
+		/// @brief Meshes to render this frame.
+		static std::vector<Mesh *> meshes;
+		/// @brief Render registered meshes.
+		static void Render();
 	};
 
 #pragma endregion

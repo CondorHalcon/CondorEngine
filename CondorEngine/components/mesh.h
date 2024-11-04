@@ -1,5 +1,6 @@
 #pragma once
 // internal
+#include "../renderer.h"
 #include "../component.h"
 #include "../material.h"
 // third party
@@ -44,8 +45,10 @@ namespace CondorEngine {
 	public:
 		/// @brief Render shader for the mesh.
 		Material* material;
-		/// @brief Update and render mesh.
-		void Update() override;
+		/// @brief Register mesh for rendering this frame.
+		void LateUpdate() override;
+		/// @brief Render mesh.
+		virtual void Render();
 	};
 }
 

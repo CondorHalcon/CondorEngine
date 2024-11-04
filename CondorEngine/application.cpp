@@ -1,12 +1,13 @@
 #include "application.h"
-// internal
-#include "time.h"
-#include "physics.h"
 // third party
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew/glew.h"
 #include "glfw/glfw3.h"
 #include "diagnostics.h"
+// internal
+#include "time.h"
+#include "physics.h"
+#include "renderer.h"
 
 CondorEngine::Scene* Application::activeScene = nullptr;
 Application* Application::instance = nullptr;
@@ -33,17 +34,26 @@ Application* Application::Instance()
 void Application::Run()
 {
 	while (!this->shouldClose()) {
-        this->tick();
-        this->clear();
+		// frame reset
+		this->tick();
+		this->clear();
+
+		// fixed update
 		CondorEngine::Time::accumulatedFixedTime += CondorEngine::Time::deltaTime();
 		while (CondorEngine::Time::accumulatedFixedTime >= CondorEngine::Time::fixedTimeStep) {
 			this->fixedUpdate();
 			CondorEngine::Physics::PhysicsUpdate();
 			CondorEngine::Time::accumulatedFixedTime -= CondorEngine::Time::fixedTimeStep;
 		}
-        this->update();
-        this->lateUpdate();
 
+		// update
+		this->update();
+		this->lateUpdate();
+
+		// draw frame
+		CondorEngine::Renderer::Render();
+
+		// time update
 		CondorEngine::Time::timeUpdate();
 	}
 }
