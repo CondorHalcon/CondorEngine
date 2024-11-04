@@ -69,5 +69,12 @@
 		"xtr1common": "cpp",
 		"xtree": "cpp",
 		"xutility": "cpp"
-	}
+	},
+	"symbols.folders.associations": {
+		"meshes": "folder-prisma",
+		"sceneobjects": "folder-assets",
+		"shaders": "folder-purple-code",
+		"textures": "folder-images",
+		"thirdparty": "folder-utils",
+	},
 }

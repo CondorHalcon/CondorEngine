@@ -234,7 +234,7 @@ void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collide
 
 #pragma endregion
 
-#pragma region BoxToSphere
+#pragma region AABBToSphere
 
 bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *collider2)
 {
@@ -290,7 +290,7 @@ void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider
 
 #pragma endregion
 
-#pragma region BoxToPlane
+#pragma region AABBToPlane
 
 bool CondorEngine::Physics::aabbToPlaneCheck(Collider *collider1, Collider *collider2)
 {
@@ -351,7 +351,7 @@ void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider 
 
 #pragma endregion
 
-#pragma region BoxToBox
+#pragma region AABBToAABB
 
 bool CondorEngine::Physics::aabbToAABBCheck(Collider *collider1, Collider *collider2)
 {
