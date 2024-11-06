@@ -28,6 +28,8 @@ namespace CondorEngine
     class Physics
     {
     public:
+        /// @brief Depenetrate if collision joules are bellow this threshold.
+        static float depenetrationThreshold;
         /// @brief Initialize the physics engine.
         static void init();
     private:

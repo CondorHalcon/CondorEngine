@@ -105,20 +105,20 @@ int main()
     M_Lit* pMat2 = new M_Lit();
 
     // primitive mesh
-    Primitive* prim = scene->Instantiate(
-        new Primitive(PrimitiveType::CubeMesh, pMat), 
-        Vector3{-2.8, 2, 0});
-    prim->rigidbody->AddForce(Vector3{1, -1, 0} * .1f);
+    Primitive *prim = scene->Instantiate(
+        new Primitive(PrimitiveType::CubeMesh, pMat),
+        Vector3{0, .5f, 0});
+    // prim->rigidbody->AddForce(Vector3{1, -1, 0} * .1f);
 
     // primitive mesh 2
-    Primitive* prim2 = scene->Instantiate(
-        new Primitive(PrimitiveType::SphereMesh, pMat), 
+    Primitive *prim2 = scene->Instantiate(
+        new Primitive(PrimitiveType::SphereMesh, pMat),
         Vector3{0, 0, 0});
 
     // primitive mesh 3
     Primitive *prim3 = scene->Instantiate(
         new Primitive(PrimitiveType::PlaneMesh, pMat2), 
-        Vector3{0, -1, 0});
+        Vector3{0, -2, 0});
 
     // rotatable
     Rotatable* rotatable = scene->Instantiate<Rotatable>(new Rotatable(), Vector3{ 2, 0, 1 });
@@ -128,7 +128,7 @@ int main()
     rotatable->control = false;
 
     //Debug::Log("fixedTimeStep " + std::to_string(Time::fixedTimeStep));
-    //Time::fixedTimeStep = 1.0f;
+    Time::fixedTimeStep = 1.0f;
     //Debug::Log("fixedTimeStep " + std::to_string(Time::fixedTimeStep));
     //FixedTimePrinter* timePrinter = scene->Instantiate<FixedTimePrinter>(new FixedTimePrinter());
 

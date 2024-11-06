@@ -55,7 +55,7 @@ CondorEngine::Vector3 CondorEngine::Collider::getClosestPoint(Vector3 point)
         return this->getSceneObject()->getPosition() + (normal * this->radius * this->getSceneObject()->getScale());
     case ColliderType::Plane:
         offset = point - this->getSceneObject()->getPosition();
-        normal = this->getSceneObject()->getUp();
+        normal = this->plane.getNormal(this->getSceneObject()->getTransform());
         distance = glm::dot(offset, normal);
         return point - normal * distance;
     case ColliderType::AABB:
@@ -69,6 +69,11 @@ CondorEngine::Vector3 CondorEngine::Collider::getClosestPoint(Vector3 point)
         z = glm::fclamp(point.z, 
             this->getSceneObject()->getPosition().z - halfSize.z, 
             this->getSceneObject()->getPosition().z + halfSize.z);
+        if (x == point.x || y == point.y || z == point.z)
+        {
+            // the point is inside the box
+            return this->getClosestPoint(Vector3{x, y, z} * glm::length(this->size));
+        }
         return Vector3{x, y, z};
     default:
         return point;

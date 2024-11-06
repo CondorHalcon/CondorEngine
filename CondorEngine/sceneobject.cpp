@@ -288,7 +288,10 @@ void CondorEngine::SceneObject::Move(Vector3 vector, bool worldSpace)
 }
 
 void CondorEngine::SceneObject::Rotate(Vector3 vector, bool worldSpace) {
-    transform = glm::rotate(worldSpace ? getTransform() : transform, glm::radians(glm::length(vector)), glm::normalize(vector));
+    transform = glm::rotate(
+        worldSpace ? getTransform() : transform,
+        glm::radians(glm::length(vector)),
+        glm::normalize(vector));
 }
 
 void CondorEngine::SceneObject::Scale(Vector3 scaler)

@@ -10,6 +10,7 @@
 
 std::vector<CondorEngine::Collider *> CondorEngine::Physics::colliders = std::vector<CondorEngine::Collider *>();
 std::vector<CondorEngine::Rigidbody *> CondorEngine::Physics::rigidbodies = std::vector<CondorEngine::Rigidbody *>();
+float CondorEngine::Physics::depenetrationThreshold = .001f;
 
 void CondorEngine::Physics::init()
 {
@@ -168,19 +169,50 @@ void CondorEngine::Physics::sphereToSphereResolution(Collider *collider1, Collid
     // collision resolution
     float joules = 0;
     Vector3 normal = glm::normalize(collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition());
+    float distance =
+        (collider1->radius + collider2->radius) -
+        glm::length(collider1->getSceneObject()->getPosition() - collider2->getSceneObject()->getPosition());
     if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
     {
         joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
-        rbA->velocity -= (joules / rbA->mass) * normal;
-        rbB->velocity += (joules / rbB->mass) * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbA->velocity -= (joules / rbA->mass) * normal;
+            rbB->velocity += (joules / rbB->mass) * normal;
+        }
+        else
+        {
+            // depenetration
+            rbA->getSceneObject()->Move(normal * distance * .5f);
+            rbB->getSceneObject()->Move(-normal * distance * .5f);
+        }
+    }
     else if (rbA != nullptr && rbA->enabled) {
         joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
-        rbA->velocity -= joules * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbA->velocity -= joules * normal;
+        }
+        else
+        {
+            // depenetration
+            rbA->getSceneObject()->Move(normal * distance);
+        }
+    }
     else if (rbB != nullptr && rbB->enabled) {
         joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
-        rbB->velocity -= joules * normal;
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbB->velocity -= joules * normal;
+        }
+        else
+        {
+            // depenetration
+            rbB->getSceneObject()->Move(normal * distance);
+        }
     }
 }
 #pragma endregion
@@ -229,7 +261,18 @@ void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collide
     // collision resolution
     Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
-    rb->velocity -= joules * normal;
+    if (std::abs(joules) >= depenetrationThreshold)
+    {
+        // resolution
+        rb->velocity -= joules * normal;
+    }
+    else
+    {
+        // depenetration
+        float distance = sphere->radius -
+                         glm::length(sphere->getSceneObject()->getPosition() - plane->getClosestPoint(sphere->getSceneObject()->getPosition()));
+        rb->getSceneObject()->Move(normal * distance);
+    }
 }
 
 #pragma endregion
@@ -238,8 +281,8 @@ void CondorEngine::Physics::planeToSphereResolution(Collider* collider1, Collide
 
 bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *collider2)
 {
-    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
-    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+    Collider *aabb = collider1->getType() & ColliderType::AABB ? collider1 : collider2;
+    Collider *sphere = collider2->getType() & ColliderType::Sphere ? collider2 : collider1;
 
     Vector3 offset = sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition());
 
@@ -250,8 +293,8 @@ bool CondorEngine::Physics::aabbToSphereCheck(Collider *collider1, Collider *col
 }
 void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *collider2)
 {
-    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
-    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+    Collider *aabb = collider1->getType() & ColliderType::AABB ? collider1 : collider2;
+    Collider *sphere = collider2->getType() & ColliderType::Sphere ? collider2 : collider1;
 
     Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition()));
     Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
@@ -262,29 +305,60 @@ void CondorEngine::Physics::aabbToSphereTrigger(Collider *collider1, Collider *c
 }
 void CondorEngine::Physics::aabbToSphereResolution(Collider *collider1, Collider *collider2)
 {
-    Collider* aabb = collider1->getType() == ColliderType::AABB ? collider1 : collider2;
-    Collider* sphere = collider2->getType() == ColliderType::Sphere ? collider2 : collider1;
+    Collider *aabb = collider1->getType() & ColliderType::AABB ? collider1 : collider2;
+    Collider *sphere = collider2->getType() & ColliderType::Sphere ? collider2 : collider1;
 
     // collision rigidbodies
-    Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
-    Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbA = sphere->getSceneObject()->GetComponentInParent<Rigidbody>();
+    Rigidbody *rbB = aabb->getSceneObject()->GetComponentInParent<Rigidbody>();
 
     // collision resolution
     float joules = 0;
-    Vector3 normal = glm::normalize(sphere->getSceneObject()->getPosition() - aabb->getClosestPoint(sphere->getSceneObject()->getPosition()));
-    if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
+    Vector3 spherePos = sphere->getSceneObject()->getPosition();
+    Vector3 aabbClosePoint = aabb->getClosestPoint(spherePos);
+    Vector3 normal = glm::length(spherePos - aabbClosePoint) != 0 ? glm::normalize(spherePos - aabbClosePoint) : glm::normalize(spherePos - aabb->getSceneObject()->getPosition());
+    float distance = sphere->radius - glm::length(spherePos - aabbClosePoint);
+    if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled))
     {
         joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
-        rbA->velocity -= (joules / rbA->mass) * normal;
-        rbB->velocity += (joules / rbB->mass) * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbA->velocity -= (joules / rbA->mass) * normal;
+            rbB->velocity += (joules / rbB->mass) * normal;
+        }
+        else
+        {
+            // depenetration
+            rbA->getSceneObject()->Move(normal * distance * .5f);
+            rbB->getSceneObject()->Move(-normal * distance * .5f);
+        }
+    }
     else if (rbA != nullptr && rbA->enabled) {
         joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
-        rbA->velocity -= joules * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbA->velocity -= joules * normal;
+        }
+        else
+        {
+            // depenetration
+            rbA->getSceneObject()->Move(normal * distance * .5f);
+        }
+    }
     else if (rbB != nullptr && rbB->enabled) {
         joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
-        rbB->velocity -= joules * normal;
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            // resolution
+            rbB->velocity -= joules * normal;
+        }
+        else
+        {
+            // depenetration
+            rbB->getSceneObject()->Move(normal * distance * .5f);
+        }
     }
 }
 
@@ -332,8 +406,8 @@ void CondorEngine::Physics::aabbToPlaneTrigger(Collider *collider1, Collider *co
     Rigidbody *rbA = collider1->getSceneObject()->GetComponentInParent<Rigidbody>();
     Rigidbody *rbB = collider2->getSceneObject()->GetComponentInParent<Rigidbody>();
     Vector3 relativeVelocity = (rbA != nullptr && rbA->enabled ? rbA->getVelocity() : Vector3{0,0,0}) - (rbB != nullptr && rbB->enabled ? rbB->getVelocity() : Vector3{0,0,0});
-    aabb->getSceneObject()->ObjectOnCollision(Collision{ collider1, collider2, normal, relativeVelocity });
-    plane->getSceneObject()->ObjectOnCollision(Collision{ collider2, collider1, -normal, -relativeVelocity });
+    aabb->getSceneObject()->ObjectOnCollision(Collision{aabb, plane, normal, relativeVelocity});
+    plane->getSceneObject()->ObjectOnCollision(Collision{plane, aabb, -normal, -relativeVelocity});
 }
 void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider *collider2)
 {
@@ -346,7 +420,14 @@ void CondorEngine::Physics::aabbToPlaneResolution(Collider *collider1, Collider 
     // collision resolution
     Vector3 normal = plane->plane.getNormal(plane->getSceneObject()->getTransform());
     float joules = glm::dot(2.0f * rb->velocity, normal) / glm::dot(normal, normal * (1 / rb->mass));
-    rb->velocity -= joules * normal;
+    if (std::abs(joules) >= depenetrationThreshold)
+    {
+        rb->velocity -= joules * normal;
+    }
+    else
+    {
+        // TODO: aabbToPlane::depenetration
+    }
 }
 
 #pragma endregion
@@ -386,16 +467,37 @@ void CondorEngine::Physics::aabbToAABBResolution(Collider *collider1, Collider *
     if ((rbA != nullptr && rbA->enabled) && (rbB != nullptr && rbB->enabled)) 
     {
         joules = glm::dot(2.0f * (rbA->velocity - rbB->velocity), normal) / glm::dot(normal, normal * ((1 / rbA->mass) + (1 / rbB->mass)));
-        rbA->velocity -= (joules / rbA->mass) * normal;
-        rbB->velocity += (joules / rbB->mass) * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            rbA->velocity -= (joules / rbA->mass) * normal;
+            rbB->velocity += (joules / rbB->mass) * normal;
+        }
+        else
+        {
+            // TODO: aabbToAABB::depenetration
+        }
+    }
     else if (rbA != nullptr && rbA->enabled) {
         joules = glm::dot(2.0f * rbA->velocity, normal) / glm::dot(normal, normal * (1 / rbA->mass));
-        rbA->velocity -= joules * normal;
-    } 
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            rbA->velocity -= joules * normal;
+        }
+        else
+        {
+            // TODO: aabbToAABB::depenetration
+        }
+    }
     else if (rbB != nullptr && rbB->enabled) {
         joules = glm::dot(2.0f * rbB->velocity, normal) / glm::dot(normal, normal * (1 / rbB->mass));
-        rbB->velocity -= joules * normal;
+        if (std::abs(joules) >= depenetrationThreshold)
+        {
+            rbB->velocity -= joules * normal;
+        }
+        else
+        {
+            // TODO: aabbToAABB::depenetration
+        }
     }
 }
 
