@@ -25,29 +25,6 @@
 
 using namespace CondorEngine;
 
-#pragma region Implementation Classes
-
-/// @brief Demo wall class.
-class Wall : public SceneObject
-{
-public:
-    /// @brief Class constructor.
-    Wall() : SceneObject()
-    {
-        this->name = "Wall";
-        this->collider = this->AddComponent<Collider>(new Collider(ColliderType::Plane));
-        this->collider->plane = PlaneSize{Axis::Up, Vector2{1, 1}};
-        this->mesh = this->AddComponent<Mesh>(Primitive::MakePlane());
-        this->mesh->material = new M_Lit(Texture::LoadTexture("textures/UVGrid.png"));
-    }
-    /// @brief Wall collider component.
-    Collider *collider;
-    /// @brief Wall mesh component.
-    Mesh *mesh;
-};
-
-#pragma endregion
-
 #pragma region Main
 
 int main()
@@ -67,26 +44,28 @@ int main()
     // material
     M_Lit *pMat = new M_Lit(Texture::LoadTexture("textures/ColorGrid.png"));
 
-    // primitive mesh
+    // primitive meshes
     Primitive *prim = scene->Instantiate(
         new Primitive(PrimitiveType::CubeMesh, pMat),
         Vector3{0, .5f, 0});
-
-    // primitive mesh 2
     Primitive *prim2 = scene->Instantiate(
         new Primitive(PrimitiveType::SphereMesh, pMat),
         Vector3{0, 0, 0});
-
-    // primitive mesh 3
     Primitive *prim3 = scene->Instantiate(
-        new Primitive(PrimitiveType::CubeMesh, pMat),
+        new Primitive(PrimitiveType::SphereMesh, pMat),
         Vector3{0, -2, 0});
-
-    // primitive mesh 4
     Primitive *prim4 = scene->Instantiate(
         new Primitive(PrimitiveType::SphereMesh, pMat),
         Vector3{5, 7, 0});
     prim4->rigidbody->AddForce(Vector3{-.5, -.5, 0});
+    Primitive *prim5 = scene->Instantiate(
+        new Primitive(PrimitiveType::PlaneMesh),
+        Vector3{-2, 1.5, 0});
+    prim5->Rotate(Vector3{0, 0, -90});
+    Primitive *prim6 = scene->Instantiate(
+        new Primitive(PrimitiveType::PlaneMesh),
+        Vector3{6, 1.5, 0});
+    prim6->Rotate(Vector3{0, 0, 90});
 
     // suzane
     SceneObject *suzane = scene->Instantiate<SceneObject>(new SceneObject(), Vector3{2, 0, 1});

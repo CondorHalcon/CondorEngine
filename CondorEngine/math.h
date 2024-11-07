@@ -34,6 +34,7 @@ namespace CondorEngine {
 
 #pragma region Enums
 
+	/// @brief Axis enumeration.
 	enum Axis
 	{
 		Right = 0,
