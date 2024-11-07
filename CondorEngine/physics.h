@@ -22,6 +22,7 @@ namespace CondorEngine
         Collider *other;
         Vector3 normal;
         Vector3 relativeVelocity;
+        bool isTriggerOnly();
     };
 
     /// @brief Engine physics class.

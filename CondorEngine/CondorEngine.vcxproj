@@ -158,6 +158,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClCompile Include="components\camera.cpp" />
     <ClCompile Include="CondorEngine.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="scenes\defaultscene.cpp" />
     <ClCompile Include="diagnostics.cpp" />
     <ClCompile Include="components\mesh.cpp" />
     <ClCompile Include="material.cpp" />
@@ -180,6 +181,7 @@ XCOPY "$(SolutionDir)CondorEngine\shaders" "$(TargetDir)\shaders\" /S /Y</Comman
     <ClInclude Include="components\collider.h" />
     <ClInclude Include="components\camera.h" />
     <ClInclude Include="debug.hpp" />
+    <ClInclude Include="scenes\defaultscene.h" />
     <ClInclude Include="diagnostics.h" />
     <ClInclude Include="components\mesh.h" />
     <ClInclude Include="material.h" />

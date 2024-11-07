@@ -14,10 +14,16 @@ namespace CondorEngine
         Capsule = 8
     };
 
+    /// @brief Plane size struct.
     struct PlaneSize
     {
+        /// @brief SceneObject local axis the plane is aligned to.
         Axis axis;
+        /// @brief Plane size.
         Vector2 size;
+        /// @brief Get the plane world normal.
+        /// @param transform SceneObject transform.
+        /// @return Global normal vector.
         Vector3 getNormal(Transform transform);
     };
 
@@ -39,7 +45,7 @@ namespace CondorEngine
             /// @brief Plane collider axis and size.
             PlaneSize plane;
         };
-        /// @brief Collider height.
+        /// @brief Should this collider only trigger OnCollision events?
         bool isTrigger;
     private:
         /// @brief Collider type.

@@ -229,13 +229,25 @@ namespace CondorEngine {
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
 		/// @param child Child SceneObject to add.
 		/// @return Added child of type `T`.
-		template <typename T> T* AddChild(T* child) {
+		template <typename T>
+		T *AddChild(T *child, Vector3 position)
+		{
 			if (child == this) {
 				throw(std::string("SceneObject::AddChild(T*) failed : Cannot add a SceneObject as its own child"));
 			}
 			children.push_back(child);
 			child->parent = this;
+			child->setLocalPosition(position);
 			return child;
+		}
+		/// @brief Add a child to this SceneObject.
+		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.
+		/// @param child Child SceneObject to add.
+		/// @return Added child of type `T`.
+		template <typename T>
+		T *AddChild(T *child)
+		{
+			return AddChild<T>(child, Vector3{0, 0, 0});
 		}
 		/// @brief Add a child to this SceneObject.
 		/// @tparam T Child SceneObject type; must inherit from `CondorEngine::SceneObject`.

@@ -106,7 +106,9 @@ namespace CondorEngine
 		static const int MAX_LIGHTS = 2;
 		/// @brief Class constructor.
         M_ComplexLit();
-        /// @brief Update shader uniforms.
+		/// @brief Class constructor.
+		M_ComplexLit(Texture *texture);
+		/// @brief Update shader uniforms.
         void Update() override;
     };
 	/// @brief UV material.

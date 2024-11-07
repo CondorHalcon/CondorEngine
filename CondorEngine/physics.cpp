@@ -8,6 +8,13 @@
 // third party
 #include "glm/ext.hpp"
 
+#pragma region Collision
+bool CondorEngine::Collision::isTriggerOnly()
+{
+    return collider->isTrigger || other->isTrigger;
+}
+#pragma endregion
+
 std::vector<CondorEngine::Collider *> CondorEngine::Physics::colliders = std::vector<CondorEngine::Collider *>();
 std::vector<CondorEngine::Rigidbody *> CondorEngine::Physics::rigidbodies = std::vector<CondorEngine::Rigidbody *>();
 float CondorEngine::Physics::depenetrationThreshold = .001f;

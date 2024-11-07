@@ -71,8 +71,9 @@ CondorEngine::Vector3 CondorEngine::Collider::getClosestPoint(Vector3 point)
             this->getSceneObject()->getPosition().z + halfSize.z);
         if (x == point.x || y == point.y || z == point.z)
         {
+            // FIXME: clamp to closest face
             // the point is inside the box
-            return this->getClosestPoint(Vector3{x, y, z} * glm::length(this->size));
+            // return this->getClosestPoint(Vector3{x, y, z} * glm::length(this->size));
         }
         return Vector3{x, y, z};
     default:

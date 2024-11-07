@@ -35,8 +35,7 @@ namespace CondorEngine {
 		/// @brief Primitive rigidbody component.
 		Rigidbody *rigidbody;
 		/// @brief Primitive collider component.
-		Collider* collider;
-	private:
+		Collider *collider;
 		/// @brief Make a simple primitive cube.
 		/// @return Simple primitive cube mesh.
 		static Mesh* MakeSimpleCube();

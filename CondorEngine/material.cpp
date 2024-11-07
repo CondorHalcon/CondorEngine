@@ -117,10 +117,7 @@ CondorEngine::M_Lit::M_Lit() : CondorEngine::M_Lit(Shader::LoadShader("shaders/d
 
 CondorEngine::M_Lit::M_Lit(Texture *texture) : CondorEngine::M_Lit()
 {
-    if (this->texture != nullptr) {
-        Texture::FreeTexture(*this->texture);
-    }
-    this->texture = texture;
+    setTexture(texture);
 }
 
 void CondorEngine::M_Lit::Update()
@@ -150,10 +147,19 @@ void CondorEngine::M_Lit::Update()
 
 void CondorEngine::M_Lit::setTexture(Texture *texture)
 {
-    setTexture(texture);
+    if (this->texture != nullptr)
+    {
+        Texture::FreeTexture(*this->texture);
+    }
+    this->texture = texture;
 }
 
 CondorEngine::M_ComplexLit::M_ComplexLit() : CondorEngine::M_Lit(Shader::LoadShader("shaders/directional.vert", "shaders/phong_multi-light.frag")) {}
+
+CondorEngine::M_ComplexLit::M_ComplexLit(Texture *texture) : CondorEngine::M_ComplexLit()
+{
+    setTexture(texture);
+}
 
 void CondorEngine::M_ComplexLit::Update() 
 {
