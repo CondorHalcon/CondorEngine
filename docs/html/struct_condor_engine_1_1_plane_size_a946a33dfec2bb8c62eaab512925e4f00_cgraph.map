@@ -1,0 +1,4 @@
+<map id="CondorEngine::PlaneSize::getNormal" name="CondorEngine::PlaneSize::getNormal">
+<area shape="rect" id="node1" title="Get the plane world normal." alt="" coords="5,5,176,48"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_math.html#abe45b01ae640e80c634a4736f3aa0cef" title="Get transform rotation axis." alt="" coords="224,5,364,48"/>
+</map>

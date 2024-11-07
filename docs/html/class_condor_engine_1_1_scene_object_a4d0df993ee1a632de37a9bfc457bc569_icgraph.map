@@ -1,0 +1,4 @@
+<map id="CondorEngine::SceneObject::AddChild" name="CondorEngine::SceneObject::AddChild">
+<area shape="rect" id="node1" title="Add a child to this SceneObject." alt="" coords="240,5,426,48"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene_object.html#adf8b9cfef2b3359312d672af03ee05fa" title="Set this SceneObject&#39;s parent." alt="" coords="5,5,192,48"/>
+</map>

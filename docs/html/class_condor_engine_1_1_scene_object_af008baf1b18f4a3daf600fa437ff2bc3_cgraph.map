@@ -1,0 +1,5 @@
+<map id="CondorEngine::SceneObject::getLocalRotation" name="CondorEngine::SceneObject::getLocalRotation">
+<area shape="rect" id="node1" title="Get this SceneObject&#39;s local rotation. (Identical to the world rotation if this is the root SceneObje..." alt="" coords="5,21,192,64"/>
+<area shape="rect" id="node2" href="$group__gtc__quaternion.html#ga3d350068ce0d14e4496cb844eb79a05f" title=" " alt="" coords="240,29,347,56"/>
+<area shape="rect" id="node3" href="$group__core__func__exponential.html#ga1f904e09827e939a56e4158f45ca8ede" title=" " alt="" coords="395,29,467,56"/>
+</map>

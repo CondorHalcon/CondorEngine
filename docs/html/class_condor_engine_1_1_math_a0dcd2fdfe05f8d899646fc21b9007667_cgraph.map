@@ -1,0 +1,4 @@
+<map id="CondorEngine::Math::getTransformVector" name="CondorEngine::Math::getTransformVector">
+<area shape="rect" id="node1" title="Transform vector from local space to world space." alt="" coords="5,5,149,48"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_math.html#affeaa7ecb798eba036fc830b965626c8" title="Extract the position, rotation, and scale of a transform." alt="" coords="197,5,337,48"/>
+</map>

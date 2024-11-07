@@ -1,0 +1,4 @@
+<map id="CondorEngine::SceneObject::setScene" name="CondorEngine::SceneObject::setScene">
+<area shape="rect" id="node1" title="Set the Scene this SceneObject is in." alt="" coords="5,5,192,48"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene.html#a020add7bb52da2ffe4044003ecb7544a" title="Instantiate a SceneObject into this Scene." alt="" coords="240,5,388,48"/>
+</map>

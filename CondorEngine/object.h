@@ -2,6 +2,8 @@
 // std
 #include <string>
 
+/// @namespace CondorEngine
+/// @brief The CondorEngine namespace contains all the core classes and functions for the Condor game engine.
 namespace CondorEngine {
     /// @brief Base engine object class.
 	class Object {

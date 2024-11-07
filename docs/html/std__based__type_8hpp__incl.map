@@ -1,0 +1,52 @@
+<map id="thirdparty/glm/gtx/std_based_type.hpp" name="thirdparty/glm/gtx/std_based_type.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="2605,5,2747,48"/>
+<area shape="rect" id="node2" href="$glm_8hpp.html" title=" " alt="" coords="2590,96,2669,123"/>
+<area shape="rect" id="node50" title=" " alt="" coords="2693,96,2752,123"/>
+<area shape="rect" id="node3" href="$__fixes_8hpp_source.html" title=" " alt="" coords="2646,328,2762,355"/>
+<area shape="rect" id="node4" title=" " alt="" coords="2579,411,2637,437"/>
+<area shape="rect" id="node5" href="$setup_8hpp_source.html" title=" " alt="" coords="3629,411,3742,437"/>
+<area shape="rect" id="node6" title=" " alt="" coords="1780,485,1844,512"/>
+<area shape="rect" id="node9" title=" " alt="" coords="1830,171,1890,197"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1913,171,1967,197"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1991,171,2044,197"/>
+<area shape="rect" id="node12" href="$fwd_8hpp_source.html" title=" " alt="" coords="3726,171,3794,197"/>
+<area shape="rect" id="node14" href="$vec2_8hpp.html" title=" " alt="" coords="791,245,865,272"/>
+<area shape="rect" id="node25" href="$vec3_8hpp.html" title=" " alt="" coords="2035,245,2109,272"/>
+<area shape="rect" id="node32" href="$vec4_8hpp.html" title=" " alt="" coords="2235,245,2309,272"/>
+<area shape="rect" id="node33" href="$mat2x2_8hpp.html" title=" " alt="" coords="2333,245,2422,272"/>
+<area shape="rect" id="node34" href="$mat2x3_8hpp.html" title=" " alt="" coords="2446,245,2535,272"/>
+<area shape="rect" id="node35" href="$mat2x4_8hpp.html" title=" " alt="" coords="2559,245,2649,272"/>
+<area shape="rect" id="node36" href="$mat3x2_8hpp.html" title=" " alt="" coords="2673,245,2762,272"/>
+<area shape="rect" id="node37" href="$mat3x3_8hpp.html" title=" " alt="" coords="2889,245,2978,272"/>
+<area shape="rect" id="node38" href="$mat3x4_8hpp.html" title=" " alt="" coords="3002,245,3091,272"/>
+<area shape="rect" id="node39" href="$mat4x2_8hpp.html" title=" " alt="" coords="3115,245,3205,272"/>
+<area shape="rect" id="node40" href="$mat4x3_8hpp.html" title=" " alt="" coords="3229,245,3318,272"/>
+<area shape="rect" id="node41" href="$mat4x4_8hpp.html" title=" " alt="" coords="3342,245,3431,272"/>
+<area shape="rect" id="node42" href="$trigonometric_8hpp.html" title=" " alt="" coords="3577,245,3698,272"/>
+<area shape="rect" id="node43" href="$exponential_8hpp.html" title=" " alt="" coords="2118,171,2231,197"/>
+<area shape="rect" id="node44" href="$common_8hpp.html" title=" " alt="" coords="3456,245,3552,272"/>
+<area shape="rect" id="node45" href="$packing_8hpp.html" title=" " alt="" coords="124,245,215,272"/>
+<area shape="rect" id="node46" href="$geometric_8hpp.html" title=" " alt="" coords="3571,171,3674,197"/>
+<area shape="rect" id="node47" href="$matrix_8hpp.html" title=" " alt="" coords="2692,171,2774,197"/>
+<area shape="rect" id="node48" href="$vector__relational_8hpp.html" title=" " alt="" coords="3825,245,3978,272"/>
+<area shape="rect" id="node49" href="$integer_8hpp.html" title=" " alt="" coords="3461,171,3547,197"/>
+<area shape="rect" id="node7" title=" " alt="" coords="3712,485,3776,512"/>
+<area shape="rect" id="node8" href="$platform_8h_source.html" title=" " alt="" coords="3565,485,3688,512"/>
+<area shape="rect" id="node13" href="$qualifier_8hpp_source.html" title=" " alt="" coords="3673,328,3799,355"/>
+<area shape="rect" id="node15" href="$vector__bool2_8hpp.html" title=" " alt="" coords="517,328,667,355"/>
+<area shape="rect" id="node16" href="$vector__bool2__precision_8hpp.html" title=" " alt="" coords="691,320,816,363"/>
+<area shape="rect" id="node17" href="$vector__float2_8hpp.html" title=" " alt="" coords="94,328,245,355"/>
+<area shape="rect" id="node18" href="$vector__float2__precision_8hpp.html" title=" " alt="" coords="840,320,966,363"/>
+<area shape="rect" id="node19" href="$vector__double2_8hpp.html" title=" " alt="" coords="990,328,1154,355"/>
+<area shape="rect" id="node20" href="$vector__double2__precision_8hpp.html" title=" " alt="" coords="1178,320,1318,363"/>
+<area shape="rect" id="node21" href="$vector__int2_8hpp.html" title=" " alt="" coords="884,411,1025,437"/>
+<area shape="rect" id="node22" href="$vector__int2__sized_8hpp.html" title=" " alt="" coords="1342,328,1520,355"/>
+<area shape="rect" id="node23" href="$vector__uint2_8hpp.html" title=" " alt="" coords="209,411,356,437"/>
+<area shape="rect" id="node24" href="$vector__uint2__sized_8hpp.html" title=" " alt="" coords="320,320,442,363"/>
+<area shape="rect" id="node26" href="$vector__bool3_8hpp.html" title=" " alt="" coords="1594,328,1744,355"/>
+<area shape="rect" id="node27" href="$vector__bool3__precision_8hpp.html" title=" " alt="" coords="1768,320,1893,363"/>
+<area shape="rect" id="node28" href="$vector__float3_8hpp.html" title=" " alt="" coords="1918,328,2069,355"/>
+<area shape="rect" id="node29" href="$vector__float3__precision_8hpp.html" title=" " alt="" coords="2093,320,2219,363"/>
+<area shape="rect" id="node30" href="$vector__double3_8hpp.html" title=" " alt="" coords="2243,328,2408,355"/>
+<area shape="rect" id="node31" href="$vector__double3__precision_8hpp.html" title=" " alt="" coords="2432,320,2571,363"/>
+</map>

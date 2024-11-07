@@ -1,0 +1,7 @@
+<map id="Assimp::StreamWriter::Tell" name="Assimp::StreamWriter::Tell">
+<area shape="rect" id="node1" title=" " alt="" coords="5,52,155,95"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_stream_writer.html#ac43a9569101e6f69ed88e3907a69c4a6" title=" " alt="" coords="207,23,356,65"/>
+<area shape="rect" id="node5" href="$class_assimp_1_1_i_o_stream.html#a316ac6cd16b5a493d1313f792c806194" title="Get the current position of the read/write cursor." alt="" coords="203,89,360,116"/>
+<area shape="rect" id="node3" href="$class_assimp_1_1_i_o_stream.html#a7c19952446ece90924b246f087417899" title="Flush the contents of the file buffer (for writers) See fflush() for more details." alt="" coords="408,5,577,32"/>
+<area shape="rect" id="node4" href="$class_assimp_1_1_i_o_stream.html#ad0ca4aae1b8c4d00db391ac3a4171f7b" title="Write to the file." alt="" coords="409,56,576,83"/>
+</map>

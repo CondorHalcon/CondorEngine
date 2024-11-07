@@ -1,0 +1,4 @@
+<map id="Assimp::MemoryIOSystem::CreateDirectory" name="Assimp::MemoryIOSystem::CreateDirectory">
+<area shape="rect" id="node1" title="Will create the directory." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_system.html#a3fc1316fdb4168cde052c95f96364d41" title="CReates an new directory at the given path." alt="" coords="233,5,412,48"/>
+</map>

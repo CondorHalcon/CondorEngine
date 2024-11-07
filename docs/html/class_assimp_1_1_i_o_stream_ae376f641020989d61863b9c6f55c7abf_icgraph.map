@@ -1,0 +1,4 @@
+<map id="Assimp::IOStream::Read" name="Assimp::IOStream::Read">
+<area shape="rect" id="node1" title="Read from the file." alt="" coords="196,13,364,40"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_t_xml_parser.html#a832c8f496948e43402767853d25b9a4c" title="Will parse an xml&#45;file from a given stream." alt="" coords="5,5,148,48"/>
+</map>

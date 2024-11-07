@@ -1,6 +1,7 @@
 <map id="Application" name="Application">
-<area shape="rect" id="node1" title="Application handler class for window, active scene, and input." alt="" coords="129,203,215,229"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene.html" title="Base scene class." alt="" coords="98,112,246,139"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,13,155,40"/>
-<area shape="rect" id="node4" href="$struct_condor_engine_1_1_directional_light.html" title="Directional light struct." alt="" coords="179,5,352,48"/>
+<area shape="rect" id="node1" title="Application handler class for window, active scene, and input." alt="" coords="5,309,91,336"/>
+<area shape="rect" id="node2" href="$structglm_1_1vec.html" title=" " alt="" coords="42,5,176,32"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_scene.html" title="Base scene class." alt="" coords="108,219,257,245"/>
+<area shape="rect" id="node5" href="$struct_condor_engine_1_1_directional_light.html" title="Directional light struct." alt="" coords="212,112,385,155"/>
+<area shape="rect" id="node4" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="409,120,559,147"/>
 </map>

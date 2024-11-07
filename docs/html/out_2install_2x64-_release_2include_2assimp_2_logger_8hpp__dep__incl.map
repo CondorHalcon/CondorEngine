@@ -1,0 +1,5 @@
+<map id="thirdparty/assimp/out/install/x64&#45;Release/include/assimp/Logger.hpp" name="thirdparty/assimp/out/install/x64&#45;Release/include/assimp/Logger.hpp">
+<area shape="rect" id="node1" title="Abstract base class &#39;Logger&#39;, base of the logging system." alt="" coords="26,5,207,64"/>
+<area shape="rect" id="node2" href="$out_2install_2x64-_release_2include_2assimp_2_default_logger_8hpp.html" title=" " alt="" coords="5,219,228,277"/>
+<area shape="rect" id="node3" href="$out_2install_2x64-_release_2include_2assimp_2_null_logger_8hpp.html" title="Dummy logger." alt="" coords="84,112,288,171"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="CondorEngine::SceneObject::TryFindComponentInParent" name="CondorEngine::SceneObject::TryFindComponentInParent">
+<area shape="rect" id="node1" title="Find a Component of type on this SceneObject or its parents. WARNING: This is a recursive function th..." alt="" coords="5,29,195,72"/>
+</map>

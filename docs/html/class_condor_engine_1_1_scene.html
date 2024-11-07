@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CondorEngine<span id="projectnumber">&#160;0.1.0</span>
+   <div id="projectname">CondorEngine<span id="projectnumber">&#160;0.2.0</span>
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>CondorEngine</b></li><li class="navelem"><a class="el" href="class_condor_engine_1_1_scene.html">Scene</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_condor_engine.html">CondorEngine</a></li><li class="navelem"><a class="el" href="class_condor_engine_1_1_scene.html">Scene</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -85,14 +85,15 @@ $(function() {
 <p>Base scene class.  
  <a href="class_condor_engine_1_1_scene.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="scene_8h_source.html">scene.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_condor_engine_2scene_8h_source.html">scene.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for CondorEngine::Scene:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_condor_engine_1_1_scene__inherit__graph.png" border="0" usemap="#a_condor_engine_1_1_scene_inherit__map" alt="Inheritance graph"/></div>
 <map name="a_condor_engine_1_1_scene_inherit__map" id="a_condor_engine_1_1_scene_inherit__map">
-<area shape="rect" title="Base scene class." alt="" coords="6,80,154,107"/>
-<area shape="rect" href="class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,5,155,32"/>
+<area shape="rect" title="Base scene class." alt="" coords="26,80,175,107"/>
+<area shape="rect" href="class_condor_engine_1_1_default_scene.html" title="Default scene for the engine. Has a floor and a spectator camera." alt="" coords="5,155,196,181"/>
+<area shape="rect" href="class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="26,5,175,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -100,31 +101,37 @@ Collaboration diagram for CondorEngine::Scene:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_condor_engine_1_1_scene__coll__graph.png" border="0" usemap="#a_condor_engine_1_1_scene_coll__map" alt="Collaboration graph"/></div>
 <map name="a_condor_engine_1_1_scene_coll__map" id="a_condor_engine_1_1_scene_coll__map">
-<area shape="rect" title="Base scene class." alt="" coords="98,112,246,139"/>
-<area shape="rect" href="class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,13,155,40"/>
-<area shape="rect" href="struct_condor_engine_1_1_directional_light.html" title="Directional light struct." alt="" coords="179,5,352,48"/>
+<area shape="rect" title="Base scene class." alt="" coords="128,219,277,245"/>
+<area shape="rect" href="class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,120,155,147"/>
+<area shape="rect" href="structglm_1_1vec.html" title=" " alt="" coords="157,5,291,32"/>
+<area shape="rect" href="struct_condor_engine_1_1_directional_light.html" title="Directional light struct." alt="" coords="305,112,479,155"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af9aca8aca69d47883e624b519e23d57e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#af9aca8aca69d47883e624b519e23d57e">Scene</a> ()</td></tr>
-<tr class="memdesc:af9aca8aca69d47883e624b519e23d57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <a href="class_condor_engine_1_1_scene.html#af9aca8aca69d47883e624b519e23d57e">More...</a><br /></td></tr>
+<tr class="memitem:af9aca8aca69d47883e624b519e23d57e"><td class="memItemLeft" align="right" valign="top"><a id="af9aca8aca69d47883e624b519e23d57e" name="af9aca8aca69d47883e624b519e23d57e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Scene</b> ()</td></tr>
+<tr class="memdesc:af9aca8aca69d47883e624b519e23d57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor. <br /></td></tr>
 <tr class="separator:af9aca8aca69d47883e624b519e23d57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb4ba9c06c5c33eb71d20205b2663fd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#aeb4ba9c06c5c33eb71d20205b2663fd5">~Scene</a> ()</td></tr>
-<tr class="memdesc:aeb4ba9c06c5c33eb71d20205b2663fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class deconstructor.  <a href="class_condor_engine_1_1_scene.html#aeb4ba9c06c5c33eb71d20205b2663fd5">More...</a><br /></td></tr>
+<tr class="memitem:aeb4ba9c06c5c33eb71d20205b2663fd5"><td class="memItemLeft" align="right" valign="top"><a id="aeb4ba9c06c5c33eb71d20205b2663fd5" name="aeb4ba9c06c5c33eb71d20205b2663fd5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~Scene</b> ()</td></tr>
+<tr class="memdesc:aeb4ba9c06c5c33eb71d20205b2663fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class deconstructor. <br /></td></tr>
 <tr class="separator:aeb4ba9c06c5c33eb71d20205b2663fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04e060764d9dd74d493041c885d0a0fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a04e060764d9dd74d493041c885d0a0fb">HierarchyUpdate</a> ()</td></tr>
-<tr class="memdesc:a04e060764d9dd74d493041c885d0a0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy.  <a href="class_condor_engine_1_1_scene.html#a04e060764d9dd74d493041c885d0a0fb">More...</a><br /></td></tr>
+<tr class="memitem:a04e060764d9dd74d493041c885d0a0fb"><td class="memItemLeft" align="right" valign="top"><a id="a04e060764d9dd74d493041c885d0a0fb" name="a04e060764d9dd74d493041c885d0a0fb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>HierarchyUpdate</b> ()</td></tr>
+<tr class="memdesc:a04e060764d9dd74d493041c885d0a0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy. <br /></td></tr>
 <tr class="separator:a04e060764d9dd74d493041c885d0a0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa5f8b41266d09753999fb9e75ff7b2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#afa5f8b41266d09753999fb9e75ff7b2d">HierarchyFixedUpdate</a> ()</td></tr>
-<tr class="memdesc:afa5f8b41266d09753999fb9e75ff7b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed update this scene and its hierarchy.  <a href="class_condor_engine_1_1_scene.html#afa5f8b41266d09753999fb9e75ff7b2d">More...</a><br /></td></tr>
+<tr class="memitem:afa5f8b41266d09753999fb9e75ff7b2d"><td class="memItemLeft" align="right" valign="top"><a id="afa5f8b41266d09753999fb9e75ff7b2d" name="afa5f8b41266d09753999fb9e75ff7b2d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>HierarchyFixedUpdate</b> ()</td></tr>
+<tr class="memdesc:afa5f8b41266d09753999fb9e75ff7b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed update this scene and its hierarchy. <br /></td></tr>
 <tr class="separator:afa5f8b41266d09753999fb9e75ff7b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa657ec7abf69ca6b87e52b36f1ac0779"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#aa657ec7abf69ca6b87e52b36f1ac0779">HierarchyLateUpdate</a> ()</td></tr>
-<tr class="memdesc:aa657ec7abf69ca6b87e52b36f1ac0779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Late update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy.  <a href="class_condor_engine_1_1_scene.html#aa657ec7abf69ca6b87e52b36f1ac0779">More...</a><br /></td></tr>
+<tr class="memitem:aa657ec7abf69ca6b87e52b36f1ac0779"><td class="memItemLeft" align="right" valign="top"><a id="aa657ec7abf69ca6b87e52b36f1ac0779" name="aa657ec7abf69ca6b87e52b36f1ac0779"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>HierarchyLateUpdate</b> ()</td></tr>
+<tr class="memdesc:aa657ec7abf69ca6b87e52b36f1ac0779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Late update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy. <br /></td></tr>
 <tr class="separator:aa657ec7abf69ca6b87e52b36f1ac0779"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a020add7bb52da2ffe4044003ecb7544a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a020add7bb52da2ffe4044003ecb7544a"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a020add7bb52da2ffe4044003ecb7544a">Instantiate</a> (T *sceneObject, Vector3 position)</td></tr>
+<tr class="memitem:a020add7bb52da2ffe4044003ecb7544a"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a020add7bb52da2ffe4044003ecb7544a">Instantiate</a> (T *sceneObject, <a class="el" href="namespace_condor_engine.html#a2a573d651aa5a225ea5a8996c7c90f88">Vector3</a> position)</td></tr>
 <tr class="memdesc:a020add7bb52da2ffe4044003ecb7544a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiate a <a class="el" href="class_condor_engine_1_1_scene_object.html" title="Base SceneObject class.">SceneObject</a> into this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a>.  <a href="class_condor_engine_1_1_scene.html#a020add7bb52da2ffe4044003ecb7544a">More...</a><br /></td></tr>
 <tr class="separator:a020add7bb52da2ffe4044003ecb7544a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36b5f7d305b8d14819195e19dffae527"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
@@ -141,17 +148,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d76071c0b53c57acb1fa875ecc70995 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a7d76071c0b53c57acb1fa875ecc70995">Object</a> (std::string <a class="el" href="class_condor_engine_1_1_object.html#a9733d1e0b37663ff3681807f55c21153">name</a>)</td></tr>
 <tr class="memdesc:a7d76071c0b53c57acb1fa875ecc70995 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <a href="class_condor_engine_1_1_object.html#a7d76071c0b53c57acb1fa875ecc70995">More...</a><br /></td></tr>
 <tr class="separator:a7d76071c0b53c57acb1fa875ecc70995 inherit pub_methods_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc459ca630e1c74a5d065e19f0bb9a86 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#adc459ca630e1c74a5d065e19f0bb9a86">Object</a> ()</td></tr>
-<tr class="memdesc:adc459ca630e1c74a5d065e19f0bb9a86 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor.  <a href="class_condor_engine_1_1_object.html#adc459ca630e1c74a5d065e19f0bb9a86">More...</a><br /></td></tr>
+<tr class="memitem:adc459ca630e1c74a5d065e19f0bb9a86 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top"><a id="adc459ca630e1c74a5d065e19f0bb9a86" name="adc459ca630e1c74a5d065e19f0bb9a86"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Object</b> ()</td></tr>
+<tr class="memdesc:adc459ca630e1c74a5d065e19f0bb9a86 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class constructor. <br /></td></tr>
 <tr class="separator:adc459ca630e1c74a5d065e19f0bb9a86 inherit pub_methods_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a426b34e33ceb2d0b33b76a3f7822b303 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a426b34e33ceb2d0b33b76a3f7822b303">Start</a> ()</td></tr>
-<tr class="memdesc:a426b34e33ceb2d0b33b76a3f7822b303 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the first <a class="el" href="class_condor_engine_1_1_object.html#a300dab4c1a81ec84d32dbb2dfe21b185" title="Every tick/frame.">Update()</a>.  <a href="class_condor_engine_1_1_object.html#a426b34e33ceb2d0b33b76a3f7822b303">More...</a><br /></td></tr>
+<tr class="memitem:a426b34e33ceb2d0b33b76a3f7822b303 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top"><a id="a426b34e33ceb2d0b33b76a3f7822b303" name="a426b34e33ceb2d0b33b76a3f7822b303"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
+<tr class="memdesc:a426b34e33ceb2d0b33b76a3f7822b303 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the first <a class="el" href="class_condor_engine_1_1_object.html#a300dab4c1a81ec84d32dbb2dfe21b185" title="Every tick/frame.">Update()</a>. <br /></td></tr>
 <tr class="separator:a426b34e33ceb2d0b33b76a3f7822b303 inherit pub_methods_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a300dab4c1a81ec84d32dbb2dfe21b185 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a300dab4c1a81ec84d32dbb2dfe21b185">Update</a> ()</td></tr>
 <tr class="memdesc:a300dab4c1a81ec84d32dbb2dfe21b185 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Every tick/frame.  <a href="class_condor_engine_1_1_object.html#a300dab4c1a81ec84d32dbb2dfe21b185">More...</a><br /></td></tr>
 <tr class="separator:a300dab4c1a81ec84d32dbb2dfe21b185 inherit pub_methods_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe17fc23e746af91bbd9425efb8a5f6b inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#afe17fc23e746af91bbd9425efb8a5f6b">FixedUpdate</a> ()</td></tr>
-<tr class="memdesc:afe17fc23e746af91bbd9425efb8a5f6b inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_physics.html" title="Engine physics class.">Physics</a> fixed update.  <a href="class_condor_engine_1_1_object.html#afe17fc23e746af91bbd9425efb8a5f6b">More...</a><br /></td></tr>
+<tr class="memitem:afe17fc23e746af91bbd9425efb8a5f6b inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top"><a id="afe17fc23e746af91bbd9425efb8a5f6b" name="afe17fc23e746af91bbd9425efb8a5f6b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>FixedUpdate</b> ()</td></tr>
+<tr class="memdesc:afe17fc23e746af91bbd9425efb8a5f6b inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_physics.html" title="Engine physics class.">Physics</a> fixed update. <br /></td></tr>
 <tr class="separator:afe17fc23e746af91bbd9425efb8a5f6b inherit pub_methods_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a206ab71f73bcab18265f5bf022ab9a32 inherit pub_methods_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a206ab71f73bcab18265f5bf022ab9a32">LateUpdate</a> ()</td></tr>
 <tr class="memdesc:a206ab71f73bcab18265f5bf022ab9a32 inherit pub_methods_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after the tick/frame.  <a href="class_condor_engine_1_1_object.html#a206ab71f73bcab18265f5bf022ab9a32">More...</a><br /></td></tr>
@@ -162,76 +172,37 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a53a1abdd12cd1c3ad023a6bfb0ca6015"><td class="memItemLeft" align="right" valign="top">ColorRGB&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a53a1abdd12cd1c3ad023a6bfb0ca6015">ambientLight</a> = ColorRGB{ .1,.1,.1 }</td></tr>
-<tr class="memdesc:a53a1abdd12cd1c3ad023a6bfb0ca6015"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> ambient light.  <a href="class_condor_engine_1_1_scene.html#a53a1abdd12cd1c3ad023a6bfb0ca6015">More...</a><br /></td></tr>
+<tr class="memitem:a53a1abdd12cd1c3ad023a6bfb0ca6015"><td class="memItemLeft" align="right" valign="top"><a id="a53a1abdd12cd1c3ad023a6bfb0ca6015" name="a53a1abdd12cd1c3ad023a6bfb0ca6015"></a>
+<a class="el" href="namespace_condor_engine.html#a0bef0c59185edc5a28b5f3b3c15601b4">ColorRGB</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ambientLight</b> = <a class="el" href="namespace_condor_engine.html#a0bef0c59185edc5a28b5f3b3c15601b4">ColorRGB</a>{ .1,.1,.1 }</td></tr>
+<tr class="memdesc:a53a1abdd12cd1c3ad023a6bfb0ca6015"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> ambient light. <br /></td></tr>
 <tr class="separator:a53a1abdd12cd1c3ad023a6bfb0ca6015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98c915656d71d7727a2747281fd8d18d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_condor_engine_1_1_directional_light.html">DirectionalLight</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a98c915656d71d7727a2747281fd8d18d">light</a></td></tr>
-<tr class="memdesc:a98c915656d71d7727a2747281fd8d18d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><em>Temporary</em> <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> directional light.  <a href="class_condor_engine_1_1_scene.html#a98c915656d71d7727a2747281fd8d18d">More...</a><br /></td></tr>
+<tr class="memitem:a98c915656d71d7727a2747281fd8d18d"><td class="memItemLeft" align="right" valign="top"><a id="a98c915656d71d7727a2747281fd8d18d" name="a98c915656d71d7727a2747281fd8d18d"></a>
+<a class="el" href="struct_condor_engine_1_1_directional_light.html">DirectionalLight</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>light</b></td></tr>
+<tr class="memdesc:a98c915656d71d7727a2747281fd8d18d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><em>Temporary</em> <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> directional light. <br /></td></tr>
 <tr class="separator:a98c915656d71d7727a2747281fd8d18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb59e3e6376c918c6700d71715569a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_condor_engine_1_1_light.html">Light</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#a6fb59e3e6376c918c6700d71715569a3">sceneLights</a></td></tr>
+<tr class="memitem:a6fb59e3e6376c918c6700d71715569a3"><td class="memItemLeft" align="right" valign="top"><a id="a6fb59e3e6376c918c6700d71715569a3" name="a6fb59e3e6376c918c6700d71715569a3"></a>
+std::vector&lt; <a class="el" href="class_condor_engine_1_1_light.html">Light</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sceneLights</b></td></tr>
 <tr class="separator:a6fb59e3e6376c918c6700d71715569a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_class_condor_engine_1_1_object"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_condor_engine_1_1_object')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_condor_engine_1_1_object.html">CondorEngine::Object</a></td></tr>
-<tr class="memitem:a9733d1e0b37663ff3681807f55c21153 inherit pub_attribs_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a9733d1e0b37663ff3681807f55c21153">name</a></td></tr>
-<tr class="memdesc:a9733d1e0b37663ff3681807f55c21153 inherit pub_attribs_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_object.html" title="Base engine object class.">Object</a> name.  <a href="class_condor_engine_1_1_object.html#a9733d1e0b37663ff3681807f55c21153">More...</a><br /></td></tr>
+<tr class="memitem:a9733d1e0b37663ff3681807f55c21153 inherit pub_attribs_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top"><a id="a9733d1e0b37663ff3681807f55c21153" name="a9733d1e0b37663ff3681807f55c21153"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
+<tr class="memdesc:a9733d1e0b37663ff3681807f55c21153 inherit pub_attribs_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_object.html" title="Base engine object class.">Object</a> name. <br /></td></tr>
 <tr class="separator:a9733d1e0b37663ff3681807f55c21153 inherit pub_attribs_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b72ebd1b7c0f5b79ccb65d06afdf72b inherit pub_attribs_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_object.html#a9b72ebd1b7c0f5b79ccb65d06afdf72b">enabled</a></td></tr>
-<tr class="memdesc:a9b72ebd1b7c0f5b79ccb65d06afdf72b inherit pub_attribs_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_object.html" title="Base engine object class.">Object</a> enabled status. Used to prevent update calls on the object.  <a href="class_condor_engine_1_1_object.html#a9b72ebd1b7c0f5b79ccb65d06afdf72b">More...</a><br /></td></tr>
+<tr class="memitem:a9b72ebd1b7c0f5b79ccb65d06afdf72b inherit pub_attribs_class_condor_engine_1_1_object"><td class="memItemLeft" align="right" valign="top"><a id="a9b72ebd1b7c0f5b79ccb65d06afdf72b" name="a9b72ebd1b7c0f5b79ccb65d06afdf72b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>enabled</b></td></tr>
+<tr class="memdesc:a9b72ebd1b7c0f5b79ccb65d06afdf72b inherit pub_attribs_class_condor_engine_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_condor_engine_1_1_object.html" title="Base engine object class.">Object</a> enabled status. Used to prevent update calls on the object. <br /></td></tr>
 <tr class="separator:a9b72ebd1b7c0f5b79ccb65d06afdf72b inherit pub_attribs_class_condor_engine_1_1_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ad54e3ca9b909f2bc7ac4549eb9e648e5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_condor_engine_1_1_scene_object.html">SceneObject</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_condor_engine_1_1_scene.html#ad54e3ca9b909f2bc7ac4549eb9e648e5">hierarchy</a></td></tr>
-<tr class="memdesc:ad54e3ca9b909f2bc7ac4549eb9e648e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root SceneObjects in this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a>.  <a href="class_condor_engine_1_1_scene.html#ad54e3ca9b909f2bc7ac4549eb9e648e5">More...</a><br /></td></tr>
+<tr class="memitem:ad54e3ca9b909f2bc7ac4549eb9e648e5"><td class="memItemLeft" align="right" valign="top"><a id="ad54e3ca9b909f2bc7ac4549eb9e648e5" name="ad54e3ca9b909f2bc7ac4549eb9e648e5"></a>
+std::vector&lt; <a class="el" href="class_condor_engine_1_1_scene_object.html">SceneObject</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>hierarchy</b></td></tr>
+<tr class="memdesc:ad54e3ca9b909f2bc7ac4549eb9e648e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Root SceneObjects in this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a>. <br /></td></tr>
 <tr class="separator:ad54e3ca9b909f2bc7ac4549eb9e648e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Base scene class. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00014">14</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af9aca8aca69d47883e624b519e23d57e" name="af9aca8aca69d47883e624b519e23d57e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9aca8aca69d47883e624b519e23d57e">&#9670;&#160;</a></span>Scene()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CondorEngine::Scene::Scene </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Class constructor. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8cpp_source.html#l00008">8</a> of file <a class="el" href="scene_8cpp_source.html">scene.cpp</a>.</p>
-
-</div>
-</div>
-<a id="aeb4ba9c06c5c33eb71d20205b2663fd5" name="aeb4ba9c06c5c33eb71d20205b2663fd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb4ba9c06c5c33eb71d20205b2663fd5">&#9670;&#160;</a></span>~Scene()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CondorEngine::Scene::~Scene </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Class deconstructor. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8cpp_source.html#l00016">16</a> of file <a class="el" href="scene_8cpp_source.html">scene.cpp</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a11e6bf25d789789bd175d8e7c33bd71a" name="a11e6bf25d789789bd175d8e7c33bd71a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a11e6bf25d789789bd175d8e7c33bd71a">&#9670;&#160;</a></span>Destroy()</h2>
 
@@ -263,71 +234,6 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00069">69</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
-</div>
-</div>
-<a id="afa5f8b41266d09753999fb9e75ff7b2d" name="afa5f8b41266d09753999fb9e75ff7b2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa5f8b41266d09753999fb9e75ff7b2d">&#9670;&#160;</a></span>HierarchyFixedUpdate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CondorEngine::Scene::HierarchyFixedUpdate </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Fixed update this scene and its hierarchy. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8cpp_source.html#l00047">47</a> of file <a class="el" href="scene_8cpp_source.html">scene.cpp</a>.</p>
-
-</div>
-</div>
-<a id="aa657ec7abf69ca6b87e52b36f1ac0779" name="aa657ec7abf69ca6b87e52b36f1ac0779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa657ec7abf69ca6b87e52b36f1ac0779">&#9670;&#160;</a></span>HierarchyLateUpdate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CondorEngine::Scene::HierarchyLateUpdate </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Late update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8cpp_source.html#l00067">67</a> of file <a class="el" href="scene_8cpp_source.html">scene.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a04e060764d9dd74d493041c885d0a0fb" name="a04e060764d9dd74d493041c885d0a0fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04e060764d9dd74d493041c885d0a0fb">&#9670;&#160;</a></span>HierarchyUpdate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CondorEngine::Scene::HierarchyUpdate </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Update this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> and its hierarchy. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8cpp_source.html#l00023">23</a> of file <a class="el" href="scene_8cpp_source.html">scene.cpp</a>.</p>
 
 </div>
 </div>
@@ -363,8 +269,6 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The instantiated <a class="el" href="class_condor_engine_1_1_scene_object.html" title="Base SceneObject class.">SceneObject</a>. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00064">64</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
 
 </div>
 </div>
@@ -409,8 +313,6 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The instantiated <a class="el" href="class_condor_engine_1_1_scene_object.html" title="Base SceneObject class.">SceneObject</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00057">57</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
 </div>
 </div>
 <a id="a020add7bb52da2ffe4044003ecb7544a" name="a020add7bb52da2ffe4044003ecb7544a"></a>
@@ -433,7 +335,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Vector3&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_condor_engine.html#a2a573d651aa5a225ea5a8996c7c90f88">Vector3</a>&#160;</td>
           <td class="paramname"><em>position</em>&#160;</td>
         </tr>
         <tr>
@@ -465,92 +367,11 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The instantiated <a class="el" href="class_condor_engine_1_1_scene_object.html" title="Base SceneObject class.">SceneObject</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00047">47</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a53a1abdd12cd1c3ad023a6bfb0ca6015" name="a53a1abdd12cd1c3ad023a6bfb0ca6015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53a1abdd12cd1c3ad023a6bfb0ca6015">&#9670;&#160;</a></span>ambientLight</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ColorRGB CondorEngine::Scene::ambientLight = ColorRGB{ .1,.1,.1 }</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> ambient light. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00037">37</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
-</div>
-</div>
-<a id="ad54e3ca9b909f2bc7ac4549eb9e648e5" name="ad54e3ca9b909f2bc7ac4549eb9e648e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad54e3ca9b909f2bc7ac4549eb9e648e5">&#9670;&#160;</a></span>hierarchy</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="class_condor_engine_1_1_scene_object.html">SceneObject</a>*&gt; CondorEngine::Scene::hierarchy</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Root SceneObjects in this <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00034">34</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
-</div>
-</div>
-<a id="a98c915656d71d7727a2747281fd8d18d" name="a98c915656d71d7727a2747281fd8d18d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98c915656d71d7727a2747281fd8d18d">&#9670;&#160;</a></span>light</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_condor_engine_1_1_directional_light.html">DirectionalLight</a>* CondorEngine::Scene::light</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p><em>Temporary</em> <a class="el" href="class_condor_engine_1_1_scene.html" title="Base scene class.">Scene</a> directional light. </p>
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00039">39</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
-</div>
-</div>
-<a id="a6fb59e3e6376c918c6700d71715569a3" name="a6fb59e3e6376c918c6700d71715569a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fb59e3e6376c918c6700d71715569a3">&#9670;&#160;</a></span>sceneLights</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="class_condor_engine_1_1_light.html">Light</a>*&gt; CondorEngine::Scene::sceneLights</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="scene_8h_source.html#l00040">40</a> of file <a class="el" href="scene_8h_source.html">scene.h</a>.</p>
-
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>CondorEngine/<a class="el" href="scene_8h_source.html">scene.h</a></li>
-<li>CondorEngine/<a class="el" href="scene_8cpp_source.html">scene.cpp</a></li>
+<li>CondorEngine/<a class="el" href="_condor_engine_2scene_8h_source.html">scene.h</a></li>
+<li>CondorEngine/scene.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

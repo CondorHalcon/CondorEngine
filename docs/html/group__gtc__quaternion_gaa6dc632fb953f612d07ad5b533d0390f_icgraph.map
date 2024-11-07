@@ -1,0 +1,6 @@
+<map id="glm::mat4_cast" name="glm::mat4_cast">
+<area shape="rect" id="node1" title=" " alt="" coords="240,80,351,107"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene_object.html#a472b56d9f036040ba50c1e1efbf82186" title="Set this SceneObject&#39;s local rotation. (Identical to the world rotation if this is the root SceneObje..." alt="" coords="5,5,192,48"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_math.html#a1c5aac7dff1e9cb8c1c0e6b55d43bca2" title="Set transform rotation." alt="" coords="21,72,176,115"/>
+<area shape="rect" id="node4" href="$group__gtx__quaternion.html#gae59147ed08331ca99604771184b306d5" title=" " alt="" coords="53,139,144,165"/>
+</map>

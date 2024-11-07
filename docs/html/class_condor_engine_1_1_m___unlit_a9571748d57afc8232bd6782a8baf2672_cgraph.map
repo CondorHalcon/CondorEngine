@@ -1,0 +1,4 @@
+<map id="CondorEngine::M_Unlit::setTexture" name="CondorEngine::M_Unlit::setTexture">
+<area shape="rect" id="node1" title="Cleanly set or change the albedo texture." alt="" coords="5,5,162,48"/>
+<area shape="rect" id="node2" href="$struct_condor_engine_1_1_texture.html#a7f34ff5aebe75c6f1a762e8a1f87396e" title="Unload a texture from OpenGL." alt="" coords="210,5,364,48"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Application::Input" name="Application::Input">
+<area shape="rect" id="node1" title="Check hardware input." alt="" coords="5,31,128,57"/>
+<area shape="rect" id="node2" href="$group__input.html#ga7d8ad8ffaf272808f04e1d5d33ec8859" title="Returns the last reported state of a keyboard key for the specified window." alt="" coords="203,5,292,32"/>
+<area shape="rect" id="node3" href="$class_application.html#af2ad57c559531f1b75dbb6ca24229d9f" title="Get class singleton. (Creates a new application if one doesn&#39;t already exist.)" alt="" coords="176,56,319,83"/>
+</map>

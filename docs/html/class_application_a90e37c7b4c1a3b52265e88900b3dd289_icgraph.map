@@ -1,0 +1,4 @@
+<map id="Application::getWindowDimensions" name="Application::getWindowDimensions">
+<area shape="rect" id="node1" title="Get application window dimensions." alt="" coords="211,13,438,40"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_camera.html#a39bb47e461a19e58a84c607369192d62" title="Get this Camera&#39;s projection matrix." alt="" coords="5,5,163,48"/>
+</map>

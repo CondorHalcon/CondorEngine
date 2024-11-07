@@ -1,0 +1,4 @@
+<map id="glfwDestroyWindow" name="glfwDestroyWindow">
+<area shape="rect" id="node1" title="Destroys the specified window and its context." alt="" coords="201,5,339,32"/>
+<area shape="rect" id="node2" href="$class_application.html#a5974dc3b4e119641d425ad88723d4489" title="Application termination." alt="" coords="5,5,153,32"/>
+</map>

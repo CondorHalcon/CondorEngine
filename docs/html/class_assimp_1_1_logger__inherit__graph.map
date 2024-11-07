@@ -1,0 +1,6 @@
+<map id="Assimp::Logger" name="Assimp::Logger">
+<area shape="rect" id="node1" title="CPP&#45;API: Abstract interface for logger implementations. Assimp provides a default implementation and ..." alt="" coords="110,80,223,107"/>
+<area shape="rect" id="node3" href="$class_assimp_1_1_default_logger.html" title="CPP&#45;API: Primary logging facility of Assimp." alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node4" href="$class_assimp_1_1_null_logger.html" title="CPP&#45;API: Empty logging implementation." alt="" coords="184,155,320,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="59,5,274,32"/>
+</map>

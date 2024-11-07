@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['istrigger_0',['isTrigger',['../class_condor_engine_1_1_collider.html#aab19b2cb57dc57e6c1cf08ff532ac480',1,'CondorEngine::Collider']]]
+  ['green_0',['green',['../struct_g_l_f_wgammaramp.html#affccc6f5df47820b6562d709da3a5a3a',1,'GLFWgammaramp']]],
+  ['greenbits_1',['greenBits',['../struct_g_l_f_wvidmode.html#a292fdd281f3485fb3ff102a5bda43faa',1,'GLFWvidmode']]]
 ];

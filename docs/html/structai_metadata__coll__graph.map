@@ -1,0 +1,5 @@
+<map id="aiMetadata" name="aiMetadata">
+<area shape="rect" id="node1" title=" " alt="" coords="53,96,138,123"/>
+<area shape="rect" id="node2" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="5,5,71,32"/>
+<area shape="rect" id="node3" href="$structai_metadata_entry.html" title=" " alt="" coords="94,5,211,32"/>
+</map>

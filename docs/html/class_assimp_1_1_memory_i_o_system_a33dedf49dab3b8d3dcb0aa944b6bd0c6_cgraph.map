@@ -1,0 +1,4 @@
+<map id="Assimp::MemoryIOSystem::Close" name="Assimp::MemoryIOSystem::Close">
+<area shape="rect" id="node1" title="Closes the given file and releases all resources associated with it." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_system.html#a8c334d60f04bceeb6bd0157d21723f3e" title="Closes the given file and releases all resources associated with it." alt="" coords="233,13,407,40"/>
+</map>

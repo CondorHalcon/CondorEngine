@@ -1,0 +1,52 @@
+<map id="thirdparty/assimp/include/assimp/vector2.h" name="thirdparty/assimp/include/assimp/vector2.h">
+<area shape="rect" id="node1" title="2D vector structure, including operators when compiling in C++" alt="" coords="3912,5,4078,48"/>
+<area shape="rect" id="node2" href="$math_8h_source.html" title=" " alt="" coords="3923,96,3985,123"/>
+<area shape="rect" id="node49" href="$include_2assimp_2defs_8h.html" title="Assimp build configuration setup. See the notes in the comment blocks to find out how to customize yo..." alt="" coords="4029,96,4087,123"/>
+<area shape="rect" id="node3" title=" " alt="" coords="3831,171,3885,197"/>
+<area shape="rect" id="node4" href="$ext_8hpp.html" title=" " alt="" coords="3909,171,3999,197"/>
+<area shape="rect" id="node5" href="$setup_8hpp_source.html" title=" " alt="" coords="5,336,119,363"/>
+<area shape="rect" id="node6" href="$glm_8hpp.html" title=" " alt="" coords="64,253,132,280"/>
+<area shape="rect" id="node7" href="$matrix__clip__space_8hpp.html" title=" " alt="" coords="155,253,337,280"/>
+<area shape="rect" id="node8" href="$matrix__common_8hpp.html" title=" " alt="" coords="361,253,531,280"/>
+<area shape="rect" id="node9" href="$matrix__double2x2_8hpp.html" title=" " alt="" coords="554,253,732,280"/>
+<area shape="rect" id="node10" href="$matrix__double2x2__precision_8hpp.html" title=" " alt="" coords="756,245,909,288"/>
+<area shape="rect" id="node11" href="$matrix__double2x3_8hpp.html" title=" " alt="" coords="933,253,1111,280"/>
+<area shape="rect" id="node12" href="$matrix__double2x3__precision_8hpp.html" title=" " alt="" coords="1135,245,1288,288"/>
+<area shape="rect" id="node13" href="$matrix__double2x4_8hpp.html" title=" " alt="" coords="1312,253,1490,280"/>
+<area shape="rect" id="node14" href="$matrix__double2x4__precision_8hpp.html" title=" " alt="" coords="1513,245,1667,288"/>
+<area shape="rect" id="node15" href="$matrix__double3x2_8hpp.html" title=" " alt="" coords="1690,253,1868,280"/>
+<area shape="rect" id="node16" href="$matrix__double3x2__precision_8hpp.html" title=" " alt="" coords="1892,245,2045,288"/>
+<area shape="rect" id="node17" href="$matrix__double3x3_8hpp.html" title=" " alt="" coords="2069,253,2247,280"/>
+<area shape="rect" id="node18" href="$matrix__double3x3__precision_8hpp.html" title=" " alt="" coords="2271,245,2424,288"/>
+<area shape="rect" id="node19" href="$matrix__double3x4_8hpp.html" title=" " alt="" coords="2448,253,2626,280"/>
+<area shape="rect" id="node20" href="$matrix__double3x4__precision_8hpp.html" title=" " alt="" coords="2649,245,2803,288"/>
+<area shape="rect" id="node21" href="$matrix__double4x2_8hpp.html" title=" " alt="" coords="2826,253,3004,280"/>
+<area shape="rect" id="node22" href="$matrix__double4x2__precision_8hpp.html" title=" " alt="" coords="3028,245,3181,288"/>
+<area shape="rect" id="node23" href="$matrix__double4x3_8hpp.html" title=" " alt="" coords="3205,253,3383,280"/>
+<area shape="rect" id="node24" href="$matrix__double4x3__precision_8hpp.html" title=" " alt="" coords="3407,245,3560,288"/>
+<area shape="rect" id="node25" href="$matrix__double4x4_8hpp.html" title=" " alt="" coords="3584,253,3762,280"/>
+<area shape="rect" id="node26" href="$matrix__double4x4__precision_8hpp.html" title=" " alt="" coords="3785,245,3939,288"/>
+<area shape="rect" id="node27" href="$matrix__float2x2_8hpp.html" title=" " alt="" coords="3963,253,4129,280"/>
+<area shape="rect" id="node28" href="$matrix__float2x2__precision_8hpp.html" title=" " alt="" coords="4153,245,4294,288"/>
+<area shape="rect" id="node29" href="$matrix__float2x3_8hpp.html" title=" " alt="" coords="4318,253,4483,280"/>
+<area shape="rect" id="node30" href="$matrix__float2x3__precision_8hpp.html" title=" " alt="" coords="4508,245,4648,288"/>
+<area shape="rect" id="node31" href="$matrix__float2x4_8hpp.html" title=" " alt="" coords="4673,253,4838,280"/>
+<area shape="rect" id="node32" href="$matrix__float2x4__precision_8hpp.html" title=" " alt="" coords="4862,245,5003,288"/>
+<area shape="rect" id="node33" href="$matrix__float3x2_8hpp.html" title=" " alt="" coords="5027,253,5193,280"/>
+<area shape="rect" id="node34" href="$matrix__float3x2__precision_8hpp.html" title=" " alt="" coords="5217,245,5358,288"/>
+<area shape="rect" id="node35" href="$matrix__float3x3_8hpp.html" title=" " alt="" coords="5382,253,5547,280"/>
+<area shape="rect" id="node36" href="$matrix__float3x3__precision_8hpp.html" title=" " alt="" coords="5572,245,5712,288"/>
+<area shape="rect" id="node37" href="$matrix__float3x4_8hpp.html" title=" " alt="" coords="5737,253,5902,280"/>
+<area shape="rect" id="node38" href="$matrix__float3x4__precision_8hpp.html" title=" " alt="" coords="5926,245,6067,288"/>
+<area shape="rect" id="node39" href="$matrix__float4x2_8hpp.html" title=" " alt="" coords="6091,253,6257,280"/>
+<area shape="rect" id="node40" href="$matrix__float4x2__precision_8hpp_source.html" title=" " alt="" coords="6281,245,6422,288"/>
+<area shape="rect" id="node41" href="$matrix__float4x3_8hpp.html" title=" " alt="" coords="6446,253,6611,280"/>
+<area shape="rect" id="node42" href="$matrix__float4x3__precision_8hpp.html" title=" " alt="" coords="6636,245,6776,288"/>
+<area shape="rect" id="node43" href="$matrix__float4x4_8hpp.html" title=" " alt="" coords="6801,253,6966,280"/>
+<area shape="rect" id="node44" href="$matrix__float4x4__precision_8hpp.html" title=" " alt="" coords="6990,245,7131,288"/>
+<area shape="rect" id="node45" href="$matrix__int2x2_8hpp.html" title=" " alt="" coords="7156,253,7310,280"/>
+<area shape="rect" id="node46" href="$matrix__int2x2__sized_8hpp.html" title=" " alt="" coords="7333,245,7463,288"/>
+<area shape="rect" id="node47" href="$matrix__int2x3_8hpp.html" title=" " alt="" coords="7486,253,7640,280"/>
+<area shape="rect" id="node48" href="$matrix__int2x3__sized_8hpp.html" title=" " alt="" coords="7664,245,7793,288"/>
+<area shape="rect" id="node50" title=" " alt="" coords="4023,171,4136,197"/>
+</map>

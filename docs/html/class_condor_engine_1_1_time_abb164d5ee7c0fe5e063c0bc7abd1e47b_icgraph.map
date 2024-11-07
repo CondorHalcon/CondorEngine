@@ -1,0 +1,5 @@
+<map id="CondorEngine::Time::deltaTime" name="CondorEngine::Time::deltaTime">
+<area shape="rect" id="node1" title="Get this frame&#39;s delta time." alt="" coords="249,27,389,69"/>
+<area shape="rect" id="node2" href="$class_application.html#aaf09cd6cb412086dc039e28cdb059f0d" title="While application should run." alt="" coords="44,5,162,32"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_spectator_cam.html#ad9e29c5c5080825dbe3ac3f453b2f1b1" title="Update spectator camera." alt="" coords="5,56,201,99"/>
+</map>

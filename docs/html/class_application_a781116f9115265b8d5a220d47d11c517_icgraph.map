@@ -1,0 +1,4 @@
+<map id="Application::shouldClose" name="Application::shouldClose">
+<area shape="rect" id="node1" title="Check termination conditions." alt="" coords="171,5,336,32"/>
+<area shape="rect" id="node2" href="$class_application.html#aaf09cd6cb412086dc039e28cdb059f0d" title="While application should run." alt="" coords="5,5,123,32"/>
+</map>

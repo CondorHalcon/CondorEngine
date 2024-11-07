@@ -1,0 +1,11 @@
+<map id="Input reference" name="Input reference">
+<area shape="rect" id="node1" href="$group__buttons.html" title="Mouse button IDs." alt="" coords="188,5,295,32"/>
+<area shape="rect" id="node2" href="$group__gamepad__axes.html" title="Gamepad axes." alt="" coords="187,56,296,83"/>
+<area shape="rect" id="node3" href="$group__gamepad__buttons.html" title="Gamepad buttons." alt="" coords="179,107,304,133"/>
+<area shape="rect" id="node4" href="$group__hat__state.html" title="Joystick hat states." alt="" coords="175,157,308,184"/>
+<area shape="rect" id="node5" title="Functions and types related to input handling." alt="" coords="5,183,114,209"/>
+<area shape="rect" id="node6" href="$group__joysticks.html" title="Joystick IDs." alt="" coords="203,208,280,235"/>
+<area shape="rect" id="node7" href="$group__keys.html" title="Keyboard key tokens." alt="" coords="169,259,314,285"/>
+<area shape="rect" id="node8" href="$group__mods.html" title="Modifier key flags." alt="" coords="179,309,304,336"/>
+<area shape="rect" id="node9" href="$group__shapes.html" title="Standard system cursor shapes." alt="" coords="162,360,321,387"/>
+</map>

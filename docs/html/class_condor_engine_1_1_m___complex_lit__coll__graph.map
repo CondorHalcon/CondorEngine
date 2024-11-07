@@ -1,8 +1,9 @@
 <map id="CondorEngine::M_ComplexLit" name="CondorEngine::M_ComplexLit">
-<area shape="rect" id="node1" title="Multi&#45;light lit material." alt="" coords="158,263,354,289"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_m___lit.html" title="Simple lit material." alt="" coords="184,187,328,213"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_material.html" title="Mesh material class." alt="" coords="88,96,245,123"/>
+<area shape="rect" id="node1" title="Multi&#45;light lit material." alt="" coords="246,263,442,289"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_m___lit.html" title="Simple lit material." alt="" coords="272,187,416,213"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_material.html" title="Mesh material class." alt="" coords="176,96,333,123"/>
 <area shape="rect" id="node4" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,5,155,32"/>
 <area shape="rect" id="node5" href="$struct_condor_engine_1_1_shader.html" title="Shader reference." alt="" coords="178,5,331,32"/>
-<area shape="rect" id="node6" href="$struct_condor_engine_1_1_texture.html" title="OpenGL texture &amp; metadata." alt="" coords="270,96,424,123"/>
+<area shape="rect" id="node6" href="$structglm_1_1mat.html" title=" " alt="" coords="355,5,512,32"/>
+<area shape="rect" id="node7" href="$struct_condor_engine_1_1_texture.html" title="OpenGL texture &amp; metadata." alt="" coords="358,96,512,123"/>
 </map>

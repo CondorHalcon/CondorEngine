@@ -1,0 +1,5 @@
+<map id="Assimp::IOStream::FileSize" name="Assimp::IOStream::FileSize">
+<area shape="rect" id="node1" title="Returns filesize Returns the filesize." alt="" coords="217,47,401,73"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_stream_buffer.html#a66c14bc6c35b33bf470be66c470e7a8f" title="Will open the cached access for a given stream." alt="" coords="5,5,169,48"/>
+<area shape="rect" id="node3" href="$class_assimp_1_1_t_xml_parser.html#a832c8f496948e43402767853d25b9a4c" title="Will parse an xml&#45;file from a given stream." alt="" coords="16,72,158,115"/>
+</map>

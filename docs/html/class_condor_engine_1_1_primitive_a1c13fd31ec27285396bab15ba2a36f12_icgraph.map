@@ -1,0 +1,5 @@
+<map id="CondorEngine::Primitive::MakeCube" name="CondorEngine::Primitive::MakeCube">
+<area shape="rect" id="node1" title="Make a primitive cube." alt="" coords="244,39,406,81"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_default_scene.html#a313896778cb7c6def9415193404ad57e" title="Default scene constructor." alt="" coords="5,5,196,48"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_primitive.html#a374cc712f044c9c9ce227c7bef21ee5b" title="Class constructor." alt="" coords="19,72,182,115"/>
+</map>

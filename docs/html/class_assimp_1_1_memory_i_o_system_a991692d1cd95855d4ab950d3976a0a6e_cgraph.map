@@ -1,0 +1,4 @@
+<map id="Assimp::MemoryIOSystem::getOsSeparator" name="Assimp::MemoryIOSystem::getOsSeparator">
+<area shape="rect" id="node1" title="Returns the directory separator." alt="" coords="5,5,185,48"/>
+<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_system.html#a40e412875b985bdb638f00ef0f20fff6" title="Returns the system specific directory separator." alt="" coords="233,13,464,40"/>
+</map>

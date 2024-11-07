@@ -1,9 +1,7 @@
 <map id="CondorEngine::SceneObject" name="CondorEngine::SceneObject">
-<area shape="rect" id="node1" title="Base SceneObject class." alt="" coords="203,107,389,133"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_primitive.html" title="SceneObject with primitive mesh." alt="" coords="454,5,616,32"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_scene_light.html" title="Scene light object." alt="" coords="446,56,623,83"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_spectator_cam.html" title="Spectator camera SceneObject." alt="" coords="437,107,632,133"/>
-<area shape="rect" id="node6" href="$class_fixed_time_printer.html" title=" " alt="" coords="474,157,595,184"/>
-<area shape="rect" id="node7" href="$class_rotatable.html" title=" " alt="" coords="496,208,573,235"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,107,155,133"/>
+<area shape="rect" id="node1" title="Base SceneObject class." alt="" coords="187,80,373,107"/>
+<area shape="rect" id="node3" href="$class_condor_engine_1_1_primitive.html" title="SceneObject with primitive mesh." alt="" coords="5,155,168,181"/>
+<area shape="rect" id="node4" href="$class_condor_engine_1_1_scene_light.html" title="Scene light object." alt="" coords="192,155,368,181"/>
+<area shape="rect" id="node5" href="$class_condor_engine_1_1_spectator_cam.html" title="Spectator camera SceneObject." alt="" coords="392,155,587,181"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="205,5,354,32"/>
 </map>

@@ -1,0 +1,7 @@
+<map id="Assimp::IOStream" name="Assimp::IOStream">
+<area shape="rect" id="node1" title="CPP&#45;API: Class to handle file I/O for C++." alt="" coords="206,80,336,107"/>
+<area shape="rect" id="node3" href="$class_assimp_1_1_blob_i_o_stream.html" title=" " alt="" coords="5,155,161,181"/>
+<area shape="rect" id="node4" href="$class_assimp_1_1_default_i_o_stream.html" title="Default IO implementation, use standard IO operations." alt="" coords="185,155,357,181"/>
+<area shape="rect" id="node5" href="$class_assimp_1_1_memory_i_o_stream.html" title=" " alt="" coords="380,155,556,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="164,5,378,32"/>
+</map>

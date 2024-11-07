@@ -1,0 +1,17 @@
+<map id="aiSkeleton" name="aiSkeleton">
+<area shape="rect" id="node1" title="A skeleton represents the bone hierarchy of an animation." alt="" coords="5,688,88,715"/>
+<area shape="rect" id="node2" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="651,5,716,32"/>
+<area shape="rect" id="node4" href="$structai_node.html" title=" " alt="" coords="982,189,1044,216"/>
+<area shape="rect" id="node6" href="$structai_metadata.html" title=" " alt="" coords="970,96,1056,123"/>
+<area shape="rect" id="node8" href="$structai_mesh.html" title="enum aiMorphingMethod" alt="" coords="515,507,578,533"/>
+<area shape="rect" id="node12" href="$structai_bone.html" title="A single bone of a mesh." alt="" coords="820,373,881,400"/>
+<area shape="rect" id="node14" href="$structai_anim_mesh.html" title="An AnimMesh is an attachment to an aiMesh stores per&#45;vertex animations for a particular frame." alt="" coords="702,373,796,400"/>
+<area shape="rect" id="node3" href="$structai_skeleton_bone.html" title="A skeleton bone represents a single bone is a skeleton structure." alt="" coords="490,597,603,624"/>
+<area shape="rect" id="node5" href="$structai_matrix4x4.html" title=" " alt="" coords="602,96,691,123"/>
+<area shape="rect" id="node7" href="$structai_metadata_entry.html" title=" " alt="" coords="956,5,1073,32"/>
+<area shape="rect" id="node9" href="$structai_vector3_d.html" title=" " alt="" coords="326,189,412,216"/>
+<area shape="rect" id="node15" href="$structai_a_a_b_b.html" title=" " alt="" coords="425,373,492,400"/>
+<area shape="rect" id="node10" href="$structai_color4_d.html" title=" " alt="" coords="510,189,589,216"/>
+<area shape="rect" id="node11" href="$structai_face.html" title="A single face in a mesh, referring to multiple vertices." alt="" coords="516,373,577,400"/>
+<area shape="rect" id="node13" href="$structai_vertex_weight.html" title="A single influence of a bone on a vertex." alt="" coords="850,189,958,216"/>
+</map>

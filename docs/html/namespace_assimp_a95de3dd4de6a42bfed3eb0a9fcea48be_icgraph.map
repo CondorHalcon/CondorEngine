@@ -1,0 +1,4 @@
+<map id="Assimp::ASSIMP_itoa10" name="Assimp::ASSIMP_itoa10">
+<area shape="rect" id="node1" title="itoa with a fixed base 10 &#39;itoa&#39; is not consistently available on all platforms so it is quite useful..." alt="" coords="220,5,386,32"/>
+<area shape="rect" id="node2" href="$namespace_assimp.html#a780ce39f05ccc110f67a59dd76709112" title="itoa with a fixed base 10 (Secure template overload) The compiler should choose this function if he o..." alt="" coords="5,5,172,32"/>
+</map>

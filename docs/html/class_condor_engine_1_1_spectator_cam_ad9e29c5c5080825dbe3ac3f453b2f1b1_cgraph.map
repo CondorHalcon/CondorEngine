@@ -1,0 +1,8 @@
+<map id="CondorEngine::SpectatorCam::Update" name="CondorEngine::SpectatorCam::Update">
+<area shape="rect" id="node1" title="Update spectator camera." alt="" coords="5,35,201,77"/>
+<area shape="rect" id="node2" href="$class_condor_engine_1_1_time.html#abb164d5ee7c0fe5e063c0bc7abd1e47b" title="Get this frame&#39;s delta time." alt="" coords="249,5,389,48"/>
+<area shape="rect" id="node4" href="$class_application.html#a492b91a62bb97fbdd320e0bf2e9a1857" title="Check hardware input." alt="" coords="258,72,380,99"/>
+<area shape="rect" id="node3" href="$group__input.html#ga03d4a1039b8662c71eeb40beea8cb622" title="Returns the GLFW time." alt="" coords="461,13,556,40"/>
+<area shape="rect" id="node5" href="$group__input.html#ga7d8ad8ffaf272808f04e1d5d33ec8859" title="Returns the last reported state of a keyboard key for the specified window." alt="" coords="464,68,553,95"/>
+<area shape="rect" id="node6" href="$class_application.html#af2ad57c559531f1b75dbb6ca24229d9f" title="Get class singleton. (Creates a new application if one doesn&#39;t already exist.)" alt="" coords="437,119,580,145"/>
+</map>

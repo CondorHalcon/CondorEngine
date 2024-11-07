@@ -1,0 +1,6 @@
+<map id="CondorEngine::SceneObject::setRotation" name="CondorEngine::SceneObject::setRotation">
+<area shape="rect" id="node1" title="Set this SceneObject&#39;s world rotation. (Identical to the local rotation if this is the root SceneObje..." alt="" coords="5,23,192,65"/>
+<area shape="rect" id="node2" href="$group__core__func__matrix.html#gace61e11fc177491beeca0c6971e2f3fc" title=" " alt="" coords="247,5,340,32"/>
+<area shape="rect" id="node3" href="$group__gtc__quaternion.html#ga3d350068ce0d14e4496cb844eb79a05f" title=" " alt="" coords="240,56,347,83"/>
+<area shape="rect" id="node4" href="$group__core__func__exponential.html#ga1f904e09827e939a56e4158f45ca8ede" title=" " alt="" coords="395,56,467,83"/>
+</map>

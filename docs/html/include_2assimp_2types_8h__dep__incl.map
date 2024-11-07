@@ -1,0 +1,7 @@
+<map id="thirdparty/assimp/include/assimp/types.h" name="thirdparty/assimp/include/assimp/types.h">
+<area shape="rect" id="node1" title=" " alt="" coords="196,5,362,48"/>
+<area shape="rect" id="node2" href="$include_2assimp_2_i_o_system_8hpp.html" title="File system wrapper for C++. Inherit this class to supply custom file handling logic to the Import li..." alt="" coords="5,96,172,139"/>
+<area shape="rect" id="node3" href="$include_2assimp_2_log_stream_8hpp.html" title="Abstract base class &#39;LogStream&#39;, representing an output log stream." alt="" coords="196,96,362,139"/>
+<area shape="rect" id="node5" href="$thirdparty_2assimp_2include_2assimp_2camera_8h.html" title="Defines the aiCamera data structure." alt="" coords="387,96,553,139"/>
+<area shape="rect" id="node4" href="$include_2assimp_2_default_logger_8hpp.html" title=" " alt="" coords="190,187,368,229"/>
+</map>

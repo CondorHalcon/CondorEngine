@@ -1,0 +1,10 @@
+<map id="glm::scale" name="glm::scale">
+<area shape="rect" id="node1" title=" " alt="" coords="250,165,331,192"/>
+<area shape="rect" id="node2" href="$group__gtx__pca.html#ga0586007af1073c8b0f629bca0ee7c46c" title=" " alt="" coords="5,5,202,32"/>
+<area shape="rect" id="node3" href="$group__ext__matrix__projection.html#ga0f93e1b7ea6887f31b643ce5099b1173" title=" " alt="" coords="48,56,159,83"/>
+<area shape="rect" id="node4" href="$group__gtx__transform.html#ga39771eee574ef52b5b706f831477c63b" title=" " alt="" coords="63,107,144,133"/>
+<area shape="rect" id="node5" href="$class_condor_engine_1_1_scene_object.html#aec244bb49d06c105d0e72537c70366d3" title="Scale this SceneObject." alt="" coords="10,157,197,200"/>
+<area shape="rect" id="node6" href="$group__gtx__transform2.html#gad9a3e611fee11d78e7d027f50288f0eb" title=" " alt="" coords="50,224,157,251"/>
+<area shape="rect" id="node7" href="$class_condor_engine_1_1_scene_object.html#a472b56d9f036040ba50c1e1efbf82186" title="Set this SceneObject&#39;s local rotation. (Identical to the world rotation if this is the root SceneObje..." alt="" coords="10,275,197,317"/>
+<area shape="rect" id="node8" href="$class_condor_engine_1_1_math.html#a1c5aac7dff1e9cb8c1c0e6b55d43bca2" title="Set transform rotation." alt="" coords="26,341,181,384"/>
+</map>
