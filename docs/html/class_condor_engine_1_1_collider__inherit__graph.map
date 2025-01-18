@@ -1,5 +1,0 @@
-<map id="CondorEngine::Collider" name="CondorEngine::Collider">
-<area shape="rect" id="node1" title="Collider component class." alt="" coords="17,155,172,181"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_component.html" title="Base engine scene object component class." alt="" coords="5,80,184,107"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="20,5,169,32"/>
-</map>

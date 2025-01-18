@@ -1,9 +1,0 @@
-<map id="Application::init" name="Application::init">
-<area shape="rect" id="node1" title="Instantiate a new window." alt="" coords="5,107,116,133"/>
-<area shape="rect" id="node2" href="$group__window.html#gaaccd00fafe81e2db94e8cdf55721e055" title="Creates a window and its associated context." alt="" coords="187,5,318,32"/>
-<area shape="rect" id="node3" href="$group__init.html#gab41771f0215a2e0afb4cf1cf98082d40" title="Initializes the GLFW library." alt="" coords="221,56,284,83"/>
-<area shape="rect" id="node4" href="$group__context.html#gafd76c93e15ec8b0b90506a9936a46185" title="Makes the context of the specified window current for the calling thread." alt="" coords="169,107,336,133"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1diagnostics.html#aecb0fb8813112518f64bdbfd0824421e" title="OpenGL error message callback." alt="" coords="164,157,341,200"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_time.html#aba95602bcb2443201b69b59299476b46" title="Initialise the time class." alt="" coords="182,224,322,267"/>
-<area shape="rect" id="node7" href="$group__input.html#ga03d4a1039b8662c71eeb40beea8cb622" title="Returns the GLFW time." alt="" coords="389,232,484,259"/>
-</map>

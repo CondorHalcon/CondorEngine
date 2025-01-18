@@ -1,7 +1,0 @@
-<map id="CondorEngine::Collider" name="CondorEngine::Collider">
-<area shape="rect" id="node1" title="Collider component class." alt="" coords="154,187,310,213"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_component.html" title="Base engine scene object component class." alt="" coords="5,96,184,123"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="20,5,169,32"/>
-<area shape="rect" id="node4" href="$structglm_1_1vec.html" title=" " alt="" coords="225,5,359,32"/>
-<area shape="rect" id="node5" href="$struct_condor_engine_1_1_plane_size.html" title="Plane size struct." alt="" coords="284,96,454,123"/>
-</map>

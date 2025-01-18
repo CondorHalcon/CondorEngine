@@ -1,8 +1,0 @@
-<map id="CondorEngine::Texture::FreeTexture" name="CondorEngine::Texture::FreeTexture">
-<area shape="rect" id="node1" title="Unload a texture from OpenGL." alt="" coords="453,39,607,81"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_m___unlit.html#a9571748d57afc8232bd6782a8baf2672" title="Cleanly set or change the albedo texture." alt="" coords="249,5,405,48"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_m___lit.html#ad7236e12b02e596b69ce7ff9f5d17e3b" title="Cleanly set or change the albedo texture." alt="" coords="255,72,398,115"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_m___unlit.html#af66309488e82cf75d94cbfbe2af65a68" title="Class constructor." alt="" coords="25,5,181,48"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_m___complex_lit.html#a5a92302b878f9be58eb6c509cb2835e4" title="Class constructor." alt="" coords="5,72,201,115"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_m___lit.html#a8e58d10c37c40490539dadd4dfd55e01" title="Class constructor." alt="" coords="31,139,175,181"/>
-</map>

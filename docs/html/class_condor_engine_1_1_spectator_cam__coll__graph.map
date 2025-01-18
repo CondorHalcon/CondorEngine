@@ -1,8 +1,0 @@
-<map id="CondorEngine::SpectatorCam" name="CondorEngine::SpectatorCam">
-<area shape="rect" id="node1" title="Spectator camera SceneObject." alt="" coords="144,263,339,289"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene_object.html" title="Base SceneObject class." alt="" coords="208,96,394,123"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="42,5,192,32"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_component.html" title="Base engine scene object component class." alt="" coords="5,96,184,123"/>
-<area shape="rect" id="node4" href="$structglm_1_1mat.html" title=" " alt="" coords="223,5,379,32"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_camera.html" title="Camera component class." alt="" coords="84,172,241,199"/>
-</map>

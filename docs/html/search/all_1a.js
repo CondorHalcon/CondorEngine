@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['zero_0',['zero',['../group__gtc__constants.html#ga788f5a421fc0f40a1296ebc094cbaa8a',1,'glm::zero()'],['../group__gtc__constants.html#ga788f5a421fc0f40a1296ebc094cbaa8a',1,'glm::zero()']]],
-  ['ziparchiveiosystem_1',['ZipArchiveIOSystem',['../class_assimp_1_1_zip_archive_i_o_system.html',1,'Assimp::ZipArchiveIOSystem'],['../class_assimp_1_1_zip_archive_i_o_system.html#a18d906305d6d694db6b2f560e94c8169',1,'Assimp::ZipArchiveIOSystem::ZipArchiveIOSystem(IOSystem *pIOHandler, const char *pFilename, const char *pMode=&quot;r&quot;)'],['../class_assimp_1_1_zip_archive_i_o_system.html#a18d906305d6d694db6b2f560e94c8169',1,'Assimp::ZipArchiveIOSystem::ZipArchiveIOSystem(IOSystem *pIOHandler, const char *pFilename, const char *pMode=&quot;r&quot;)'],['../class_assimp_1_1_zip_archive_i_o_system.html#a18d906305d6d694db6b2f560e94c8169',1,'Assimp::ZipArchiveIOSystem::ZipArchiveIOSystem(IOSystem *pIOHandler, const char *pFilename, const char *pMode=&quot;r&quot;)']]],
-  ['ziparchiveiosystem_2eh_2',['ZipArchiveIOSystem.h',['../include_2assimp_2_zip_archive_i_o_system_8h.html',1,'(Global Namespace)'],['../out_2install_2x64-_debug_2include_2assimp_2_zip_archive_i_o_system_8h.html',1,'(Global Namespace)'],['../out_2install_2x64-_release_2include_2assimp_2_zip_archive_i_o_system_8h.html',1,'(Global Namespace)']]]
-];

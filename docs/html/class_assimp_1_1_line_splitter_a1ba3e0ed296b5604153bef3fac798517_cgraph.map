@@ -1,6 +1,0 @@
-<map id="Assimp::LineSplitter::operator++" name="Assimp::LineSplitter::operator++">
-<area shape="rect" id="node1" title=" " alt="" coords="5,72,144,115"/>
-<area shape="rect" id="node2" href="$class_assimp_1_1_stream_reader.html#a04b5d66012c771bb3c33c0580d8d8464" title=" " alt="" coords="192,5,349,48"/>
-<area shape="rect" id="node3" href="$class_assimp_1_1_stream_reader.html#aa33c8a16974f75b94f66276833df4ae3" title="Get the remaining stream size (to the end of the stream)" alt="" coords="192,72,349,115"/>
-<area shape="rect" id="node4" href="$class_assimp_1_1_stream_reader.html#a78aaca82e5097b4c31297a9553d74b05" title=" " alt="" coords="192,139,349,181"/>
-</map>

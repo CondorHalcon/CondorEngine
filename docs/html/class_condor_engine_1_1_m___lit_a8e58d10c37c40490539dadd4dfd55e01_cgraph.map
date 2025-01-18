@@ -1,5 +1,0 @@
-<map id="CondorEngine::M_Lit::M_Lit" name="CondorEngine::M_Lit::M_Lit">
-<area shape="rect" id="node1" title="Class constructor." alt="" coords="5,5,149,48"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_m___lit.html#ad7236e12b02e596b69ce7ff9f5d17e3b" title="Cleanly set or change the albedo texture." alt="" coords="197,5,340,48"/>
-<area shape="rect" id="node3" href="$struct_condor_engine_1_1_texture.html#a7f34ff5aebe75c6f1a762e8a1f87396e" title="Unload a texture from OpenGL." alt="" coords="388,5,542,48"/>
-</map>

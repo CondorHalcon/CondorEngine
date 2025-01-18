@@ -1,4 +1,0 @@
-<map id="CondorEngine::Debug::Log" name="CondorEngine::Debug::Log">
-<area shape="rect" id="node1" title="Print an INFO message to console." alt="" coords="5,5,184,32"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_debug.html#a954453170f49ab7fbaa9024729c03fcd" title="Print an INFO message to console." alt="" coords="232,5,410,32"/>
-</map>

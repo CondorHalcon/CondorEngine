@@ -1,9 +1,0 @@
-<map id="CondorEngine::Debug::Log" name="CondorEngine::Debug::Log">
-<area shape="rect" id="node1" title="Print an INFO message to console." alt="" coords="432,97,610,124"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_debug.html#a0c7d2135969cc3c182dcfa7817be7a57" title="Print an INFO message to console." alt="" coords="206,5,384,32"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_debug.html#a22146c1707fb5f582415df07a24c7167" title="Print an ERROR message to console." alt="" coords="220,56,370,99"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_debug.html#a8fe923d2ab1003fc58736b1584259b15" title="Print a WARNING message to console." alt="" coords="220,123,370,165"/>
-<area shape="rect" id="node5" href="$struct_condor_engine_1_1_shader.html#a08816a7f27e94768b494c26135e59df9" title="Compile a shader in OpenGl." alt="" coords="219,189,371,232"/>
-<area shape="rect" id="node6" href="$struct_condor_engine_1_1_shader.html#a900e6f3743ef35491ebf2b8387918cd4" title="Load and compile a shader in OpenGl." alt="" coords="5,156,158,199"/>
-<area shape="rect" id="node7" href="$struct_condor_engine_1_1_shader.html#a503d70a237946b4dd76718384dd180aa" title="Compile a shader in OpenGl." alt="" coords="5,223,158,265"/>
-</map>

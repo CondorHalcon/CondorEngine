@@ -1,9 +1,0 @@
-<map id="CondorEngine::Component" name="CondorEngine::Component">
-<area shape="rect" id="node1" title="Base engine scene object component class." alt="" coords="203,107,381,133"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_camera.html" title="Camera component class." alt="" coords="435,5,592,32"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_collider.html" title="Collider component class." alt="" coords="436,56,591,83"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_light.html" title="Light component class." alt="" coords="444,107,583,133"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_mesh.html" title="Mesh component class." alt="" coords="442,157,585,184"/>
-<area shape="rect" id="node7" href="$class_condor_engine_1_1_rigidbody.html" title="Rigidbody component class." alt="" coords="429,208,598,235"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,107,155,133"/>
-</map>

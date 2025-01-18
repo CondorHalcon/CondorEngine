@@ -1,8 +1,0 @@
-<map id="CondorEngine::Primitive::Primitive" name="CondorEngine::Primitive::Primitive">
-<area shape="rect" id="node1" title="Class constructor." alt="" coords="5,139,168,181"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene_object.html#a48f1b1f5148863acdaf9c14f56887739" title="Add a Component to this SceneObject." alt="" coords="216,5,402,48"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_primitive.html#a1c13fd31ec27285396bab15ba2a36f12" title="Make a primitive cube." alt="" coords="228,72,390,115"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_primitive.html#a18a313827b73a83efceeefc542a7887e" title="Make a primitive plane mesh." alt="" coords="228,139,390,181"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_primitive.html#a5045087fcbe7cf42248e1dd799b748d0" title="Make a simple primitive cube." alt="" coords="228,205,390,248"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_primitive.html#abe20298b4b077e164f709aa0d37b9d65" title="Make a primitive sphere mesh." alt="" coords="228,272,390,315"/>
-</map>

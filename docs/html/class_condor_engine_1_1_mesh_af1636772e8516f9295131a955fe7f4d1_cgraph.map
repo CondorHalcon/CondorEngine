@@ -1,4 +1,0 @@
-<map id="CondorEngine::Mesh::LoadMeshFromFile" name="CondorEngine::Mesh::LoadMeshFromFile">
-<area shape="rect" id="node1" title="Load a mesh from and .obj file." alt="" coords="5,5,149,48"/>
-<area shape="rect" id="node2" href="$include_2assimp_2cimport_8h.html#a5b07b5b6589ad33033c2d456cd95da2b" title=" " alt="" coords="197,13,286,40"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="aiTexture" name="aiTexture">
-<area shape="rect" id="node1" title=" " alt="" coords="43,96,118,123"/>
-<area shape="rect" id="node2" href="$structai_texel.html" title="Helper structure to represent a texel in a ARGB8888 format." alt="" coords="5,5,68,32"/>
-<area shape="rect" id="node3" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="92,5,157,32"/>
-</map>

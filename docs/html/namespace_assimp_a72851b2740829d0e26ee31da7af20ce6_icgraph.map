@@ -1,4 +1,0 @@
-<map id="Assimp::ASSIMP_stricmp" name="Assimp::ASSIMP_stricmp">
-<area shape="rect" id="node1" title="Helper function to do platform independent string comparison." alt="" coords="228,5,402,32"/>
-<area shape="rect" id="node2" href="$namespace_assimp.html#abd7b0704eb33d941b05a778f916cf963" title="Case independent comparison of two std::strings." alt="" coords="5,5,180,32"/>
-</map>

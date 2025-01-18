@@ -1,4 +1,0 @@
-<map id="Assimp::MemoryIOSystem::CurrentDirectory" name="Assimp::MemoryIOSystem::CurrentDirectory">
-<area shape="rect" id="node1" title="Will return the current directory from the stack top." alt="" coords="5,5,185,48"/>
-<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_system.html#a9cfaf118a329da14726b33c4b5089740" title="Returns the top directory from the stack." alt="" coords="233,5,416,48"/>
-</map>

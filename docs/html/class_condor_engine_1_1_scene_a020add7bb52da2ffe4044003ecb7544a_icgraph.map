@@ -1,6 +1,0 @@
-<map id="CondorEngine::Scene::Instantiate" name="CondorEngine::Scene::Instantiate">
-<area shape="rect" id="node1" title="Instantiate a SceneObject into this Scene." alt="" coords="240,72,388,115"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene.html#a36b5f7d305b8d14819195e19dffae527" title="Instantiate a SceneObject into this Scene." alt="" coords="24,5,173,48"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_scene_object.html#adf8b9cfef2b3359312d672af03ee05fa" title="Set this SceneObject&#39;s parent." alt="" coords="5,72,192,115"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_scene_object.html#adf71a566a6fe2cb1ac8e4d24dd43f889" title="Set the Scene this SceneObject is in." alt="" coords="5,139,192,181"/>
-</map>

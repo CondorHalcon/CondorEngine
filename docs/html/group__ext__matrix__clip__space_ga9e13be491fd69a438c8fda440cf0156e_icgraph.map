@@ -1,8 +1,0 @@
-<map id="glm::perspective" name="glm::perspective">
-<area shape="rect" id="node1" title=" " alt="" coords="454,47,571,73"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_camera.html#a39bb47e461a19e58a84c607369192d62" title="Get this Camera&#39;s projection matrix." alt="" coords="249,5,406,48"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_material.html#a04166518e71714251c88b1839ce0b76f" title="Update material." alt="" coords="249,72,406,115"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_m___unlit.html#a992863c7f181a2a48b7b93f8e492fcc4" title="Update shader uniforms." alt="" coords="25,5,181,48"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_m___lit.html#a670a2ecf3c0d2e12b6719ddb84ebe631" title="Update shader uniforms." alt="" coords="31,72,175,115"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_m___complex_lit.html#a02b97cbf0b7481719ddf9610c762afd0" title="Update shader uniforms." alt="" coords="5,139,201,181"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="Assimp::MemoryIOSystem::StackSize" name="Assimp::MemoryIOSystem::StackSize">
-<area shape="rect" id="node1" title="Returns the stack size." alt="" coords="5,5,185,48"/>
-<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_system.html#a1f3180cefbb447b4b8c628dcaf95fc69" title="Returns the number of directories stored on the stack." alt="" coords="233,13,433,40"/>
-</map>

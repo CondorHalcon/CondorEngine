@@ -1,6 +1,0 @@
-<map id="aiAnimMesh" name="aiAnimMesh">
-<area shape="rect" id="node1" title="An AnimMesh is an attachment to an aiMesh stores per&#45;vertex animations for a particular frame." alt="" coords="91,160,185,187"/>
-<area shape="rect" id="node2" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="5,5,71,32"/>
-<area shape="rect" id="node3" href="$structai_vector3_d.html" title=" " alt="" coords="95,5,181,32"/>
-<area shape="rect" id="node4" href="$structai_color4_d.html" title=" " alt="" coords="225,5,304,32"/>
-</map>

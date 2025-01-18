@@ -1,6 +1,0 @@
-<map id="Application::Instance" name="Application::Instance">
-<area shape="rect" id="node1" title="Get class singleton. (Creates a new application if one doesn&#39;t already exist.)" alt="" coords="454,43,597,69"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_camera.html#a39bb47e461a19e58a84c607369192d62" title="Get this Camera&#39;s projection matrix." alt="" coords="249,5,406,48"/>
-<area shape="rect" id="node3" href="$class_application.html#a492b91a62bb97fbdd320e0bf2e9a1857" title="Check hardware input." alt="" coords="266,72,388,99"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_spectator_cam.html#ad9e29c5c5080825dbe3ac3f453b2f1b1" title="Update spectator camera." alt="" coords="5,64,201,107"/>
-</map>

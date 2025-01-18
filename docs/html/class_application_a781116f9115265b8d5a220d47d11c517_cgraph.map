@@ -1,5 +1,0 @@
-<map id="Application::shouldClose" name="Application::shouldClose">
-<area shape="rect" id="node1" title="Check termination conditions." alt="" coords="5,31,171,57"/>
-<area shape="rect" id="node2" href="$group__input.html#ga7d8ad8ffaf272808f04e1d5d33ec8859" title="Returns the last reported state of a keyboard key for the specified window." alt="" coords="257,5,346,32"/>
-<area shape="rect" id="node3" href="$group__window.html#gaa6162f67dfa38b8beda2fea623649332" title="Checks the close flag of the specified window." alt="" coords="219,56,385,83"/>
-</map>

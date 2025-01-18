@@ -1,5 +1,0 @@
-<map id="CondorEngine::DefaultScene" name="CondorEngine::DefaultScene">
-<area shape="rect" id="node1" title="Default scene for the engine. Has a floor and a spectator camera." alt="" coords="5,155,196,181"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_scene.html" title="Base scene class." alt="" coords="26,80,175,107"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="26,5,175,32"/>
-</map>

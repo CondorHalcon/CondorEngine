@@ -1,9 +1,0 @@
-<map id="Assimp::NodeAttachmentInfo" name="Assimp::NodeAttachmentInfo">
-<area shape="rect" id="node1" title=" " alt="" coords="141,299,335,325"/>
-<area shape="rect" id="node2" href="$structai_node.html" title=" " alt="" coords="122,189,184,216"/>
-<area shape="rect" id="node3" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="5,5,71,32"/>
-<area shape="rect" id="node5" href="$structai_metadata.html" title=" " alt="" coords="110,96,195,123"/>
-<area shape="rect" id="node4" href="$structai_matrix4x4.html" title=" " alt="" coords="219,96,308,123"/>
-<area shape="rect" id="node6" href="$structai_metadata_entry.html" title=" " alt="" coords="97,5,214,32"/>
-<area shape="rect" id="node7" title=" " alt="" coords="295,189,352,216"/>
-</map>

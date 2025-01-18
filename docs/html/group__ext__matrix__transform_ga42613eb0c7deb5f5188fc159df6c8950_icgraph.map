@@ -1,8 +1,0 @@
-<map id="glm::rotate" name="glm::rotate">
-<area shape="rect" id="node1" title=" " alt="" coords="478,85,561,112"/>
-<area shape="rect" id="node2" href="$group__gtx__rotate__vector.html#ga83099d005b4af6a7a0d882ff6eb1a536" title=" " alt="" coords="282,5,392,32"/>
-<area shape="rect" id="node3" href="$group__gtx__rotate__vector.html#gaa9033100ff2f16c01fefb01a88769f27" title=" " alt="" coords="295,56,378,83"/>
-<area shape="rect" id="node4" href="$class_condor_engine_1_1_scene_object.html#a760d0a7b60f3e0364c2e9aed3022fc58" title="Rotate this SceneObject." alt="" coords="244,107,430,149"/>
-<area shape="rect" id="node6" href="$class_condor_engine_1_1_math.html#a4380f09f4c13b90c0e11852ac9521ed5" title="Rotate transform with euler angles." alt="" coords="267,173,407,216"/>
-<area shape="rect" id="node5" href="$class_condor_engine_1_1_default_scene.html#a313896778cb7c6def9415193404ad57e" title="Default scene constructor." alt="" coords="5,107,196,149"/>
-</map>

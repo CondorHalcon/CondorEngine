@@ -1,5 +1,0 @@
-<map id="Assimp::TXmlParser::parse" name="Assimp::TXmlParser::parse">
-<area shape="rect" id="node1" title="Will parse an xml&#45;file from a given stream." alt="" coords="5,23,148,65"/>
-<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_stream.html#aaa01183d197fb714f28d6c611b6fa058" title="Returns filesize Returns the filesize." alt="" coords="196,5,380,32"/>
-<area shape="rect" id="node3" href="$class_assimp_1_1_i_o_stream.html#ae376f641020989d61863b9c6f55c7abf" title="Read from the file." alt="" coords="204,56,372,83"/>
-</map>

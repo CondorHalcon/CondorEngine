@@ -1,6 +1,0 @@
-<map id="CondorEngine::Scene" name="CondorEngine::Scene">
-<area shape="rect" id="node1" title="Base scene class." alt="" coords="128,219,277,245"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="5,120,155,147"/>
-<area shape="rect" id="node3" href="$structglm_1_1vec.html" title=" " alt="" coords="157,5,291,32"/>
-<area shape="rect" id="node4" href="$struct_condor_engine_1_1_directional_light.html" title="Directional light struct." alt="" coords="305,112,479,155"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="CondorEngine::M_Unlit" name="CondorEngine::M_Unlit">
-<area shape="rect" id="node1" title="Unlit material." alt="" coords="6,155,162,181"/>
-<area shape="rect" id="node2" href="$class_condor_engine_1_1_material.html" title="Mesh material class." alt="" coords="5,80,163,107"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_object.html" title="Base engine object class." alt="" coords="9,5,159,32"/>
-</map>

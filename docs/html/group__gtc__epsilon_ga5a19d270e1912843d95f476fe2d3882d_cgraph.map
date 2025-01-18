@@ -1,6 +1,0 @@
-<map id="glm::epsilonNotEqual" name="glm::epsilonNotEqual">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,151,83"/>
-<area shape="rect" id="node2" href="$group__core__func__common.html#ga439e60a72eadecfeda2df5449c613a64" title=" " alt="" coords="239,5,310,32"/>
-<area shape="rect" id="node3" href="$group__ext__scalar__constants.html#ga2a1e57fc5592b69cfae84174cbfc9429" title="Return the epsilon constant for floating point types." alt="" coords="229,56,320,83"/>
-<area shape="rect" id="node4" href="$group__core__func__vector__relational.html#ga932c94a34799d65dfe36762158a58d90" title=" " alt="" coords="199,107,351,133"/>
-</map>

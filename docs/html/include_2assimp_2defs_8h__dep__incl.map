@@ -1,5 +1,0 @@
-<map id="thirdparty/assimp/include/assimp/defs.h" name="thirdparty/assimp/include/assimp/defs.h">
-<area shape="rect" id="node1" title="Assimp build configuration setup. See the notes in the comment blocks to find out how to customize yo..." alt="" coords="100,5,266,48"/>
-<area shape="rect" id="node2" href="$include_2assimp_2_bitmap_8h.html" title="Defines bitmap format helper for textures." alt="" coords="5,96,172,139"/>
-<area shape="rect" id="node3" href="$include_2assimp_2vector2_8h.html" title="2D vector structure, including operators when compiling in C++" alt="" coords="196,96,362,139"/>
-</map>

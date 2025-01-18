@@ -1,7 +1,0 @@
-<map id="aiNode" name="aiNode">
-<area shape="rect" id="node1" title=" " alt="" coords="121,189,184,216"/>
-<area shape="rect" id="node2" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="5,5,71,32"/>
-<area shape="rect" id="node4" href="$structai_metadata.html" title=" " alt="" coords="110,96,195,123"/>
-<area shape="rect" id="node3" href="$structai_matrix4x4.html" title=" " alt="" coords="219,96,308,123"/>
-<area shape="rect" id="node5" href="$structai_metadata_entry.html" title=" " alt="" coords="97,5,214,32"/>
-</map>

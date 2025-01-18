@@ -1,5 +1,0 @@
-<map id="Assimp::StreamWriter::Flush" name="Assimp::StreamWriter::Flush">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,155,65"/>
-<area shape="rect" id="node2" href="$class_assimp_1_1_i_o_stream.html#a7c19952446ece90924b246f087417899" title="Flush the contents of the file buffer (for writers) See fflush() for more details." alt="" coords="203,5,372,32"/>
-<area shape="rect" id="node3" href="$class_assimp_1_1_i_o_stream.html#ad0ca4aae1b8c4d00db391ac3a4171f7b" title="Write to the file." alt="" coords="204,56,371,83"/>
-</map>

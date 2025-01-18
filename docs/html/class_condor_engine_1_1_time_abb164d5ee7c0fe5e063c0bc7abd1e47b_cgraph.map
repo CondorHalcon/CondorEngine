@@ -1,4 +1,0 @@
-<map id="CondorEngine::Time::deltaTime" name="CondorEngine::Time::deltaTime">
-<area shape="rect" id="node1" title="Get this frame&#39;s delta time." alt="" coords="5,5,146,48"/>
-<area shape="rect" id="node2" href="$group__input.html#ga03d4a1039b8662c71eeb40beea8cb622" title="Returns the GLFW time." alt="" coords="194,13,289,40"/>
-</map>

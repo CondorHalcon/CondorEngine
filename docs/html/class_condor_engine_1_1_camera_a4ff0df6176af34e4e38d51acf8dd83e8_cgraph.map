@@ -1,8 +1,0 @@
-<map id="CondorEngine::Camera::getViewMatrix" name="CondorEngine::Camera::getViewMatrix">
-<area shape="rect" id="node1" title="Get this Camera&#39;s view matrix." alt="" coords="5,23,163,65"/>
-<area shape="rect" id="node2" href="$group__ext__matrix__transform.html#ga894735fbf8f3d25628c127712d0285f7" title=" " alt="" coords="211,31,298,57"/>
-<area shape="rect" id="node3" href="$group__ext__matrix__transform.html#gab2850421652778eeef6830e4fb1ea346" title=" " alt="" coords="348,5,452,32"/>
-<area shape="rect" id="node6" href="$group__ext__matrix__transform.html#ga55e33da75ea7e0f877059cc6f181cd2b" title=" " alt="" coords="346,56,453,83"/>
-<area shape="rect" id="node4" href="$group__core__func__geometric.html#ga1882f52ee88a161ed86dea9905a6da91" title=" " alt="" coords="513,5,596,32"/>
-<area shape="rect" id="node5" href="$group__core__func__geometric.html#ga5c6c1379961d4589035a390856f2d66c" title=" " alt="" coords="501,56,608,83"/>
-</map>

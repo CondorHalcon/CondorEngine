@@ -1,5 +1,0 @@
-<map id="aiCamera" name="aiCamera">
-<area shape="rect" id="node1" title=" " alt="" coords="49,128,126,155"/>
-<area shape="rect" id="node2" href="$structai_string.html" title="Represents an UTF&#45;8 string, zero byte terminated." alt="" coords="5,5,71,32"/>
-<area shape="rect" id="node3" href="$structai_vector3_d.html" title=" " alt="" coords="95,5,181,32"/>
-</map>

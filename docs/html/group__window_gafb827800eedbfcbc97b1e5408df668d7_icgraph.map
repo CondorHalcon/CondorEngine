@@ -1,5 +1,0 @@
-<map id="glfwSwapBuffers" name="glfwSwapBuffers">
-<area shape="rect" id="node1" title="Swaps the front and back buffers of the specified window." alt="" coords="333,5,452,32"/>
-<area shape="rect" id="node2" href="$class_application.html#af44c742342adf5305e430ff293f147c1" title="Update for the window and frame buffers." alt="" coords="171,5,285,32"/>
-<area shape="rect" id="node3" href="$class_application.html#aaf09cd6cb412086dc039e28cdb059f0d" title="While application should run." alt="" coords="5,5,123,32"/>
-</map>

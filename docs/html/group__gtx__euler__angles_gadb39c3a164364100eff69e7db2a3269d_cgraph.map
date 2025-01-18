@@ -1,7 +1,0 @@
-<map id="glm::extractEulerAngleYZX" name="glm::extractEulerAngleYZX">
-<area shape="rect" id="node1" title=" " alt="" coords="5,117,185,144"/>
-<area shape="rect" id="node2" href="$group__gtx__compatibility.html#ga9e7b4e9a672898b8cf80ef8ab414f87a" title="Arc tangent. Returns an angle whose tangent is y/x. The signs of x and y are used to determine what q..." alt="" coords="233,5,315,32"/>
-<area shape="rect" id="node3" href="$group__core__func__trigonometric.html#ga54745147add8b4fa05642f5c71f6833e" title=" " alt="" coords="238,80,310,107"/>
-<area shape="rect" id="node4" href="$group__core__func__trigonometric.html#ga3fcdcfa2d2ac38de9ba1885cd1c79414" title=" " alt="" coords="240,155,308,181"/>
-<area shape="rect" id="node5" href="$group__core__func__exponential.html#ga1f904e09827e939a56e4158f45ca8ede" title=" " alt="" coords="238,229,310,256"/>
-</map>

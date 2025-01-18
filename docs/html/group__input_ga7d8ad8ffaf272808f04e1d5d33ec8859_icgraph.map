@@ -1,7 +1,0 @@
-<map id="glfwGetKey" name="glfwGetKey">
-<area shape="rect" id="node1" title="Returns the last reported state of a keyboard key for the specified window." alt="" coords="462,43,551,69"/>
-<area shape="rect" id="node2" href="$class_application.html#a492b91a62bb97fbdd320e0bf2e9a1857" title="Check hardware input." alt="" coords="270,16,392,43"/>
-<area shape="rect" id="node4" href="$class_application.html#a781116f9115265b8d5a220d47d11c517" title="Check termination conditions." alt="" coords="249,68,414,95"/>
-<area shape="rect" id="node3" href="$class_condor_engine_1_1_spectator_cam.html#ad9e29c5c5080825dbe3ac3f453b2f1b1" title="Update spectator camera." alt="" coords="5,5,201,48"/>
-<area shape="rect" id="node5" href="$class_application.html#aaf09cd6cb412086dc039e28cdb059f0d" title="While application should run." alt="" coords="44,72,162,99"/>
-</map>
