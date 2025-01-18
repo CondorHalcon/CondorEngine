@@ -1,20 +1,11 @@
 # CondorEngine
 
-## Visual Studio Config
-### `C/C++\General\Additional Include Libraries`
-```
-$(SolutionDir)thirdparty\;%(AdditionalIncludedDirectories)
-```
+## Libraries
+Library | Version | Description
+--------|---------|------------
+Assimp | v5.4.3 | Mesh Loader
+GLEW | | OpenGL Extensions
+GLFW | v3.4 | Window Handler
+GLM | v1.0.1 | OpenGL Math
+STB | | Image Loader
 
-### `Linker\Input\Additional Dependencies`
-```
-glfw3.lib
-glew32s.lib
-opengl32.lib
-%(AdditionalDependencies)
-```
-
-### `Linker\General\Additional Library Directories`
-```
-$(SolutionDir)thirdparty\glfw\lib\$(PlatformShortName);$(SolutionDir)thirdparty\glew\lib\$(PlatformShortName);%(AdditionalLibraryDirectories)
-```
