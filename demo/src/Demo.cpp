@@ -1,6 +1,8 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/scenes/defaultscene.h>
 #include <CondorEngine/sceneobjects/primitive.h>
+#include <stdexcept>
+#include <cstdlib>
 
 using namespace CondorEngine;
 
@@ -9,6 +11,8 @@ using namespace CondorEngine;
 int main()
 {
     Application *app = Application::Instance();
+    try {
+        
     if (!app->init(640, 480, "CondorEngine"))
     {
         Debug::LogError("Failed to initialise application.");
@@ -54,9 +58,13 @@ int main()
         new M_Lit(Texture::LoadTexture("textures/UVGrid.png"))));
 
     app->Run();
+    } catch (const std::exception &e) {
+        Debug::LogError(e.what());
+        return EXIT_FAILURE;
+    }
 
     app->terminate();
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 #pragma endregion

@@ -100,6 +100,14 @@ target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 target_link_libraries(${PROJECT_NAME} PUBLIC glm::glm)
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 
+# resources copy command
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/resources
+    ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>
+)
+
 # folder
 if (NOT CondorEngine_IS_ROOT_PROJECT)
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "Engine")
