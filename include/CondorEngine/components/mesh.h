@@ -5,7 +5,7 @@
 #include "CondorEngine/component.h"
 #include "CondorEngine/material.h"
 // third party
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 namespace CondorEngine
 {

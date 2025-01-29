@@ -7,7 +7,7 @@
 // third party
 #include <assimp/scene.h>
 #include <assimp/cimport.h>
-#include "glm/ext.hpp"
+#include <glm/ext.hpp>
 
 CondorEngine::Mesh::Mesh(const Vertex *const verts, GLsizei vertCount, const GLuint *indices, GLsizei indexCount)
 {

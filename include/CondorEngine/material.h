@@ -67,7 +67,7 @@ namespace CondorEngine
 
 #pragma region Preset Materials
 	/// @brief Unlit material.
-	class M_Unlit : public Material
+	class DllExport M_Unlit : public Material
 	{
 	public:
 		/// @brief Class constructor.
@@ -84,7 +84,7 @@ namespace CondorEngine
 		void setTexture(Texture *texture);
 	};
 	/// @brief Simple lit material.
-	class M_Lit : public Material
+	class DllExport M_Lit : public Material
 	{
 	protected:
 		/// @brief Class constructor
@@ -106,7 +106,7 @@ namespace CondorEngine
 		void setTexture(Texture *texture);
 	};
 	/// @brief Multi-light lit material.
-	class M_ComplexLit : public M_Lit
+	class DllExport M_ComplexLit : public M_Lit
 	{
 	public:
 		/// @brief Maximum number of lights.
@@ -119,21 +119,21 @@ namespace CondorEngine
 		void Update() override;
 	};
 	/// @brief UV material.
-	class M_UV : public Material
+	class DllExport M_UV : public Material
 	{
 	public:
 		/// @brief Class constructor.
 		M_UV();
 	};
 	/// @brief Object normal material.
-	class M_Normal : public Material
+	class DllExport M_Normal : public Material
 	{
 	public:
 		/// @brief Class constructor.
 		M_Normal();
 	};
 	/// @brief Screen space normal material.
-	class M_ScreenNormal : public Material
+	class DllExport M_ScreenNormal : public Material
 	{
 	public:
 		/// @brief Class constructor.
