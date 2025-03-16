@@ -3,8 +3,8 @@
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew.h"
 #include "glfw/glfw3.h"
-#include "CondorEngine/diagnostics.h"
 // internal
+#include "CondorEngine/debug.hpp"
 #include "CondorEngine/time.hpp"
 #include "CondorEngine/physics.h"
 #include "CondorEngine/renderer.h"
@@ -33,7 +33,7 @@ Application *Application::Instance()
 	return instance;
 }
 
-void Application::Run()
+void Application::runtime()
 {
 	while (!this->shouldClose())
 	{
@@ -70,6 +70,7 @@ CondorEngine::Vector2Int Application::getWindowDimensions()
 bool Application::init(int width, int height, const char *title)
 {
 	CondorEngine::Time::timeInit();
+	CondorEngine::Debug::init();
 
 	this->windowWidth = width;
 	this->windowHeight = height;
@@ -92,7 +93,7 @@ bool Application::init(int width, int height, const char *title)
 
 	// enable OpenGL debug output
 	glEnable(GL_DEBUG_OUTPUT);
-	glDebugMessageCallback(CondorEngine::diagnostics::MessageCallback, 0);
+	glDebugMessageCallback(CondorEngine::Debug::GLMessageCallback, 0);
 
 	glClearColor(.4f, .4f, .4f, 1);
 	return true;

@@ -21,9 +21,9 @@ private:
 public:
 	/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
 	/// @return Class singleton.
-	static Application *Instance();
+	static Application* Instance();
 	/// @brief While application should run.
-	void Run();
+	void runtime();
 
 private:
 	/// @brief Window width.

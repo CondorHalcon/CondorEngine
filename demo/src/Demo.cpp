@@ -13,14 +13,11 @@ int main()
     Application *app = Application::Instance();
     try {
         
-    if (!app->init(640, 480, "CondorEngine"))
+        if (!app->init(1280, 720, "CondorEngine"))
     {
         Debug::LogError("Failed to initialise application.");
         return -1;
     }
-    Time::fixedTimeStep = .02f;
-
-    diagnostics::Environment();
 
     // Scene
     Scene *scene = Application::activeScene = new DefaultScene();
@@ -57,7 +54,7 @@ int main()
         "meshes/suzane.obj",
         new M_Lit(Texture::LoadTexture("textures/UVGrid.png"))));
 
-    app->Run();
+    app->runtime();
     } catch (const std::exception &e) {
         Debug::LogError(e.what());
         return EXIT_FAILURE;
