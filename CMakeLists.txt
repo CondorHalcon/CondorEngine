@@ -78,10 +78,7 @@ set(CondorEngine_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/resources)
 # files
 file(GLOB_RECURSE CondorEngine_HEADERS ${CondorEngine_INCLUDES_DIR}/*.hpp ${CondorEngine_INCLUDES_DIR}/*.h)
 file(GLOB_RECURSE CondorEngine_SOURCES ${CondorEngine_SOURCES_DIR}/*cpp)
-
-file(GLOB_RECURSE CondorEngine_MESHES ${CondorEngine_RESOURCES_DIR}/meshes/*.obj ${CondorEngine_RESOURCES_DIR}/meshes/*.fbx)
 file(GLOB_RECURSE CondorEngine_SHADERS ${CondorEngine_RESOURCES_DIR}/shaders/*.vert ${CondorEngine_RESOURCES_DIR}/shaders/*.frag)
-file(GLOB_RECURSE CondorEngine_TEXTURES ${CondorEngine_RESOURCES_DIR}/textures/*.png ${CondorEngine_RESOURCES_DIR}/textures/*.jpg)
 
 # library
 add_library(${PROJECT_NAME}
@@ -104,7 +101,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/resources
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources
     ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>
 )
 
@@ -116,6 +113,11 @@ endif()
 message(STATUS "${PROJECT_NAME} :: ${PROJECT_NAME} v${PROJECT_VERSION} configured")
 
 #--------------------------------------------------------------------
-# Demo: CondorEngine_Demo Game Subdirectory
+# Demo: CondorEngine_DemoGame Subdirectory
 #--------------------------------------------------------------------
 add_subdirectory(demo)
+
+#--------------------------------------------------------------------
+# Demo: CondorEngine_Samples Subdirectory
+#--------------------------------------------------------------------
+add_subdirectory(samples)
