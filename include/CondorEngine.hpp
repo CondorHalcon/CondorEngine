@@ -13,8 +13,3 @@
 #include "CondorEngine/scene.h"
 #include "CondorEngine/sceneobject.h"
 #include "CondorEngine/time.hpp"
-
-//namespace CondorEngine
-//{
-extern "C" int DllExport RunApplication(Application* app, const char* title, CondorEngine::Vector2 resolution);
-//}
