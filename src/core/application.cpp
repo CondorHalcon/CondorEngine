@@ -10,22 +10,22 @@
 #include "CondorEngine/renderer.h"
 #include "CondorEngine/resourcemanager.h"
 
-CondorEngine::Scene *Application::activeScene = nullptr;
-Application *Application::instance = nullptr;
+CondorEngine::Scene* CondorEngine::Application::activeScene = nullptr;
+CondorEngine::Application* CondorEngine::Application::instance = nullptr;
 
-Application::Application()
+CondorEngine::Application::Application()
 {
 	this->window = nullptr;
 	this->windowWidth = 640;
 	this->windowHeight = 480;
-	this->clearColor = CondorEngine::ColorRGB{.4, .4, .4};
+	this->clearColor = ColorRGB{ .4, .4, .4 };
 }
-Application::~Application()
+CondorEngine::Application::~Application()
 {
 	delete instance;
 }
 
-Application *Application::Instance()
+CondorEngine::Application* CondorEngine::Application::Instance()
 {
 	if (instance == nullptr)
 	{
@@ -34,7 +34,7 @@ Application *Application::Instance()
 	return instance;
 }
 
-void Application::runtime()
+void CondorEngine::Application::runtime()
 {
 	while (!this->shouldClose())
 	{
@@ -43,12 +43,12 @@ void Application::runtime()
 		this->clear();
 
 		// fixed update
-		CondorEngine::Time::accumulatedFixedTime += CondorEngine::Time::deltaTime();
-		while (CondorEngine::Time::accumulatedFixedTime >= CondorEngine::Time::fixedTimeStep)
+		Time::accumulatedFixedTime += Time::deltaTime();
+		while (Time::accumulatedFixedTime >= Time::fixedTimeStep)
 		{
 			this->fixedUpdate();
-			CondorEngine::Physics::PhysicsUpdate();
-			CondorEngine::Time::accumulatedFixedTime -= CondorEngine::Time::fixedTimeStep;
+			Physics::PhysicsUpdate();
+			Time::accumulatedFixedTime -= Time::fixedTimeStep;
 		}
 
 		// update
@@ -56,22 +56,22 @@ void Application::runtime()
 		this->lateUpdate();
 
 		// draw frame
-		CondorEngine::Renderer::Render();
+		Renderer::Render();
 
 		// time update
-		CondorEngine::Time::timeUpdate();
+		Time::timeUpdate();
 	}
 }
 
-CondorEngine::Vector2Int Application::getWindowDimensions()
+CondorEngine::Vector2Int CondorEngine::Application::getWindowDimensions()
 {
-	return CondorEngine::Vector2Int{windowWidth, windowHeight};
+	return Vector2Int{ windowWidth, windowHeight };
 }
 
-bool Application::init(int width, int height, const char *title)
+bool CondorEngine::Application::init(int width, int height, const char* title)
 {
-	CondorEngine::Time::timeInit();
-	CondorEngine::Debug::init();
+	Time::timeInit();
+	Debug::init();
 
 	this->windowWidth = width;
 	this->windowHeight = height;
@@ -94,7 +94,7 @@ bool Application::init(int width, int height, const char *title)
 
 	// enable OpenGL debug output
 	glEnable(GL_DEBUG_OUTPUT);
-	glDebugMessageCallback(CondorEngine::Debug::GLMessageCallback, 0);
+	glDebugMessageCallback(Debug::GLMessageCallback, 0);
 
 	glClearColor(.4f, .4f, .4f, 1);
 
@@ -103,24 +103,24 @@ bool Application::init(int width, int height, const char *title)
 	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
 	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
 	message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
-	CondorEngine::Debug::Log(message);
+	Debug::Log(message);
 
 	return true;
 }
 
-void Application::tick()
+void CondorEngine::Application::tick()
 {
 	glfwSwapBuffers(window); // swap frame buffer
 	glfwPollEvents();		 // poll hardware inputs
 }
 
-void Application::clear()
+void CondorEngine::Application::clear()
 {
 	glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
 }
 
-void Application::update()
+void CondorEngine::Application::update()
 {
 	if (activeScene != nullptr)
 	{
@@ -131,7 +131,7 @@ void Application::update()
 	}
 }
 
-void Application::fixedUpdate()
+void CondorEngine::Application::fixedUpdate()
 {
 	if (activeScene != nullptr)
 	{
@@ -141,7 +141,7 @@ void Application::fixedUpdate()
 		}
 	}
 }
-void Application::lateUpdate()
+void CondorEngine::Application::lateUpdate()
 {
 	if (activeScene != nullptr)
 	{
@@ -152,21 +152,21 @@ void Application::lateUpdate()
 	}
 }
 
-void Application::terminate()
+void CondorEngine::Application::terminate()
 {
-	CondorEngine::ResourceManager::cleanup();
+	ResourceManager::cleanup();
 
 	glfwDestroyWindow(window);
 	window = nullptr;
 	glfwTerminate();
 }
 
-bool Application::shouldClose()
+bool CondorEngine::Application::shouldClose()
 {
 	return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
 }
 
-bool Application::Input(int key)
+bool CondorEngine::Application::Input(int key)
 {
 	return glfwGetKey(Instance()->window, key);
 }
