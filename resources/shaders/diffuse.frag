@@ -7,9 +7,9 @@ in vec3 vNorm;
 
 out vec4 fragColor;
 
-layout (location = 3) uniform vec3 ambient = vec3{0.5,0.5,0.5};
-layout (location = 4) uniform vec3 dirLightColor = vec3{1.0,1.0,1.0};
-layout (location = 5) uniform vec3 dirLightDirection = vec3{0.5,0.5,0.0};
+layout (location = 3) uniform vec3 ambient = vec3(0.5,0.5,0.5);
+layout (location = 4) uniform vec3 dirLightColor = vec3(1.0,1.0,1.0);
+layout (location = 5) uniform vec3 dirLightDirection = vec3(0.5,0.5,0.0);
 layout (location = 6) uniform sampler2D mainTex;
 
 void main() 

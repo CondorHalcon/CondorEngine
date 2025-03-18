@@ -23,7 +23,7 @@ int main()
     Scene *scene = Application::activeScene = new DefaultScene();
 
     // material
-    M_Lit *pMat = new M_Lit(Texture::LoadTexture("textures/ColorGrid.png"));
+    Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
 
     // primitive meshes
     Primitive *prim = scene->Instantiate(
@@ -49,10 +49,10 @@ int main()
     prim6->Rotate(Vector3{0, 0, 90});
 
     // suzane
-    SceneObject *suzane = scene->Instantiate<SceneObject>(new SceneObject(), Vector3{2, 0, 1});
-    suzane->AddComponent<Mesh>(Mesh::LoadMeshFromFile(
-        "meshes/suzane.obj",
-        new M_Lit(Texture::LoadTexture("textures/UVGrid.png"))));
+    Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
+    SceneObject* suzane = scene->Instantiate<SceneObject>(new SceneObject(), Vector3{ 2, 0, 1 });
+    suzane->name = "Suzane";
+    suzane->AddComponent<Mesh>(new Mesh(ResourceManager::LoadMesh("meshes/suzane.obj"), new Diffuse(uvGrid)));
 
     app->runtime();
     } catch (const std::exception &e) {

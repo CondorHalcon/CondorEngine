@@ -29,7 +29,7 @@ void CondorEngine::Debug::init() {
 
     // complete
     file.close();
-    Log("Debug :: Log file has initialized."); // only console log log file init
+    Log("CondorEngine::Debug :: Log file has initialized."); // only console log log file init
     hasInit = true;
 }
 
@@ -61,16 +61,6 @@ void CondorEngine::Debug::LogError(std::string msg) {
     LogError(msg.c_str());
 }
 
-void CondorEngine::Debug::LogGLEnvironment() {
-    std::string message = "[OpenGL Environment]\n";
-    message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
-    message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
-    message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
-    message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
-
-    Log(message);
-}
-
 void GLAPIENTRY CondorEngine::Debug::GLMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
     std::stringstream print;
     print << "[" << getTime() << "] ";
@@ -81,7 +71,7 @@ void GLAPIENTRY CondorEngine::Debug::GLMessageCallback(GLenum source, GLenum typ
     else {
         print << "WARNING ";
     }
-    print << "GL CALLBACK: " << type << " type = 0x" << "%x, " << "severity = 0x" << severity << ", message = " << message;
+    print << "GL CALLBACK: type = 0x" << std::hex << type << ", " << "severity = 0x" << std::hex << severity << ", message = " << message;
 
     std::cout << print.str() << std::endl;
     printToFile(print.str());

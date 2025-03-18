@@ -1,0 +1,36 @@
+#pragma once
+#include "CondorEngine/pch.h"
+#include "CondorEngine/material.h"
+#include "CondorEngine/resourcemanager.h"
+
+namespace CondorEngine
+{
+    /// @brief Unlit material.
+    class Unlit : public Material
+    {
+    public:
+        /// @brief Class constructor.
+        Unlit() : Material(ResourceManager::LoadShader("shaders/basic.vert", "shaders/unlit.frag")) {
+            this->texture = ResourceManager::LoadTexture("textures/Blank.png");
+        }
+
+        /// @brief Class constructor.
+        /// @param texture Albedo texture.
+        Unlit(Texture tex) : Unlit() { setTexture(tex); }
+
+        /// @brief Update shader uniforms.
+        virtual void Update() override {
+            Material::Update();
+            SetUniform(3, texture, 0);
+        }
+        /// @brief Albedo texture.
+        Texture texture;
+
+        /// @brief Cleanly set or change the albedo texture.
+        /// @param texture New albedo texture.
+        void setTexture(Texture tex) {
+            this->texture = tex;
+        }
+    };
+
+}

@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <stb_image.h> // for image loading
+#include <assimp/scene.h>
+#include <assimp/cimport.h>
 // std
 #include <fstream> // for reading from files
 // internal
@@ -13,6 +15,143 @@
 #include "CondorEngine/components/mesh.h"
 
 using std::fstream;
+
+#pragma region MeshData
+
+CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount) {
+	MeshData mesh{};
+
+	// create GPU instance
+	mesh.size = indexCount;
+
+	// make buffers
+	glGenVertexArrays(1, &mesh.vao); // make a VAO at this geo's point in memory
+	glGenBuffers(1, &mesh.vbo);
+	glGenBuffers(1, &mesh.ibo);
+
+	// bind the buffers for the task which we want them to do, like and angry spirit
+	glBindVertexArray(mesh.vao);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ibo);
+
+	// use vertex data if using vectors.. the GPU manufacturer determins how to draw it
+	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Vertex), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
+
+#pragma region Enable Vertex Attributes
+	// describe the buffer
+	glEnableVertexAttribArray(0); // attribute index for enabling positions
+	glVertexAttribPointer(
+		0,				// attribute index
+		4,				// no. of components
+		GL_FLOAT,		// type of component
+		GL_FALSE,		// should be normalized?
+		sizeof(Vertex), // size/stride in bites of each vertex position
+		(void*)0);
+	// vertex color blending
+	glEnableVertexAttribArray(1); // attribute index for enabling positions
+	glVertexAttribPointer(
+		1,				// attribute index
+		4,				// no. of components
+		GL_FLOAT,		// type of component
+		GL_FALSE,		// should be normalized?
+		sizeof(Vertex), // size/stride in bites of each vertex position
+		(void*)offsetof(Vertex, col));
+
+	// UV
+	glEnableVertexAttribArray(2); // attribute index for enabling positions
+	glVertexAttribPointer(
+		2,				// attribute index
+		2,				// no. of components
+		GL_FLOAT,		// type of component
+		GL_FALSE,		// should be normalized?
+		sizeof(Vertex), // size/stride in bites of each vertex position
+		(void*)offsetof(Vertex, uv));
+	// normals
+	glEnableVertexAttribArray(3); // attribute index for enabling positions
+	glVertexAttribPointer(
+		3,				// attribute index
+		3,				// no. of components
+		GL_FLOAT,		// type of component
+		GL_FALSE,		// should be normalized?
+		sizeof(Vertex), // size/stride in bites of each vertex position
+		(void*)offsetof(Vertex, normal));
+#pragma endregion
+
+	// unbind the angry spirit and bind it to nothing
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	return mesh;
+}
+
+CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const std::vector<Vertex> verts, const std::vector<GLuint> indices) {
+	return MakeMesh(verts.data(), verts.size(), indices.data(), indices.size());
+}
+
+CondorEngine::MeshData CondorEngine::MeshData::LoadMesh(const char* filepath) {
+	// read vertices from the model
+	const aiScene* scene = aiImportFile(filepath, 0);
+
+	// just use the first mesh we find for now
+	aiMesh* mesh = scene->mMeshes[0];
+
+	// extract indicies from the first mesh
+	int numFaces = mesh->mNumFaces;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i < numFaces; i++) {
+		indices.push_back(mesh->mFaces[i].mIndices[0]);
+		indices.push_back(mesh->mFaces[i].mIndices[1]);
+		indices.push_back(mesh->mFaces[i].mIndices[2]);
+
+		// generate second triangle for quads
+		if (mesh->mFaces[i].mNumIndices == 4) {
+			indices.push_back(mesh->mFaces[i].mIndices[0]);
+			indices.push_back(mesh->mFaces[i].mIndices[2]);
+			indices.push_back(mesh->mFaces[i].mIndices[3]);
+		}
+	}
+
+	// extract vertex data
+	int numV = mesh->mNumVertices;
+	std::vector<Vertex> vertices = std::vector<Vertex>();
+	for (int i = 0; i < numV; i++) {
+		Vertex vertex;
+		vertex.pos = Vector4{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
+		if (mesh->HasVertexColors(i)) {
+			aiColor4D* vertColor = mesh->mColors[i];
+			vertex.col = Color{ vertColor->r, vertColor->g, vertColor->b, vertColor->a };
+		}
+		else {
+			vertex.col = Color{ 1, 1, 1, 1 };
+		}
+		if (mesh->HasTextureCoords(0)) {
+			vertex.uv = Vector2{ mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y };
+		}
+		else {
+			vertex.uv = Vector2{ 0, 0 };
+		}
+		if (mesh->HasNormals()) {
+			vertex.normal = Vector3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
+		}
+		else {
+			vertex.normal = Vector3{ 0, 0, 1 };
+		}
+		vertices.push_back(vertex);
+	}
+
+	// return final
+	return MakeMesh(vertices.data(), numV, indices.data(), indices.size());
+}
+void CondorEngine::MeshData::FreeMesh(MeshData& mesh) {
+	// reverse the order so we don't ose access to ibo and vbo
+	glDeleteBuffers(1, &mesh.ibo);
+	glDeleteBuffers(1, &mesh.vbo);
+	glDeleteVertexArrays(1, &mesh.vao);
+}
+#pragma endregion
 
 #pragma region Shader Implementations
 
@@ -50,13 +189,13 @@ std::string ReadFile(const char *path)
 
 #pragma region Shader
 
-CondorEngine::Shader *CondorEngine::Shader::MakeShader(const char *vertShader, const char *fragShader)
+CondorEngine::Shader CondorEngine::Shader::MakeShader(const char* vertShader, const char* fragShader)
 {
 	// TODO: add error handling/checking logic to shader process
 
 	// make an instance of the shader
-	Shader *shader = new Shader{};
-	shader->program = glCreateProgram();
+	Shader shader{};
+	shader.program = glCreateProgram();
 
 	GLuint vertexPortion = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragPortion = glCreateShader(GL_FRAGMENT_SHADER);
@@ -75,14 +214,14 @@ CondorEngine::Shader *CondorEngine::Shader::MakeShader(const char *vertShader, c
 	GLint fragParam;
 	glGetShaderiv(vertexPortion, GL_COMPILE_STATUS, &vertParam);
 	glGetShaderiv(vertexPortion, GL_COMPILE_STATUS, &fragParam);
-	Debug::Log("Shader Compile Status: Vertex[" + std::to_string(vertParam) + "]; Fragment[" + std::to_string(fragParam) + "]");
+	Debug::Log("CondorEngine::Shader :: Shader Compile Status: Vertex[" + std::to_string(vertParam) + "]; Fragment[" + std::to_string(fragParam) + "]");
 
 	// assemble the final shader from the two shaders
-	glAttachShader(shader->program, vertexPortion);
-	glAttachShader(shader->program, fragPortion);
+	glAttachShader(shader.program, vertexPortion);
+	glAttachShader(shader.program, fragPortion);
 
 	// link the shaders together
-	glLinkProgram(shader->program);
+	glLinkProgram(shader.program);
 	// TODO: error check the link
 
 	glDeleteShader(vertexPortion);
@@ -91,12 +230,12 @@ CondorEngine::Shader *CondorEngine::Shader::MakeShader(const char *vertShader, c
 	return shader;
 }
 
-CondorEngine::Shader *CondorEngine::Shader::MakeShader(const std::string &vertShader, const std::string &fragShader)
+CondorEngine::Shader CondorEngine::Shader::MakeShader(const std::string& vertShader, const std::string& fragShader)
 {
 	return CondorEngine::Shader::MakeShader(vertShader.c_str(), fragShader.c_str());
 }
 
-CondorEngine::Shader *CondorEngine::Shader::LoadShader(const char *vertPath, const char *fragPath)
+CondorEngine::Shader CondorEngine::Shader::LoadShader(const char* vertPath, const char* fragPath)
 {
 	std::string vertSource = ReadFile(vertPath);
 	std::string fragSource = ReadFile(fragPath);
@@ -115,7 +254,7 @@ void CondorEngine::Shader::FreeShader(Shader &shader)
 
 #pragma region Texture
 
-CondorEngine::Texture *CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char *pixels)
+CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels)
 {
 	GLenum oglFormat = GL_RGBA;
 	switch (channels)
@@ -134,11 +273,11 @@ CondorEngine::Texture *CondorEngine::Texture::MakeTexture(unsigned width, unsign
 		break;
 	}
 	// 0 for handle, may change if you want more than one texture per mesh
-	Texture *texObject = new Texture{0, width, height, channels};
+	Texture texObject{ 0, width, height, channels };
 	// generate the texture on the GPU with the struct we made.
-	glGenTextures(1, &texObject->handle);
+	glGenTextures(1, &texObject.handle);
 	// bind and buffer texture
-	glBindTexture(GL_TEXTURE_2D, texObject->handle);
+	glBindTexture(GL_TEXTURE_2D, texObject.handle);
 	glTexImage2D(GL_TEXTURE_2D, 0, oglFormat, width, height, 0, oglFormat, GL_UNSIGNED_BYTE, pixels);
 	// configure texture settings
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -148,7 +287,7 @@ CondorEngine::Texture *CondorEngine::Texture::MakeTexture(unsigned width, unsign
 	return texObject;
 }
 
-CondorEngine::Texture *CondorEngine::Texture::LoadTexture(const char *imagePath)
+CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath)
 {
 	// setup variables to store texture data
 	int imageWidth = -1;
@@ -156,7 +295,7 @@ CondorEngine::Texture *CondorEngine::Texture::LoadTexture(const char *imagePath)
 	int imageFormat = -1;
 	unsigned char *imagePixels = nullptr;
 
-	Texture *newTex = {};
+	Texture newTex{};
 	// load the data!
 	stbi_set_flip_vertically_on_load(true); // load using OpenGL conventions
 	imagePixels = stbi_load(

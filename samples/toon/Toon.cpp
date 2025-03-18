@@ -8,7 +8,7 @@ using namespace CondorEngine;
 class ToonMat : public Material
 {
 public:
-    ToonMat() : Material(Shader::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {}
+    ToonMat() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {}
 };
 
 class ToonSuzane : public Suzane

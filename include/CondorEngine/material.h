@@ -13,25 +13,23 @@ namespace CondorEngine
 	public:
 		/// @brief Class constructor.
 		/// @param shader Material shader.
-		Material(Shader *shader);
-		/// @brief Class deconstructor.
-		~Material();
+		Material(Shader shader);
 		/// @brief Update material.
-		void Update() override;
+		virtual void Update() override;
 
 	protected:
 		/// @brief Material Shader reference.
-		Shader *shader;
+		Shader shader;
 		/// @brief Model transform matrix.
 		Transform transform;
 
 	public:
 		/// @brief Set material shader.
 		/// @param shader Shader to set.
-		void setShader(Shader *shader);
+		void setShader(Shader shader);
 		/// @brief Get material Shader.
 		/// @return Material Shader.
-		Shader *getShader();
+		Shader getShader();
 		/// @brief Set model transform matrix.
 		/// @param transform Model transform matrix.
 		void setTransform(Transform transform);
@@ -64,80 +62,4 @@ namespace CondorEngine
 		/// @param values Uniform value.
 		void SetUniform(GLuint location, int count, const glm::vec3 &values);
 	};
-
-#pragma region Preset Materials
-	/// @brief Unlit material.
-	class DllExport M_Unlit : public Material
-	{
-	public:
-		/// @brief Class constructor.
-		M_Unlit();
-		/// @brief Class constructor.
-		/// @param texture Albedo texture.
-		M_Unlit(Texture *texture);
-		/// @brief Update shader uniforms.
-		void Update() override;
-		/// @brief Albedo texture.
-		Texture *texture;
-		/// @brief Cleanly set or change the albedo texture.
-		/// @param texture New albedo texture.
-		void setTexture(Texture *texture);
-	};
-	/// @brief Simple lit material.
-	class DllExport M_Lit : public Material
-	{
-	protected:
-		/// @brief Class constructor
-		/// @param shader Shader this material will use.
-		M_Lit(Shader *shader);
-
-	public:
-		/// @brief Class constructor.
-		M_Lit();
-		/// @brief Class constructor.
-		/// @param texture Albedo texture.
-		M_Lit(Texture *texture);
-		/// @brief Update shader uniforms.
-		void Update() override;
-		/// @brief Albedo texture.
-		Texture *texture;
-		/// @brief Cleanly set or change the albedo texture.
-		/// @param texture New albedo texture.
-		void setTexture(Texture *texture);
-	};
-	/// @brief Multi-light lit material.
-	class DllExport M_ComplexLit : public M_Lit
-	{
-	public:
-		/// @brief Maximum number of lights.
-		static const int MAX_LIGHTS = 2;
-		/// @brief Class constructor.
-		M_ComplexLit();
-		/// @brief Class constructor.
-		M_ComplexLit(Texture *texture);
-		/// @brief Update shader uniforms.
-		void Update() override;
-	};
-	/// @brief UV material.
-	class DllExport M_UV : public Material
-	{
-	public:
-		/// @brief Class constructor.
-		M_UV();
-	};
-	/// @brief Object normal material.
-	class DllExport M_Normal : public Material
-	{
-	public:
-		/// @brief Class constructor.
-		M_Normal();
-	};
-	/// @brief Screen space normal material.
-	class DllExport M_ScreenNormal : public Material
-	{
-	public:
-		/// @brief Class constructor.
-		M_ScreenNormal();
-	};
-#pragma endregion
 }

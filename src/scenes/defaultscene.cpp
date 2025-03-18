@@ -1,8 +1,10 @@
 #include "CondorEngine/scenes/defaultscene.h"
 // internal
 #include "CondorEngine/material.h"
+#include "CondorEngine/materials/phong.hpp"
 #include "CondorEngine/sceneobjects/primitive.h"
 #include "CondorEngine/sceneobjects/spectatorcam.h"
+#include "CondorEngine/resourcemanager.h"
 
 namespace CondorEngine
 {
@@ -18,8 +20,8 @@ namespace CondorEngine
 
         // level
         SceneObject *floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{0, -5, 0});
-        Mesh *floorMesh = floor->AddComponent<Mesh>(Primitive::MakeCube());
-        floorMesh->material = new M_Lit(Texture::LoadTexture("textures/UVGrid.png"));
+        Mesh* floorMesh = floor->AddComponent<Mesh>(new Mesh(Primitive::MakeCube()));
+        floorMesh->material = new Phong(ResourceManager::LoadTexture("textures/UVGrid.png"));
         Collider *floorCollider = floor->AddComponent<Collider>(new Collider(ColliderType::Plane));
         floor->Scale(Vector3{50, 1, 50});
     }

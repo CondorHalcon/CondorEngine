@@ -29,8 +29,6 @@ namespace CondorEngine {
 		/// @brief Print an `ERROR` message to console.
 		/// @param msg Message to print.
 		static void LogError(std::string msg);
-		/// @brief Print environment info to the console.
-		static void LogGLEnvironment();
 		/// @brief OpenGL error message callback.
 		/// @param source
 		/// @param type

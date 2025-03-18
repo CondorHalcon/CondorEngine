@@ -8,6 +8,7 @@
 #include "CondorEngine/time.hpp"
 #include "CondorEngine/physics.h"
 #include "CondorEngine/renderer.h"
+#include "CondorEngine/resourcemanager.h"
 
 CondorEngine::Scene *Application::activeScene = nullptr;
 Application *Application::instance = nullptr;
@@ -96,6 +97,14 @@ bool Application::init(int width, int height, const char *title)
 	glDebugMessageCallback(CondorEngine::Debug::GLMessageCallback, 0);
 
 	glClearColor(.4f, .4f, .4f, 1);
+
+	std::string message = "Application :: [OpenGL Environment]\n";
+	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
+	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
+	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
+	message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
+	CondorEngine::Debug::Log(message);
+
 	return true;
 }
 
@@ -145,6 +154,8 @@ void Application::lateUpdate()
 
 void Application::terminate()
 {
+	CondorEngine::ResourceManager::cleanup();
+
 	glfwDestroyWindow(window);
 	window = nullptr;
 	glfwTerminate();

@@ -41,18 +41,18 @@ namespace CondorEngine
 		Collider *collider;
 		/// @brief Make a simple primitive cube.
 		/// @return Simple primitive cube mesh.
-		static Mesh *MakeSimpleCube();
+		static MeshData MakeSimpleCube();
 		/// @brief Make a primitive cube.
 		/// @return Primitive cube mesh.
-		static Mesh *MakeCube();
+		static MeshData MakeCube();
 		/// @brief Make a primitive sphere mesh.
 		/// @return Primitive sphere mesh.
-		static Mesh *MakeSphere();
+		static MeshData MakeSphere();
 		/// @brief Make a primitive cylinder mesh.
 		/// @return Primitive cylinder mesh.
-		static Mesh *MakeCylinder();
+		static MeshData MakeCylinder();
 		/// @brief Make a primitive plane mesh.
 		/// @return Primitive plane mesh.
-		static Mesh *MakePlane();
+		static MeshData MakePlane();
 	};
 }

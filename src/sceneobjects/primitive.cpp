@@ -1,4 +1,6 @@
 #include "CondorEngine/sceneobjects/primitive.h"
+#include "CondorEngine/materials/phong.hpp"
+#include "CondorEngine/resourcemanager.h"
 // third party
 #include "glew.h"
 #include "glm/glm.hpp"
@@ -10,19 +12,19 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
     switch (type)
     {
     case CondorEngine::SimpleCubeMesh:
-        this->mesh = MakeSimpleCube();
+        this->mesh = new Mesh(MakeSimpleCube(), material);
         this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::CubeMesh:
-        this->mesh = MakeCube();
+        this->mesh = new Mesh(MakeCube(), material);
         this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::PlaneMesh:
-        this->mesh = MakePlane();
+        this->mesh = new Mesh(MakePlane(), material);
         this->collider = new Collider(ColliderType::Plane);
         break;
     case CondorEngine::SphereMesh:
-        this->mesh = MakeSphere();
+        this->mesh = new Mesh(MakeSphere(), material);
         this->collider = new Collider(ColliderType::Sphere);
         break;
     default:
@@ -33,12 +35,11 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
     AddComponent(mesh);
     AddComponent(rigidbody);
     AddComponent(collider);
-    this->mesh->material = material;
 }
 
-CondorEngine::Primitive::Primitive(PrimitiveType type) : CondorEngine::Primitive::Primitive(type, new M_Lit(CondorEngine::Texture::LoadTexture("textures/ColorGrid.png"))) {}
+CondorEngine::Primitive::Primitive(PrimitiveType type) : CondorEngine::Primitive::Primitive(type, new Phong(CondorEngine::ResourceManager::LoadTexture("textures/ColorGrid.png"))) {}
 
-CondorEngine::Mesh *CondorEngine::Primitive::MakeSimpleCube()
+CondorEngine::MeshData CondorEngine::Primitive::MakeSimpleCube()
 {
     std::vector<Vertex> verts = std::vector<Vertex>{
         {
@@ -105,10 +106,10 @@ CondorEngine::Mesh *CondorEngine::Primitive::MakeSimpleCube()
         6, 2, 3, 3, 7, 6,
         0, 2, 6, 6, 4, 0,
         1, 5, 3, 3, 5, 7};
-    return new Mesh(verts, indicies);
+    return MeshData::MakeMesh(verts, indicies);
 }
 
-CondorEngine::Mesh *CondorEngine::Primitive::MakeCube()
+CondorEngine::MeshData CondorEngine::Primitive::MakeCube()
 {
     std::vector<Vertex> verts = std::vector<Vertex>{
         // Face: 0 (front)
@@ -293,10 +294,10 @@ CondorEngine::Mesh *CondorEngine::Primitive::MakeCube()
         12, 13, 14, 14, 13, 15,
         16, 17, 18, 18, 17, 19,
         20, 21, 22, 22, 21, 23};
-    return new Mesh(verts, indicies);
+    return MeshData::MakeMesh(verts, indicies);
 }
 
-CondorEngine::Mesh *CondorEngine::Primitive::MakeSphere()
+CondorEngine::MeshData CondorEngine::Primitive::MakeSphere()
 {
     std::vector<Vertex> verts;
 
@@ -383,10 +384,10 @@ CondorEngine::Mesh *CondorEngine::Primitive::MakeSphere()
     }
 
     // TODO fix sphere
-    return new Mesh(verts, indices);
+    return MeshData::MakeMesh(verts, indices);
 }
 
-CondorEngine::Mesh *CondorEngine::Primitive::MakeCylinder()
+CondorEngine::MeshData CondorEngine::Primitive::MakeCylinder()
 {
     int sides = 32;
     float height = 1.0f;
@@ -403,10 +404,11 @@ CondorEngine::Mesh *CondorEngine::Primitive::MakeCylinder()
 
     std::vector<Vertex> verts;
     // TODO complete
-    return nullptr;
+    throw std::runtime_error("CondorEngine::Primitive::MakeCylinder() is incomplete");
+    return MeshData{};
 }
 
-CondorEngine::Mesh *CondorEngine::Primitive::MakePlane()
+CondorEngine::MeshData CondorEngine::Primitive::MakePlane()
 {
     std::vector<Vertex> verts = {
         {
@@ -446,5 +448,5 @@ CondorEngine::Mesh *CondorEngine::Primitive::MakePlane()
         3,
         1,
     };
-    return new Mesh(verts, indicies);
+    return MeshData::MakeMesh(verts, indicies);
 }
