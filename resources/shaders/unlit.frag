@@ -1,15 +1,26 @@
 #version 430 core
 
+struct Material {
+    sampler2D texture;
+    vec3 tint;
+};
+
 in vec4 vPos;
 in vec4 vCol;
 in vec2 vUV;
 
 out vec4 fragColor;
 
-layout (location = 3) uniform sampler2D mainTex;
+uniform Material material;
 
 void main() 
 {
-    vec4 texCol = texture(mainTex, vUV);
-    fragColor = (texCol != vec4(0,0,0,1) ? texCol : vec4(1,1,1,1));
+    // # Texture Color
+    // ---------------
+    vec3 color = texture(material.texture, vUV).rgb;
+    vec3 textureColor = (color != vec3(0.0,0.0,0.0) ? color * material.tint : material.tint);
+    
+    // # Fragment Output
+    // -----------------
+    fragColor = vec4(textureColor, 1.0);
 }

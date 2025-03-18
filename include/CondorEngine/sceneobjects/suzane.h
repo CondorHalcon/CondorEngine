@@ -8,6 +8,7 @@ namespace CondorEngine
     class DllExport Suzane : public SceneObject
     {
     public:
+        Suzane(Material* material);
         Suzane();
 
         Mesh* mesh;

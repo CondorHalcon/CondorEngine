@@ -13,9 +13,23 @@ namespace CondorEngine
     class Diffuse : public Material
     {
     public:
+        /// @brief Albedo texture.
+        Texture texture;
+        /// @brief Albedo tint.
+        ColorRGB tint;
+
+    private:
+        unsigned int textureUniform;
+        unsigned int tintUniform;
+
+    public:
         /// @brief Class constructor.
         Diffuse() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/diffuse.frag")) {
-            texture = ResourceManager::LoadTexture("textures/Blank.png");
+            this->texture = ResourceManager::LoadTexture("textures/Blank.png");
+            this->tint = ColorRGB(1, 1, 1);
+
+            textureUniform = GetUniformLocation("material.texture");
+            tintUniform = GetUniformLocation("material.tint");
         }
 
         /// @brief Class constructor.
@@ -36,11 +50,9 @@ namespace CondorEngine
                 SetUniform(4, ColorRGB{ .5f, .5f, .5f });
                 SetUniform(5, Vector3{ .3f, .3f, .3f });
             }
-            // texture
-            SetUniform(6, texture, 0);
+            // material values
+            SetUniform(textureUniform, texture, 0);
+            SetUniform(tintUniform, tint);
         }
-
-        /// @brief Albedo texture.
-        Texture texture;
     };
 }

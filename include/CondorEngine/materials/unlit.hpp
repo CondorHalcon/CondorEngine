@@ -9,9 +9,23 @@ namespace CondorEngine
     class Unlit : public Material
     {
     public:
+        /// @brief Albedo texture.
+        Texture texture;
+        /// @brief Albedo tint.
+        ColorRGB tint;
+
+    private:
+        unsigned int textureUniform;
+        unsigned int tintUniform;
+
+    public:
         /// @brief Class constructor.
         Unlit() : Material(ResourceManager::LoadShader("shaders/basic.vert", "shaders/unlit.frag")) {
             this->texture = ResourceManager::LoadTexture("textures/Blank.png");
+            this->tint = ColorRGB(1, 1, 1);
+
+            textureUniform = GetUniformLocation("material.texture");
+            tintUniform = GetUniformLocation("material.tint");
         }
 
         /// @brief Class constructor.
@@ -21,10 +35,10 @@ namespace CondorEngine
         /// @brief Update shader uniforms.
         virtual void Update() override {
             Material::Update();
-            SetUniform(3, texture, 0);
+            // material values
+            SetUniform(textureUniform, texture, 0);
+            SetUniform(tintUniform, tint);
         }
-        /// @brief Albedo texture.
-        Texture texture;
 
         /// @brief Cleanly set or change the albedo texture.
         /// @param texture New albedo texture.
@@ -32,5 +46,4 @@ namespace CondorEngine
             this->texture = tex;
         }
     };
-
 }

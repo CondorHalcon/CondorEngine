@@ -38,28 +38,70 @@ namespace CondorEngine
 		/// @brief Get the location of a uniform.
 		/// @param name Name of the uniform.
 		/// @return Uniform location.
-		int GetUniformLocation(const char *name);
-		/// @brief Set shader uniforms for `Transform`.
+		unsigned int GetUniformLocation(const char* name);
+
+		/// @brief Set shader uniforms for `float` using layout location.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
-		void SetUniform(GLuint location, const Transform &value); // for transforms
-		/// @brief Set shader uniforms for `Texture`.
+		void SetUniform(GLuint location, const float& value);
+
+		/// @brief Set shader uniforms for `float` using uniform name.
+		/// @param location Shader layout location.
+		/// @param value Uniform value.
+		void SetUniform(std::string name, const float& value);
+
+		/// @brief Set shader uniforms for `Transform` using layout location.
+		/// @param location Shader layout location.
+		/// @param value Uniform value.
+		void SetUniform(GLuint location, const Transform& value); // for transforms
+
+		/// @brief Set shader uniforms for `Transform` using unform name.
+		/// @param name Shader unform name.
+		/// @param value Uniform value.
+		void SetUniform(std::string name, const Transform& value);
+
+		/// @brief Set shader uniforms for `Texture` using layout location.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
 		/// @param textureSlot
-		void SetUniform(GLuint location, const Texture &value, int textureSlot); // for textures
-		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB`.
+		void SetUniform(GLuint location, const Texture& value, int textureSlot); // for textures
+
+		/// @brief Set shader uniforms for `Texture` using unform name.
+		/// @param name Shader unform name.
+		/// @param value Uniform value.
+		/// @param textureSlot
+		void SetUniform(std::string name, const Texture& value, int textureSlot);
+
+		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` using layout location.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
-		void SetUniform(GLuint location, const glm::vec3 &value); // for rgb color & positions
-		/// @brief Set shader uniform for `Vector4` and `Color`.
+		void SetUniform(GLuint location, const glm::vec3& value); // for rgb color & positions
+
+		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` using unform name.
+		/// @param name Shader unform name.
+		/// @param value Uniform value.
+		void SetUniform(std::string name, const glm::vec3& value);
+
+		/// @brief Set shader uniform for `Vector4` and `Color` using layout location.
 		/// @param location Shader layout location.
 		/// @param value Uniform value.
-		void SetUniform(GLuint location, const glm::vec4 &value); // for color and quaternions
-		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` arrays.
+		void SetUniform(GLuint location, const glm::vec4& value); // for color and quaternions
+
+		/// @brief Set shader uniform for `Vector4` and `Color` using unform name.
+		/// @param name Shader unform name.
+		/// @param value Uniform value.
+		void SetUniform(std::string name, const glm::vec4& value);
+
+		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` arrays using layout location.
 		/// @param location Shader layout location.
 		/// @param count Length of array
 		/// @param values Uniform value.
-		void SetUniform(GLuint location, int count, const glm::vec3 &values);
+		void SetUniform(GLuint location, int count, const glm::vec3& values);
+
+		/// @brief Set Shader uniforms for `Vector3` and `ColorRGB` arrays using unform name.
+		/// @param name Shader unform name.
+		/// @param count Length of array
+		/// @param values Uniform value.
+		void SetUniform(std::string name, int count, const glm::vec3& values);
 	};
 }

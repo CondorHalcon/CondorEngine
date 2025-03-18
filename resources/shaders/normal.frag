@@ -9,5 +9,13 @@ out vec4 fragColor;
 
 void main() 
 {
-    fragColor = vec4(abs(vNorm.x),abs(vNorm.y),abs(vNorm.z), 1);
+    // # Normal Color
+    vec3 norm = normalize(vNorm);
+
+    norm += 1;
+    norm *= .5;
+
+    // # Fragment Output
+    // -----------------
+    fragColor = vec4(norm, 1);
 }

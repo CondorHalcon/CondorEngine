@@ -15,6 +15,8 @@ out vec2 vUV;
 
 void main()
 {
+    // # Vertex Output
+    // -----------------
     vPos = position;
     vCol = color;
     vUV = uv;

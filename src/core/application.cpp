@@ -70,8 +70,9 @@ CondorEngine::Vector2Int CondorEngine::Application::getWindowDimensions()
 
 bool CondorEngine::Application::init(int width, int height, const char* title)
 {
-	Time::timeInit();
 	Debug::init();
+	Time::timeInit();
+	Debug::Log("CondorEngine::Application :: Application initializing...");
 
 	this->windowWidth = width;
 	this->windowHeight = height;
@@ -98,7 +99,7 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 
 	glClearColor(.4f, .4f, .4f, 1);
 
-	std::string message = "Application :: [OpenGL Environment]\n";
+	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
 	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
 	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
 	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
@@ -154,6 +155,8 @@ void CondorEngine::Application::lateUpdate()
 
 void CondorEngine::Application::terminate()
 {
+	Debug::Log("CondorEngine::Application :: Application terminating...");
+
 	ResourceManager::cleanup();
 
 	glfwDestroyWindow(window);

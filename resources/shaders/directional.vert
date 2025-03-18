@@ -5,7 +5,6 @@ layout (location = 1) in vec4 color;
 layout (location = 2) in vec2 uv;
 layout (location = 3) in vec3 normal;
 
-//uniforms
 layout (location = 0) uniform mat4 proj; // clip space
 layout (location = 1) uniform mat4 view; // view space
 layout (location = 2) uniform mat4 model; // world space i.e. transform
@@ -17,6 +16,8 @@ out vec3 vNorm;
 
 void main()
 {
+    // # Vertex Output
+    // -----------------
     vPos = model * position;
     vCol = color;
     vUV = uv;

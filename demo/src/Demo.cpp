@@ -1,10 +1,41 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/scenes/defaultscene.h>
 #include <CondorEngine/sceneobjects/primitive.h>
+#include <CondorEngine/sceneobjects/suzane.h>
 #include <stdexcept>
 #include <cstdlib>
 
 using namespace CondorEngine;
+
+class DemoScene : public DefaultScene
+{
+public:
+    DemoScene() {
+        // material
+        Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
+
+        // primitive meshes
+        Instantiate(new Primitive(PrimitiveType::CubeMesh, pMat), Vector3{ 0, .5f, -6 });
+        Instantiate(new Primitive(PrimitiveType::SphereMesh, pMat), Vector3{ 0, 0, -6 });
+        Instantiate(new Primitive(PrimitiveType::SphereMesh, new Unlit()), Vector3{ 0, -2, -6 });
+        Primitive* prim4 = Instantiate(new Primitive(PrimitiveType::SphereMesh, new Normal()), Vector3{ 5, 7, -6 });
+        prim4->rigidbody->AddForce(Vector3{ -.5, -.5, 0 });
+        Primitive* prim5 = Instantiate(new Primitive(PrimitiveType::PlaneMesh), Vector3{ -2, 1.5, -6 });
+        prim5->Rotate(Vector3{ 0, 0, -90 });
+        Primitive* prim6 = Instantiate(new Primitive(PrimitiveType::PlaneMesh), Vector3{ 6, 1.5, -6 });
+        prim6->Rotate(Vector3{ 0, 0, 90 });
+
+        // suzane
+        Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
+        Instantiate<Suzane>(new Suzane(new Phong), Vector3{ 6, 0, -3 });
+        Instantiate<Suzane>(new Suzane(), Vector3{ 2, 0, -3 });
+        Instantiate<Suzane>(new Suzane(new Diffuse()), Vector3{ -2, 0, -3 });
+        Instantiate<Suzane>(new Suzane(new Diffuse(uvGrid)), Vector3{ -6, 0, -3 });
+        Instantiate(new Suzane(new Normal()), Vector3{ 4, 2, -3 });
+        Instantiate(new Suzane(new UV()), Vector3{ 0, 2, -3 });
+        Instantiate(new Suzane(new Unlit()), Vector3{ -4, 2, -3 });
+    }
+};
 
 #pragma region Main
 
@@ -12,50 +43,19 @@ int main()
 {
     Application *app = Application::Instance();
     try {
-        
         if (!app->init(1280, 720, "CondorEngine"))
-    {
-        Debug::LogError("Failed to initialise application.");
-        return -1;
+        {
+            Debug::LogError("Failed to initialise application.");
+            return -1;
+        }
+
+        // Scene
+        Scene* scene = new DemoScene();
+        Application::activeScene = scene;
+
+        app->runtime();
     }
-
-    // Scene
-    Scene *scene = Application::activeScene = new DefaultScene();
-
-    // material
-    Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
-
-    // primitive meshes
-    Primitive *prim = scene->Instantiate(
-        new Primitive(PrimitiveType::CubeMesh, pMat),
-        Vector3{0, .5f, 0});
-    Primitive *prim2 = scene->Instantiate(
-        new Primitive(PrimitiveType::SphereMesh, pMat),
-        Vector3{0, 0, 0});
-    Primitive *prim3 = scene->Instantiate(
-        new Primitive(PrimitiveType::SphereMesh, pMat),
-        Vector3{0, -2, 0});
-    Primitive *prim4 = scene->Instantiate(
-        new Primitive(PrimitiveType::SphereMesh, pMat),
-        Vector3{5, 7, 0});
-    prim4->rigidbody->AddForce(Vector3{-.5, -.5, 0});
-    Primitive *prim5 = scene->Instantiate(
-        new Primitive(PrimitiveType::PlaneMesh),
-        Vector3{-2, 1.5, 0});
-    prim5->Rotate(Vector3{0, 0, -90});
-    Primitive *prim6 = scene->Instantiate(
-        new Primitive(PrimitiveType::PlaneMesh),
-        Vector3{6, 1.5, 0});
-    prim6->Rotate(Vector3{0, 0, 90});
-
-    // suzane
-    Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
-    SceneObject* suzane = scene->Instantiate<SceneObject>(new SceneObject(), Vector3{ 2, 0, 1 });
-    suzane->name = "Suzane";
-    suzane->AddComponent<Mesh>(new Mesh(ResourceManager::LoadMesh("meshes/suzane.obj"), new Diffuse(uvGrid)));
-
-    app->runtime();
-    } catch (const std::exception &e) {
+    catch (const std::exception& e) {
         Debug::LogError(e.what());
         return EXIT_FAILURE;
     }

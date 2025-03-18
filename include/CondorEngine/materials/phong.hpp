@@ -12,11 +12,35 @@ namespace CondorEngine
     /// @brief Phong lighting material
     class Phong : public Material
     {
+    public:
+        /// @brief Albedo texture.
+        Texture texture;
+        /// @brief Color tint.
+        ColorRGB tint;
+        /// @brief Specular strength.
+        float specular;
+        /// @brief Specular smoothness.
+        float smoothness;
+
+    private:
+        unsigned int textureUniform;
+        unsigned int tintUniform;
+        unsigned int specularUniform;
+        unsigned int smoothnessUniform;
+
     protected:
         /// @brief Class constructor
         /// @param shader Shader this material will use.
         Phong(Shader shader) : Material(shader) {
             texture = ResourceManager::LoadTexture("textures/Blank.png");
+            tint = ColorRGB(1, 1, 1);
+            specular = .5f;
+            smoothness = .5f;
+
+            textureUniform = GetUniformLocation("material.texture");
+            tintUniform = GetUniformLocation("material.tint");
+            specularUniform = GetUniformLocation("material.specular");
+            smoothnessUniform = GetUniformLocation("material.smoothness");
         }
 
     public:
@@ -48,12 +72,12 @@ namespace CondorEngine
             else {
                 SetUniform(6, Vector3{ 0, 0, 0 });
             }
-            // texture
-            SetUniform(7, texture, 0);
+            // material values
+            SetUniform(textureUniform, texture, 0);
+            SetUniform(tintUniform, tint);
+            SetUniform(specularUniform, specular);
+            SetUniform(smoothnessUniform, smoothness);
         }
-
-        /// @brief Albedo texture.
-        Texture texture;
     };
 
     class PhongMultiLight : public Phong
