@@ -3,8 +3,10 @@
 struct Material {
     sampler2D texture;
     vec3 tint;
-    float specular;
-    float smoothness;
+    sampler2D specular;
+    float specularMul;
+    sampler2D smoothness;
+    float smoothnessMul;
 };
 
 in vec4 vPos;
@@ -40,16 +42,18 @@ void main()
     vec3 viewDir = normalize(cameraPos - vPos.xyz);
     vec3 reflectDir = reflect(lightDir, norm);
 
-    float specularTermination = pow(max(0.0, dot(reflectDir, viewDir)), 64. * material.smoothness);
-    vec3 specular = material.specular * specularTermination * dirLightColor;
+    float smoothnessValue = texture(material.smoothness, vUV).r * material.smoothnessMul;
+    float specularTermination = pow(max(0.0, dot(reflectDir, viewDir)), 64. * smoothnessValue);
+    float specularIntensity = texture(material.specular, vUV).r * material.specularMul;
+    vec3 specular = specularTermination * specularIntensity * dirLightColor;
 
     // # Texture Color
     // ---------------
-    vec3 color = texture(material.texture, vUV).rgb;
-    vec3 textureColor = (color != vec3(0.0,0.0,0.0) ? color * material.tint : material.tint);
+    vec3 textureColor = texture(material.texture, vUV).rgb;
+    vec3 color = textureColor * material.tint;
 
     // # Fragment Output
     // -----------------
-    vec3 result = (ambient + diffuse + specular) * textureColor;
+    vec3 result = (ambient + diffuse + specular) * color;
     fragColor = vec4(result, 1);
 }

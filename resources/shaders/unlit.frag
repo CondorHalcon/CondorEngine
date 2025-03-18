@@ -17,10 +17,9 @@ void main()
 {
     // # Texture Color
     // ---------------
-    vec3 color = texture(material.texture, vUV).rgb;
-    vec3 textureColor = (color != vec3(0.0,0.0,0.0) ? color * material.tint : material.tint);
+    vec3 color = texture(material.texture, vUV).rgb * material.tint;
     
     // # Fragment Output
     // -----------------
-    fragColor = vec4(textureColor, 1.0);
+    fragColor = vec4(color, 1.0);
 }

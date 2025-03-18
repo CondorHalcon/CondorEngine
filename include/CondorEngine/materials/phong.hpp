@@ -17,30 +17,40 @@ namespace CondorEngine
         Texture texture;
         /// @brief Color tint.
         ColorRGB tint;
-        /// @brief Specular strength.
-        float specular;
-        /// @brief Specular smoothness.
-        float smoothness;
+        /// @brief Specular texture.
+        Texture specular;
+        /// @brief Specular multiplayer.
+        float specularMul;
+        /// @brief Specular smoothness texture.
+        Texture smoothness;
+        /// @brief Specular smoothness multiplayer.
+        float smoothnessMul;
 
     private:
         unsigned int textureUniform;
         unsigned int tintUniform;
         unsigned int specularUniform;
+        unsigned int specularMulUniform;
         unsigned int smoothnessUniform;
+        unsigned int smoothnessMulUniform;
 
     protected:
         /// @brief Class constructor
         /// @param shader Shader this material will use.
         Phong(Shader shader) : Material(shader) {
-            texture = ResourceManager::LoadTexture("textures/Blank.png");
+            texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
             tint = ColorRGB(1, 1, 1);
-            specular = .5f;
-            smoothness = .5f;
+            specular = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
+            specularMul = 1;
+            smoothness = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
+            smoothnessMul = 1;
 
             textureUniform = GetUniformLocation("material.texture");
             tintUniform = GetUniformLocation("material.tint");
             specularUniform = GetUniformLocation("material.specular");
+            specularMulUniform = GetUniformLocation("material.specularMul");
             smoothnessUniform = GetUniformLocation("material.smoothness");
+            smoothnessMulUniform = GetUniformLocation("material.smoothnessMul");
         }
 
     public:
@@ -75,8 +85,10 @@ namespace CondorEngine
             // material values
             SetUniform(textureUniform, texture, 0);
             SetUniform(tintUniform, tint);
-            SetUniform(specularUniform, specular);
-            SetUniform(smoothnessUniform, smoothness);
+            SetUniform(specularUniform, specular, 1);
+            SetUniform(specularMulUniform, specularMul);
+            SetUniform(smoothnessUniform, smoothness, 2);
+            SetUniform(smoothnessMulUniform, smoothnessMul);
         }
     };
 

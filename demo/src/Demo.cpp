@@ -11,13 +11,13 @@ class DemoScene : public DefaultScene
 {
 public:
     DemoScene() {
-        // material
+        Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
         Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
 
         // primitive meshes
         Instantiate(new Primitive(PrimitiveType::CubeMesh, pMat), Vector3{ 0, .5f, -6 });
         Instantiate(new Primitive(PrimitiveType::SphereMesh, pMat), Vector3{ 0, 0, -6 });
-        Instantiate(new Primitive(PrimitiveType::SphereMesh, new Unlit()), Vector3{ 0, -2, -6 });
+        Instantiate(new Primitive(PrimitiveType::SphereMesh, new Unlit(uvGrid)), Vector3{ 0, -2, -6 });
         Primitive* prim4 = Instantiate(new Primitive(PrimitiveType::SphereMesh, new Normal()), Vector3{ 5, 7, -6 });
         prim4->rigidbody->AddForce(Vector3{ -.5, -.5, 0 });
         Primitive* prim5 = Instantiate(new Primitive(PrimitiveType::PlaneMesh), Vector3{ -2, 1.5, -6 });
@@ -26,14 +26,14 @@ public:
         prim6->Rotate(Vector3{ 0, 0, 90 });
 
         // suzane
-        Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
-        Instantiate<Suzane>(new Suzane(new Phong), Vector3{ 6, 0, -3 });
+        Instantiate<Suzane>(new Suzane(new Phong()), Vector3{ 6, 0, -3 });
         Instantiate<Suzane>(new Suzane(), Vector3{ 2, 0, -3 });
         Instantiate<Suzane>(new Suzane(new Diffuse()), Vector3{ -2, 0, -3 });
         Instantiate<Suzane>(new Suzane(new Diffuse(uvGrid)), Vector3{ -6, 0, -3 });
-        Instantiate(new Suzane(new Normal()), Vector3{ 4, 2, -3 });
-        Instantiate(new Suzane(new UV()), Vector3{ 0, 2, -3 });
-        Instantiate(new Suzane(new Unlit()), Vector3{ -4, 2, -3 });
+        Instantiate(new Suzane(new Normal()), Vector3{ 6, 2, -3 });
+        Instantiate(new Suzane(new Unlit(uvGrid)), Vector3{ 2, 2, -3 });
+        Instantiate(new Suzane(new Unlit()), Vector3{ -2, 2, -3 });
+        Instantiate(new Suzane(new UV()), Vector3{ -6, 2, -3 });
     }
 };
 
