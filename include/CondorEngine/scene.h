@@ -4,12 +4,12 @@
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/object.h"
 #include "CondorEngine/sceneobject.h"
+#include "CondorEngine/renderer.h"
 // std
 #include <vector>
 
 namespace CondorEngine
 {
-	struct DirectionalLight;
 	class Light;
 
 	/// @brief Base scene class.
@@ -43,8 +43,7 @@ namespace CondorEngine
 		/// @brief Scene ambient light.
 		ColorRGB ambientLight = ColorRGB{.1, .1, .1};
 		/// @brief *Temporary* Scene directional light.
-		DirectionalLight *light;
-		std::vector<Light *> sceneLights;
+		DirectionalLight light;
 #pragma region SceneObject Methods
 	public:
 		/// @brief Instantiate a SceneObject into this Scene.

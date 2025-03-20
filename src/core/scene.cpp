@@ -1,7 +1,6 @@
 #include "CondorEngine/scene.h"
 // internal
 #include "CondorEngine/debug.hpp"
-#include "CondorEngine/renderer.h"
 // std
 #include <string>
 
@@ -9,8 +8,7 @@ CondorEngine::Scene::Scene()
 {
     this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
-    light = new DirectionalLight{ColorRGB{1, 1, 1}, Vector3{0, 0, -1}};
-    sceneLights = std::vector<Light *>();
+    light = DirectionalLight(ColorRGB{ 1, 1, 1 }, Vector3{ 0, 0, -1 });
 }
 
 CondorEngine::Scene::~Scene()

@@ -2,6 +2,7 @@
 #include <CondorEngine/scenes/defaultscene.h>
 #include <CondorEngine/sceneobjects/primitive.h>
 #include <CondorEngine/sceneobjects/suzane.h>
+#include <CondorEngine/sceneobjects/scenelight.h>
 #include <stdexcept>
 #include <cstdlib>
 
@@ -11,6 +12,10 @@ class DemoScene : public DefaultScene
 {
 public:
     DemoScene() {
+        light = DirectionalLight(ColorRGB{ .7, .7, .7 }, Vector3{ 0, -.3, -.7 });
+        Instantiate<SceneLight>(new SceneLight(ColorRGB{ 1, 0, 0 }), Vector3{ -4, 0, 0 });
+        Instantiate<SceneLight>(new SceneLight(ColorRGB{ 0, 0, 1 }), Vector3{ 4, 0, 0 });
+
         Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
         Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
 
@@ -34,6 +39,10 @@ public:
         Instantiate(new Suzane(new Unlit(uvGrid)), Vector3{ 2, 2, -3 });
         Instantiate(new Suzane(new Unlit()), Vector3{ -2, 2, -3 });
         Instantiate(new Suzane(new UV()), Vector3{ -6, 2, -3 });
+
+        Material* multiLightMat = new Phong();
+        Instantiate(new Primitive(PrimitiveType::SphereMesh, multiLightMat), Vector3{ 2, -2, 0 });
+        Instantiate(new Suzane(multiLightMat), Vector3{ -2, -2, 0 });
     }
 };
 
@@ -45,7 +54,7 @@ int main()
     try {
         if (!app->init(1280, 720, "CondorEngine"))
         {
-            Debug::LogError("Failed to initialise application.");
+            throw std::runtime_error("Failed to initialise application.");
             return -1;
         }
 

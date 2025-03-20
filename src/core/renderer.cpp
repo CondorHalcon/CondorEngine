@@ -13,6 +13,7 @@
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/mesh.h"
+#include "CondorEngine/components/light.h"
 
 using std::fstream;
 
@@ -324,9 +325,21 @@ void CondorEngine::Texture::FreeTexture(Texture &tex)
 
 #pragma endregion
 
+#pragma region Directional Light
+
+CondorEngine::DirectionalLight::DirectionalLight(ColorRGB col, Vector3 dir) {
+	color = col;
+	direction = dir;
+}
+
+CondorEngine::DirectionalLight::DirectionalLight() : DirectionalLight(ColorRGB{ .7f, .7f, .7f }, Vector3{ 0, 0, -1 }) {}
+
+#pragma endregion
+
 #pragma region Renderer
 
-std::vector<CondorEngine::Mesh *> CondorEngine::Renderer::meshes = std::vector<CondorEngine::Mesh *>();
+std::vector<CondorEngine::Mesh*> CondorEngine::Renderer::meshes = std::vector<CondorEngine::Mesh*>();
+std::vector<CondorEngine::Light*> CondorEngine::Renderer::lights = std::vector<CondorEngine::Light*>();
 
 void CondorEngine::Renderer::Render()
 {
@@ -335,6 +348,8 @@ void CondorEngine::Renderer::Render()
 		mesh->Render();
 	}
 	meshes.clear();
+	lights.clear();
 }
 
 #pragma endregion
+

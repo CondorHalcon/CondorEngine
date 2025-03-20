@@ -11,7 +11,7 @@ namespace CondorEngine
     DefaultScene::DefaultScene()
     {
         // directional light
-        this->light = new DirectionalLight{ColorRGB{1, 1, 1}, Vector3{0, -.3, -.7}};
+        light = DirectionalLight(ColorRGB{ .7, .7, .7 }, Vector3{ 0, -.3, -.7 });
 
         // camera
         SpectatorCam *camera = this->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{0, 0, 5});

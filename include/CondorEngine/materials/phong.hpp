@@ -1,11 +1,15 @@
 #pragma once
 #include "CondorEngine/pch.h"
 #include "CondorEngine/material.h"
+// std
+#include <climits>
 // internal
 #include "CondorEngine/application.h"
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/light.h"
+#include "CondorEngine/renderer.h"
 #include "CondorEngine/resourcemanager.h"
+#include "CondorEngine/scene.h"
 
 namespace CondorEngine
 {
@@ -13,6 +17,9 @@ namespace CondorEngine
     class Phong : public Material
     {
     public:
+        /// @brief Maximum number of lights.
+        static const int MAX_LIGHTS = 2;
+
         /// @brief Albedo texture.
         Texture texture;
         /// @brief Color tint.
@@ -33,11 +40,18 @@ namespace CondorEngine
         unsigned int specularMulUniform;
         unsigned int smoothnessUniform;
         unsigned int smoothnessMulUniform;
+        struct LightUniforms
+        {
+            unsigned int position{ UINT32_MAX };
+            unsigned int direction{ UINT32_MAX };
+            unsigned int color{ UINT32_MAX };
+            unsigned int cutoff{ UINT32_MAX };
+            unsigned int outerCutoff{ UINT32_MAX };
+        } lightUniforms[MAX_LIGHTS];
 
-    protected:
-        /// @brief Class constructor
-        /// @param shader Shader this material will use.
-        Phong(Shader shader) : Material(shader) {
+    public:
+        /// @brief Class constructor.
+        Phong() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {
             texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
             tint = ColorRGB(1, 1, 1);
             specular = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
@@ -51,11 +65,15 @@ namespace CondorEngine
             specularMulUniform = GetUniformLocation("material.specularMul");
             smoothnessUniform = GetUniformLocation("material.smoothness");
             smoothnessMulUniform = GetUniformLocation("material.smoothnessMul");
+            for (int i = 0; i < MAX_LIGHTS; i++) {
+                std::string light = std::string("lights[") + std::to_string(i) + std::string("]");
+                lightUniforms[i].position = GetUniformLocation((light + std::string(".position")).c_str());
+                lightUniforms[i].direction = GetUniformLocation((light + std::string(".direction")).c_str());
+                lightUniforms[i].color = GetUniformLocation((light + std::string(".color")).c_str());
+                lightUniforms[i].cutoff = GetUniformLocation((light + std::string(".cutoff")).c_str());
+                lightUniforms[i].outerCutoff = GetUniformLocation((light + std::string(".outerCutoff")).c_str());
+            }
         }
-
-    public:
-        /// @brief Class constructor.
-        Phong() : Phong(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {}
 
         /// @brief Class constructor.
         /// @param texture Albedo texture.
@@ -67,13 +85,38 @@ namespace CondorEngine
             // lighting
             if (Application::activeScene != nullptr) {
                 SetUniform(3, Application::activeScene->ambientLight);
-                SetUniform(4, Application::activeScene->light->color);
-                SetUniform(5, Application::activeScene->light->direction);
+                SetUniform(4, Application::activeScene->light.color);
+                SetUniform(5, Application::activeScene->light.direction);
+                // scene lights
+                for (int i = 0; i < MAX_LIGHTS; i++) {
+                    if (i < Renderer::lights.size()) {
+                        SetUniform(lightUniforms[i].position, Renderer::lights[i]->getLightPosition());
+                        SetUniform(lightUniforms[i].direction, Renderer::lights[i]->getLightColor());
+                        SetUniform(lightUniforms[i].color, Renderer::lights[i]->getLightColor());
+                        SetUniform(lightUniforms[i].cutoff, Renderer::lights[i]->getLightCutoff());
+                        SetUniform(lightUniforms[i].outerCutoff, Renderer::lights[i]->getLightOuterCutoff());
+                    }
+                    else {
+                        SetUniform(lightUniforms[i].position, Vector3{ 0,0,0 });
+                        SetUniform(lightUniforms[i].direction, Vector3{ 0,-1,0 });
+                        SetUniform(lightUniforms[i].color, Vector3{ 0,0,0 });
+                        SetUniform(lightUniforms[i].cutoff, 360);
+                        SetUniform(lightUniforms[i].outerCutoff, 360);
+                    }
+                }
             }
             else {
                 SetUniform(3, ColorRGB{ .5f, .5f, .5f });
                 SetUniform(4, ColorRGB{ .5f, .5f, .5f });
                 SetUniform(5, Vector3{ .3f, .3f, .3f });
+                // scene lights
+                for (int i = 0; i < MAX_LIGHTS; i++) {
+                    SetUniform(lightUniforms[i].position, Vector3{ 0,0,0 });
+                    SetUniform(lightUniforms[i].direction, Vector3{ 0,-1,0 });
+                    SetUniform(lightUniforms[i].color, Vector3{ 0,0,0 });
+                    SetUniform(lightUniforms[i].cutoff, 360);
+                    SetUniform(lightUniforms[i].outerCutoff, 360);
+                }
             }
             // camera position
             if (Camera::Main() != nullptr) {
@@ -89,58 +132,6 @@ namespace CondorEngine
             SetUniform(specularMulUniform, specularMul);
             SetUniform(smoothnessUniform, smoothness, 2);
             SetUniform(smoothnessMulUniform, smoothnessMul);
-        }
-    };
-
-    class PhongMultiLight : public Phong
-    {
-    public:
-        /// @brief Maximum number of lights.
-        static const int MAX_LIGHTS = 2;
-
-        /// @brief Class constructor.
-        PhongMultiLight() : Phong(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong_multi-light.frag")) {}
-
-        /// @brief Class constructor.
-        PhongMultiLight(Texture tex) : PhongMultiLight() { texture = tex; }
-
-        /// @brief Update shader uniforms.
-        virtual void Update() override {
-            Material::Update();
-            // lighting
-            ColorRGB lightColors[MAX_LIGHTS];
-            Vector3 lightDirections[MAX_LIGHTS];
-            if (Application::activeScene != nullptr) {
-                lightColors[0] = Application::activeScene->light->color;
-                lightDirections[0] = Application::activeScene->light->direction;
-                for (int i = 0; i < MAX_LIGHTS - 1; i++) {
-                    if (i < Application::activeScene->sceneLights.size()) {
-                        lightColors[i + 1] = Application::activeScene->sceneLights[i]->getLightColor();
-                        lightDirections[i + 1] = Application::activeScene->sceneLights[i]->getLightDirection();
-                    }
-                    else {
-                        lightColors[i + 1] = ColorRGB{ 0, 0, 0 };
-                        lightDirections[i + 1] = Vector3{ 1, 0, 0 };
-                    }
-                }
-            }
-            else {
-                for (int i = 0; i < MAX_LIGHTS; i++) {
-                    lightColors[i] = ColorRGB{ .04, .04, 0 };
-                    lightDirections[i] = Vector3{ 1, 0, 0 };
-                }
-            }
-            SetUniform(GetUniformLocation("lightColor"), MAX_LIGHTS, *lightColors);
-            SetUniform(GetUniformLocation("lightDirection"), MAX_LIGHTS, *lightDirections);
-            // camera position
-            if (Camera::Main() != nullptr) {
-                SetUniform(4, Camera::Main()->getPosition());
-            }
-            else {
-                SetUniform(4, Vector3{ 0, 0, 0 });
-            }
-            // texture
-            SetUniform(5, texture, 0);
         }
     };
 }

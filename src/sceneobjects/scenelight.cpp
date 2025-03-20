@@ -1,16 +1,6 @@
 #include "CondorEngine/sceneobjects/scenelight.h"
 
-CondorEngine::SceneLight::SceneLight()
+CondorEngine::SceneLight::SceneLight(ColorRGB lightColor, Vector3 lightDirection, float cutoff)
 {
-    this->light = new Light();
-}
-
-CondorEngine::SceneLight::SceneLight(ColorRGB lightColor) : CondorEngine::SceneLight::SceneLight()
-{
-    this->light->color = lightColor;
-}
-
-CondorEngine::SceneLight::SceneLight(ColorRGB lightColor, Vector3 lightDirection) : CondorEngine::SceneLight::SceneLight(lightColor)
-{
-    this->light->direction = lightDirection;
+    this->light = AddComponent<Light>(new Light(lightColor, lightDirection, cutoff));
 }

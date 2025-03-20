@@ -9,6 +9,7 @@
 namespace CondorEngine
 {
 	class Mesh;
+	class Light;
 	class Material;
 
 #pragma region Struct Definitions
@@ -114,6 +115,9 @@ namespace CondorEngine
 		ColorRGB color;
 		/// @brief Light direction.
 		Vector3 direction;
+
+		DirectionalLight(ColorRGB col, Vector3 dir);
+		DirectionalLight();
 	};
 
 	/// @brief Render utility class.
@@ -121,7 +125,9 @@ namespace CondorEngine
 	{
 	public:
 		/// @brief Meshes to render this frame.
-		static std::vector<Mesh *> meshes;
+		static std::vector<Mesh*> meshes;
+		/// @brief Lights to render this frame.
+		static std::vector<Light*> lights;
 		/// @brief Render registered meshes.
 		static void Render();
 	};
