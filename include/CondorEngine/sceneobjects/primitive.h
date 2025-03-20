@@ -1,7 +1,7 @@
 #pragma once
 #include "CondorEngine/pch.h"
 // third party
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/sceneobject.h"
 #include "CondorEngine/components/mesh.h"
 #include "CondorEngine/components/rigidbody.h"

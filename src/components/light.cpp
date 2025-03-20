@@ -1,7 +1,7 @@
 #include "CondorEngine/components/light.h"
 // internal
 #include "CondorEngine/application.h"
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/math.hpp"
 
 CondorEngine::Light::Light(ColorRGB col, Vector3 dir, float cut) {
@@ -16,7 +16,7 @@ CondorEngine::Light::Light(ColorRGB col, Vector3 dir, float cut) {
 
 void CondorEngine::Light::LateUpdate() {
     if (enabled) {
-        Renderer::lights.push_back(this);
+        Rendering::Renderer::lights.push_back(this);
     }
 }
 

@@ -80,7 +80,7 @@ namespace CondorEngine
 		static Shader LoadShader(const char* vertPath, const char* fragPath);
 		/// @brief Unload shader from OpenGL.
 		/// @param shader Shader to unload.
-		static void FreeShader(Shader &shader);
+		static void FreeShader(Shader& shader);
 	};
 
 	/// @brief OpenGL texture & metadata.
@@ -105,7 +105,7 @@ namespace CondorEngine
 		static Texture LoadTexture(const char* imagePath);
 		/// @brief Unload a texture from OpenGL.
 		/// @param tex Texture to unload.
-		static void FreeTexture(Texture &tex);
+		static void FreeTexture(Texture& tex);
 	};
 
 	/// @brief Directional light struct.
@@ -119,18 +119,34 @@ namespace CondorEngine
 		DirectionalLight(ColorRGB col, Vector3 dir);
 		DirectionalLight();
 	};
-
-	/// @brief Render utility class.
-	class DllExport Renderer
-	{
-	public:
-		/// @brief Meshes to render this frame.
-		static std::vector<Mesh*> meshes;
-		/// @brief Lights to render this frame.
-		static std::vector<Light*> lights;
-		/// @brief Render registered meshes.
-		static void Render();
-	};
-
 #pragma endregion
+
+	namespace Rendering
+	{
+		class RenderFeature;
+
+		/// @brief Render handler class.
+		class DllExport Renderer
+		{
+		protected:
+			Renderer();
+			~Renderer();
+			static Renderer* instance;
+
+		public:
+			/// @brief Meshes to render this frame.
+			static std::vector<Mesh*> meshes;
+			/// @brief Lights to render this frame.
+			static std::vector<Light*> lights;
+
+			std::vector<RenderFeature*> featuresMain;
+
+			static Renderer* Instance();
+
+			/// @brief Initialize renderer.
+			virtual void init();
+			/// @brief Render registered meshes.
+			virtual void Render();
+		};
+	}
 }

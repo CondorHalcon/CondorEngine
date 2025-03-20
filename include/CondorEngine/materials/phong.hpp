@@ -7,7 +7,7 @@
 #include "CondorEngine/application.h"
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/light.h"
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/resourcemanager.h"
 #include "CondorEngine/scene.h"
 
@@ -89,12 +89,12 @@ namespace CondorEngine
                 SetUniform(5, Application::activeScene->light.direction);
                 // scene lights
                 for (int i = 0; i < MAX_LIGHTS; i++) {
-                    if (i < Renderer::lights.size()) {
-                        SetUniform(lightUniforms[i].position, Renderer::lights[i]->getLightPosition());
-                        SetUniform(lightUniforms[i].direction, Renderer::lights[i]->getLightColor());
-                        SetUniform(lightUniforms[i].color, Renderer::lights[i]->getLightColor());
-                        SetUniform(lightUniforms[i].cutoff, Renderer::lights[i]->getLightCutoff());
-                        SetUniform(lightUniforms[i].outerCutoff, Renderer::lights[i]->getLightOuterCutoff());
+                    if (i < Rendering::Renderer::lights.size()) {
+                        SetUniform(lightUniforms[i].position, Rendering::Renderer::lights[i]->getLightPosition());
+                        SetUniform(lightUniforms[i].direction, Rendering::Renderer::lights[i]->getLightColor());
+                        SetUniform(lightUniforms[i].color, Rendering::Renderer::lights[i]->getLightColor());
+                        SetUniform(lightUniforms[i].cutoff, Rendering::Renderer::lights[i]->getLightCutoff());
+                        SetUniform(lightUniforms[i].outerCutoff, Rendering::Renderer::lights[i]->getLightOuterCutoff());
                     }
                     else {
                         SetUniform(lightUniforms[i].position, Vector3{ 0,0,0 });

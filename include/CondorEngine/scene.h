@@ -4,7 +4,7 @@
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/object.h"
 #include "CondorEngine/sceneobject.h"
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 // std
 #include <vector>
 

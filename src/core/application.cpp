@@ -7,9 +7,11 @@
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/time.hpp"
 #include "CondorEngine/physics.h"
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/resourcemanager.h"
+#include "CondorEngine/rendering/renderers/defaultrenderer.hpp"
 
+CondorEngine::Rendering::Renderer* CondorEngine::Application::renderer = nullptr;
 CondorEngine::Scene* CondorEngine::Application::activeScene = nullptr;
 CondorEngine::Application* CondorEngine::Application::instance = nullptr;
 
@@ -56,7 +58,7 @@ void CondorEngine::Application::runtime()
 		this->lateUpdate();
 
 		// draw frame
-		Renderer::Render();
+		renderer->Render();
 
 		// time update
 		Time::timeUpdate();
@@ -74,37 +76,17 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 	Time::timeInit();
 	Debug::Log("CondorEngine::Application :: Application initializing...");
 
-	this->windowWidth = width;
-	this->windowHeight = height;
 	// window handling
 	// TODO: add error handling
 	glfwInit();
 	window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-	// start setting up graphics pipeline
-	glewInit();
-	// set flags for openGL features
-	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE); // optimization features
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDepthFunc(GL_LEQUAL); // depth testing for deciding which objects are in front of one another
-	glFrontFace(GL_CCW);	// winding order for determining which direction the normal is on a triangle
-	glCullFace(GL_BACK);
-
-	// enable OpenGL debug output
-	glEnable(GL_DEBUG_OUTPUT);
-	glDebugMessageCallback(Debug::GLMessageCallback, 0);
-
-	glClearColor(.4f, .4f, .4f, 1);
-
-	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
-	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
-	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
-	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
-	message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
-	Debug::Log(message);
+	// setup graphics pipeline
+	if (renderer == nullptr) {
+		renderer = new Rendering::DefaultRenderer();
+	}
+	renderer->init();
 
 	return true;
 }

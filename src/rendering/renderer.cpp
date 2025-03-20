@@ -1,5 +1,6 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
+#include "CondorEngine/rendering/renderfeature.h"
 // third party
 #include <glew.h>
 #include <glm/glm.hpp>
@@ -11,9 +12,11 @@
 #include <fstream> // for reading from files
 // internal
 #include "CondorEngine/debug.hpp"
+#include "CondorEngine/material.h"
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/mesh.h"
 #include "CondorEngine/components/light.h"
+#include "CondorEngine/sceneobject.h"
 
 using std::fstream;
 
@@ -39,7 +42,6 @@ CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const Vertex* const vert
 	glBufferData(GL_ARRAY_BUFFER, vertCount * sizeof(Vertex), verts, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
-#pragma region Enable Vertex Attributes
 	// describe the buffer
 	glEnableVertexAttribArray(0); // attribute index for enabling positions
 	glVertexAttribPointer(
@@ -77,7 +79,6 @@ CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const Vertex* const vert
 		GL_FALSE,		// should be normalized?
 		sizeof(Vertex), // size/stride in bites of each vertex position
 		(void*)offsetof(Vertex, normal));
-#pragma endregion
 
 	// unbind the angry spirit and bind it to nothing
 	glBindVertexArray(0);
@@ -156,25 +157,21 @@ void CondorEngine::MeshData::FreeMesh(MeshData& mesh) {
 
 #pragma region Shader Implementations
 
-void ReportCompileStatus(GLuint &shaderToReport)
-{
+void ReportCompileStatus(GLuint& shaderToReport) {
 	GLint compileStatus = 0;
 	glGetShaderiv(shaderToReport, GL_COMPILE_STATUS, &compileStatus);
-	if (compileStatus != GL_TRUE)
-	{
+	if (compileStatus != GL_TRUE) {
 		// TODO: get the error report and print it out
 	}
 }
 
-std::string ReadFile(const char *path)
-{
+std::string ReadFile(const char* path) {
 	fstream stream(path, std::ios_base::in);
 	std::string source;
 
 	// TODO: add error checking and validation if you are reading from a text file.
 
-	while (!stream.eof())
-	{
+	while (!stream.eof()) {
 		std::string thisLine;
 		std::getline(stream, thisLine);
 		source += thisLine + "\n";
@@ -190,8 +187,7 @@ std::string ReadFile(const char *path)
 
 #pragma region Shader
 
-CondorEngine::Shader CondorEngine::Shader::MakeShader(const char* vertShader, const char* fragShader)
-{
+CondorEngine::Shader CondorEngine::Shader::MakeShader(const char* vertShader, const char* fragShader) {
 	// TODO: add error handling/checking logic to shader process
 
 	// make an instance of the shader
@@ -231,21 +227,18 @@ CondorEngine::Shader CondorEngine::Shader::MakeShader(const char* vertShader, co
 	return shader;
 }
 
-CondorEngine::Shader CondorEngine::Shader::MakeShader(const std::string& vertShader, const std::string& fragShader)
-{
+CondorEngine::Shader CondorEngine::Shader::MakeShader(const std::string& vertShader, const std::string& fragShader) {
 	return CondorEngine::Shader::MakeShader(vertShader.c_str(), fragShader.c_str());
 }
 
-CondorEngine::Shader CondorEngine::Shader::LoadShader(const char* vertPath, const char* fragPath)
-{
+CondorEngine::Shader CondorEngine::Shader::LoadShader(const char* vertPath, const char* fragPath) {
 	std::string vertSource = ReadFile(vertPath);
 	std::string fragSource = ReadFile(fragPath);
 
 	return CondorEngine::Shader::MakeShader(vertSource, fragSource);
 }
 
-void CondorEngine::Shader::FreeShader(Shader &shader)
-{
+void CondorEngine::Shader::FreeShader(Shader& shader) {
 	glDeleteProgram(shader.program);
 	// zero it out
 	shader = {};
@@ -255,11 +248,9 @@ void CondorEngine::Shader::FreeShader(Shader &shader)
 
 #pragma region Texture
 
-CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels)
-{
+CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels) {
 	GLenum oglFormat = GL_RGBA;
-	switch (channels)
-	{
+	switch (channels) {
 	case 1:
 		oglFormat = GL_RED;
 		break;
@@ -288,13 +279,12 @@ CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigne
 	return texObject;
 }
 
-CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath)
-{
+CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath) {
 	// setup variables to store texture data
 	int imageWidth = -1;
 	int imageHeight = -1;
 	int imageFormat = -1;
-	unsigned char *imagePixels = nullptr;
+	unsigned char* imagePixels = nullptr;
 
 	Texture newTex{};
 	// load the data!
@@ -317,8 +307,7 @@ CondorEngine::Texture CondorEngine::Texture::LoadTexture(const char* imagePath)
 	return newTex;
 }
 
-void CondorEngine::Texture::FreeTexture(Texture &tex)
-{
+void CondorEngine::Texture::FreeTexture(Texture& tex) {
 	glDeleteTextures(1, &tex.handle);
 	tex = {};
 }
@@ -338,14 +327,57 @@ CondorEngine::DirectionalLight::DirectionalLight() : DirectionalLight(ColorRGB{ 
 
 #pragma region Renderer
 
-std::vector<CondorEngine::Mesh*> CondorEngine::Renderer::meshes = std::vector<CondorEngine::Mesh*>();
-std::vector<CondorEngine::Light*> CondorEngine::Renderer::lights = std::vector<CondorEngine::Light*>();
+CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::instance = nullptr;
+std::vector<CondorEngine::Mesh*> CondorEngine::Rendering::Renderer::meshes = std::vector<CondorEngine::Mesh*>();
+std::vector<CondorEngine::Light*> CondorEngine::Rendering::Renderer::lights = std::vector<CondorEngine::Light*>();
 
-void CondorEngine::Renderer::Render()
-{
-	for (Mesh *mesh : meshes)
-	{
-		mesh->Render();
+CondorEngine::Rendering::Renderer::Renderer() {
+	featuresMain = std::vector<RenderFeature*>();
+}
+
+CondorEngine::Rendering::Renderer::~Renderer() {
+	if (instance == this) {
+		delete instance;
+	}
+}
+
+CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::Instance() {
+	if (instance == nullptr) {
+		instance = new Renderer();
+	}
+	return instance;
+}
+
+void CondorEngine::Rendering::Renderer::init() {
+	// start setting up graphics pipeline
+	glewInit();
+	// set flags for openGL features
+	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE); // optimization features
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthFunc(GL_LEQUAL); // depth testing for deciding which objects are in front of one another
+	glFrontFace(GL_CCW);	// winding order for determining which direction the normal is on a triangle
+	glCullFace(GL_BACK);
+
+	// enable OpenGL debug output
+	glEnable(GL_DEBUG_OUTPUT);
+	glDebugMessageCallback(Debug::GLMessageCallback, 0);
+
+	glClearColor(.4f, .4f, .4f, 1);
+
+	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
+	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
+	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
+	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
+	message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
+	Debug::Log(message);
+}
+
+void CondorEngine::Rendering::Renderer::Render() {
+	for (RenderFeature* feature : featuresMain) {
+		feature->Render();
 	}
 	meshes.clear();
 	lights.clear();

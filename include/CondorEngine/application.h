@@ -6,6 +6,11 @@
 
 namespace CondorEngine
 {
+	namespace Rendering
+	{
+		class Renderer;
+	}
+
 	/// @brief Application handler class for window, active scene, and input.
 	class DllExport Application
 	{
@@ -19,13 +24,13 @@ namespace CondorEngine
 		~Application();
 		/// @brief Class singleton.
 		static Application* instance;
+		static Rendering::Renderer* renderer;
 
 	public:
-		/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
-		/// @return Class singleton.
-		static Application* Instance();
-		/// @brief While application should run.
-		void runtime();
+		/// @brief Current active scene the application will update.
+		static Scene* activeScene;
+		/// @brief Color to clear the screen buffer.
+		ColorRGB clearColor;
 
 	private:
 		/// @brief Window width.
@@ -34,13 +39,15 @@ namespace CondorEngine
 		int windowHeight;
 
 	public:
+		/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
+		/// @return Class singleton.
+		static Application* Instance();
 		/// @brief Get application window dimensions.
 		/// @return Window width and height as an integer vector 2.
 		CondorEngine::Vector2Int getWindowDimensions();
-		/// @brief Color to clear the screen buffer.
-		CondorEngine::ColorRGB clearColor;
 
-	public:
+		/// @brief While application should run.
+		void runtime();
 		/// @brief Instantiate a new window.
 		/// @param width Set the window's width.
 		/// @param height Set the window's height.
@@ -63,9 +70,6 @@ namespace CondorEngine
 		/// @return True if the application should terminate.
 		bool shouldClose();
 
-	public:
-		/// @brief Current active scene the application will update.
-		static CondorEngine::Scene* activeScene;
 		/// @brief Check hardware input.
 		/// @param key The key to check.
 		/// @return True if the key has been pressed.

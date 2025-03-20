@@ -1,6 +1,6 @@
 #pragma once
 #include "CondorEngine/pch.h"
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include <string>
 #include <vector>
 

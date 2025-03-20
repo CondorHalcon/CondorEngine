@@ -9,7 +9,6 @@
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/object.h"
 #include "CondorEngine/physics.h"
-#include "CondorEngine/renderer.h"
 #include "CondorEngine/resourcemanager.h"
 #include "CondorEngine/scene.h"
 #include "CondorEngine/sceneobject.h"

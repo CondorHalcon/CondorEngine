@@ -1,7 +1,7 @@
 #pragma once
 #include "CondorEngine/pch.h"
 // internal
-#include "CondorEngine/renderer.h"
+#include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/component.h"
 #include "CondorEngine/material.h"
 // third party
@@ -25,7 +25,5 @@ namespace CondorEngine
 		Material *material;
 		/// @brief Register mesh for rendering this frame.
 		void LateUpdate() override;
-		/// @brief Render mesh.
-		virtual void Render();
 	};
 }

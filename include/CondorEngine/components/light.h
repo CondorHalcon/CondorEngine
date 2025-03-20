@@ -2,8 +2,8 @@
 #include "CondorEngine/pch.h"
 // internal
 #include "CondorEngine/math.hpp"
-#include "CondorEngine/renderer.h"
 #include "CondorEngine/component.h"
+#include "CondorEngine/rendering/renderer.h"
 
 namespace CondorEngine
 {
