@@ -14,6 +14,7 @@
 CondorEngine::Rendering::Renderer* CondorEngine::Application::renderer = nullptr;
 CondorEngine::Scene* CondorEngine::Application::activeScene = nullptr;
 CondorEngine::Application* CondorEngine::Application::instance = nullptr;
+std::vector<std::string> CondorEngine::Application::layerNames = std::vector<std::string>{ "Default" };
 
 CondorEngine::Application::Application()
 {
@@ -21,6 +22,7 @@ CondorEngine::Application::Application()
 	this->windowWidth = 640;
 	this->windowHeight = 480;
 }
+
 CondorEngine::Application::~Application()
 {
 	delete instance;
@@ -65,6 +67,19 @@ void CondorEngine::Application::runtime()
 		// time update
 		Time::timeUpdate();
 	}
+}
+
+std::vector<std::string> CondorEngine::Application::GetLayers(unsigned int layerMask) {
+	std::vector<std::string> names = std::vector<std::string>();
+
+	for (int i = 0; i < layerNames.size(); i++) {
+		unsigned int layer = (unsigned int)glm::pow(2, i);
+		if (layer & layerMask) {
+			names.push_back(layerNames[i]);
+		}
+	}
+
+	return names;
 }
 
 CondorEngine::Vector2Int CondorEngine::Application::getWindowDimensions()
@@ -120,6 +135,7 @@ void CondorEngine::Application::fixedUpdate()
 		}
 	}
 }
+
 void CondorEngine::Application::lateUpdate()
 {
 	if (activeScene != nullptr)

@@ -24,9 +24,12 @@ namespace CondorEngine
 		~Application();
 		/// @brief Class singleton.
 		static Application* instance;
-		static Rendering::Renderer* renderer;
 
 	public:
+		/// @brief Renderer object reference to render the scene.
+		static Rendering::Renderer* renderer;
+		/// @brief List of named SceneObject layers.
+		static std::vector<std::string> layerNames;
 		/// @brief Current active scene the application will update.
 		static Scene* activeScene;
 
@@ -40,6 +43,12 @@ namespace CondorEngine
 		/// @brief Get class singleton. (Creates a new application if one doesn't already exist.)
 		/// @return Class singleton.
 		static Application* Instance();
+
+		/// @brief Get list of layer names a layer mask includes.
+		/// @param layerMask Layer mask.
+		/// @return List of layer names.
+		static std::vector<std::string> GetLayers(unsigned int layerMask);
+
 		/// @brief Get application window dimensions.
 		/// @return Window width and height as an integer vector 2.
 		CondorEngine::Vector2Int getWindowDimensions();

@@ -37,6 +37,9 @@ namespace CondorEngine
 		/// @brief OnCollision event.
 		virtual void OnCollision(Collision collision);
 
+		/// @brief SceneObject layer mask.
+		unsigned int layer{ 0x1 };
+
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
 		bool hasDoneFirstUpdate = false;
@@ -125,6 +128,9 @@ namespace CondorEngine
 		/// @brief Get this SceneObject's local scale. (Identical to the world scale if this is the root SceneObject.)
 		/// @return Local Vector3 scale.
 		Vector3 getLocalScale();
+		/// @brief Get this SceneObjects layer names.
+		/// @return List of layer names.
+		std::vector<std::string> getLayerNames();
 #pragma endregion
 
 #pragma region Transformation

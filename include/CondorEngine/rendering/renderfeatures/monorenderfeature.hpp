@@ -23,6 +23,9 @@ namespace CondorEngine
             /// @brief Mono material to render the scene with.
             Material* material;
 
+            /// @brief Render filter's layer mask.
+            unsigned int renderLayer{ 0x1 };
+
             virtual void Render() override {
                 if (material == nullptr) {
                     throw("CondorEngine::Rendering::MonoRenderFeature :: Failed to render: No mono material set.");
@@ -31,6 +34,9 @@ namespace CondorEngine
                 for (Mesh* mesh : Renderer::meshes) {
                     material->setTransform(mesh->getSceneObject()->getTransform());
                     material->Update();
+
+                    // filter to only render enabled layer
+                    if (!mesh->getSceneObject()->layer & renderLayer) { continue; }
 
                     // specify which shader to use
                     glUseProgram(material->getShader().program);

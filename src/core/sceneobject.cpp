@@ -6,9 +6,6 @@
 #include "CondorEngine/scene.h"
 #include "CondorEngine/component.h"
 #include "CondorEngine/components/collider.h"
-// std
-#include <string>
-#include <vector>
 
 CondorEngine::SceneObject::SceneObject()
 {
@@ -292,6 +289,10 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getLocalScale()
         glm::length(Vector3{transform[0]}),
         glm::length(Vector3{transform[1]}),
         glm::length(Vector3{transform[2]})};
+}
+
+std::vector<std::string> CondorEngine::SceneObject::getLayerNames() {
+    return Application::GetLayers(layer);
 }
 
 #pragma endregion
