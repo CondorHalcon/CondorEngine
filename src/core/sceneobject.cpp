@@ -51,13 +51,9 @@ void CondorEngine::SceneObject::HierarchyUpdate()
         {
             components[i]->HierarchyUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Component Update : Failed to update Component in SceneObject(" + name + ") at index[" + std::to_string(i) + "].");
         }
     }
     for (int i = 0; i < children.size(); i++)
@@ -66,13 +62,9 @@ void CondorEngine::SceneObject::HierarchyUpdate()
         {
             children[i]->HierarchyUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Child SceneObject Update : Failed to update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -91,13 +83,9 @@ void CondorEngine::SceneObject::HierarchyFixedUpdate()
         {
             components[i]->HierarchyFixedUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Component FixedUpdate : Failed to fixed update Component in SceneObject(" + name + ") at index[" + std::to_string(i) + "].");
         }
     }
     for (int i = 0; i < children.size(); i++)
@@ -106,13 +94,9 @@ void CondorEngine::SceneObject::HierarchyFixedUpdate()
         {
             children[i]->HierarchyFixedUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -131,13 +115,9 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
         {
             components[i]->HierarchyLateUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Component LateUpdate : Failed to late update Component in SceneObject(" + name + ") at index[" + std::to_string(i) + "].");
         }
     }
     for (int i = 0; i < children.size(); i++)
@@ -146,13 +126,9 @@ void CondorEngine::SceneObject::HierarchyLateUpdate()
         {
             children[i]->HierarchyLateUpdate();
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed Child SceneObject LateUpdate : Failed to late update child of SceneObject(" + name + ") at child index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -181,7 +157,7 @@ void CondorEngine::SceneObject::setScene(Scene *scene)
 {
     if (parent != nullptr)
     {
-        throw("Cannot use setScene(Scene*) on a non root SceneObject.");
+        throw("CondorEngine::SceneObject :: Cannot use setScene(Scene*) on a non root SceneObject.");
     }
     this->scene->RemoveSceneObject(this);
     scene->Instantiate(this);

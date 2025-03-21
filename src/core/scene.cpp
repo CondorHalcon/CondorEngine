@@ -41,13 +41,9 @@ void CondorEngine::Scene::HierarchyUpdate()
                 hierarchy[i]->HierarchyUpdate();
             }
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed SceneObject Update : Failed to update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -69,13 +65,9 @@ void CondorEngine::Scene::HierarchyFixedUpdate()
                 hierarchy[i]->HierarchyFixedUpdate();
             }
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed SceneObject FixedUpdate : Failed to fixed update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
 }
@@ -107,13 +99,9 @@ void CondorEngine::Scene::HierarchyLateUpdate()
                 hierarchy[i]->HierarchyLateUpdate();
             }
         }
-        catch (std::string msg)
+        catch (const char* msg)
         {
             Debug::LogError(msg);
-        }
-        catch (...)
-        {
-            Debug::LogError("Failed SceneObject LateUpdate : Failed to late update SceneObject in Scene(" + name + ") at hierarchy index[" + std::to_string(i) + "].");
         }
     }
 }
