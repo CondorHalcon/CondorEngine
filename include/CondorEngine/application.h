@@ -29,8 +29,6 @@ namespace CondorEngine
 	public:
 		/// @brief Current active scene the application will update.
 		static Scene* activeScene;
-		/// @brief Color to clear the screen buffer.
-		ColorRGB clearColor;
 
 	private:
 		/// @brief Window width.
@@ -56,8 +54,6 @@ namespace CondorEngine
 		bool init(int width, int height, const char* title);
 		/// @brief Update for the window and frame buffers.
 		void tick();
-		/// @brief Clear screen and depth buffers.
-		void clear();
 		/// @brief Application Update call. (Updates active scene.)
 		void update();
 		/// @brief Application fixed update call.

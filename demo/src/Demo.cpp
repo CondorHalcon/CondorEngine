@@ -54,8 +54,7 @@ int main()
     try {
         if (!app->init(1280, 720, "CondorEngine"))
         {
-            throw std::runtime_error("Failed to initialise application.");
-            return -1;
+            throw std::runtime_error("Demo :: Failed to initialise application.");
         }
 
         // Scene

@@ -139,12 +139,17 @@ namespace CondorEngine
 			/// @brief Lights to render this frame.
 			static std::vector<Light*> lights;
 
+			/// @brief Color to clear the screen buffer.
+			ColorRGB clearColor;
 			std::vector<RenderFeature*> featuresMain;
 
 			static Renderer* Instance();
 
 			/// @brief Initialize renderer.
 			virtual void init();
+			/// @brief Clear screen and depth buffers.
+			virtual void Clear();
+
 			/// @brief Render registered meshes.
 			virtual void Render();
 		};

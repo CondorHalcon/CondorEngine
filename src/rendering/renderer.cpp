@@ -333,6 +333,7 @@ std::vector<CondorEngine::Light*> CondorEngine::Rendering::Renderer::lights = st
 
 CondorEngine::Rendering::Renderer::Renderer() {
 	featuresMain = std::vector<RenderFeature*>();
+	clearColor = ColorRGB{ .4, .4, .4 };
 }
 
 CondorEngine::Rendering::Renderer::~Renderer() {
@@ -365,7 +366,7 @@ void CondorEngine::Rendering::Renderer::init() {
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(Debug::GLMessageCallback, 0);
 
-	glClearColor(.4f, .4f, .4f, 1);
+	glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
 
 	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
 	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
@@ -375,7 +376,12 @@ void CondorEngine::Rendering::Renderer::init() {
 	Debug::Log(message);
 }
 
+void CondorEngine::Rendering::Renderer::Clear() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
+}
 void CondorEngine::Rendering::Renderer::Render() {
+	Clear();
+
 	for (RenderFeature* feature : featuresMain) {
 		feature->Render();
 	}

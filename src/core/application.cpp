@@ -20,7 +20,6 @@ CondorEngine::Application::Application()
 	this->window = nullptr;
 	this->windowWidth = 640;
 	this->windowHeight = 480;
-	this->clearColor = ColorRGB{ .4, .4, .4 };
 }
 CondorEngine::Application::~Application()
 {
@@ -42,23 +41,26 @@ void CondorEngine::Application::runtime()
 	{
 		// frame reset
 		this->tick();
-		this->clear();
 
-		// fixed update
-		Time::accumulatedFixedTime += Time::deltaTime();
-		while (Time::accumulatedFixedTime >= Time::fixedTimeStep)
-		{
-			this->fixedUpdate();
-			Physics::PhysicsUpdate();
-			Time::accumulatedFixedTime -= Time::fixedTimeStep;
+		try {
+			// fixed update
+			Time::accumulatedFixedTime += Time::deltaTime();
+			while (Time::accumulatedFixedTime >= Time::fixedTimeStep) {
+				this->fixedUpdate();
+				Physics::PhysicsUpdate();
+				Time::accumulatedFixedTime -= Time::fixedTimeStep;
+			}
+
+			// update
+			this->update();
+			this->lateUpdate();
+
+			// draw frame
+			renderer->Render();
 		}
-
-		// update
-		this->update();
-		this->lateUpdate();
-
-		// draw frame
-		renderer->Render();
+		catch (const char* msg) {
+			Debug::LogError(msg);
+		}
 
 		// time update
 		Time::timeUpdate();
@@ -95,12 +97,6 @@ void CondorEngine::Application::tick()
 {
 	glfwSwapBuffers(window); // swap frame buffer
 	glfwPollEvents();		 // poll hardware inputs
-}
-
-void CondorEngine::Application::clear()
-{
-	glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
 }
 
 void CondorEngine::Application::update()
