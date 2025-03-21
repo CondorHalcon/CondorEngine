@@ -332,7 +332,7 @@ std::vector<CondorEngine::Mesh*> CondorEngine::Rendering::Renderer::meshes = std
 std::vector<CondorEngine::Light*> CondorEngine::Rendering::Renderer::lights = std::vector<CondorEngine::Light*>();
 
 CondorEngine::Rendering::Renderer::Renderer() {
-	featuresMain = std::vector<RenderFeature*>();
+	features = std::vector<RenderFeature*>();
 	clearColor = ColorRGB{ .4, .4, .4 };
 }
 
@@ -377,16 +377,25 @@ void CondorEngine::Rendering::Renderer::init() {
 	Debug::Log(message);
 }
 
-void CondorEngine::Rendering::Renderer::Clear() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear the screen buffer and the depth buffer each frame
-}
-
 void CondorEngine::Rendering::Renderer::Render() {
-	Clear();
+	// pre processing
+	for (RenderFeature* feature : features) {
+		feature->PreProccess();
+	}
 
-	for (RenderFeature* feature : featuresMain) {
+	// clear the screen, depth, and stencil buffers each frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	// main render
+	for (RenderFeature* feature : features) {
 		feature->Render();
 	}
+
+	// post processing
+	for (RenderFeature* feature : features) {
+		feature->PostProcess();
+	}
+
 	meshes.clear();
 	lights.clear();
 }

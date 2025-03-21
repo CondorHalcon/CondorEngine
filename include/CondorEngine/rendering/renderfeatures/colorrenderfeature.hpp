@@ -22,13 +22,14 @@ namespace CondorEngine
 
             virtual void Render() override {
                 for (Mesh* mesh : Renderer::meshes) {
+                    // filter to only render enabled layer
+                    if (!mesh->getSceneObject()->layer & renderLayer) { continue; }
+
                     if (mesh->material == nullptr) {
                         throw("CondorEngine::Rendering::ColorRenderFeature :: Failed to render: No material set to mesh component.");
                     }
 
-                    // filter to only render enabled layer
-                    if (!mesh->getSceneObject()->layer & renderLayer) { continue; }
-
+                    // prep shader
                     mesh->material->setTransform(mesh->getSceneObject()->getTransform());
                     mesh->material->Update();
 

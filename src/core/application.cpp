@@ -96,6 +96,7 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 	// window handling
 	// TODO: add error handling
 	glfwInit();
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);   // disable window resizing
 	window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 

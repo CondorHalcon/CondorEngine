@@ -32,11 +32,12 @@ namespace CondorEngine
                 }
 
                 for (Mesh* mesh : Renderer::meshes) {
-                    material->setTransform(mesh->getSceneObject()->getTransform());
-                    material->Update();
-
                     // filter to only render enabled layer
                     if (!mesh->getSceneObject()->layer & renderLayer) { continue; }
+
+                    // prep shader
+                    material->setTransform(mesh->getSceneObject()->getTransform());
+                    material->Update();
 
                     // specify which shader to use
                     glUseProgram(material->getShader().program);

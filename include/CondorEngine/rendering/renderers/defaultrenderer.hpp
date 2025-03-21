@@ -18,7 +18,7 @@ namespace CondorEngine
                 Renderer::init();
 
                 // initialize render features
-                featuresMain = std::vector<RenderFeature*>{ new ColorRenderFeature() };
+                features = std::vector<RenderFeature*>{ new ColorRenderFeature() };
             }
         };
     }
