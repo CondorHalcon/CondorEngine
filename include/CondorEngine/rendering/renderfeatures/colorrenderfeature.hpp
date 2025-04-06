@@ -21,6 +21,8 @@ namespace CondorEngine
             unsigned int renderLayer{ 0x1 };
 
             virtual void Render() override {
+                RenderFeature::Render();
+
                 for (Mesh* mesh : Renderer::meshes) {
                     // filter to only render enabled layer
                     if (!mesh->getSceneObject()->layer & renderLayer) { continue; }

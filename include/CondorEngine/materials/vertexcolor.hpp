@@ -10,6 +10,8 @@ namespace CondorEngine
     {
     public:
         /// @brief Class constructor
-        VertexColor() : Material(ResourceManager::LoadShader("shaders/basic.vert", "shaders/vertexcolor.frag")) {}
+        VertexColor() : Material(ResourceManager::LoadShader("shaders/basic.vert", "shaders/vertexcolor.frag")) {
+            this->name = "CondorEngine::VertexColor";
+        }
     };
 }

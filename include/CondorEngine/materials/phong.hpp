@@ -9,6 +9,7 @@
 #include "CondorEngine/components/light.h"
 #include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/resourcemanager.h"
+#include "CondorEngine/rendering/renderfeatures/directionalshadowmappingrenderfeature.hpp"
 #include "CondorEngine/scene.h"
 
 namespace CondorEngine
@@ -32,6 +33,7 @@ namespace CondorEngine
         Texture smoothness;
         /// @brief Specular smoothness multiplayer.
         float smoothnessMul;
+        Texture shadowMap;
 
     private:
         unsigned int textureUniform;
@@ -48,10 +50,12 @@ namespace CondorEngine
             unsigned int cutoff{ UINT32_MAX };
             unsigned int outerCutoff{ UINT32_MAX };
         } lightUniforms[MAX_LIGHTS];
+        unsigned int shadowMapUniform{ UINT32_MAX };
 
     public:
         /// @brief Class constructor.
         Phong() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {
+            this->name = "CondorEngine::Phong";
             texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
             tint = ColorRGB(1, 1, 1);
             specular = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
@@ -59,12 +63,21 @@ namespace CondorEngine
             smoothness = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
             smoothnessMul = 1;
 
+            Rendering::DirectionalShadowMappingRenderFeature* shadowRF = nullptr;
+            if (Rendering::DirectionalShadowMappingRenderFeature::Exists(&shadowRF)) {
+                this->shadowMap = shadowRF->shadowTexture;
+            }
+            else {
+                this->shadowMap = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+            }
+
             textureUniform = GetUniformLocation("material.texture");
             tintUniform = GetUniformLocation("material.tint");
             specularUniform = GetUniformLocation("material.specular");
             specularMulUniform = GetUniformLocation("material.specularMul");
             smoothnessUniform = GetUniformLocation("material.smoothness");
             smoothnessMulUniform = GetUniformLocation("material.smoothnessMul");
+            shadowMapUniform = GetUniformLocation("shadowMap");
             for (int i = 0; i < MAX_LIGHTS; i++) {
                 std::string light = std::string("lights[") + std::to_string(i) + std::string("]");
                 lightUniforms[i].position = GetUniformLocation((light + std::string(".position")).c_str());
@@ -83,10 +96,14 @@ namespace CondorEngine
         virtual void Update() override {
             Material::Update();
             // lighting
+            ColorRGB ambientLight = ColorRGB{ .3f, .3f, .3f };
+            ColorRGB sunLight = ColorRGB{ .5f, .5f, .5f };
+            ColorRGB sunDirection = Vector3{ 0.f, -1.f, 0.f };
+
             if (Application::activeScene != nullptr) {
-                SetUniform(3, Application::activeScene->ambientLight);
-                SetUniform(4, Application::activeScene->light.color);
-                SetUniform(5, Application::activeScene->light.direction);
+                ambientLight = Application::activeScene->ambientLight;
+                sunLight = Application::activeScene->light.color;
+                sunDirection = Application::activeScene->light.direction;
                 // scene lights
                 for (int i = 0; i < MAX_LIGHTS; i++) {
                     if (i < Rendering::Renderer::lights.size()) {
@@ -106,9 +123,6 @@ namespace CondorEngine
                 }
             }
             else {
-                SetUniform(3, ColorRGB{ .5f, .5f, .5f });
-                SetUniform(4, ColorRGB{ .5f, .5f, .5f });
-                SetUniform(5, Vector3{ .3f, .3f, .3f });
                 // scene lights
                 for (int i = 0; i < MAX_LIGHTS; i++) {
                     SetUniform(lightUniforms[i].position, Vector3{ 0,0,0 });
@@ -120,11 +134,16 @@ namespace CondorEngine
             }
             // camera position
             if (Camera::Main() != nullptr) {
-                SetUniform(6, Camera::Main()->getPosition());
+                SetUniform(7, Camera::Main()->getPosition());
             }
             else {
-                SetUniform(6, Vector3{ 0, 0, 0 });
+                SetUniform(7, Vector3{ 0, 0, 0 });
             }
+            // sun and ambient light
+            SetUniform(4, ambientLight);
+            SetUniform(5, sunLight);
+            SetUniform(6, sunDirection);
+            SetUniform(shadowMapUniform, shadowMap, 3);
             // material values
             SetUniform(textureUniform, texture, 0);
             SetUniform(tintUniform, tint);

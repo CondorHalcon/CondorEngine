@@ -10,6 +10,8 @@ namespace CondorEngine
     {
     public:
         /// @brief Class constructor.
-        Normal() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/normal.frag")) {}
+        Normal() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/normal.frag")) {
+            this->name = "CondorEngine::Normal";
+        }
     };
 }

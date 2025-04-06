@@ -15,8 +15,7 @@ namespace CondorEngine
 
         // camera
         SpectatorCam *camera = this->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{0, 0, 5});
-        camera->Rotate(Vector3{0, 180, 0});
-        camera->camera->farClippingPlane = 100;
+        camera->Rotate(Vector3{ 0, 180, 0 });
 
         // level
         SceneObject *floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{0, -5, 0});

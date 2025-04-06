@@ -146,10 +146,15 @@ namespace CondorEngine
 			static Renderer* Instance();
 
 			/// @brief Initialize renderer.
+			/// @note When overriding this method, it is recommended to call the base method `Renderer::init()` first then add to it.
 			virtual void init();
 
 			/// @brief Render registered meshes.
+			/// @note Be VERY careful when overriding this method; the order it does things affects how other classes work.
 			virtual void Render();
+
+		private:
+			void ResetScreen();
 		};
 	}
 }

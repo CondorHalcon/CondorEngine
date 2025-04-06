@@ -20,7 +20,8 @@ namespace CondorEngine
 
     public:
         /// @brief Class constructor.
-        Unlit() : Material(ResourceManager::LoadShader("shaders/basic.vert", "shaders/unlit.frag")) {
+        Unlit() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/unlit.frag")) {
+            this->name = "CondorEngine::Unlit";
             this->texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
             this->tint = ColorRGB(1, 1, 1);
 

@@ -27,9 +27,13 @@ namespace CondorEngine
             unsigned int renderLayer{ 0x1 };
 
             virtual void Render() override {
+                RenderFeature::Render();
+
                 if (material == nullptr) {
                     throw("CondorEngine::Rendering::MonoRenderFeature :: Failed to render: No mono material set.");
                 }
+                // specify which shader to use
+                glUseProgram(material->getShader().program);
 
                 for (Mesh* mesh : Renderer::meshes) {
                     // filter to only render enabled layer
@@ -39,8 +43,6 @@ namespace CondorEngine
                     material->setTransform(mesh->getSceneObject()->getTransform());
                     material->Update();
 
-                    // specify which shader to use
-                    glUseProgram(material->getShader().program);
                     // specify which geometry
                     glBindVertexArray(mesh->data.vao);
                     // draw the geometry with the shader

@@ -50,3 +50,18 @@ CondorEngine::Transform CondorEngine::Camera::getProjectionMatrix()
 	Vector2Int windowDimensions = Application::Instance()->getWindowDimensions();
 	return glm::perspective(glm::radians(fov), windowDimensions.x / (float)windowDimensions.y, nearClippingPlane, farClippingPlane);
 }
+
+CondorEngine::Transform CondorEngine::Camera::getSunViewMatrix() {
+	Vector3 position = getPosition();
+	Vector3 direction = Application::activeScene ? Application::activeScene->light.direction : Vector3{ 0.f, -1.f, 0.f };
+	return glm::lookAt(
+		position, // light position
+		position + direction, // look at position
+		Vector3{ 0.0f, 1.0f, 0.0f } // up vector
+	);
+}
+
+CondorEngine::Transform CondorEngine::Camera::getSunProjectionMatrix() {
+	return glm::ortho(-lightClippingPlane, lightClippingPlane, -lightClippingPlane, lightClippingPlane,
+		nearClippingPlane, lightClippingPlane);
+}

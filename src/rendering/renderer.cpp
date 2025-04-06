@@ -11,6 +11,7 @@
 // std
 #include <fstream> // for reading from files
 // internal
+#include "CondorEngine/application.h"
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/material.h"
 #include "CondorEngine/components/camera.h"
@@ -338,7 +339,11 @@ CondorEngine::Rendering::Renderer::Renderer() {
 
 CondorEngine::Rendering::Renderer::~Renderer() {
 	if (instance == this) {
-		delete instance;
+		instance = nullptr;
+	}
+
+	for (auto feature : features) {
+		delete feature;
 	}
 }
 
@@ -378,13 +383,17 @@ void CondorEngine::Rendering::Renderer::init() {
 }
 
 void CondorEngine::Rendering::Renderer::Render() {
+	if (Camera::Main() == nullptr) { // no camera to render with
+		ResetScreen();
+		return;
+	}
+
 	// pre processing
 	for (RenderFeature* feature : features) {
 		feature->PreProccess();
 	}
 
-	// clear the screen, depth, and stencil buffers each frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	ResetScreen();
 
 	// main render
 	for (RenderFeature* feature : features) {
@@ -400,5 +409,12 @@ void CondorEngine::Rendering::Renderer::Render() {
 	lights.clear();
 }
 
+void CondorEngine::Rendering::Renderer::ResetScreen() {
+	Vector2Int window = Application::Instance()->getWindowDimensions();
+	glViewport(0, 0, window.x, window.y);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// clear the screen, depth, and stencil buffers each frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
 #pragma endregion
 

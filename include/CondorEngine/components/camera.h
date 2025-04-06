@@ -25,7 +25,9 @@ namespace CondorEngine
 		/// @brief Camera near clipping plane.
 		float nearClippingPlane = .01f;
 		/// @brief Camera far clipping plane.
-		float farClippingPlane = 10.0f;
+		float farClippingPlane = 100.0f;
+		/// @brief Range the light distance the light should render till.
+		float lightClippingPlane = 20.0f;
 
 	public:
 		/// @brief Get the main camera.
@@ -45,5 +47,7 @@ namespace CondorEngine
 		/// @brief Get this Camera's projection matrix.
 		/// @return Projection matrix.
 		Transform getProjectionMatrix();
+		Transform getSunViewMatrix();
+		Transform getSunProjectionMatrix();
 	};
 }

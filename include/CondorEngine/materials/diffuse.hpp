@@ -7,6 +7,7 @@
 #include "CondorEngine/components/light.h"
 #include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/resourcemanager.h"
+#include "CondorEngine/rendering/renderfeatures/directionalshadowmappingrenderfeature.hpp"
 
 namespace CondorEngine
 {
@@ -23,9 +24,12 @@ namespace CondorEngine
         /// @brief Albedo tint.
         ColorRGB tint;
 
+        Texture shadowMap;
+
     private:
         unsigned int textureUniform;
         unsigned int tintUniform;
+        unsigned int shadowMapUniform{ UINT32_MAX };
         struct LightUniforms
         {
             unsigned int position{ UINT32_MAX };
@@ -38,11 +42,21 @@ namespace CondorEngine
     public:
         /// @brief Class constructor.
         Diffuse() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/diffuse.frag")) {
+            this->name = "CondorEngine::Diffuse";
             this->texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
             this->tint = ColorRGB(1, 1, 1);
 
+            Rendering::DirectionalShadowMappingRenderFeature* shadowRF = nullptr;
+            if (Rendering::DirectionalShadowMappingRenderFeature::Exists(&shadowRF)) {
+                this->shadowMap = shadowRF->shadowTexture;
+            }
+            else {
+                this->shadowMap = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+            }
+
             textureUniform = GetUniformLocation("material.texture");
             tintUniform = GetUniformLocation("material.tint");
+            shadowMapUniform = GetUniformLocation("shadowMap");
             for (int i = 0; i < MAX_LIGHTS; i++) {
                 std::string light = std::string("lights[") + std::to_string(i) + std::string("]");
                 lightUniforms[i].position = GetUniformLocation((light + std::string(".position")).c_str());
@@ -61,10 +75,14 @@ namespace CondorEngine
         virtual void Update() override {
             Material::Update();
             // lighting
+            ColorRGB ambientLight = ColorRGB{ .3f, .3f, .3f };
+            ColorRGB sunLight = ColorRGB{ .5f, .5f, .5f };
+            ColorRGB sunDirection = Vector3{ 0.f, -1.f, 0.f };
+
             if (Application::activeScene != nullptr) {
-                SetUniform(3, Application::activeScene->ambientLight);
-                SetUniform(4, Application::activeScene->light.color);
-                SetUniform(5, Application::activeScene->light.direction);
+                ambientLight = Application::activeScene->ambientLight;
+                sunLight = Application::activeScene->light.color;
+                sunDirection = Application::activeScene->light.direction;
                 // scene lights
                 for (int i = 0; i < MAX_LIGHTS; i++) {
                     if (i < Rendering::Renderer::lights.size()) {
@@ -84,9 +102,6 @@ namespace CondorEngine
                 }
             }
             else {
-                SetUniform(3, ColorRGB{ .5f, .5f, .5f });
-                SetUniform(4, ColorRGB{ .5f, .5f, .5f });
-                SetUniform(5, Vector3{ .3f, .3f, .3f });
                 // scene lights
                 for (int i = 0; i < MAX_LIGHTS; i++) {
                     SetUniform(lightUniforms[i].position, Vector3{ 0,0,0 });
@@ -96,6 +111,11 @@ namespace CondorEngine
                     SetUniform(lightUniforms[i].outerCutoff, 360);
                 }
             }
+            // sun and ambient light
+            SetUniform(4, ambientLight);
+            SetUniform(5, sunLight);
+            SetUniform(6, sunDirection);
+            SetUniform(shadowMapUniform, shadowMap, 1);
             // material values
             SetUniform(textureUniform, texture, 0);
             SetUniform(tintUniform, tint);

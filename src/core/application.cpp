@@ -25,7 +25,7 @@ CondorEngine::Application::Application()
 
 CondorEngine::Application::~Application()
 {
-	delete instance;
+	if (instance == this) { instance = nullptr; }
 }
 
 CondorEngine::Application* CondorEngine::Application::Instance()
@@ -99,6 +99,9 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);   // disable window resizing
 	window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 	glfwMakeContextCurrent(window);
+
+	windowWidth = width;
+	windowHeight = height;
 
 	// setup graphics pipeline
 	if (renderer == nullptr) {

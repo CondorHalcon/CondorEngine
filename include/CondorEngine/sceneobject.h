@@ -38,6 +38,7 @@ namespace CondorEngine
 		virtual void OnCollision(Collision collision);
 
 		/// @brief SceneObject layer mask.
+		/// @note The first for layers (0xF) are enabled by most in built classes.
 		unsigned int layer{ 0x1 };
 
 	private:
