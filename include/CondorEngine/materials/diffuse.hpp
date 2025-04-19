@@ -41,9 +41,9 @@ namespace CondorEngine
 
     public:
         /// @brief Class constructor.
-        Diffuse() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/diffuse.frag")) {
+        Diffuse() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/diffuse.frag")) {
             this->name = "CondorEngine::Diffuse";
-            this->texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+            this->texture = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
             this->tint = ColorRGB(1, 1, 1);
 
             Rendering::DirectionalShadowMappingRenderFeature* shadowRF = nullptr;
@@ -51,7 +51,7 @@ namespace CondorEngine
                 this->shadowMap = shadowRF->shadowTexture;
             }
             else {
-                this->shadowMap = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
             }
 
             textureUniform = GetUniformLocation("material.texture");

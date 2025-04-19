@@ -9,7 +9,7 @@ namespace CondorEngine
     class Depth : public Material
     {
     public:
-        Depth() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/depth.frag")) {
+        Depth() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/depth.frag")) {
             this->name = "CondorEngine::Depth";
         }
     };

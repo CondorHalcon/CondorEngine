@@ -20,10 +20,12 @@ set(CondorEngine_OS_BIT 32)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(CondorEngine_OS_BIT 64)
 endif()
-set(CondorEngine_FULL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}${CondorEngine_OS_BIT})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
+if (CondorEngine_IS_ROOT_PROJECT)
+    set(CondorEngine_FULL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}${CondorEngine_OS_BIT})
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR}/lib)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
+endif()
 
 #--------------------------------------------------------------------
 # Third Party Libraries
@@ -102,7 +104,7 @@ add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>
+    ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>/CondorEngine
 )
 
 # folder

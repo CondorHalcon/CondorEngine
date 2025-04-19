@@ -9,7 +9,7 @@ namespace CondorEngine
     class UV : public Material
     {
     public:
-        UV() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/uv.frag")) {
+        UV() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/uv.frag")) {
             this->name = "CondorEngine::UV";
         }
     };

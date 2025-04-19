@@ -37,7 +37,7 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
     AddComponent(collider);
 }
 
-CondorEngine::Primitive::Primitive(PrimitiveType type) : CondorEngine::Primitive::Primitive(type, new Phong(CondorEngine::ResourceManager::LoadTexture("textures/ColorGrid.png"))) {}
+CondorEngine::Primitive::Primitive(PrimitiveType type) : CondorEngine::Primitive::Primitive(type, new Phong(CondorEngine::ResourceManager::LoadTexture("CondorEngine/textures/ColorGrid.png"))) {}
 
 CondorEngine::MeshData CondorEngine::Primitive::MakeSimpleCube()
 {

@@ -54,13 +54,13 @@ namespace CondorEngine
 
     public:
         /// @brief Class constructor.
-        Phong() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {
+        Phong() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/phong.frag")) {
             this->name = "CondorEngine::Phong";
-            texture = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+            texture = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
             tint = ColorRGB(1, 1, 1);
-            specular = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
+            specular = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Gloss.png");
             specularMul = 1;
-            smoothness = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Gloss.png");
+            smoothness = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Gloss.png");
             smoothnessMul = 1;
 
             Rendering::DirectionalShadowMappingRenderFeature* shadowRF = nullptr;
@@ -68,7 +68,7 @@ namespace CondorEngine
                 this->shadowMap = shadowRF->shadowTexture;
             }
             else {
-                this->shadowMap = ResourceManager::LoadTexture("textures/PBRBlank/PBRB_Albedo.png");
+                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
             }
 
             textureUniform = GetUniformLocation("material.texture");

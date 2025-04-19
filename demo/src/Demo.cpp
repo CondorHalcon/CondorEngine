@@ -16,8 +16,8 @@ public:
         Instantiate<SceneLight>(new SceneLight(ColorRGB{ 1, 0, 0 }), Vector3{ -4, 0, 0 });
         Instantiate<SceneLight>(new SceneLight(ColorRGB{ 0, 0, 1 }), Vector3{ 4, 0, 0 });
 
-        Texture uvGrid = ResourceManager::LoadTexture("textures/UVGrid.png");
-        Phong* pMat = new Phong(ResourceManager::LoadTexture("textures/ColorGrid.png"));
+        Texture uvGrid = ResourceManager::LoadTexture("CondorEngine/textures/UVGrid.png");
+        Phong* pMat = new Phong(ResourceManager::LoadTexture("CondorEngine/textures/ColorGrid.png"));
 
         // primitive meshes
         Instantiate(new Primitive(PrimitiveType::CubeMesh, pMat), Vector3{ 0, .5f, -6 });

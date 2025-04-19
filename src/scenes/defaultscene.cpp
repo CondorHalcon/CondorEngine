@@ -20,7 +20,7 @@ namespace CondorEngine
         // level
         SceneObject *floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{0, -5, 0});
         Mesh* floorMesh = floor->AddComponent<Mesh>(new Mesh(Primitive::MakeCube()));
-        floorMesh->material = new Phong(ResourceManager::LoadTexture("textures/UVGrid.png"));
+        floorMesh->material = new Phong(ResourceManager::LoadTexture("CondorEngine/textures/UVGrid.png"));
         Collider *floorCollider = floor->AddComponent<Collider>(new Collider(ColliderType::Plane));
         floor->Scale(Vector3{50, 1, 50});
     }
