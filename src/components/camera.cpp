@@ -63,5 +63,5 @@ CondorEngine::Transform CondorEngine::Camera::getSunViewMatrix() {
 
 CondorEngine::Transform CondorEngine::Camera::getSunProjectionMatrix() {
 	return glm::ortho(-lightClippingPlane, lightClippingPlane, -lightClippingPlane, lightClippingPlane,
-		nearClippingPlane, lightClippingPlane);
+		-lightClippingPlane, lightClippingPlane);
 }
