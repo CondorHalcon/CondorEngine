@@ -5,7 +5,9 @@ cmake_minimum_required(VERSION 3.13...3.31)
 project(CondorEngine VERSION 0.2.0 LANGUAGES CXX C)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# source and root directories 
 set(CondorEngine_IS_ROOT_PROJECT OFF)
+set(CondorEngine_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
     set(CondorEngine_IS_ROOT_PROJECT ON)
 endif()
@@ -20,8 +22,9 @@ set(CondorEngine_OS_BIT 32)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(CondorEngine_OS_BIT 64)
 endif()
+set(CondorEngine_FULL_OUTPUT_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 if (CondorEngine_IS_ROOT_PROJECT)
-    set(CondorEngine_FULL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}${CondorEngine_OS_BIT})
+    set(CondorEngine_FULL_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}/x${CondorEngine_OS_BIT})
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR}/lib)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR})
@@ -68,6 +71,11 @@ find_package(OpenGL REQUIRED)
 message(STATUS "${PROJECT_NAME} :: Third party libraries configured")
 
 #--------------------------------------------------------------------
+# Tools Subdirectory
+#--------------------------------------------------------------------
+add_subdirectory(tools)
+
+#--------------------------------------------------------------------
 # MAIN: CondorEngine
 #--------------------------------------------------------------------
 message(STATUS "${PROJECT_NAME} :: Configuring ${PROJECT_NAME} v${PROJECT_VERSION}...")
@@ -98,14 +106,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC glew)
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 target_link_libraries(${PROJECT_NAME} PUBLIC glm::glm)
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
-
-# resources copy command
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>/CondorEngine
-)
+add_dependencies(${PROJECT_NAME} CondorEngine_CopyResources)
+add_dependencies(${PROJECT_NAME} CondorEngine_ProcessShaders)
 
 # folder
 if (NOT CondorEngine_IS_ROOT_PROJECT)

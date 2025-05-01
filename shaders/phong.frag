@@ -2,6 +2,8 @@
 
 #define MAX_LIGHTS 2
 
+#include <common.glsl>
+
 struct Material {
     sampler2D texture;
     vec3 tint;
@@ -9,14 +11,6 @@ struct Material {
     float specularMul;
     sampler2D smoothness;
     float smoothnessMul;
-};
-
-struct Light {
-    vec3 position;
-    vec3 direction;
-    vec3 color;
-    float cutoff;
-    float outerCutoff;
 };
 
 in vec4 vPos;
@@ -32,27 +26,10 @@ layout (location = 5) uniform vec3 dirLightColor;
 layout (location = 6) uniform vec3 dirLightDirection;
 layout (location = 7) uniform vec3 cameraPos;
 uniform Light lights[MAX_LIGHTS];
-uniform sampler2D shadowMap;
 
 uniform Material material;
 
-float shadow_calculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir)
-{
-    // perform perspective divide
-    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    projCoords = projCoords * 0.5 + 0.5; // transform to [0,1] range
-
-    // get rendered depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float renderDepth = texture(shadowMap, projCoords.xy).r;
-    if (projCoords.x <= 0 || projCoords.y <= 0 || projCoords.x >= 1 || projCoords.y >= 1) { renderDepth = 1; }
-    // get the projected depth of the fragment from light's perspective
-    float projDepth = projCoords.z;
-    // check whether current frag pos is in shadow
-    float bias = max(0.05 * (1.0 - dot(normal, -lightDir)), 0.005);
-    float shadow = projDepth - bias > renderDepth && projDepth <= 1 ? 1.0 : 0.0; 
-
-    return shadow;
-}
+#include <shadow.glsl>
 
 void add_light(in vec3 norm, in vec3 lightDir, in vec3 lightColor, inout vec3 diffuse, inout vec3 specular) 
 {

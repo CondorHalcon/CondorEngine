@@ -98,6 +98,7 @@ CondorEngine::MeshData CondorEngine::MeshData::LoadMesh(const char* filepath) {
 	const aiScene* scene = aiImportFile(filepath, 0);
 
 	// just use the first mesh we find for now
+	// TODO support multiple meshes in a single file
 	aiMesh* mesh = scene->mMeshes[0];
 
 	// extract indicies from the first mesh
