@@ -1,6 +1,5 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/scenes/defaultscene.h>
-#include <CondorEngine/sceneobjects/suzane.h>
 #include <stdexcept>
 
 using namespace CondorEngine;
@@ -11,12 +10,12 @@ public:
     ToonMat() : Material(ResourceManager::LoadShader("shaders/directional.vert", "shaders/phong.frag")) {}
 };
 
-class ToonSuzane : public Suzane
+class ToonSuzane : public SceneObject
 {
 public:
     ToonSuzane() {
-        delete mesh->material;
-        mesh->material = new ToonMat();
+        //delete mesh->material;
+        //mesh->material = new ToonMat();
     }
 };
 

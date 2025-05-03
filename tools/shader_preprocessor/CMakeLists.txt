@@ -14,9 +14,6 @@ message(STATUS "${PROJECT_NAME} :: Configuring ${CE_Tool_PS_NAME}...")
 file(GLOB_RECURSE ENGINE_SHADER_SOURCES "${CMAKE_SOURCE_DIR}/shaders/*.frag" "${CMAKE_SOURCE_DIR}/shaders/*.vert")
 file(GLOB_RECURSE SHADER_SOURCES "${CMAKE_SOURCE_DIR}/shaders/*.frag" "${CMAKE_SOURCE_DIR}/shaders/*.vert")
 
-# custom target
-add_custom_target(${CE_Tool_PS_NAME} ALL DEPENDS ${PREPROCESSED_SHADERS})
-
 # preprocessor commands
 set(PREPROCESSED_SHADERS "")
 message(STATUS "${PROJECT_NAME} :: Adding engine shaders in directory ${CondorEngine_SOURCE_DIR}/shaders...")
@@ -48,6 +45,8 @@ if (NOT CondorEngine_IS_ROOT_PROJECT)
     endforeach()
 endif()
 
+# custom target
+add_custom_target(${CE_Tool_PS_NAME} ALL DEPENDS ${PREPROCESSED_SHADERS})
 
 # cmake folder
 if (NOT CondorEngine_IS_ROOT_PROJECT)

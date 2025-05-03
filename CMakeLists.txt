@@ -73,22 +73,18 @@ find_package(OpenGL REQUIRED)
 # Tools Subdirectory
 #--------------------------------------------------------------------
 add_subdirectory(tools)
+set(SHADER_PREPROCESSOR ${CMAKE_BINARY_DIR}/tools/bin/$<CONFIG>/CondorEngine_ShaderPreprocessor)
 
 #--------------------------------------------------------------------
 # MAIN: CondorEngine
 #--------------------------------------------------------------------
 message(STATUS "${PROJECT_NAME} :: Configuring engine...")
 
-# directories
-set(CondorEngine_INCLUDES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(CondorEngine_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(CondorEngine_SHADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
-
 # files
-file(GLOB_RECURSE CondorEngine_HEADERS ${CondorEngine_INCLUDES_DIR}/*.hpp ${CondorEngine_INCLUDES_DIR}/*.h)
-file(GLOB_RECURSE CondorEngine_SOURCES ${CondorEngine_SOURCES_DIR}/*cpp)
-file(GLOB_RECURSE CondorEngine_SHADERS ${CondorEngine_SHADERS_DIR}/*.vert ${CondorEngine_SHADERS_DIR}/*.frag)
-file(GLOB_RECURSE CondorEngine_SHADER_EX ${CondorEngine_SHADERS_DIR}/*.glsl)
+file(GLOB_RECURSE CondorEngine_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+file(GLOB_RECURSE CondorEngine_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*cpp)
+file(GLOB_RECURSE CondorEngine_SHADERS ${CMAKE_CURRENT_SOURCE_DIR}/shaders/*.vert ${CMAKE_CURRENT_SOURCE_DIR}/shaders/*.frag)
+file(GLOB_RECURSE CondorEngine_SHADER_EX ${CMAKE_CURRENT_SOURCE_DIR}/shaders/*.glsl)
 
 # library
 add_library(${PROJECT_NAME}
@@ -99,7 +95,7 @@ add_library(${PROJECT_NAME}
     ${CondorEngine_THIRD_PARTY_DIR}/stb/stb_image.h
 )
 target_compile_definitions(${PROJECT_NAME} PRIVATE CondorEngine_EXPORTS)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CondorEngine_INCLUDES_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CondorEngine_THIRD_PARTY_DIR}/stb)
 
 # dependencies
