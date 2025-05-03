@@ -12,3 +12,5 @@ build/
 # JetBrains Rider
 .idea/
 
+# Blender
+*.blend1

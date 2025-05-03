@@ -4,6 +4,7 @@
 cmake_minimum_required(VERSION 3.13...3.31)
 project(CondorEngine VERSION 0.2.0 LANGUAGES CXX C)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+message(STATUS "${PROJECT_NAME} :: Configuring ${PROJECT_NAME} v${PROJECT_VERSION}...")
 
 # source and root directories 
 set(CondorEngine_IS_ROOT_PROJECT OFF)
@@ -68,8 +69,6 @@ set_target_properties(glm PROPERTIES FOLDER "EngineLibs")
 # OpenGL
 find_package(OpenGL REQUIRED)
 
-message(STATUS "${PROJECT_NAME} :: Third party libraries configured")
-
 #--------------------------------------------------------------------
 # Tools Subdirectory
 #--------------------------------------------------------------------
@@ -78,22 +77,25 @@ add_subdirectory(tools)
 #--------------------------------------------------------------------
 # MAIN: CondorEngine
 #--------------------------------------------------------------------
-message(STATUS "${PROJECT_NAME} :: Configuring ${PROJECT_NAME} v${PROJECT_VERSION}...")
+message(STATUS "${PROJECT_NAME} :: Configuring engine...")
 
 # directories
 set(CondorEngine_INCLUDES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(CondorEngine_SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(CondorEngine_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/resources)
+set(CondorEngine_SHADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 
 # files
 file(GLOB_RECURSE CondorEngine_HEADERS ${CondorEngine_INCLUDES_DIR}/*.hpp ${CondorEngine_INCLUDES_DIR}/*.h)
 file(GLOB_RECURSE CondorEngine_SOURCES ${CondorEngine_SOURCES_DIR}/*cpp)
-file(GLOB_RECURSE CondorEngine_SHADERS ${CondorEngine_RESOURCES_DIR}/shaders/*.vert ${CondorEngine_RESOURCES_DIR}/shaders/*.frag)
+file(GLOB_RECURSE CondorEngine_SHADERS ${CondorEngine_SHADERS_DIR}/*.vert ${CondorEngine_SHADERS_DIR}/*.frag)
+file(GLOB_RECURSE CondorEngine_SHADER_EX ${CondorEngine_SHADERS_DIR}/*.glsl)
 
 # library
 add_library(${PROJECT_NAME}
-    ${CondorEngine_HEADERS} ${CondorEngine_SOURCES}
+    ${CondorEngine_HEADERS} 
+    ${CondorEngine_SOURCES}
     ${CondorEngine_SHADERS}
+    ${CondorEngine_SHADER_EX}
     ${CondorEngine_THIRD_PARTY_DIR}/stb/stb_image.h
 )
 target_compile_definitions(${PROJECT_NAME} PRIVATE CondorEngine_EXPORTS)
@@ -113,8 +115,6 @@ add_dependencies(${PROJECT_NAME} CondorEngine_ProcessShaders)
 if (NOT CondorEngine_IS_ROOT_PROJECT)
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "Engine")
 endif()
-
-message(STATUS "${PROJECT_NAME} :: ${PROJECT_NAME} v${PROJECT_VERSION} configured")
 
 #--------------------------------------------------------------------
 # Demo: CondorEngine_DemoGame Subdirectory

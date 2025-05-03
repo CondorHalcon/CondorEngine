@@ -1,10 +1,10 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/scenes/defaultscene.h>
 #include <CondorEngine/sceneobjects/primitive.h>
-#include <CondorEngine/sceneobjects/suzane.h>
 #include <CondorEngine/sceneobjects/scenelight.h>
 #include <stdexcept>
 #include <cstdlib>
+#include "suzane.h"
 
 using namespace CondorEngine;
 
