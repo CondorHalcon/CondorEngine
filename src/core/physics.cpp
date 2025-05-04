@@ -128,8 +128,10 @@ void CondorEngine::Physics::PhysicsUpdate()
     };
 
     // collision
-    for (int i = 0; i < colliders.size() - 1; i++)
+    for (int i = 0; !(i >= colliders.size()); i++)
     {
+        // FIX was is a strange bug where the program enters the first loop but not the second when there are no colliders in scene
+        // The expression has been changed from `i < colliders.size() - 1` to `!(i >= colliders.size())`
         for (int j = i + 1; j < colliders.size(); j++)
         {
             // collision check
