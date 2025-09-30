@@ -14,11 +14,11 @@ namespace CondorEngine
         light = DirectionalLight(ColorRGB{ .7, .7, .7 }, Vector3{ 0, -.3, -.7 });
 
         // camera
-        SpectatorCam *camera = this->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{0, 0, 5});
-        camera->Rotate(Vector3{ 0, 180, 0 });
+        defaultCam = this->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{ 0, 2, 5 });
+        defaultCam->Rotate(Vector3{ 0, 180, 0 });
 
         // level
-        SceneObject *floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{0, -5, 0});
+        SceneObject* floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{ 0, 0, 0 });
         Mesh* floorMesh = floor->AddComponent<Mesh>(new Mesh(Primitive::MakeCube()));
         floorMesh->material = new Phong(ResourceManager::LoadTexture("CondorEngine/textures/UVGrid.png"));
         Collider *floorCollider = floor->AddComponent<Collider>(new Collider(ColliderType::Plane));

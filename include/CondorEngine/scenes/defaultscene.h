@@ -5,6 +5,8 @@
 
 namespace CondorEngine
 {
+	class SpectatorCam;
+
 	/// @brief Default scene for the engine. Has a floor and a spectator camera.
 	class DllExport DefaultScene : public Scene
 	{
@@ -13,5 +15,8 @@ namespace CondorEngine
 		DefaultScene();
 		/// @brief Default scene destructor.
 		~DefaultScene();
+
+		/// @brief Default scene camera.
+		SpectatorCam* defaultCam;
 	};
 }

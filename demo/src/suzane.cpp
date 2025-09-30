@@ -6,4 +6,4 @@ Suzane::Suzane(Material* material) {
         ResourceManager::LoadMesh("meshes/suzane.obj"),
         material));
 }
-Suzane::Suzane() : Suzane(new Phong(ResourceManager::LoadTexture("textures/UVGrid.png"))) {}
+Suzane::Suzane() : Suzane(new Phong(ResourceManager::LoadTexture("CondorEngine/textures/UVGrid.png"))) {}
