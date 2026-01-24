@@ -32,8 +32,20 @@ if (docs)
     set_target_properties(docs PROPERTIES FOLDER "EngineLibs/glfw_utils")
 endif()
 set_target_properties(update_mappings PROPERTIES FOLDER "EngineLibs/glfw_utils")
-# glm
+# glm - force static library to avoid building a shared DLL
+# Temporarily disable BUILD_SHARED_LIBS so GLM's add_library() uses STATIC.
+if(DEFINED BUILD_SHARED_LIBS)
+    set(_OLD_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+else()
+    set(_OLD_BUILD_SHARED_LIBS "")
+endif()
+set(BUILD_SHARED_LIBS OFF)
 add_subdirectory(${CondorEngine_THIRD_PARTY_DIR}/glm)
+if(_OLD_BUILD_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${_OLD_BUILD_SHARED_LIBS})
+else()
+    unset(BUILD_SHARED_LIBS)
+endif()
 set_target_properties(glm PROPERTIES FOLDER "EngineLibs")
 # OpenGL
 find_package(OpenGL REQUIRED)
