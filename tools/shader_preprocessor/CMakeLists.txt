@@ -11,12 +11,12 @@ set(CE_Tool_PS_NAME ${PROJECT_NAME}_ProcessShaders)
 message(STATUS "${PROJECT_NAME} :: Configuring ${CE_Tool_PS_NAME}...")
 
 # shader source files
-file(GLOB_RECURSE ENGINE_SHADER_SOURCES "${CMAKE_SOURCE_DIR}/shaders/*.frag" "${CMAKE_SOURCE_DIR}/shaders/*.vert")
+file(GLOB_RECURSE ENGINE_SHADER_SOURCES "${CMAKE_SOURCE_DIR}/engine/shaders/*.frag" "${CMAKE_SOURCE_DIR}/engine/shaders/*.vert")
 file(GLOB_RECURSE SHADER_SOURCES "${CMAKE_SOURCE_DIR}/shaders/*.frag" "${CMAKE_SOURCE_DIR}/shaders/*.vert")
 
 # preprocessor commands
 set(PREPROCESSED_SHADERS "")
-message(STATUS "${PROJECT_NAME} :: Adding engine shaders in directory ${CondorEngine_SOURCE_DIR}/shaders...")
+message(STATUS "${PROJECT_NAME} :: Adding engine shaders in directory ${CondorEngine_SOURCE_DIR}/engine/shaders...")
 foreach(SHADER ${ENGINE_SHADER_SOURCES})
     get_filename_component(SHADER_NAME ${SHADER} NAME)
     set(OUT_SHADER "${CondorEngine_FULL_OUTPUT_DIR}/$<CONFIG>/CondorEngine/shaders/${SHADER_NAME}")
