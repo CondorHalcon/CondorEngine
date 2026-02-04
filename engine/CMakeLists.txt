@@ -1,8 +1,11 @@
 #--------------------------------------------------------------------
+# CondorEngine
+#--------------------------------------------------------------------
+message(STATUS "${PROJECT_NAME} :: Configuring engine third party libraries")
+set(CondorEngine_THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
+
 # Third Party Libraries
 #--------------------------------------------------------------------
-message(STATUS "${PROJECT_NAME} :: Configuring third party libraries")
-set(CondorEngine_THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 
 # assimp
 add_subdirectory(${CondorEngine_THIRD_PARTY_DIR}/assimp)
@@ -47,11 +50,31 @@ else()
     unset(BUILD_SHARED_LIBS)
 endif()
 set_target_properties(glm PROPERTIES FOLDER "EngineLibs")
+
+# imgui
+add_library(imgui STATIC
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/imgui.cpp
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/imgui_draw.cpp
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/imgui_tables.cpp
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/imgui_widgets.cpp
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/backends/imgui_impl_glfw.cpp
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories(imgui PUBLIC
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui
+    ${CondorEngine_THIRD_PARTY_DIR}/imgui/backends
+)
+target_link_libraries(imgui PUBLIC glfw)
+target_compile_definitions(imgui PUBLIC IMGUI_ENABLE_DOCKING)
+target_compile_definitions(imgui PUBLIC IMGUI_USER_CONFIG="${CondorEngine_THIRD_PARTY_DIR}/imconfig.h")
+set_property(TARGET imgui PROPERTY
+    MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
+)
+set_target_properties(imgui PROPERTIES FOLDER "EngineLibs")
 # OpenGL
 find_package(OpenGL REQUIRED)
 
-#--------------------------------------------------------------------
-# MAIN: CondorEngine
+# Main
 #--------------------------------------------------------------------
 message(STATUS "${PROJECT_NAME} :: Configuring engine...")
 
@@ -72,15 +95,27 @@ add_library(${PROJECT_NAME}
 target_compile_definitions(${PROJECT_NAME} PRIVATE CondorEngine_EXPORTS)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CondorEngine_THIRD_PARTY_DIR}/stb)
+set_property(TARGET ${PROJECT_NAME} PROPERTY
+    MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
+)
 
 # dependencies
 target_link_libraries(${PROJECT_NAME} PUBLIC assimp)
 target_link_libraries(${PROJECT_NAME} PUBLIC glew)
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 target_link_libraries(${PROJECT_NAME} PUBLIC glm::glm)
+target_link_libraries(${PROJECT_NAME} PRIVATE imgui)
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 add_dependencies(${PROJECT_NAME} CondorEngine_CopyResources)
 add_dependencies(${PROJECT_NAME} CondorEngine_ProcessShaders)
+
+# memory verification (ASan)
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-fsanitize=address -g -O1)
+    add_link_options(-fsanitize=address)
+elseif(MSVC)
+    add_compile_options(/fsanitize=address /Zi)
+endif()
 
 # folder
 if (NOT CondorEngine_IS_ROOT_PROJECT)

@@ -4,6 +4,7 @@
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/object.h"
+#include "CondorEngine/components/camera.h"
 
 namespace CondorEngine
 {
@@ -15,7 +16,7 @@ namespace CondorEngine
 		/// @param shader Material shader.
 		Material(Shader shader);
 		/// @brief Update material.
-		virtual void Update() override;
+		virtual void UpdateMat(Camera* cam);
 
 	protected:
 		/// @brief Material Shader reference.

@@ -57,7 +57,7 @@ namespace CondorEngine
 
                     // prep shader
                     material->setTransform(mesh->getSceneObject()->getTransform());
-                    material->Update();
+                    material->UpdateMat(Camera::Main());
 
                     // specify which geometry
                     glBindVertexArray(mesh->data.vao);

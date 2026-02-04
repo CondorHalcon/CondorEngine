@@ -7,3 +7,10 @@
 [submodule "engine/thirdparty/glfw"]
 	path = engine/thirdparty/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "engine/thirdparty/imgui"]
+	path = engine/thirdparty/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
+[submodule "editor/thirdparty/yaml-cpp"]
+	path = editor/thirdparty/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp

@@ -21,6 +21,15 @@ namespace CondorEngine
                 // initialize render features
                 features = std::vector<RenderFeature*>{ new ColorRenderFeature(), DirectionalShadowMappingRenderFeature::Instance() };
             }
+
+            virtual void Render() override {
+                if (Camera::Main() == nullptr) { // no camera to render with
+                    ResetScreen();
+                    return;
+                }
+
+                Renderer::Render();
+            }
         };
     }
 }

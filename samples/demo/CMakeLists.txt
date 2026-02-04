@@ -34,5 +34,7 @@ add_custom_command(
 
 # folder
 if (NOT CondorEngine_IS_ROOT_PROJECT)
-    set_target_properties(${CE_DemoGame_NAME} PROPERTIES FOLDER "Engine")
+    set_target_properties(${CE_DemoGame_NAME} PROPERTIES FOLDER "Engine/Samples")
+else()
+    set_target_properties(${CE_DemoGame_NAME} PROPERTIES FOLDER "Samples")
 endif()

@@ -60,3 +60,19 @@ void CondorEngine::SpectatorCam::Update()
         Rotate(CondorEngine::Vector3{0, 1, 0} * rotationSpeed * Time::deltaTime());
     }
 }
+
+void CondorEngine::SpectatorCam::CollectFields(std::vector<FieldInfo>& out) {
+    SceneObject::CollectFields(out);
+    out.push_back(FieldInfo{
+            "moveSpeed",
+            FieldType::Float,
+            offsetof(SpectatorCam, moveSpeed),
+            FieldFlags::Save
+        });
+    out.push_back(FieldInfo{
+            "rotationSpeed",
+            FieldType::Float,
+            offsetof(SpectatorCam, rotationSpeed),
+            FieldFlags::Save
+        });
+}

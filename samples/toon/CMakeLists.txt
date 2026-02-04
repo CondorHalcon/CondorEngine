@@ -36,7 +36,7 @@ foreach(SHADER ${CE_Sample_Toon_SHADERS})
     add_custom_command(
         OUTPUT ${OUT_SHADER}
         COMMAND ${CMAKE_COMMAND} -E make_directory ${CondorEngine_FULL_OUTPUT_DIR}/$<CONFIG>/shaders
-        COMMAND ${SHADER_PREPROCESSOR} ${SHADER} ${OUT_SHADER} ${CondorEngine_SOURCE_DIR}/shaders
+        COMMAND ${SHADER_PREPROCESSOR} ${SHADER} ${OUT_SHADER} ${CondorEngine_SOURCE_DIR}/engine/shaders
         DEPENDS ${SHADER} CondorEngine_ShaderPreprocessor
         COMMENT "Preprocessing ${SHADER_NAME}"
     )

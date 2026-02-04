@@ -52,6 +52,12 @@ namespace CondorEngine
 		/// @brief Get application window dimensions.
 		/// @return Window width and height as an integer vector 2.
 		CondorEngine::Vector2Int getWindowDimensions();
+		/// @brief Get application's GLFW window.
+		/// @return GLFW window.
+		GLFWwindow* getWindow();
+		/// @brief Set or change the application's window title.
+		/// @param newTitle New title for the window.
+		void SetWindowTitle(const char* newTitle);
 
 		/// @brief While application should run.
 		void runtime();

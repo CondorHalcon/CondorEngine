@@ -3,6 +3,9 @@
 #define GLEW_STATIC // if preprocessor not defined
 #include "glew.h"
 #include "glfw/glfw3.h"
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 // internal
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/time.hpp"
@@ -87,6 +90,14 @@ CondorEngine::Vector2Int CondorEngine::Application::getWindowDimensions()
 	return Vector2Int{ windowWidth, windowHeight };
 }
 
+GLFWwindow* CondorEngine::Application::getWindow() {
+    return window;
+}
+
+void CondorEngine::Application::SetWindowTitle(const char* newTitle) {
+	glfwSetWindowTitle(window, newTitle);
+}
+
 bool CondorEngine::Application::init(int width, int height, const char* title)
 {
 	Debug::init();
@@ -102,6 +113,20 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 
 	windowWidth = width;
 	windowHeight = height;
+
+	// ImGui Initialization
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // optional but recommended
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(getWindow(), true);
+	ImGui_ImplOpenGL3_Init("#version 330");
 
 	// setup graphics pipeline
 	if (renderer == nullptr) {
@@ -157,6 +182,12 @@ void CondorEngine::Application::terminate()
 
 	ResourceManager::cleanup();
 
+	// ImGui
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	// GlFW
 	glfwDestroyWindow(window);
 	window = nullptr;
 	glfwTerminate();

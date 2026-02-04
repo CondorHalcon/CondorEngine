@@ -1,6 +1,8 @@
 #pragma once
 #include "CondorEngine/pch.h"
+#include "CondorEngine/serialization.hpp"
 #include <string>
+#include <vector>
 
 /// @namespace CondorEngine
 /// @brief The CondorEngine namespace contains all the core classes and functions for the Condor game engine.
@@ -17,6 +19,7 @@ namespace CondorEngine
 		Object();
 		/// @brief Object name.
 		std::string name;
+		unsigned int id;
 		/// @brief Object enabled status. Used to prevent update calls on the object.
 		bool enabled;
 
@@ -32,5 +35,7 @@ namespace CondorEngine
 		/// @brief Object to string.
 		/// @return String value of the object. (default value is the name of the object.)
 		virtual std::string to_string();
+		virtual std::string GetType();
+		virtual void CollectFields(std::vector<FieldInfo>& out);
 	};
 }

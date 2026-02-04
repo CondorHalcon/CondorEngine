@@ -153,7 +153,7 @@ namespace CondorEngine
 			/// @note Be VERY careful when overriding this method; the order it does things affects how other classes work.
 			virtual void Render();
 
-		private:
+		protected:
 			void ResetScreen();
 		};
 	}

@@ -72,8 +72,8 @@ namespace CondorEngine
         Diffuse(Texture tex) : Diffuse() { texture = tex; }
 
         /// @brief Update shader uniforms.
-        virtual void Update() override {
-            Material::Update();
+        virtual void UpdateMat(Camera* cam) override {
+            Material::UpdateMat(cam);
             // lighting
             ColorRGB ambientLight = ColorRGB{ .3f, .3f, .3f };
             ColorRGB sunLight = ColorRGB{ .5f, .5f, .5f };

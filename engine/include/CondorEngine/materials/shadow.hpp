@@ -13,16 +13,16 @@ namespace CondorEngine
         public:
             Shadow() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/shadow.frag")) {}
 
-            virtual void Update() override {
+            virtual void UpdateMat(Camera* cam) override {
                 Transform lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 10.5f);
                 Transform lightView = glm::lookAt(
                     glm::vec3(0.0, 10.0, 0.0), // light position
                     glm::vec3(0.0f, -1.0, 0.0f), // look at position
                     glm::vec3(0.0f, 1.0f, 0.0f) // up vector
                 );
-                if (Camera::Main() != nullptr) {
-                    lightProjection = Camera::Main()->getSunProjectionMatrix();
-                    lightView = Camera::Main()->getSunViewMatrix();
+                if (cam != nullptr) {
+                    lightProjection = cam->getSunProjectionMatrix();
+                    lightView = cam->getSunViewMatrix();
                 }
 
                 SetUniform(0, lightProjection);

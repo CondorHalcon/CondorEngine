@@ -1,5 +1,6 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/sceneobjects/spectatorcam.h>
+#include <CondorEngine/scenes/defaultscene.h>
 #include <stdexcept>
 #include "toonmat.hpp"
 #include "toonsceneobjects.hpp"
@@ -7,7 +8,7 @@
 
 using namespace CondorEngine;
 
-class ToonScene : public Scene
+/*class ToonScene : public Scene
 {
 public:
     ToonScene() {
@@ -15,13 +16,14 @@ public:
         light = DirectionalLight(ColorRGB{ .7, .7, .7 }, Vector3{ 0, -.3, -.7 });
 
         // camera
-        SpectatorCam* camera = this->Instantiate<SpectatorCam>(new SpectatorCam(), Vector3{ 0, 1, 10 });
+        SpectatorCam* camera = new SpectatorCam();
+        this->Instantiate<SpectatorCam>(camera, Vector3{ 0, 1, 10 });
         camera->Rotate(Vector3{ 0, 180, 0 });
 
         // level
         Ground* ground = this->Instantiate<Ground>(new Ground(), Vector3{ 0, 0, 0 });
     }
-};
+};*/
 
 int main() {
     Application* app = Application::Instance();
@@ -29,7 +31,7 @@ int main() {
     try {
         app->renderer = new ToonRenderer();
         app->init(1280, 720, "Toon Sample");
-        app->activeScene = new ToonScene();
+        app->activeScene = new DefaultScene();
         app->runtime();
         app->terminate();
     }

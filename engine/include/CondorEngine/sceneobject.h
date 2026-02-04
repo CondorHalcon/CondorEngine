@@ -53,7 +53,7 @@ namespace CondorEngine
 		/// @brief This SceneObject's local transformation matrix.
 		Transform transform;
 
-	private:
+	public:
 		/// @brief List of Components on this SceneObject.
 		std::vector<Component *> components;
 		/// @brief List of child SceneObjects on this SceneObject.

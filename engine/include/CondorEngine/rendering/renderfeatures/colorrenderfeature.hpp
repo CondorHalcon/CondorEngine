@@ -33,7 +33,7 @@ namespace CondorEngine
 
                     // prep shader
                     mesh->material->setTransform(mesh->getSceneObject()->getTransform());
-                    mesh->material->Update();
+                    mesh->material->UpdateMat(Camera::Main());
 
                     // specify which shader to use
                     glUseProgram(mesh->material->getShader().program);

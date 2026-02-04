@@ -11,7 +11,7 @@ CondorEngine::Material::Material(Shader shader)
     this->transform = glm::identity<Transform>();
 }
 
-void CondorEngine::Material::Update()
+void CondorEngine::Material::UpdateMat(Camera* cam)
 {
     Transform cameraProjection = glm::perspective(glm::radians(60.0f), 640 / (float)480, .01f, 10.0f);
     Transform cameraView = glm::lookAt(
@@ -25,12 +25,12 @@ void CondorEngine::Material::Update()
         glm::vec3(0.0f, -1.0, 0.0f), // look at position
         glm::vec3(0.0f, 1.0f, 0.0f) // up vector
     );
-    if (Camera::Main() != nullptr)
+    if (cam != nullptr)
     {
-        cameraProjection = Camera::Main()->getProjectionMatrix();
-        cameraView = Camera::Main()->getViewMatrix();
-        sunProjection = Camera::Main()->getSunProjectionMatrix();
-        sunView = Camera::Main()->getSunViewMatrix();
+        cameraProjection = cam->getProjectionMatrix();
+        cameraView = cam->getViewMatrix();
+        sunProjection = cam->getSunProjectionMatrix();
+        sunView = cam->getSunViewMatrix();
     }
     SetUniform(0, cameraProjection);
     SetUniform(1, cameraView);

@@ -12,6 +12,7 @@
 #include "CondorEngine/resourcemanager.h"
 #include "CondorEngine/scene.h"
 #include "CondorEngine/sceneobject.h"
+#include "CondorEngine/serialization.hpp"
 #include "CondorEngine/time.hpp"
 
 // materials

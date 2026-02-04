@@ -35,13 +35,11 @@ namespace CondorEngine
 		/// @brief Scene objects marked for deletion during before `Scene::LateUpdate()`.
 		std::vector<SceneObject *> markedDelete;
 
-	protected:
-		/// @brief Root SceneObjects in this Scene.
-		std::vector<SceneObject *> hierarchy;
-
 	public:
+		/// @brief Root SceneObjects in this Scene.
+		std::vector<SceneObject*> hierarchy;
 		/// @brief Scene ambient light.
-		ColorRGB ambientLight = ColorRGB{.1, .1, .1};
+		ColorRGB ambientLight;
 		/// @brief *Temporary* Scene directional light.
 		DirectionalLight light;
 #pragma region SceneObject Methods

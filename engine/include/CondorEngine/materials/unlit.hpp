@@ -34,8 +34,8 @@ namespace CondorEngine
         Unlit(Texture tex) : Unlit() { setTexture(tex); }
 
         /// @brief Update shader uniforms.
-        virtual void Update() override {
-            Material::Update();
+        virtual void UpdateMat(Camera* cam) override {
+            Material::UpdateMat(cam);
             // material values
             SetUniform(textureUniform, texture, 0);
             SetUniform(tintUniform, tint);

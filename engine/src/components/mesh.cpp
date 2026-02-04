@@ -11,7 +11,7 @@
 #include <glm/ext.hpp>
 
 CondorEngine::Mesh::Mesh(MeshData meshData, Material* material) {
-	this->name = "CondorEngine::Mesh";
+	this->name = "Mesh";
 	this->data = meshData;
 	this->material = material;
 }

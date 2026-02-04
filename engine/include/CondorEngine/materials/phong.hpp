@@ -93,8 +93,8 @@ namespace CondorEngine
         Phong(Texture tex) : Phong() { texture = tex; }
 
         /// @brief Update shader uniforms.
-        virtual void Update() override {
-            Material::Update();
+        virtual void UpdateMat(Camera* cam) override {
+            Material::UpdateMat(cam);
             // lighting
             ColorRGB ambientLight = ColorRGB{ .3f, .3f, .3f };
             ColorRGB sunLight = ColorRGB{ .5f, .5f, .5f };
@@ -133,8 +133,8 @@ namespace CondorEngine
                 }
             }
             // camera position
-            if (Camera::Main() != nullptr) {
-                SetUniform(7, Camera::Main()->getPosition());
+            if (cam != nullptr) {
+                SetUniform(7, cam->getPosition());
             }
             else {
                 SetUniform(7, Vector3{ 0, 0, 0 });

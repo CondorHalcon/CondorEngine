@@ -343,6 +343,10 @@ CondorEngine::Rendering::Renderer::~Renderer() {
 		instance = nullptr;
 	}
 
+	if (Application::renderer == this) {
+		Application::renderer = nullptr;
+	}
+
 	for (auto feature : features) {
 		delete feature;
 	}
@@ -357,7 +361,12 @@ CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::Instance()
 
 void CondorEngine::Rendering::Renderer::init() {
 	// start setting up graphics pipeline
-	glewInit();
+	// Ensure GLEW loads modern OpenGL function pointers (required on some drivers)
+	glewExperimental = GL_TRUE;
+	GLenum glewErr = glewInit();
+	if (glewErr != GLEW_OK) {
+		throw(std::string("CondorEngine::Renderer :: GLEW initialization failed: ") + (const char*)glewGetErrorString(glewErr));
+	}
 	// set flags for openGL features
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -384,11 +393,6 @@ void CondorEngine::Rendering::Renderer::init() {
 }
 
 void CondorEngine::Rendering::Renderer::Render() {
-	if (Camera::Main() == nullptr) { // no camera to render with
-		ResetScreen();
-		return;
-	}
-
 	// pre processing
 	for (RenderFeature* feature : features) {
 		feature->PreProccess();

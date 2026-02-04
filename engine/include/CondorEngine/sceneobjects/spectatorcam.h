@@ -20,5 +20,6 @@ namespace CondorEngine
 		float rotationSpeed;
 		/// @brief Update spectator camera.
 		void Update() override;
+		virtual void CollectFields(std::vector<FieldInfo>& out) override;
 	};
 }

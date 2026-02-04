@@ -8,6 +8,9 @@ CondorEngine::Scene::Scene()
 {
     this->name = "CondorEngine::Scene";
     hasDoneFirstUpdate = false;
+    markedDelete = std::vector<SceneObject*>();
+    hierarchy = std::vector<SceneObject*>();
+    ambientLight = ColorRGB{ .1, .1, .1 };
     light = DirectionalLight(ColorRGB{ 1, 1, 1 }, Vector3{ 0, 0, -1 });
 }
 
