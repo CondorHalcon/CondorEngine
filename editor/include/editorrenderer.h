@@ -20,9 +20,8 @@ namespace CondorEditor
 
         virtual void Render() override;
 
-        ImGuiID RootDockspace();
-
         void BuildDefaultDockLayout(ImGuiID dockspaceId, ImGuiViewport* viewport);
+        void MainMenuBar();
     };
 
     class SceneViewRenderFeature : public RenderFeature

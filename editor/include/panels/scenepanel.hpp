@@ -8,16 +8,10 @@ namespace CondorEditor
     class ScenePanel : public EditorPanel
     {
     public:
-        static std::string getScenePanelName() {
-            Scene* scene = Application::activeScene;
+        virtual const char* getTitle() { return "Scene"; }
 
-            if (scene != nullptr) {
-                return std::string{ "Scene(" }.append(scene->name).append(")");
-            }
-            return std::string{ "Scene ()" };
-        }
         virtual void OnGui() override {
-            ImGui::Begin(getScenePanelName().c_str());
+            ImGui::Begin(getTitle());
 
             /*SceneViewRenderFeature* svrf = SceneViewRenderFeature::Instance();
 

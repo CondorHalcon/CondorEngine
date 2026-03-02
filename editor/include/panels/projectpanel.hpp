@@ -5,15 +5,15 @@ using namespace CondorEngine;
 
 namespace CondorEditor
 {
-    class ConsolePanel : public EditorPanel
+    class ProjectPanel : public EditorPanel
     {
     public:
-        virtual const char* getTitle() { return "Console"; }
+        virtual const char* getTitle() { return "Project"; }
 
         virtual void OnGui() override {
             ImGui::Begin(getTitle());
 
-            // TODO list console logs
+            // TODO project directory
 
             ImGui::End();
         }

@@ -8,8 +8,10 @@ namespace CondorEditor
     class HierarchyPanel : public EditorPanel
     {
     public:
+        virtual const char* getTitle() { return "Hierarchy"; }
+
         virtual void OnGui() override {
-            ImGui::Begin("Hierarchy");
+            ImGui::Begin(getTitle());
 
             if (Application::Instance()->activeScene != nullptr) {
 

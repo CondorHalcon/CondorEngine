@@ -1,5 +1,4 @@
 #include "editorrenderer.h"
-#include "panels/scenepanel.hpp"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <backends/imgui_impl_glfw.h>
@@ -19,9 +18,11 @@ void CondorEditor::EditorRenderFeature::Render() {
         BuildDefaultDockLayout(dockspaceId, viewport);
         hasDoneFirstDraw = true;
     }
-
+    
     // Submit dockspace
     ImGui::DockSpaceOverViewport(dockspaceId, viewport, 0);
+
+    MainMenuBar();
 
     for (EditorPanel* panel : Editor::Instance()->panels) {
         panel->OnGui();
@@ -37,16 +38,83 @@ void CondorEditor::EditorRenderFeature::BuildDefaultDockLayout(ImGuiID dockspace
         ImGuiID dockMain = dockspaceId;
         ImGuiID dockLeft, dockRight, dockBottom;
 
-        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Right, 0.1f, &dockRight, &dockMain);
-        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Down, 0.15f, &dockBottom, &dockMain);
-        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Left, 0.2f, &dockLeft, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Right, 0.2f, &dockRight, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Down, 0.25f, &dockBottom, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Left, 0.25f, &dockLeft, &dockMain);
 
-        ImGui::DockBuilderDockWindow(ScenePanel::getScenePanelName().c_str(), dockMain);
+        ImGui::DockBuilderDockWindow("Scene", dockMain);
         ImGui::DockBuilderDockWindow("Hierarchy", dockLeft);
         ImGui::DockBuilderDockWindow("Console", dockBottom);
+        ImGui::DockBuilderDockWindow("Project", dockBottom);
         ImGui::DockBuilderDockWindow("Inspector", dockRight);
 
         ImGui::DockBuilderFinish(dockspaceId);
+    }
+}
+
+void CondorEditor::EditorRenderFeature::MainMenuBar() {
+    if (ImGui::BeginMainMenuBar()) {
+        if (ImGui::BeginMenu("Project")) {
+            if (ImGui::MenuItem("New Project")) {}
+            if (ImGui::MenuItem("Open Project")) {}
+            if (ImGui::MenuItem("Save Project")) {}
+            if (ImGui::MenuItem("Close Project")) {}
+
+            ImGui::Separator();
+            if (ImGui::MenuItem("Project Settings", "Ctrl+,")) {}
+            if (ImGui::MenuItem("Plugin Manager")) {}
+            if (ImGui::MenuItem("Build Project", "Ctrl+Print")) {}
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Edit")) {
+            if (ImGui::MenuItem("New Scene", "Ctrl+N")) {}
+            if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {}
+            if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {}
+            if (ImGui::MenuItem("Save Scene As", "Ctrl+Shift+S")) {}
+
+            ImGui::Separator();
+            if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
+            if (ImGui::MenuItem("Redo", "Ctrl+Y")) {}
+
+            ImGui::Separator();
+            if (ImGui::BeginMenu("New SceneObject")) {
+                if (ImGui::MenuItem("SceneObject")) {}
+                if (ImGui::BeginMenu("CondorEngine")) {
+
+                    ImGui::EndMenu();
+                }
+
+                ImGui::Separator();
+
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Panels")) {
+            if (ImGui::MenuItem("Console")) {}
+            if (ImGui::MenuItem("Hierarchy")) {}
+            if (ImGui::MenuItem("Inspector")) {}
+            if (ImGui::MenuItem("Project")) {}
+            if (ImGui::MenuItem("Scene")) {}
+
+            ImGui::Separator();
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Plugins")) {
+            if (ImGui::MenuItem("Plugin Manager")) {}
+
+            ImGui::Separator();
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
     }
 }
 

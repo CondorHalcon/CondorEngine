@@ -3,6 +3,7 @@
 #include "panels/consolepanel.hpp"
 #include "panels/hierarchypanel.hpp"
 #include "panels/inspectorpanel.hpp"
+#include "panels/projectpanel.hpp"
 #include "panels/scenepanel.hpp"
 
 CondorEditor::Editor* CondorEditor::Editor::instance = nullptr;
@@ -28,8 +29,11 @@ CondorEditor::Editor* CondorEditor::Editor::Instance() {
 }
 
 void CondorEditor::Editor::init() {
+    ImGuiIO& io = ImGui::GetIO();
+    io.IniFilename = "EditorConfig.ini";
+
     // panels
-    panels = std::vector<EditorPanel*>{ new HierarchyPanel(), new InspectorPanel(), new ScenePanel(), new ConsolePanel() };
+    panels = std::vector<EditorPanel*>{ new HierarchyPanel(), new InspectorPanel(), new ScenePanel(), new ProjectPanel(), new ConsolePanel() };
 
     // scene camera
     sceneCamera = new Camera();
