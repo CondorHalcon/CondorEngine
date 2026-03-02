@@ -11,6 +11,7 @@ namespace CondorEngine
 	/// @brief Base engine object class.
 	class DllExport Object
 	{
+		REFLECT_ROOT_CLASS(Object)
 	public:
 		/// @brief Class constructor.
 		/// @param name Assign name to the object.
@@ -18,10 +19,11 @@ namespace CondorEngine
 		/// @brief Class constructor.
 		Object();
 		/// @brief Object name.
-		std::string name;
+		FIELD(std::string, name, Object)
+		
 		unsigned int id;
 		/// @brief Object enabled status. Used to prevent update calls on the object.
-		bool enabled;
+		FIELD(bool, enabled, Object)
 
 	public:
 		/// @brief Called before the first Update().
@@ -35,7 +37,5 @@ namespace CondorEngine
 		/// @brief Object to string.
 		/// @return String value of the object. (default value is the name of the object.)
 		virtual std::string to_string();
-		virtual std::string GetType();
-		virtual void CollectFields(std::vector<FieldInfo>& out);
 	};
 }

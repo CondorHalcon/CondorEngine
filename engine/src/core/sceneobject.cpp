@@ -15,6 +15,7 @@ CondorEngine::SceneObject::SceneObject()
     this->components = std::vector<Component *>();
     this->children = std::vector<SceneObject *>();
     this->parent = nullptr;
+    this->layer = { 0x1 };
 }
 
 CondorEngine::SceneObject::~SceneObject()

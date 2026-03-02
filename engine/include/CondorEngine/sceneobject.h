@@ -1,6 +1,7 @@
 #pragma once
 #include "CondorEngine/pch.h"
 // internal
+#include "CondorEngine/serialization.hpp"
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/object.h"
 #include "CondorEngine/component.h"
@@ -20,6 +21,7 @@ namespace CondorEngine
 	{
 		friend Scene;
 
+		REFLECT_CLASS(SceneObject, Object)
 	public:
 		/// @brief Class constructor.
 		SceneObject();
@@ -39,7 +41,7 @@ namespace CondorEngine
 
 		/// @brief SceneObject layer mask.
 		/// @note The first for layers (0xF) are enabled by most in built classes.
-		unsigned int layer{ 0x1 };
+		FIELD(unsigned int, layer, SceneObject)
 
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.

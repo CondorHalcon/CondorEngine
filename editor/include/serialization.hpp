@@ -50,7 +50,7 @@ namespace CondorEditor
             // fields
             YAML::Node fieldsNode = componentNode["Fields"];
             std::vector<FieldInfo> fields;
-            component->CollectFields(fields);
+            component->GetTypeInfo()->CollectFields(fields);
             for (const FieldInfo& field : fields) {
                 if (!(field.flags & FieldFlags::Save)) {
                     continue;
@@ -109,7 +109,7 @@ namespace CondorEditor
             Component* component = new Component(); // TODO: change to component factory
 
             std::vector<FieldInfo> fields;
-            component->CollectFields(fields);
+            component->GetTypeInfo()->CollectFields(fields);
 
             for (auto& field : fields) {
                 if (!(field.flags & FieldFlags::Save)) { continue; }

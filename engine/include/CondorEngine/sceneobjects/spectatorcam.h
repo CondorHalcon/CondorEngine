@@ -1,6 +1,7 @@
 #pragma once
 #include "CondorEngine/pch.h"
 // internal
+#include "CondorEngine/serialization.hpp"
 #include "CondorEngine/sceneobject.h"
 #include "CondorEngine/components/camera.h"
 
@@ -9,17 +10,17 @@ namespace CondorEngine
 	/// @brief Spectator camera SceneObject.
 	class DllExport SpectatorCam : public SceneObject
 	{
+		REFLECT_CLASS(SpectatorCam, SceneObject)
 	public:
 		/// @brief Class constructor.
 		SpectatorCam();
 		/// @brief Camera component.
-		Camera *camera;
+		FIELD(Camera*, camera, SpectatorCam);
 		/// @brief Camera move speed.
-		float moveSpeed;
+		FIELD(float, moveSpeed, SpectatorCam)
 		/// @brief Camera rotation speed.
-		float rotationSpeed;
+		FIELD(float, rotationSpeed, SpectatorCam)
 		/// @brief Update spectator camera.
 		void Update() override;
-		virtual void CollectFields(std::vector<FieldInfo>& out) override;
 	};
 }
