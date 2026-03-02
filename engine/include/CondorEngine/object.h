@@ -19,11 +19,11 @@ namespace CondorEngine
 		/// @brief Class constructor.
 		Object();
 		/// @brief Object name.
-		FIELD(std::string, name, Object)
+		FIELD(std::string, name)
 		
 		unsigned int id;
 		/// @brief Object enabled status. Used to prevent update calls on the object.
-		FIELD(bool, enabled, Object)
+		FIELD(bool, enabled)
 
 	public:
 		/// @brief Called before the first Update().

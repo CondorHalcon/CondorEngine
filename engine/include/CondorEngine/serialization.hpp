@@ -76,6 +76,16 @@ namespace CondorEngine
             }
             registry.push_back(type);
         }
+
+        template<typename Class, typename FieldType>
+        static void RegisterField(TypeInfo& typeInfo, const char* name, FieldType Class::* member) {
+            typeInfo.fields.push_back({
+                name,
+                FieldInfo::GetFieldType<FieldType>(),
+                reinterpret_cast<size_t>(&(reinterpret_cast<Class*>(0)->*member))
+                });
+        }
+
         static TypeInfo* GetType(const unsigned int id) {
             for (TypeInfo* ti : registry) {
                 if (ti->typeId == id) {
@@ -133,22 +143,17 @@ private:                                                       \
         {}                                                     \
     };
 
-#define FIELD(type, name, class)                                \
+#define FIELD(type, name)                                       \
     type name;                                                  \
 private:                                                        \
-    static void RegisterField_##name()                          \
-    {                                                           \
-        s_TypeInfo.fields.push_back({                           \
-            #name,                                              \
-            FieldInfo::GetFieldType<type>(),                    \
-            offsetof(class, name)                               \
-        });                                                     \
-    }                                                           \
     struct AutoRegister_##name                                  \
     {                                                           \
         AutoRegister_##name()                                   \
         {                                                       \
-            RegisterField_##name();                             \
+            ReflectionRegistry::RegisterField<Self, type>(      \
+                s_TypeInfo,                                     \
+                #name,                                          \
+                &Self::name);                                   \
         }                                                       \
     };                                                          \
     static inline AutoRegister_##name s_AutoRegister_##name;    \

@@ -41,7 +41,7 @@ namespace CondorEngine
 
 		/// @brief SceneObject layer mask.
 		/// @note The first for layers (0xF) are enabled by most in built classes.
-		FIELD(unsigned int, layer, SceneObject)
+		FIELD(unsigned int, layer)
 
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
