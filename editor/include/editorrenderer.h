@@ -16,7 +16,13 @@ namespace CondorEditor
     public:
         EditorRenderFeature();
 
+        const char* rootDockspace = "RootDockspace";
+
         virtual void Render() override;
+
+        ImGuiID RootDockspace();
+
+        void BuildDefaultDockLayout(ImGuiID dockspaceId, ImGuiViewport* viewport);
     };
 
     class SceneViewRenderFeature : public RenderFeature

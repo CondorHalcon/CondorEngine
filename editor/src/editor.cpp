@@ -4,10 +4,6 @@
 #include "panels/hierarchypanel.hpp"
 #include "panels/inspectorpanel.hpp"
 #include "panels/scenepanel.hpp"
-#include <imgui.h>
-#include <imgui_internal.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
 
 CondorEditor::Editor* CondorEditor::Editor::instance = nullptr;
 
@@ -43,36 +39,4 @@ void CondorEditor::Editor::init() {
 }
 
 void CondorEditor::Editor::terminate() {
-}
-
-void CondorEditor::Editor::BuildDefaultDockLayout(ImGuiID dockspaceId) {
-    ImGui::DockBuilderRemoveNode(dockspaceId);
-    ImGui::DockBuilderAddNode(
-        dockspaceId,
-        ImGuiDockNodeFlags_DockSpace
-    );
-    ImGui::DockBuilderSetNodeSize(
-        dockspaceId,
-        ImGui::GetMainViewport()->WorkSize
-    );
-
-    ImGuiID dockMain = dockspaceId;
-    ImGuiID dockLeft, dockRight, dockBottom;
-
-    ImGui::DockBuilderSplitNode(
-        dockMain, ImGuiDir_Left, 0.20f, &dockLeft, &dockMain
-    );
-    ImGui::DockBuilderSplitNode(
-        dockMain, ImGuiDir_Right, 0.25f, &dockRight, &dockMain
-    );
-    ImGui::DockBuilderSplitNode(
-        dockMain, ImGuiDir_Down, 0.30f, &dockBottom, &dockMain
-    );
-
-    ImGui::DockBuilderDockWindow("Hierarchy", dockLeft);
-    ImGui::DockBuilderDockWindow("Inspector", dockRight);
-    ImGui::DockBuilderDockWindow("Console", dockBottom);
-    ImGui::DockBuilderDockWindow(ScenePanel::getScenePanelName().c_str(), dockMain);
-
-    ImGui::DockBuilderFinish(dockspaceId);
 }

@@ -1,4 +1,9 @@
 #include "editorrenderer.h"
+#include "panels/scenepanel.hpp"
+#include <imgui.h>
+#include <imgui_internal.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 CondorEditor::EditorRenderFeature::EditorRenderFeature() {}
 
@@ -7,20 +12,41 @@ void CondorEditor::EditorRenderFeature::Render() {
 
     ImGuiRenderFeature::Render();
 
-    RootDockspace();
-
-    for (EditorPanel* panel : Editor::Instance()->panels) {
-        ImGui::SetNextWindowDockID(
-            ImGui::GetID(rootDockspace),
-            ImGuiCond_FirstUseEver
-        );
-
-        panel->OnGui();
-    }
+    ImGuiID dockspaceId = ImGui::GetID(rootDockspace);
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
 
     if (!hasDoneFirstDraw) {
-        Editor::Instance()->BuildDefaultDockLayout(ImGui::GetID(rootDockspace));
+        BuildDefaultDockLayout(dockspaceId, viewport);
         hasDoneFirstDraw = true;
+    }
+
+    // Submit dockspace
+    ImGui::DockSpaceOverViewport(dockspaceId, viewport, 0);
+
+    for (EditorPanel* panel : Editor::Instance()->panels) {
+        panel->OnGui();
+    }
+}
+
+void CondorEditor::EditorRenderFeature::BuildDefaultDockLayout(ImGuiID dockspaceId, ImGuiViewport* viewport) {
+
+    if (ImGui::DockBuilderGetNode(dockspaceId) == nullptr) {
+        ImGui::DockBuilderAddNode(dockspaceId, ImGuiDockNodeFlags_DockSpace);
+        ImGui::DockBuilderSetNodeSize(dockspaceId, viewport->WorkSize);
+
+        ImGuiID dockMain = dockspaceId;
+        ImGuiID dockLeft, dockRight, dockBottom;
+
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Right, 0.1f, &dockRight, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Down, 0.15f, &dockBottom, &dockMain);
+        ImGui::DockBuilderSplitNode(dockMain, ImGuiDir_Left, 0.2f, &dockLeft, &dockMain);
+
+        ImGui::DockBuilderDockWindow(ScenePanel::getScenePanelName().c_str(), dockMain);
+        ImGui::DockBuilderDockWindow("Hierarchy", dockLeft);
+        ImGui::DockBuilderDockWindow("Console", dockBottom);
+        ImGui::DockBuilderDockWindow("Inspector", dockRight);
+
+        ImGui::DockBuilderFinish(dockspaceId);
     }
 }
 

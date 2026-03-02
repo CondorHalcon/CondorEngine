@@ -28,7 +28,5 @@ namespace CondorEditor
         SceneObject* selectedSceneObject;
 
         bool playMode;
-
-        void BuildDefaultDockLayout(ImGuiID dockspaceId);
     };
 }

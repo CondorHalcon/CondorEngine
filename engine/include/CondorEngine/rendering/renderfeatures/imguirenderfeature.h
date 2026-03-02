@@ -14,11 +14,7 @@ namespace CondorEngine
         public:
             ImGuiRenderFeature();
 
-            const char* rootDockspace = "RootDockspace";
-
             virtual void Render() override;
-
-            void RootDockspace();
 
             virtual void PostProcess() override;
         };
