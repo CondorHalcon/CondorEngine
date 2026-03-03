@@ -21,7 +21,7 @@ namespace CondorEngine
 	{
 		friend Scene;
 
-		REFLECT_CLASS(SceneObject, Object)
+		REFLECT_CLASS(CondorEngine::SceneObject, Object)
 	public:
 		/// @brief Class constructor.
 		SceneObject();
@@ -53,7 +53,7 @@ namespace CondorEngine
 		/// @brief This SceneObject's parent if it is not a root object.
 		SceneObject *parent;
 		/// @brief This SceneObject's local transformation matrix.
-		Transform transform;
+		FIELD(Transform, transform)
 
 	public:
 		/// @brief List of Components on this SceneObject.

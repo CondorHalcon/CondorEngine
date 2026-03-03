@@ -21,7 +21,32 @@ namespace CondorEditor
                 std::vector<FieldInfo> fields;
                 selected->GetTypeInfo()->CollectFields(fields);
 
+                // header
+                FieldInfo* nameField = nullptr;
+                FieldInfo* enabledField = nullptr;
                 for (auto& field : fields) {
+                    if (std::strcmp(field.name, "name") == 0) { nameField = &field; }
+                    else if (std::strcmp(field.name, "enabled") == 0) { enabledField = &field; }
+
+                    if (nameField != nullptr && enabledField != nullptr) { break; }
+                }
+                if (enabledField) {
+                    void* data = (char*)selected + enabledField->offset;
+                    ImGui::Checkbox("##enabled", (bool*)data);
+                }
+                if (nameField) {
+                    void* data = (char*)selected + nameField->offset;
+                    ImGui::SameLine();
+                    ImGui::InputText("##name", (std::string*)data);
+                }
+                if (nameField || enabledField) {
+                    ImGui::Separator();
+                }
+
+                // fields
+                for (auto& field : fields) {
+                    if (std::strcmp(field.name, "name") == 0 || std::strcmp(field.name, "enabled") == 0) { continue; }
+
                     void* data = (char*)selected + field.offset;
                     DrawField(field, data);
                 }
@@ -30,32 +55,22 @@ namespace CondorEditor
             ImGui::End();
         }
         void DrawField(FieldInfo& field, void* data) {
-            switch (field.type)
-            {
-            case FieldType::Int:
-                ImGui::InputInt(field.name.c_str(), (int*)data);
-                break;
-            case FieldType::Float:
-                ImGui::DragFloat(field.name.c_str(), (float*)data);
-                break;
-            case FieldType::Bool:
-                ImGui::Checkbox(field.name.c_str(), (bool*)data);
-                break;
-            case FieldType::Vec2:
-                ImGui::DragFloat2(field.name.c_str(), (float*)data);
-                break;
-            case FieldType::Vec3:
-                ImGui::DragFloat3(field.name.c_str(), (float*)data);
-                break;
-            case FieldType::Vec4:
-                ImGui::DragFloat4(field.name.c_str(), (float*)data);
-                break;
-            case FieldType::String:
-                ImGui::InputText(field.name.c_str(), (std::string*)data);
-                break;
-            default:
-                ImGui::Text(field.name.c_str());
-                break;
+            TypeInfo* type = ReflectionRegistry::GetType(field.type);
+            if (type != nullptr) {
+                // fallback on parent draw if non is set
+                TypeInfo* currentType = type;
+                while (currentType->DrawField == nullptr && currentType->parent != nullptr) {
+                    currentType = currentType->parent;
+                }
+                if (currentType->DrawField != nullptr) {
+                    currentType->DrawField(field, data); // draw the field
+                }
+                else {
+                    ImGui::Text(field.name); // no assigned draw field found
+                }
+            }
+            else {
+                ImGui::Text(field.name); // no registered type found
             }
         }
     };

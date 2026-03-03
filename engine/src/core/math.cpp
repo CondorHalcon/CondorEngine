@@ -6,6 +6,17 @@
 const float CondorEngine::Math::PI = 3.14159265358979323846264338327950288f;
 
 #pragma region Transform Values
+void CondorEngine::Math::RegisterMath()
+{
+    ReflectionRegistry::RegisterType<glm::vec2>();
+    ReflectionRegistry::RegisterType<glm::ivec2>();
+    ReflectionRegistry::RegisterType<glm::vec3>();
+    ReflectionRegistry::RegisterType<glm::ivec3>();
+    ReflectionRegistry::RegisterType<glm::vec4>();
+    ReflectionRegistry::RegisterType<glm::ivec4>();
+    ReflectionRegistry::RegisterType<glm::quat>();
+    ReflectionRegistry::RegisterType<glm::mat4>();
+}
 
 CondorEngine::Vector3 CondorEngine::Math::getTransformAxis(Transform transform, Axis axis)
 {

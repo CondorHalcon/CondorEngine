@@ -63,18 +63,9 @@ namespace CondorEditor
             return componentNode;
         }
         static void SerializeField(YAML::Node& node, const FieldInfo& field, void* data) {
-            switch (field.type) {
-            case FieldType::Float:
-                node[field.name] = *(float*)data;
-                break;
-            case FieldType::Vec3:
-                Vector3& v = *(Vector3*)data;
-                node[field.name] = YAML::Load(
-                    "[" + std::to_string(v.x) + ", " +
-                    std::to_string(v.y) + ", " +
-                    std::to_string(v.z) + "]"
-                );
-                break;
+            TypeInfo* typeInfo = ReflectionRegistry::GetType(field.type);
+            if (typeInfo->Serialize != nullptr) {
+                typeInfo->Serialize(data);
             }
         }
 
@@ -122,17 +113,9 @@ namespace CondorEditor
             return component;
         }
         static void DeserializeField(YAML::Node& node, const FieldInfo& field, void* data) {
-            switch (field.type) {
-            case FieldType::Float:
-                *(float*)data = node[field.name].as<float>();
-                break;
-            case FieldType::Vec3:
-                auto arr = node[field.name];
-                Vector3& v = *(Vector3*)data;
-                v.x = arr[0].as<float>();
-                v.y = arr[1].as<float>();
-                v.z = arr[2].as<float>();
-                break;
+            TypeInfo* type = ReflectionRegistry::GetType(field.type);
+            if (type != nullptr && type->Deserialize != nullptr) {
+                type->Deserialize(data);
             }
         }
     };

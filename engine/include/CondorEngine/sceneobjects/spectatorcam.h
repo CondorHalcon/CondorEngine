@@ -15,7 +15,7 @@ namespace CondorEngine
 		/// @brief Class constructor.
 		SpectatorCam();
 		/// @brief Camera component.
-		FIELD(Camera*, camera);
+		FIELD(Camera*, camera)
 		/// @brief Camera move speed.
 		FIELD(float, moveSpeed)
 		/// @brief Camera rotation speed.

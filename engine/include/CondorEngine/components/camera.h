@@ -1,5 +1,6 @@
 #pragma once
 #include "CondorEngine/pch.h"
+#include "CondorEngine/serialization.hpp"
 // internal
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/component.h"
@@ -9,6 +10,7 @@ namespace CondorEngine
 	/// @brief Camera component class.
 	class DllExport Camera : public Component
 	{
+		REFLECT_CLASS(CondorEngine::Camera, Component)
 	public:
 		/// @brief Class constructor.
 		Camera();

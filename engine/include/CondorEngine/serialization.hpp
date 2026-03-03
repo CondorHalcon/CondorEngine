@@ -1,21 +1,15 @@
 #pragma once
 #include "CondorEngine/pch.h"
-#include "CondorEngine/math.hpp"
 // std
 #include <string>
 #include <vector>
-#include <type_traits>
+#include <unordered_map>
+// third party
+#include <imgui.h>
 
 namespace CondorEngine
 {
-    enum class DllExport FieldType
-    {
-        Int, Float, Bool,
-        Vec2, Vec3, Vec4,
-        String,
-        Other
-    };
-
+#pragma region Type and Field Info
     enum FieldFlags
     {
         None = 0,
@@ -25,33 +19,23 @@ namespace CondorEngine
 
     struct DllExport FieldInfo
     {
-        std::string name;
-        FieldType type;
+        const char* name;
+        const char* type;
+        bool pointer;
         size_t offset;
         FieldFlags flags;
-
-        template <typename T>
-        static FieldType GetFieldType() {
-            if (std::is_same_v<T, int> || std::is_same_v<T, unsigned int>) {
-                return FieldType::Int;
-            }
-            if (std::is_same_v < T, float>) { return FieldType::Float; }
-            if (std::is_same_v < T, bool>) { return FieldType::Bool; }
-            if (std::is_same_v < T, Vector2>) { return FieldType::Vec2; }
-            if (std::is_same_v < T, Vector3>) { return FieldType::Vec3; }
-            if (std::is_same_v < T, Vector4>) { return FieldType::Vec4; }
-            if (std::is_same_v<T, std::string>) { return FieldType::String; }
-
-            return FieldType::Other;
-        }
     };
 
     struct DllExport TypeInfo
     {
-        std::string name;
-        unsigned int typeId;
+        const char* name;
         TypeInfo* parent;
         std::vector<FieldInfo> fields;
+
+        void (*Serialize)(void*);
+        void (*Deserialize)(void*);
+        void (*DrawField)(FieldInfo&, void*);
+        void (*DrawInspector)(void*);
 
         void CollectFields(std::vector<FieldInfo>& out) const {
             if (parent) {
@@ -61,71 +45,110 @@ namespace CondorEngine
             out.insert(out.end(), fields.begin(), fields.end());
         }
     };
+#pragma endregion
+
+#pragma region Registry
+
+    template <typename T>
+    struct TypeResolver
+    {
+        static TypeInfo* Get() {
+            return T::StaticTypeInfo();
+        }
+        static constexpr bool pointer = false;
+    };
+    // Pointer Resolver
+    template <typename T>
+    struct TypeResolver<T*>
+    {
+        static TypeInfo* Get() {
+            return TypeResolver<T>::Get();
+        }
+        static constexpr bool pointer = true;
+    };
 
     class DllExport ReflectionRegistry
     {
+    private:
+        static inline std::unordered_map<const char*, TypeInfo*> registry = {};
     public:
-        static inline std::vector<TypeInfo*> registry = {};
-
-        static void RegisterType(TypeInfo* type) {
-            static unsigned int idIndex = 7; // start at the last value of FieldType then iterate forward
-
-            if (type->typeId == 0) {
-                idIndex++;
-                type->typeId = idIndex;
-            }
-            registry.push_back(type);
+        template<typename T>
+        static void RegisterType() {
+            TypeInfo* type = TypeResolver<T>::Get();
+            registry.insert({ type->name, type });
+        }
+        static TypeInfo* GetType(const char* type) {
+            return registry[type];
         }
 
         template<typename Class, typename FieldType>
         static void RegisterField(TypeInfo& typeInfo, const char* name, FieldType Class::* member) {
+            using CleanType = std::remove_cv_t<FieldType>; // extract base type from pointer and reference types
+            constexpr bool isPointer = std::is_pointer_v<FieldType>;
+
+            TypeInfo* fieldTypeInfo = TypeResolver<FieldType>::Get();
+
             typeInfo.fields.push_back({
                 name,
-                FieldInfo::GetFieldType<FieldType>(),
-                reinterpret_cast<size_t>(&(reinterpret_cast<Class*>(0)->*member))
+                fieldTypeInfo->name,
+                isPointer,
+                reinterpret_cast<size_t>(&(reinterpret_cast<Class*>(0)->*member)),
+                FieldFlags::None
                 });
         }
 
-        static TypeInfo* GetType(const unsigned int id) {
-            for (TypeInfo* ti : registry) {
-                if (ti->typeId == id) {
-                    return ti;
-                }
-            }
-
-            return nullptr;
+        static void RegisterPrimitives() {
+            RegisterType<int>();
+            RegisterType<float>();
+            RegisterType<bool>();
+            RegisterType<std::string>();
+            RegisterType<unsigned int>();
         }
     };
+
+#pragma endregion
+
+#pragma region Reflection MACROs
 
 #define REFLECT_ROOT_CLASS(Type)                             \
 public:                                                      \
     using Self = Type;                                       \
     static TypeInfo* StaticTypeInfo()                        \
     {                                                        \
-        return &s_TypeInfo;                                  \
+        return &_TypeInfo;                                   \
     }                                                        \
     virtual TypeInfo* GetTypeInfo()                          \
     {                                                        \
-        return &s_TypeInfo;                                  \
+        return &_TypeInfo;                                   \
     }                                                        \
     virtual std::string GetType()                            \
     {                                                        \
-        return s_TypeInfo.name;                              \
+        return _TypeInfo.name;                               \
     }                                                        \
 private:                                                     \
-    static inline TypeInfo s_TypeInfo = {                    \
-        #Type,                                               \
-        0,                                                   \
-        nullptr,                                             \
-        {}                                                   \
-    };
+    static inline TypeInfo _TypeInfo = {                     \
+        #Type,   /*name*/                                    \
+        nullptr, /*parent*/                                  \
+        {},      /*fields*/                                  \
+        nullptr, /*Serialize*/                               \
+        nullptr, /*Deserialize*/                             \
+        nullptr, /*DrawProperty*/                            \
+        nullptr, /*DrawInspector*/                           \
+    };                                                       \
+    struct AutoRegister_Self                                 \
+    {                                                        \
+        AutoRegister_Self() {                                \
+            ReflectionRegistry::RegisterType<Type>();        \
+        }                                                    \
+    };                                                       \
+    static inline AutoRegister_Self _AutoRegister_Self;
 
 #define REFLECT_CLASS(Type, ParentType)                        \
 public:                                                        \
     using Self = Type;                                         \
     static inline TypeInfo* StaticTypeInfo()                   \
     {                                                          \
-        return &s_TypeInfo;                                    \
+        return &_TypeInfo;                                     \
     }                                                          \
     virtual TypeInfo* GetTypeInfo() override                   \
     {                                                          \
@@ -133,15 +156,25 @@ public:                                                        \
     }                                                          \
     virtual std::string GetType() override                     \
     {                                                          \
-        return s_TypeInfo.name;                                \
+        return _TypeInfo.name;                                 \
     }                                                          \
 private:                                                       \
-    static inline TypeInfo s_TypeInfo = {                      \
-        #Type,                                                 \
-        0,                                                     \
-        ParentType::StaticTypeInfo(),                          \
-        {}                                                     \
-    };
+    static inline TypeInfo _TypeInfo = {                       \
+        #Type,                          /*name*/               \
+        ParentType::StaticTypeInfo(),   /*parent*/             \
+        {},                             /*fields*/             \
+        nullptr,                        /*Serialize*/          \
+        nullptr,                        /*Deserialize*/        \
+        nullptr,                        /*DrawProperty*/       \
+        nullptr,                        /*DrawInspector*/      \
+    };                                                         \
+    struct AutoRegister_Self                                   \
+    {                                                          \
+        AutoRegister_Self() {                                  \
+            ReflectionRegistry::RegisterType<Type>();          \
+        }                                                      \
+    };                                                         \
+    static inline AutoRegister_Self _AutoRegister_Self;
 
 #define FIELD(type, name)                                       \
     type name;                                                  \
@@ -151,12 +184,89 @@ private:                                                        \
         AutoRegister_##name()                                   \
         {                                                       \
             ReflectionRegistry::RegisterField<Self, type>(      \
-                s_TypeInfo,                                     \
+                _TypeInfo,                                      \
                 #name,                                          \
                 &Self::name);                                   \
         }                                                       \
     };                                                          \
     static inline AutoRegister_##name s_AutoRegister_##name;    \
 public:
+
+#pragma endregion
+
+#pragma region Primitives
     
+    template <>
+    struct TypeResolver<int>
+    {
+        static TypeInfo* Get() {
+            static TypeInfo typeInfo = {
+                "int", nullptr, {},
+                nullptr,
+                nullptr,
+                [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
+                nullptr
+            };
+            return &typeInfo;
+        }
+    };
+    template <>
+    struct TypeResolver<float>
+    {
+        static TypeInfo* Get() {
+            static TypeInfo typeInfo = {
+                "float", nullptr, {},
+                nullptr,
+                nullptr,
+                [](FieldInfo& field, void* data) { ImGui::DragFloat(field.name, (float*)data); },
+                nullptr
+            };
+            return &typeInfo;
+        }
+    };
+    template <>
+    struct TypeResolver<bool>
+    {
+        static TypeInfo* Get() {
+            static TypeInfo typeInfo = {
+                "bool", nullptr, {},
+                nullptr,
+                nullptr,
+                [](FieldInfo& field, void* data) { ImGui::Checkbox(field.name, (bool*)data); },
+                nullptr
+            };
+            return &typeInfo;
+        }
+    };
+    template <>
+    struct TypeResolver<std::string>
+    {
+        static TypeInfo* Get() {
+            static TypeInfo typeInfo = {
+                "std::string", nullptr, {},
+                nullptr,
+                nullptr,
+                nullptr,
+                nullptr
+            };
+            return &typeInfo;
+        }
+    };
+
+    template <>
+    struct TypeResolver<unsigned int>
+    {
+        static TypeInfo* Get() {
+            static TypeInfo typeInfo = {
+                "unsigned int", nullptr, {},
+                nullptr,
+                nullptr,
+                [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
+                nullptr
+            };
+            return &typeInfo;
+        }
+    };
+
+#pragma endregion
 }

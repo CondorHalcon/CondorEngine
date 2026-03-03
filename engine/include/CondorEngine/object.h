@@ -11,7 +11,7 @@ namespace CondorEngine
 	/// @brief Base engine object class.
 	class DllExport Object
 	{
-		REFLECT_ROOT_CLASS(Object)
+		REFLECT_ROOT_CLASS(CondorEngine::Object)
 	public:
 		/// @brief Class constructor.
 		/// @param name Assign name to the object.

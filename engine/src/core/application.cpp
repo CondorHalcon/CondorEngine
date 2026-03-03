@@ -7,6 +7,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 // internal
+#include "CondorEngine/serialization.hpp"
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/time.hpp"
 #include "CondorEngine/physics.h"
@@ -24,6 +25,14 @@ CondorEngine::Application::Application()
 	this->window = nullptr;
 	this->windowWidth = 640;
 	this->windowHeight = 480;
+
+	// register primitives and engine structs
+	static bool registered = false;
+	if (!registered) {
+		ReflectionRegistry::RegisterPrimitives();
+		Math::RegisterMath();
+		registered = true;
+	}
 }
 
 CondorEngine::Application::~Application()

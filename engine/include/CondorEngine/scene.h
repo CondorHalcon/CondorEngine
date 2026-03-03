@@ -17,7 +17,7 @@ namespace CondorEngine
 	{
 		friend SceneObject;
 
-		REFLECT_CLASS(Scene, Object)
+		REFLECT_CLASS(CondorEngine::Scene, Object)
 
 	public:
 		/// @brief Class constructor.

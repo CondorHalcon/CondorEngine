@@ -1,10 +1,13 @@
 #pragma once
 #include "CondorEngine/pch.h"
+#include "serialization.hpp"
 #include <string>
 #include <glm/ext.hpp>
+#include <imgui.h>
 
 namespace CondorEngine
 {
+	class Math;
 
 #pragma region GLM Types
 
@@ -31,6 +34,134 @@ namespace CondorEngine
 
 #pragma endregion
 
+#pragma region GLM Type Serialization
+
+	template<>
+	struct TypeResolver<glm::vec2>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::vec2", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::DragFloat2(field.name, (float*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::ivec2>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::ivec2", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::InputInt2(field.name, (int*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::vec3>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::vec3", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::DragFloat3(field.name, (float*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::ivec3>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::ivec3", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::InputInt3(field.name, (int*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::vec4>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::vec4", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::DragFloat4(field.name, (float*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::ivec4>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::ivec4", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) { ImGui::InputInt4(field.name, (int*)data); },
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::quat>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::quat", nullptr, {},
+				nullptr,
+				nullptr,
+				nullptr,
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+	template<>
+	struct TypeResolver<glm::mat4>
+	{
+		static TypeInfo* Get() {
+			static TypeInfo typeInfo = {
+				"glm::mat4", nullptr, {},
+				nullptr,
+				nullptr,
+				[](FieldInfo& field, void* data) {
+					glm::mat4* mat = (glm::mat4*)data;
+					glm::vec3 pos = (*mat)[3];
+					glm::vec3 rot = glm::eulerAngles(glm::quat_cast(*mat));
+					glm::vec3 scale = {
+						glm::length(Vector3{(*mat)[0]}),
+						glm::length(Vector3{(*mat)[1]}),
+						glm::length(Vector3{(*mat)[2]}) };
+					ImGui::DragFloat3("position", (float*)&pos);
+					ImGui::DragFloat3("rotation", (float*)&rot);
+					ImGui::DragFloat3("scale", (float*)&scale);
+				},
+				nullptr
+			};
+			return &typeInfo;
+		}
+	};
+
+#pragma endregion
+
 #pragma region Enums
 
 	/// @brief Axis enumeration.
@@ -51,6 +182,8 @@ namespace CondorEngine
 	public:
 		/// @brief Good old PI (3.14)
 		const static float PI;
+
+		static void RegisterMath();
 
 	public:
 #pragma region Transform Get/Set
