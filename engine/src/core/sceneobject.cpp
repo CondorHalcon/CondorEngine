@@ -7,9 +7,9 @@
 #include "CondorEngine/component.h"
 #include "CondorEngine/components/collider.h"
 
-CondorEngine::SceneObject::SceneObject()
-{
-    this->name = "CondorEngine::SceneObject";
+CondorEngine::SceneObject::SceneObject() : SceneObject("SceneObject") { }
+
+CondorEngine::SceneObject::SceneObject(std::string name) : Object(name) {
     this->scene = nullptr;
     this->transform = glm::identity<Transform>();
     this->components = std::vector<Component *>();

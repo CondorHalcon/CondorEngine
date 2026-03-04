@@ -12,8 +12,10 @@ namespace CondorEngine
 	{
 		REFLECT_CLASS(CondorEngine::Camera, Component)
 	public:
-		/// @brief Class constructor.
+		/// @brief Default class constructor.
 		Camera();
+		/// @brief Class constructor.
+		Camera(std::string name);
 		/// @brief Class deconstructor.
 		~Camera();
 

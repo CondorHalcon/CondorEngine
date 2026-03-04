@@ -6,11 +6,10 @@
 
 CondorEngine::Camera *CondorEngine::Camera::main = nullptr;
 
-CondorEngine::Camera::Camera()
-{
-	this->name = "Camera";
-	if (Camera::main == nullptr)
-	{
+CondorEngine::Camera::Camera() : Camera("Camera") {}
+
+CondorEngine::Camera::Camera(std::string name) : Component(name) {
+	if (Camera::main == nullptr) {
 		Camera::main = this;
 	}
 
@@ -19,6 +18,7 @@ CondorEngine::Camera::Camera()
 	this->farClippingPlane = 100.0f;
 	this->lightClippingPlane = 20.0f;
 }
+
 CondorEngine::Camera::~Camera()
 {
 	if (this == Camera::main)

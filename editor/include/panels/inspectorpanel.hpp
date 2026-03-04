@@ -13,7 +13,7 @@ namespace CondorEditor
     public:
         virtual const char* getTitle() { return "Inspector"; }
 
-        static inline std::vector<std::string> specialFieldNames = { "name", "enabled", "components" };
+        static inline std::vector<std::string> specialFieldNames = { "name", "enabled", "components", "children" };
 
         static inline bool isSpecialFieldName(const char* fieldName) {
             for (std::string name : specialFieldNames) {
@@ -85,6 +85,7 @@ namespace CondorEditor
                                 FieldFlags::None
                             };
                             if (ImGui::CollapsingHeader(component->name.c_str())) {
+                                // custom draw handler (avoids a field name entry & special fields)
                                 InspectorPanel::DrawObjectAsField(componentInfo, componentData);
                             }
                         }
@@ -108,20 +109,5 @@ namespace CondorEditor
                 FieldInfo::DrawField(field, data);
             }
         }
-
-        struct AutoEngineDrawers
-        {
-            AutoEngineDrawers() {
-                TypeInfo* objectType = TypeResolver<Object>::Get();
-
-                objectType->DrawField = [](FieldInfo& field, void* data) {
-                    if (ImGui::TreeNode(field.name)) {
-                        InspectorPanel::DrawObjectAsField(field, data);
-                        ImGui::TreePop();
-                    }
-                };
-            }
-        };
-        static inline AutoEngineDrawers autoEngineDrawers;
     };
 }

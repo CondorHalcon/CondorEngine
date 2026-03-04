@@ -2,9 +2,9 @@
 // internal
 #include "CondorEngine/physics.h"
 
-CondorEngine::Component::Component()
-{
-    this->name = "CondorEngine::Component";
+CondorEngine::Component::Component() : Component("Component") { }
+
+CondorEngine::Component::Component(std::string name) : Object(name) {
     this->sceneObject = nullptr;
     this->hasDoneFirstUpdate = false;
 }

@@ -23,8 +23,10 @@ namespace CondorEngine
 
 		REFLECT_CLASS(CondorEngine::SceneObject, Object)
 	public:
-		/// @brief Class constructor.
+		/// @brief Default class constructor.
 		SceneObject();
+		/// @brief Class constructor.
+		SceneObject(std::string name);
 		/// @brief Class deconstructor.
 		~SceneObject();
 		/// @brief Update this SceneObject, its components, and its children.

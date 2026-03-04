@@ -40,7 +40,6 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<int>::Get() {
     static TypeInfo typeInfo = {
         "int", nullptr, {},
         nullptr,
-        nullptr,
         [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
         nullptr
     };
@@ -51,7 +50,6 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<float>::Get() {
     static TypeInfo typeInfo = {
         "float", nullptr, {},
         nullptr,
-        nullptr,
         [](FieldInfo& field, void* data) { ImGui::DragFloat(field.name, (float*)data); },
         nullptr
     };
@@ -61,7 +59,6 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<float>::Get() {
 CondorEngine::TypeInfo* CondorEngine::TypeResolver<bool>::Get() {
     static TypeInfo typeInfo = {
         "bool", nullptr, {},
-        nullptr,
         nullptr,
         [](FieldInfo& field, void* data) { ImGui::Checkbox(field.name, (bool*)data); },
         nullptr
@@ -74,7 +71,6 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<unsigned int>::Get()
     static TypeInfo typeInfo = {
         "unsigned int", nullptr, {},
         nullptr,
-        nullptr,
         [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
         nullptr
     };
@@ -84,7 +80,6 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<unsigned int>::Get()
 CondorEngine::TypeInfo* CondorEngine::TypeResolver<std::string>::Get() {
     static TypeInfo typeInfo = {
         "std::string", nullptr, {},
-        nullptr,
         nullptr,
         [](FieldInfo& field, void* data) { ImGui::InputText(field.name, (std::string*)data); },
         nullptr

@@ -10,10 +10,12 @@ namespace CondorEngine
 	/// @brief Spectator camera SceneObject.
 	class DllExport SpectatorCam : public SceneObject
 	{
-		REFLECT_CLASS(SpectatorCam, SceneObject)
+		REFLECT_CLASS(CondorEngine::SpectatorCam, SceneObject)
 	public:
-		/// @brief Class constructor.
+		/// @brief Default class constructor.
 		SpectatorCam();
+		/// @brief Class Constructor.
+		SpectatorCam(std::string name);
 		/// @brief Camera component.
 		FIELD(Camera*, camera)
 		/// @brief Camera move speed.

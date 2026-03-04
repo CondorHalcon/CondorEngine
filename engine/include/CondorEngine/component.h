@@ -17,8 +17,10 @@ namespace CondorEngine
 		REFLECT_CLASS(CondorEngine::Component, Object)
 
 	public:
-		/// @brief Class constructor.
+		/// @brief Default class constructor.
 		Component();
+		/// @brief Class constructor.
+		Component(std::string name);
 
 	public:
 		/// @brief Update this component.

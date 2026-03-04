@@ -4,9 +4,9 @@
 #include "CondorEngine/application.h"
 #include "CondorEngine/debug.hpp"
 
-CondorEngine::SpectatorCam::SpectatorCam()
-{
-    this->name = "CondorEngine::SpectatorCam";
+CondorEngine::SpectatorCam::SpectatorCam() : SpectatorCam("Spectator Camera") {}
+
+CondorEngine::SpectatorCam::SpectatorCam(std::string name) : SceneObject(name) {
     this->camera = AddComponent<Camera>(new Camera());
     this->moveSpeed = 5;
     this->rotationSpeed = 50;

@@ -6,6 +6,7 @@
 #include "CondorEngine/sceneobject.h"
 #include "CondorEngine/rendering/renderer.h"
 // std
+#include <string>
 #include <vector>
 
 namespace CondorEngine
@@ -20,8 +21,10 @@ namespace CondorEngine
 		REFLECT_CLASS(CondorEngine::Scene, Object)
 
 	public:
-		/// @brief Class constructor.
+		/// @brief Default class constructor.
 		Scene();
+		/// @brief Class constructor.
+		Scene(std::string name);
 		/// @brief Class deconstructor.
 		~Scene();
 		/// @brief Update this Scene and its hierarchy.

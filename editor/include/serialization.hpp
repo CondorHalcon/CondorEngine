@@ -64,9 +64,10 @@ namespace CondorEditor
         }
         static void SerializeField(YAML::Node& node, const FieldInfo& field, void* data) {
             TypeInfo* typeInfo = ReflectionRegistry::GetType(field.type);
-            if (typeInfo->Serialize != nullptr) {
+            // TODO fix
+            /*if (typeInfo->Serialize != nullptr) {
                 typeInfo->Serialize(data);
-            }
+            }*/
         }
 
         static Scene* DeserializeScene(YAML::Node node) {
@@ -114,9 +115,10 @@ namespace CondorEditor
         }
         static void DeserializeField(YAML::Node& node, const FieldInfo& field, void* data) {
             TypeInfo* type = ReflectionRegistry::GetType(field.type);
-            if (type != nullptr && type->Deserialize != nullptr) {
+            // TODO fix
+            /*if (type != nullptr && type->Deserialize != nullptr) {
                 type->Deserialize(data);
-            }
+            }*/
         }
     };
 }

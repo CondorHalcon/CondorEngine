@@ -34,8 +34,7 @@ namespace CondorEngine
         TypeInfo* parent;
         std::vector<FieldInfo> fields;
 
-        void (*Serialize)(void*);
-        void (*Deserialize)(void*);
+        void* (*CreateInstance)();
         void (*DrawField)(FieldInfo&, void*);
         void (*DrawReference)(FieldInfo&, void*);
 
@@ -71,7 +70,7 @@ namespace CondorEngine
 
     class DllExport ReflectionRegistry
     {
-    private:
+    public:
         static inline std::unordered_map<const char*, TypeInfo*> registry = {};
     public:
         template<typename T>
@@ -127,15 +126,17 @@ public:                                                      \
     {                                                        \
         return _TypeInfo.name;                               \
     }                                                        \
+    static Type* CreateInstance() { return new Type(); }     \
 private:                                                     \
     static inline TypeInfo _TypeInfo = {                     \
-        #Type,   /*name*/                                    \
-        nullptr, /*parent*/                                  \
-        {},      /*fields*/                                  \
-        nullptr, /*Serialize*/                               \
-        nullptr, /*Deserialize*/                             \
-        nullptr, /*DrawProperty*/                            \
-        nullptr, /*DrawInspector*/                           \
+        #Type,          /*name*/                             \
+        nullptr,        /*parent*/                           \
+        {},             /*fields*/                           \
+        []()->void* {       /*CreateInstance*/               \
+            return (char*)CreateInstance();                  \
+        },                                                   \
+        nullptr,        /*DrawProperty*/                     \
+        nullptr,        /*DrawInspector*/                    \
     };                                                       \
     struct AutoRegister_Self                                 \
     {                                                        \
@@ -160,13 +161,15 @@ public:                                                        \
     {                                                          \
         return _TypeInfo.name;                                 \
     }                                                          \
+    static inline Type* CreateInstance() { return new Type(); }\
 private:                                                       \
     static inline TypeInfo _TypeInfo = {                       \
         #Type,                          /*name*/               \
         ParentType::StaticTypeInfo(),   /*parent*/             \
         {},                             /*fields*/             \
-        nullptr,                        /*Serialize*/          \
-        nullptr,                        /*Deserialize*/        \
+        []()->void* {                   /*CreateInstance*/     \
+            return (char*)CreateInstance();                    \
+        },                                                     \
         nullptr,                        /*DrawProperty*/       \
         nullptr,                        /*DrawInspector*/      \
     };                                                         \
@@ -223,7 +226,6 @@ public:
         static TypeInfo* Get() {
             static TypeInfo typeInfo = {
                 typeid(std::vector<T>).name(), nullptr, {},
-                nullptr,
                 nullptr,
                 &TypeResolver<std::vector<T>>::DrawField,
                 nullptr

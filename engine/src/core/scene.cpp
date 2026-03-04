@@ -1,12 +1,10 @@
 #include "CondorEngine/scene.h"
 // internal
 #include "CondorEngine/debug.hpp"
-// std
-#include <string>
 
-CondorEngine::Scene::Scene()
-{
-    this->name = "CondorEngine::Scene";
+CondorEngine::Scene::Scene() : Scene("Scene") { }
+
+CondorEngine::Scene::Scene(std::string name) : Object(name) {
     hasDoneFirstUpdate = false;
     markedDelete = std::vector<SceneObject*>();
     hierarchy = std::vector<SceneObject*>();

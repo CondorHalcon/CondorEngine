@@ -37,5 +37,12 @@ namespace CondorEngine
 		/// @brief Object to string.
 		/// @return String value of the object. (default value is the name of the object.)
 		virtual std::string to_string();
+
+	private:
+		struct AutoRegister_Draw
+		{
+			AutoRegister_Draw();
+		};
+		static inline AutoRegister_Draw _AutoRegister_Draw;
 	};
 }
