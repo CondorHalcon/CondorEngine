@@ -23,13 +23,13 @@ namespace CondorEngine
 
 	public:
 		/// @brief Camera FOV.
-		float fov = 60.0f;
+		FIELD(float, fov)
 		/// @brief Camera near clipping plane.
-		float nearClippingPlane = .01f;
+		FIELD(float, nearClippingPlane)
 		/// @brief Camera far clipping plane.
-		float farClippingPlane = 100.0f;
+		FIELD(float, farClippingPlane)
 		/// @brief Range the light distance the light should render till.
-		float lightClippingPlane = 20.0f;
+		FIELD(float, lightClippingPlane)
 
 	public:
 		/// @brief Get the main camera.

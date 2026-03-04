@@ -10,7 +10,7 @@ CondorEngine::Vector3 CondorEngine::PlaneSize::getNormal(Transform transform)
 
 CondorEngine::Collider::Collider(CondorEngine::ColliderType t) : CondorEngine::Component()
 {
-    this->name = "CondorEngine::Collider";
+    this->name = "Collider";
     this->type = t;
     switch (t)
     {

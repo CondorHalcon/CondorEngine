@@ -25,7 +25,7 @@ namespace CondorEditor
 
         std::vector<EditorPanel*> panels;
         Camera* sceneCamera;
-        SceneObject* selectedSceneObject;
+        Object* selectedSceneObject;
 
         bool playMode;
     };

@@ -57,9 +57,9 @@ namespace CondorEngine
 
 	public:
 		/// @brief List of Components on this SceneObject.
-		std::vector<Component *> components;
+		FIELD(std::vector<Component *>, components)
 		/// @brief List of child SceneObjects on this SceneObject.
-		std::vector<SceneObject *> children;
+		FIELD(std::vector<SceneObject *>, children)
 
 #pragma region Getters and Setters
 	public:

@@ -13,23 +13,41 @@ namespace CondorEditor
     public:
         virtual const char* getTitle() { return "Inspector"; }
 
+        static inline std::vector<std::string> specialFieldNames = { "name", "enabled", "components" };
+
+        static inline bool isSpecialFieldName(const char* fieldName) {
+            for (std::string name : specialFieldNames) {
+                if (name == fieldName) { return true; }
+            }
+
+            return false;
+        }
+
         virtual void OnGui() override {
-            SceneObject* selected = Editor::Instance()->selectedSceneObject;
+            Object* selected = Editor::Instance()->selectedSceneObject;
             ImGui::Begin(getTitle());
 
             if (selected) {
                 std::vector<FieldInfo> fields;
                 selected->GetTypeInfo()->CollectFields(fields);
 
-                // header
+                // special fields being used by this function
                 FieldInfo* nameField = nullptr;
                 FieldInfo* enabledField = nullptr;
+                FieldInfo* componentsField = nullptr;
                 for (auto& field : fields) {
                     if (std::strcmp(field.name, "name") == 0) { nameField = &field; }
                     else if (std::strcmp(field.name, "enabled") == 0) { enabledField = &field; }
+                    else if (std::strcmp(field.name, "components") == 0) { componentsField = &field; }
 
-                    if (nameField != nullptr && enabledField != nullptr) { break; }
+                    if (nameField != nullptr &&
+                        enabledField != nullptr &&
+                        componentsField != nullptr) {
+                        break;
+                    }
                 }
+
+                // header
                 if (enabledField) {
                     void* data = (char*)selected + enabledField->offset;
                     ImGui::Checkbox("##enabled", (bool*)data);
@@ -45,33 +63,65 @@ namespace CondorEditor
 
                 // fields
                 for (auto& field : fields) {
-                    if (std::strcmp(field.name, "name") == 0 || std::strcmp(field.name, "enabled") == 0) { continue; }
+                    if (InspectorPanel::isSpecialFieldName(field.name)) { continue; }
 
                     void* data = (char*)selected + field.offset;
-                    DrawField(field, data);
+                    FieldInfo::DrawField(field, data);
+                }
+
+                // components
+                if (componentsField) {
+                    void* data = (char*)selected + componentsField->offset;
+                    std::vector<Component*>* components = (std::vector<Component*>*)data;
+
+                    if (components) {
+                        for (Component* component : *components) {
+                            void* componentData = (char*)component;
+                            FieldInfo componentInfo = {
+                                component->name.c_str(),
+                                component->GetTypeInfo()->name,
+                                false,
+                                0,
+                                FieldFlags::None
+                            };
+                            if (ImGui::CollapsingHeader(component->name.c_str())) {
+                                InspectorPanel::DrawObjectAsField(componentInfo, componentData);
+                            }
+                        }
+                    }
                 }
             }
 
             ImGui::End();
         }
-        void DrawField(FieldInfo& field, void* data) {
-            TypeInfo* type = ReflectionRegistry::GetType(field.type);
-            if (type != nullptr) {
-                // fallback on parent draw if non is set
-                TypeInfo* currentType = type;
-                while (currentType->DrawField == nullptr && currentType->parent != nullptr) {
-                    currentType = currentType->parent;
-                }
-                if (currentType->DrawField != nullptr) {
-                    currentType->DrawField(field, data); // draw the field
-                }
-                else {
-                    ImGui::Text(field.name); // no assigned draw field found
-                }
-            }
-            else {
-                ImGui::Text(field.name); // no registered type found
+    private:
+        static void DrawObjectAsField(FieldInfo& field, void* data) {
+            Object* obj = (Object*)data;
+
+            std::vector<FieldInfo> fields;
+            obj->GetTypeInfo()->CollectFields(fields);
+
+            for (auto& field : fields) {
+                if (InspectorPanel::isSpecialFieldName(field.name)) { continue; }
+
+                void* data = (char*)obj + field.offset;
+                FieldInfo::DrawField(field, data);
             }
         }
+
+        struct AutoEngineDrawers
+        {
+            AutoEngineDrawers() {
+                TypeInfo* objectType = TypeResolver<Object>::Get();
+
+                objectType->DrawField = [](FieldInfo& field, void* data) {
+                    if (ImGui::TreeNode(field.name)) {
+                        InspectorPanel::DrawObjectAsField(field, data);
+                        ImGui::TreePop();
+                    }
+                };
+            }
+        };
+        static inline AutoEngineDrawers autoEngineDrawers;
     };
 }

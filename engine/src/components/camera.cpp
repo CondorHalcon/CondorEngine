@@ -8,11 +8,16 @@ CondorEngine::Camera *CondorEngine::Camera::main = nullptr;
 
 CondorEngine::Camera::Camera()
 {
-	this->name = "CondorEngine::Camera";
+	this->name = "Camera";
 	if (Camera::main == nullptr)
 	{
 		Camera::main = this;
 	}
+
+	this->fov = 60.0f;
+	this->nearClippingPlane = .01f;
+	this->farClippingPlane = 100.0f;
+	this->lightClippingPlane = 20.0f;
 }
 CondorEngine::Camera::~Camera()
 {

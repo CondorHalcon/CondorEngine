@@ -24,6 +24,8 @@ namespace CondorEngine
         bool pointer;
         size_t offset;
         FieldFlags flags;
+
+        static void DrawField(FieldInfo& field, void* data);
     };
 
     struct DllExport TypeInfo
@@ -35,7 +37,7 @@ namespace CondorEngine
         void (*Serialize)(void*);
         void (*Deserialize)(void*);
         void (*DrawField)(FieldInfo&, void*);
-        void (*DrawInspector)(void*);
+        void (*DrawReference)(FieldInfo&, void*);
 
         void CollectFields(std::vector<FieldInfo>& out) const {
             if (parent) {
@@ -194,78 +196,77 @@ public:
 
 #pragma endregion
 
-#pragma region Primitives
+#pragma region Primitive Resolvers
     
     template <>
-    struct TypeResolver<int>
-    {
-        static TypeInfo* Get() {
-            static TypeInfo typeInfo = {
-                "int", nullptr, {},
-                nullptr,
-                nullptr,
-                [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
-                nullptr
-            };
-            return &typeInfo;
-        }
-    };
-    template <>
-    struct TypeResolver<float>
-    {
-        static TypeInfo* Get() {
-            static TypeInfo typeInfo = {
-                "float", nullptr, {},
-                nullptr,
-                nullptr,
-                [](FieldInfo& field, void* data) { ImGui::DragFloat(field.name, (float*)data); },
-                nullptr
-            };
-            return &typeInfo;
-        }
-    };
-    template <>
-    struct TypeResolver<bool>
-    {
-        static TypeInfo* Get() {
-            static TypeInfo typeInfo = {
-                "bool", nullptr, {},
-                nullptr,
-                nullptr,
-                [](FieldInfo& field, void* data) { ImGui::Checkbox(field.name, (bool*)data); },
-                nullptr
-            };
-            return &typeInfo;
-        }
-    };
-    template <>
-    struct TypeResolver<std::string>
-    {
-        static TypeInfo* Get() {
-            static TypeInfo typeInfo = {
-                "std::string", nullptr, {},
-                nullptr,
-                nullptr,
-                nullptr,
-                nullptr
-            };
-            return &typeInfo;
-        }
-    };
+    struct TypeResolver<int> { static TypeInfo* Get(); };
 
     template <>
-    struct TypeResolver<unsigned int>
+    struct TypeResolver<float> { static TypeInfo* Get(); };
+
+    template <>
+    struct TypeResolver<bool> { static TypeInfo* Get(); };
+
+    template <>
+    struct TypeResolver<unsigned int> { static TypeInfo* Get(); };
+
+#pragma endregion
+
+#pragma region std Resolvers
+
+    template <>
+    struct TypeResolver<std::string> { static TypeInfo* Get(); };
+    
+    template <typename T>
+    struct TypeResolver<std::vector<T>>
     {
         static TypeInfo* Get() {
             static TypeInfo typeInfo = {
-                "unsigned int", nullptr, {},
+                typeid(std::vector<T>).name(), nullptr, {},
                 nullptr,
                 nullptr,
-                [](FieldInfo& field, void* data) { ImGui::InputInt(field.name, (int*)data); },
+                &TypeResolver<std::vector<T>>::DrawField,
                 nullptr
             };
             return &typeInfo;
         }
+        static void DrawField(FieldInfo& field, void* data) {
+            TypeInfo* itemType = TypeResolver<T>::Get();
+
+            if (itemType == nullptr) {
+                if (ImGui::TreeNode(field.name)) { ImGui::TreePop(); }
+                return;
+            }
+
+            if (ImGui::TreeNode(field.name)) {
+                std::vector<T>* list = (std::vector<T>*)data;
+                
+                constexpr bool itemIsPointer = std::is_pointer_v<T>;
+
+                for (std::size_t i = 0; i < list->size(); ++i) {
+                    void* itemData = (char*)&(*list)[i];
+                    std::string itemName = std::to_string(i);
+                    FieldInfo itemInfo = {
+                        itemName.c_str(),
+                        itemType->name,
+                        itemIsPointer,
+                        0,
+                        FieldFlags::None
+                    };
+                    FieldInfo::DrawField(itemInfo, (void*)itemData);
+                }
+
+                ImGui::TreePop();
+            }
+        }
+    private:
+        struct AutoRegister_Self
+        {
+            AutoRegister_Self() {
+                ReflectionRegistry::RegisterType<std::vector<T>>();
+            }
+        };
+        static inline AutoRegister_Self _autoRegister_Self;
     };
 
 #pragma endregion
