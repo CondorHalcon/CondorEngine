@@ -18,7 +18,7 @@ namespace CondorEngine
         defaultCam->Rotate(Vector3{ 0, 180, 0 });
 
         // level
-        SceneObject* floor = this->Instantiate<SceneObject>(new SceneObject(), Vector3{ 0, 0, 0 });
+        SceneObject* floor = this->Instantiate<SceneObject>(new SceneObject("Floor"), Vector3{ 0, 0, 0 });
         Mesh* floorMesh = floor->AddComponent<Mesh>(new Mesh(Primitive::MakeCube()));
         floorMesh->material = new Phong(ResourceManager::LoadTexture("CondorEngine/textures/UVGrid.png"));
         Collider *floorCollider = floor->AddComponent<Collider>(new Collider(ColliderType::Plane));

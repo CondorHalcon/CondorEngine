@@ -26,6 +26,8 @@ namespace CondorEngine
         FieldFlags flags;
 
         static void DrawField(FieldInfo& field, void* data);
+        static std::string AppendId(std::string name, unsigned int id);
+        static const char* AppendId(const char* name, unsigned int id);
     };
 
     struct DllExport TypeInfo

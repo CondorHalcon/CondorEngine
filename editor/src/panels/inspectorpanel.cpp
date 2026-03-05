@@ -17,6 +17,7 @@ void CondorEditor::InspectorPanel::OnGui() {
     ImGui::Begin(getTitle());
 
     if (selected != nullptr) {
+        SceneObject* sceneObject = dynamic_cast<SceneObject*>(selected);
         std::vector<FieldInfo> fields;
         selected->GetTypeInfo()->CollectFields(fields);
 
@@ -74,10 +75,18 @@ void CondorEditor::InspectorPanel::OnGui() {
                         FieldFlags::None
                     };
 
-                    bool componentOpened = ImGui::CollapsingHeader(component->name.c_str());
+                    bool componentOpened = ImGui::CollapsingHeader(FieldInfo::AppendId(component->name, component->id).c_str());
 
                     // right click context menu
                     if (ImGui::BeginPopupContextItem()) {
+                        if (sceneObject != nullptr) {
+                            if (ImGui::Selectable("Delete")) {
+                                sceneObject->RemoveComponent(component);
+                                delete component; // TODO safely handle delete
+                                ImGui::EndPopup();
+                                continue;
+                            }
+                        }
                         ImGui::EndPopup();
                     }
 
@@ -94,8 +103,8 @@ void CondorEditor::InspectorPanel::OnGui() {
 
         // add component button
         ImGui::Separator();
-        if (ImGui::Button("Add Component")) {
-            Debug::LogError("InspectorPanel :: Add Component button not implemented.");
+        if (sceneObject != nullptr) {
+            AddComponentButton(sceneObject);
         }
     }
 
@@ -113,5 +122,36 @@ void CondorEditor::InspectorPanel::DrawObjectAsField(FieldInfo& field, void* dat
 
         void* data = (char*)obj + field.offset;
         FieldInfo::DrawField(field, data);
+    }
+}
+
+void CondorEditor::InspectorPanel::AddComponentButton(SceneObject* sceneObject) {
+    static const char* addCompPopupName = "Add Component";
+
+    if (sceneObject == nullptr) {
+        return;
+    }
+
+    // add component popup
+    if (ImGui::BeginPopup(addCompPopupName)) {
+        std::vector<TypeInfo*> componentTypes =
+            ReflectionRegistry::GetInheritedTypes(TypeResolver<Component>::Get()->name, false);
+        for (TypeInfo* type : componentTypes) {
+            if (type->CreateInstance == nullptr) {
+                continue;
+            }
+
+            if (ImGui::Selectable(type->name)) {
+                void* inst = type->CreateInstance();
+                Component* component = static_cast<Component*>(inst);
+                sceneObject->AddComponent(component);
+            }
+        }
+        ImGui::EndPopup();
+    }
+
+    // add component button
+    if (ImGui::Button(addCompPopupName)) {
+        ImGui::OpenPopup(addCompPopupName);
     }
 }

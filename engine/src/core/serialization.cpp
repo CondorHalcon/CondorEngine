@@ -36,6 +36,14 @@ void CondorEngine::FieldInfo::DrawField(FieldInfo& field, void* data) {
     }
 }
 
+std::string CondorEngine::FieldInfo::AppendId(std::string name, unsigned int id) {
+    return std::string(name).append("##").append(std::to_string(id));
+}
+
+const char* CondorEngine::FieldInfo::AppendId(const char* name, unsigned int id) {
+    return AppendId(std::string{ name }, id).c_str();
+}
+
 CondorEngine::TypeInfo* CondorEngine::TypeResolver<int>::Get() {
     static TypeInfo typeInfo = {
         "int", nullptr, {},

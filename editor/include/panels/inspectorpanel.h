@@ -27,5 +27,6 @@ namespace CondorEditor
         virtual void OnGui() override;
     private:
         static void DrawObjectAsField(FieldInfo& field, void* data);
+        static void AddComponentButton(SceneObject* sceneObject);
     };
 }
