@@ -1,4 +1,5 @@
 #include "editorrenderer.h"
+#include "editorpanel.h"
 #include "editormainmenubar.h"
 #include <imgui.h>
 #include <imgui_internal.h>

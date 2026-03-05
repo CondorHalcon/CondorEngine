@@ -1,10 +1,7 @@
 #include "editor.h"
 #include "editorpanel.h"
-#include "panels/consolepanel.hpp"
-#include "panels/hierarchypanel.hpp"
-#include "panels/inspectorpanel.hpp"
-#include "panels/projectpanel.hpp"
-#include "panels/scenepanel.hpp"
+#include "panels.hpp"
+#include <imgui.h>
 
 CondorEditor::Editor* CondorEditor::Editor::instance = nullptr;
 
@@ -33,7 +30,7 @@ void CondorEditor::Editor::init() {
     io.IniFilename = "EditorConfig.ini";
 
     // panels
-    panels = std::vector<EditorPanel*>{ new HierarchyPanel(), new InspectorPanel(), new ScenePanel(), new ProjectPanel(), new ConsolePanel() };
+    panels = std::vector<EditorPanel*>{ HierarchyPanel::Instance(), InspectorPanel::Instance(), ScenePanel::Instance(), ProjectPanel::Instance(), ConsolePanel::Instance() };
 
     // scene camera
     sceneCamera = new Camera();
@@ -43,4 +40,28 @@ void CondorEditor::Editor::init() {
 }
 
 void CondorEditor::Editor::terminate() {
+}
+
+void CondorEditor::Editor::AddPanel(EditorPanel* panel) {
+    for (EditorPanel* existingPanel : panels) {
+        if (panel == existingPanel) {
+            return; // already in registered panels
+        }
+    }
+
+    panels.push_back(panel);
+}
+
+bool CondorEditor::Editor::RemovePanel(EditorPanel* panel, bool destroy) {
+    for (int i = 0; i < panels.size(); i++) {
+        if (panels[i] == panel) {
+            panels.erase(std::next(panels.begin(), i));
+            if (destroy) {
+                delete panel;
+            }
+            return true;
+        }
+    }
+
+    return false;
 }

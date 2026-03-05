@@ -1,6 +1,8 @@
 #include "editormainmenubar.h"
 #include "editor.h"
+#include "panels.hpp"
 #include <CondorEngine/serialization.hpp>
+#include <imgui.h>
 
 CondorEditor::EditorMainMenuBar::EditorMainMenuBar() {}
 
@@ -42,6 +44,8 @@ void CondorEditor::EditorMainMenuBar::DrawMainMenuBar() {
 }
 
 void CondorEditor::EditorMainMenuBar::ProjectMenu() {
+    ImGui::BeginDisabled();
+
     if (ImGui::MenuItem("New Project")) {}
     if (ImGui::MenuItem("Open Project")) {}
     if (ImGui::MenuItem("Save Project")) {}
@@ -54,9 +58,13 @@ void CondorEditor::EditorMainMenuBar::ProjectMenu() {
 
     ImGui::Separator();
     if (ImGui::MenuItem("User Settings", "Ctrl+.")) {}
+
+    ImGui::EndDisabled();
 }
 
 void CondorEditor::EditorMainMenuBar::EditMenu() {
+    ImGui::BeginDisabled();
+
     if (ImGui::MenuItem("New Scene", "Ctrl+N")) {}
     if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {}
     if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {}
@@ -66,6 +74,8 @@ void CondorEditor::EditorMainMenuBar::EditMenu() {
     if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
     if (ImGui::MenuItem("Redo", "Ctrl+Y")) {}
 
+    ImGui::EndDisabled();
+
     ImGui::Separator();
     if (ImGui::BeginMenu("New SceneObject")) {
         NewSceneObjectSubMenu();
@@ -73,20 +83,38 @@ void CondorEditor::EditorMainMenuBar::EditMenu() {
     }
 }
 
+void GetPanel(CondorEditor::EditorPanel* panel) {
+    CondorEditor::Editor::Instance()->AddPanel(panel);
+    ImGui::SetWindowFocus(panel->getTitle());
+}
+
 void CondorEditor::EditorMainMenuBar::PanelsMenu() {
-    if (ImGui::MenuItem("Console")) {}
-    if (ImGui::MenuItem("Hierarchy")) {}
-    if (ImGui::MenuItem("Inspector")) {}
-    if (ImGui::MenuItem("Project")) {}
-    if (ImGui::MenuItem("Scene")) {}
+    if (ImGui::MenuItem(ConsolePanel::Instance()->getTitle())) {
+        GetPanel(ConsolePanel::Instance());
+    }
+    if (ImGui::MenuItem(HierarchyPanel::Instance()->getTitle())) {
+        GetPanel(HierarchyPanel::Instance());
+    }
+    if (ImGui::MenuItem(InspectorPanel::Instance()->getTitle())) {
+        GetPanel(InspectorPanel::Instance());
+    }
+    if (ImGui::MenuItem(ProjectPanel::Instance()->getTitle())) {
+        GetPanel(ProjectPanel::Instance());
+    }
+    if (ImGui::MenuItem(ScenePanel::Instance()->getTitle())) {
+        GetPanel(ScenePanel::Instance());
+    }
 
     ImGui::Separator();
 }
 
 void CondorEditor::EditorMainMenuBar::PluginsMenu() {
+    ImGui::BeginDisabled();
     if (ImGui::MenuItem("Plugin Manager")) {}
 
     ImGui::Separator();
+
+    ImGui::EndDisabled();
 }
 
 inline SceneObject* NewSceneObject(TypeInfo* type, Object* selectedObject) {

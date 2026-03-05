@@ -1,11 +1,11 @@
 #pragma once
+#include "editor.h"
 #include <CondorEngine.hpp>
 #include <CondorEngine/rendering/renderfeatures/imguirenderfeature.h>
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
-#include "editor.h"
-#include "editorpanel.h"
+
 using namespace CondorEngine;
 using namespace CondorEngine::Rendering;
 

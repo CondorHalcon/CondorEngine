@@ -2,6 +2,7 @@
 #include <CondorEngine.hpp>
 #include <CondorEngine/serialization.hpp>
 #include <yaml-cpp/yaml.h>
+
 using namespace CondorEngine;
 
 namespace CondorEditor
