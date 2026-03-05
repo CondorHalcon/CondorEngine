@@ -148,6 +148,9 @@ void CondorEngine::SceneObject::OnCollision(Collision collision)
 
 CondorEngine::Scene *CondorEngine::SceneObject::getScene()
 {
+    if (this->scene == nullptr && this->parent != nullptr) {
+        return this->parent->scene;
+    }
     return this->scene;
 }
 
@@ -175,6 +178,9 @@ void CondorEngine::SceneObject::setParent(SceneObject *newParent)
     if (newParent != nullptr)
     {
         newParent->AddChild(this);
+        if (scene != nullptr) {
+            scene->RemoveSceneObject(this);
+        }
     }
     else
     {

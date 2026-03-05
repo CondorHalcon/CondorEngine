@@ -13,7 +13,7 @@ namespace CondorEditor
     public:
         virtual const char* getTitle() { return "Inspector"; }
 
-        static inline std::vector<std::string> specialFieldNames = { "name", "enabled", "components", "children" };
+        static inline std::vector<std::string> specialFieldNames = { "name", "enabled", "components", "hierarchy", "children" };
 
         static inline bool isSpecialFieldName(const char* fieldName) {
             for (std::string name : specialFieldNames) {
@@ -27,7 +27,7 @@ namespace CondorEditor
             Object* selected = Editor::Instance()->selectedSceneObject;
             ImGui::Begin(getTitle());
 
-            if (selected) {
+            if (selected != nullptr) {
                 std::vector<FieldInfo> fields;
                 selected->GetTypeInfo()->CollectFields(fields);
 
@@ -75,21 +75,38 @@ namespace CondorEditor
                     std::vector<Component*>* components = (std::vector<Component*>*)data;
 
                     if (components) {
-                        for (Component* component : *components) {
+                        for (Component*& component : *components) {
                             void* componentData = (char*)component;
-                            FieldInfo componentInfo = {
+                            FieldInfo componentField = {
                                 component->name.c_str(),
                                 component->GetTypeInfo()->name,
                                 false,
                                 0,
                                 FieldFlags::None
                             };
-                            if (ImGui::CollapsingHeader(component->name.c_str())) {
-                                // custom draw handler (avoids a field name entry & special fields)
-                                InspectorPanel::DrawObjectAsField(componentInfo, componentData);
+
+                            bool componentOpened = ImGui::CollapsingHeader(component->name.c_str());
+                            
+                            // right click context menu
+                            if (ImGui::BeginPopupContextItem()) {
+                                ImGui::EndPopup();
+                            }
+
+                            // drag & drop source
+                            DragDropHandler::Source<Component>(component->GetTypeInfo()->name, component);
+
+                            if (componentOpened) {
+                                // custom draw handler (avoids a field name & other special fields)
+                                InspectorPanel::DrawObjectAsField(componentField, componentData);
                             }
                         }
                     }
+                }
+
+                // add component button
+                ImGui::Separator();
+                if (ImGui::Button("Add Component")) {
+                    Debug::LogError("InspectorPanel :: Add Component button not implemented.");
                 }
             }
 

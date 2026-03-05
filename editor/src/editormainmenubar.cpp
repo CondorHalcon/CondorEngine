@@ -51,6 +51,9 @@ void CondorEditor::EditorMainMenuBar::ProjectMenu() {
     if (ImGui::MenuItem("Project Settings", "Ctrl+,")) {}
     if (ImGui::MenuItem("Plugin Manager")) {}
     if (ImGui::MenuItem("Build Project", "Ctrl+Print")) {}
+
+    ImGui::Separator();
+    if (ImGui::MenuItem("User Settings", "Ctrl+.")) {}
 }
 
 void CondorEditor::EditorMainMenuBar::EditMenu() {
@@ -86,7 +89,7 @@ void CondorEditor::EditorMainMenuBar::PluginsMenu() {
     ImGui::Separator();
 }
 
-SceneObject* NewSceneObject(TypeInfo* type, Object* selectedObject) {
+inline SceneObject* NewSceneObject(TypeInfo* type, Object* selectedObject) {
     if (type == nullptr) {
         Debug::LogError("EditorMainMenuBar :: <type> == nullptr");
         return nullptr;
@@ -96,8 +99,8 @@ SceneObject* NewSceneObject(TypeInfo* type, Object* selectedObject) {
         return nullptr;
     }
     if (selectedObject == nullptr) {
-        Debug::LogError("EditorMainMenuBar :: No selected Scene or SceneObject to add a SceneObject to.");
-        return nullptr;
+        selectedObject = Application::activeScene;
+        Debug::LogWarning("EditorMainMenuBar :: No selected object; adding to scene");
     }
 
     //TODO fix forced cast
@@ -129,28 +132,12 @@ void CondorEditor::EditorMainMenuBar::NewSceneObjectSubMenu() {
     }
 
     ImGui::Separator();
-    for (auto entry : ReflectionRegistry::registry) {
-        if (entry.second->name == std::string{ "CondorEngine::SceneObject" }) { continue; }
-
-        TypeInfo* currentType = entry.second;
-        bool isSceneObjectSubType = false;
-        while (currentType->parent != nullptr) {
-            if (currentType->name == std::string{ "CondorEngine::SceneObject" }) {
-                isSceneObjectSubType = true;
-                break;
-            }
-
-            if (currentType->parent != nullptr) {
-                currentType = currentType->parent;
-            }
-        }
-
-        if (isSceneObjectSubType) {
-            if (ImGui::MenuItem(entry.second->name)) {
-                SceneObject* newSceneObject = NewSceneObject(entry.second, Editor::Instance()->selectedSceneObject);
-                if (newSceneObject != nullptr) {
-                    Editor::Instance()->selectedSceneObject = newSceneObject;
-                }
+    std::vector<TypeInfo*> sceneObjectTypes = ReflectionRegistry::GetInheritedTypes(TypeResolver<SceneObject>::Get()->name, false);
+    for (TypeInfo* type : sceneObjectTypes) {
+        if (ImGui::MenuItem(type->name)) {
+            SceneObject* newSceneObject = NewSceneObject(type, Editor::Instance()->selectedSceneObject);
+            if (newSceneObject != nullptr) {
+                Editor::Instance()->selectedSceneObject = newSceneObject;
             }
         }
     }

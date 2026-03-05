@@ -70,7 +70,7 @@ namespace CondorEngine
 
     class DllExport ReflectionRegistry
     {
-    public:
+    private:
         static inline std::unordered_map<const char*, TypeInfo*> registry = {};
     public:
         template<typename T>
@@ -104,6 +104,35 @@ namespace CondorEngine
             RegisterType<bool>();
             RegisterType<std::string>();
             RegisterType<unsigned int>();
+        }
+
+        static std::vector<TypeInfo*> GetInheritedTypes(const char* base, bool includeSelf = true) {
+            std::vector<TypeInfo*> subTypes = {};
+            for (auto entry : registry) {
+                TypeInfo* currentType = entry.second;
+
+                // this is the base type
+                if (strcmp(currentType->name, base) == 0 && includeSelf) {
+                    subTypes.push_back(currentType);
+                    continue;
+                }
+
+                while (currentType->parent != nullptr) {
+                    if (strcmp(currentType->parent->name, base) == 0) {
+                        subTypes.push_back(currentType);
+                        break;
+                    }
+                    currentType = currentType->parent;
+                }
+            }
+            return subTypes;
+        }
+
+        static std::vector<TypeInfo*> GetInheritedTypes(TypeInfo* base, bool includeSelf = true) {
+            if (base == nullptr) {
+                return {};
+            }
+            return GetInheritedTypes(base->name, includeSelf);
         }
     };
 
@@ -269,6 +298,67 @@ public:
             }
         };
         static inline AutoRegister_Self _autoRegister_Self;
+    };
+
+#pragma endregion
+
+#pragma region Drag & Drop
+
+    class DllExport DragDropHandler
+    {
+    public:
+        template <typename T>
+        static void Source(const char* type, T*& data) {
+            if (data == nullptr) {
+                return;
+            }
+
+            if (ImGui::BeginDragDropSource()) {
+                bool sent = ImGui::SetDragDropPayload(type, &data, sizeof(T*));
+                ImGui::Text("Dragging item(%s)", type); // TODO solve for item name
+                ImGui::EndDragDropSource();
+            }
+        }
+
+        template <typename T>
+        static void Source(TypeInfo* type, T*& data) {
+            if (type == nullptr) {
+                return;
+            }
+            Source<T>(type->name, data);
+        }
+
+        template <typename T>
+        static T* Target(const char* type) {
+            if (!ImGui::BeginDragDropTarget()) {
+                return nullptr;
+            }
+
+            std::vector<TypeInfo*> inheritedTypes = ReflectionRegistry::GetInheritedTypes(type, true);
+            for (TypeInfo* subType : inheritedTypes) {
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(subType->name)) {
+                    T* data = nullptr;
+
+                    if (payload->Data != nullptr) {
+                        data = *static_cast<T* const*>(payload->Data);
+                    }
+
+                    ImGui::EndDragDropTarget();
+                    return data;
+                }
+            }
+            
+            ImGui::EndDragDropTarget();
+            return nullptr;
+        }
+        template <typename T>
+        static T* Target(TypeInfo* type) {
+            if (type == nullptr) {
+                return nullptr;
+            }
+
+            return Target<T>(type->name);
+        }
     };
 
 #pragma endregion

@@ -84,6 +84,7 @@ void CondorEngine::Scene::HierarchyLateUpdate()
     for (int i = 0; i < markedDelete.size(); i++)
     {
         RemoveSceneObject(markedDelete[i]);
+        markedDelete[i]->setParent(nullptr);
         delete markedDelete[i];
     }
     markedDelete.clear();
