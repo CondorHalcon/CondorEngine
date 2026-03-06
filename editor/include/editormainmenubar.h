@@ -1,6 +1,4 @@
-#include <CondorEngine.hpp>
-
-using namespace CondorEngine;
+#pragma once
 
 namespace CondorEditor
 {

@@ -1,6 +1,5 @@
 #pragma once
 #include <CondorEngine.hpp>
-#include <vector>
 
 using namespace CondorEngine;
 

@@ -1,0 +1,30 @@
+#pragma once
+#include <CondorEngine.hpp>
+#include <CondorEngine/Rendering.hpp>
+
+using namespace CondorEngine;
+using namespace CondorEngine::Rendering;
+
+namespace CondorEditor
+{
+    class SceneViewRenderFeature : public RenderFeature
+    {
+    private:
+        SceneViewRenderFeature();
+        ~SceneViewRenderFeature();
+        static SceneViewRenderFeature* instance;
+    public:
+        static SceneViewRenderFeature* Instance();
+
+        GLuint sceneFBO = 0;
+        GLuint sceneColorTex = 0;
+        GLuint sceneDepthRBO = 0;
+        Vector2Int sceneSize = { 1280, 720 };
+
+        void CreateSceneFramebuffer(int width, int height);
+
+        void SetBuffer();
+
+        virtual void Render() override;
+    };
+}

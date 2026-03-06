@@ -1,6 +1,6 @@
 #pragma once
 #include "editorpanel.h"
-#include "editorrenderer.h"
+#include <CondorEngine.hpp>
 
 using namespace CondorEngine;
 

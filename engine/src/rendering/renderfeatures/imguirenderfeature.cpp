@@ -1,4 +1,7 @@
 #include "CondorEngine/rendering/renderfeatures/imguirenderfeature.h"
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 CondorEngine::Rendering::ImGuiRenderFeature::ImGuiRenderFeature() {}
 

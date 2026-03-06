@@ -1,4 +1,5 @@
 #include "panels/hierarchypanel.h"
+#include "editor.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 
