@@ -1,8 +1,5 @@
 #include "CondorEngine/application.h"
 // third party
-#define GLEW_STATIC // if preprocessor not defined
-#include "glew.h"
-#include "glfw/glfw3.h"
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -125,7 +122,8 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 
 	// ImGui Initialization
 	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
+	imguiContext = ImGui::CreateContext();
+	ImGui::SetCurrentContext(imguiContext);
 
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;

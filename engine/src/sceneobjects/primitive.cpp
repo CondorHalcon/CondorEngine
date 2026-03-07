@@ -2,8 +2,7 @@
 #include "CondorEngine/materials/phong.hpp"
 #include "CondorEngine/resourcemanager.h"
 // third party
-#include "glew.h"
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
 {

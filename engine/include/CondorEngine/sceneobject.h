@@ -270,7 +270,7 @@ namespace CondorEngine
 		/// @brief Remove a child SceneObject form this SceneObject.
 		/// @param child The child to remove.
 		/// @return Removed child.
-		Component*& RemoveComponent(Component* child) {
+		Component*& RemoveComponent(Component*& child) {
 			for (int i = 0; i < components.size(); i++) {
 				if (components[i] == child) {
 					components.erase(std::next(components.begin(), i));

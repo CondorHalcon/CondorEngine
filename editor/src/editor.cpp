@@ -26,6 +26,8 @@ CondorEditor::Editor* CondorEditor::Editor::Instance() {
 }
 
 void CondorEditor::Editor::init() {
+	ImGui::SetCurrentContext(Application::Instance()->imguiContext);
+
     ImGuiIO& io = ImGui::GetIO();
     io.IniFilename = "EditorConfig.ini";
 

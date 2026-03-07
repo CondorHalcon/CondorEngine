@@ -16,6 +16,8 @@ namespace CondorEngine
 	{
 		/// @brief Application window.
 		struct GLFWwindow* window;
+	public:
+		ImGuiContext* imguiContext;
 
 	private:
 		/// @brief Class constructor.

@@ -2,7 +2,6 @@
 #include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/rendering/renderfeature.h"
 // third party
-#include <glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <stb_image.h> // for image loading
@@ -361,11 +360,8 @@ CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::Instance()
 
 void CondorEngine::Rendering::Renderer::init() {
 	// start setting up graphics pipeline
-	// Ensure GLEW loads modern OpenGL function pointers (required on some drivers)
-	glewExperimental = GL_TRUE;
-	GLenum glewErr = glewInit();
-	if (glewErr != GLEW_OK) {
-		throw(std::string("CondorEngine::Renderer :: GLEW initialization failed: ") + (const char*)glewGetErrorString(glewErr));
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		throw std::runtime_error("CondorEngine::Renderer :: Failed to initialize GLAD");
 	}
 	// set flags for openGL features
 	glEnable(GL_BLEND);
@@ -386,9 +382,9 @@ void CondorEngine::Rendering::Renderer::init() {
 
 	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
 	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
-	message.append("\t- GLEW version: " + std::string((const char*)glewGetString(GLEW_VERSION)) + "\n");
-	message.append("\t- Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
-	message.append("\t- GLSL: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
+	message.append("\t- OpenGL vendor: " + std::string((const char*)glGetString(GL_VENDOR)) + "\n");
+	message.append("\t- OpenGL Renderer: " + std::string((const char*)glGetString(GL_RENDERER)) + "\n");
+	message.append("\t- GLSL version: " + std::string((const char*)glGetString(GL_SHADING_LANGUAGE_VERSION)));
 	Debug::Log(message);
 }
 

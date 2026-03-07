@@ -14,18 +14,14 @@ set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES FOLDER "Eng
 set_target_properties(uninstall PROPERTIES FOLDER "EngineLibs/assimp_utils")
 set_target_properties(unit PROPERTIES FOLDER "EngineLibs/assimp_utils")
 set_target_properties(zlibstatic PROPERTIES FOLDER "EngineLibs/assimp_utils")
-# glew
+
+# glad
 message(STATUS "GLEW :: Importing lib")
-add_library(glew STATIC IMPORTED)
-set (glew_IMPORT_DIR ${CondorEngine_THIRD_PARTY_DIR}/glew/lib/Win32)
-if (CondorEngine_OS_BIT EQUAL 64)
-    set (glew_IMPORT_DIR ${CondorEngine_THIRD_PARTY_DIR}/glew/lib/x64)
-endif()
-set_target_properties(glew PROPERTIES
-    IMPORTED_LOCATION ${glew_IMPORT_DIR}/glew32s.lib
+add_library(glad STATIC 
+    ${CondorEngine_THIRD_PARTY_DIR}/glad/src/glad.c
 )
-target_include_directories(glew INTERFACE ${CondorEngine_THIRD_PARTY_DIR}/glew)
-set_target_properties(glew PROPERTIES FOLDER "EngineLibs")
+target_include_directories(glad PUBLIC ${CondorEngine_THIRD_PARTY_DIR}/glad/include)
+set_target_properties(glad PROPERTIES FOLDER "EngineLibs")
 
 # glfw
 set(GLFW_LIBRARY_TYPE STATIC)
@@ -35,6 +31,7 @@ if (docs)
     set_target_properties(docs PROPERTIES FOLDER "EngineLibs/glfw_utils")
 endif()
 set_target_properties(update_mappings PROPERTIES FOLDER "EngineLibs/glfw_utils")
+
 # glm - force static library to avoid building a shared DLL
 # Temporarily disable BUILD_SHARED_LIBS so GLM's add_library() uses STATIC.
 if(DEFINED BUILD_SHARED_LIBS)
@@ -71,6 +68,7 @@ set_property(TARGET imgui PROPERTY
     MSVC_RUNTIME_LIBRARY "MultiThreadedDLL"
 )
 set_target_properties(imgui PROPERTIES FOLDER "EngineLibs")
+
 # OpenGL
 find_package(OpenGL REQUIRED)
 
@@ -101,10 +99,10 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY
 
 # dependencies
 target_link_libraries(${PROJECT_NAME} PUBLIC assimp)
-target_link_libraries(${PROJECT_NAME} PUBLIC glew)
+target_link_libraries(${PROJECT_NAME} PUBLIC glad)
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 target_link_libraries(${PROJECT_NAME} PUBLIC glm::glm)
-target_link_libraries(${PROJECT_NAME} PRIVATE imgui)
+target_link_libraries(${PROJECT_NAME} PUBLIC imgui)
 target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL::GL)
 add_dependencies(${PROJECT_NAME} CondorEngine_CopyResources)
 add_dependencies(${PROJECT_NAME} CondorEngine_ProcessShaders)
