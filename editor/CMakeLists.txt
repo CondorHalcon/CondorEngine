@@ -32,7 +32,7 @@ add_executable(${Editor_NAME}
     ${CondorEditor_HEADERS} 
     ${CondorEditor_SOURCES}
 )
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${Editor_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # dependencies
 target_link_libraries(${Editor_NAME} PUBLIC ${PROJECT_NAME})

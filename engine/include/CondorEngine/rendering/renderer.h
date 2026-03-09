@@ -121,6 +121,8 @@ namespace CondorEngine
 	};
 #pragma endregion
 
+#pragma region Renderer
+
 	namespace Rendering
 	{
 		class RenderFeature;
@@ -131,19 +133,24 @@ namespace CondorEngine
 		protected:
 			Renderer();
 			~Renderer();
-			static Renderer* instance;
+			static inline Renderer* instance = nullptr;
 
 		public:
+			static Renderer* Instance() {
+				if (instance == nullptr) {
+					instance = new Renderer();
+				}
+				return instance;
+			}
+
 			/// @brief Meshes to render this frame.
 			static std::vector<Mesh*> meshes;
 			/// @brief Lights to render this frame.
 			static std::vector<Light*> lights;
 
 			/// @brief Color to clear the screen buffer.
-			ColorRGB clearColor;
+			ColorRGB clearColorRGB;
 			std::vector<RenderFeature*> features;
-
-			static Renderer* Instance();
 
 			/// @brief Initialize renderer.
 			/// @note When overriding this method, it is recommended to call the base method `Renderer::init()` first then add to it.
@@ -155,6 +162,61 @@ namespace CondorEngine
 
 		protected:
 			void ResetScreen();
+
+		public:
+
+			// TODO turn into a proper abstraction layer
+#pragma region Render
+
+			static void viewport(GLint x, GLint y, GLsizei width, GLsizei height);
+			static void clearColor(ColorRGB color);
+			static void clear(GLbitfield mask);
+			static void drawElements(GLenum mode, GLsizei count, GLenum type, const void* indices);
+
+#pragma endregion
+
+#pragma region Texture
+
+			static void genTextures(GLsizei n, GLuint* textures);
+			static void deleteTextures(GLsizei n, const GLuint* textures);
+			static void bindTexture(GLenum target, GLuint texture);
+			static void texImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void* data);
+			static void texParameteri(GLenum target, GLenum pname, GLint param);
+
+#pragma endregion
+
+#pragma region Renderbuffer
+
+			static void genRenderbuffers(GLsizei n, GLuint* renderbuffers);
+			static void deleteRenderbuffers(GLsizei n, GLuint* renderbuffers);
+			static void bindRenderbuffer(GLenum target, GLuint renderbuffer);
+			static void renderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
+			static void framebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
+			static GLenum checkFramebufferStatus(GLenum target);
+
+#pragma endregion
+
+#pragma region Framebuffers / Render Targets
+
+			static void genFramebuffers(GLsizei n, GLuint* framebuffers);
+			static void deleteFramebuffers(GLsizei n, GLuint* framebuffers);
+			static void bindFramebuffer(GLenum target, GLuint framebuffer);
+			static void framebufferTexture2D(GLenum target, GLenum attachment, GLenum texTarget, GLuint texture, GLint level);
+#pragma endregion
+
+#pragma region Shaders
+
+			static void useProgram(GLuint program);
+
+#pragma endregion
+
+#pragma region Buffers(Vertex / Index / Uniform)
+
+			static void bindVertexArray(GLuint array);
+
+#pragma endregion
 		};
 	}
+
+#pragma endregion
 }

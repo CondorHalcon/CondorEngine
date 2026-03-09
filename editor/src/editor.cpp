@@ -1,6 +1,7 @@
 #include "editor.h"
 #include "editorpanel.h"
 #include "panels.hpp"
+#include "editorscenecamera.hpp"
 #include <imgui.h>
 
 CondorEditor::Editor* CondorEditor::Editor::instance = nullptr;
@@ -35,9 +36,10 @@ void CondorEditor::Editor::init() {
     panels = std::vector<EditorPanel*>{ HierarchyPanel::Instance(), InspectorPanel::Instance(), ScenePanel::Instance(), ProjectPanel::Instance(), ConsolePanel::Instance() };
 
     // scene camera
-    sceneCamera = new Camera();
-    if (Camera::Main() == sceneCamera) {
-        Camera::SetMainCamera(nullptr);
+    if (!sceneCamera) {
+        sceneCamera = new EditorSceneCamera();
+        sceneCamera->Move(Vector3{ 0, 5, -5 });
+        sceneCamera->Rotate(Vector3{ 0, 35, 0 });
     }
 }
 

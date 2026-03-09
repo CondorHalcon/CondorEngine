@@ -13,9 +13,9 @@ namespace CondorEngine
 		REFLECT_CLASS(CondorEngine::Camera, Component)
 	public:
 		/// @brief Default class constructor.
-		Camera();
+		Camera(bool isMain = true);
 		/// @brief Class constructor.
-		Camera(std::string name);
+		Camera(std::string name, bool isMain = true);
 		/// @brief Class deconstructor.
 		~Camera();
 
@@ -45,6 +45,8 @@ namespace CondorEngine
 		/// @brief Get this Camera's world position.
 		/// @return World position.
 		Vector3 getPosition();
+		Vector3 getForward();
+		Vector3 getUp();
 		/// @brief Get this Camera's view matrix.
 		/// @return View matrix.
 		Transform getViewMatrix();

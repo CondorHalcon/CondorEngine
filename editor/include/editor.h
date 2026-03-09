@@ -7,6 +7,7 @@ namespace CondorEditor
 {
     class EditorPanel;
     class EditorRenderFeature;
+    class EditorSceneCamera;
 
     class Editor
     {
@@ -22,7 +23,8 @@ namespace CondorEditor
         void init();
         void terminate();
 
-        Camera* sceneCamera;
+        EditorSceneCamera* sceneCamera;
+        
         Object* selectedSceneObject;
 
         bool playMode;

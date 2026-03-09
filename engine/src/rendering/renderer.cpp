@@ -18,8 +18,6 @@
 #include "CondorEngine/components/light.h"
 #include "CondorEngine/sceneobject.h"
 
-using std::fstream;
-
 #pragma region MeshData
 
 CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount) {
@@ -167,7 +165,7 @@ void ReportCompileStatus(GLuint& shaderToReport) {
 }
 
 std::string ReadFile(const char* path) {
-	fstream stream(path, std::ios_base::in);
+	std::fstream stream(path, std::ios_base::in);
 	std::string source;
 
 	// TODO: add error checking and validation if you are reading from a text file.
@@ -328,13 +326,12 @@ CondorEngine::DirectionalLight::DirectionalLight() : DirectionalLight(ColorRGB{ 
 
 #pragma region Renderer
 
-CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::instance = nullptr;
 std::vector<CondorEngine::Mesh*> CondorEngine::Rendering::Renderer::meshes = std::vector<CondorEngine::Mesh*>();
 std::vector<CondorEngine::Light*> CondorEngine::Rendering::Renderer::lights = std::vector<CondorEngine::Light*>();
 
 CondorEngine::Rendering::Renderer::Renderer() {
 	features = std::vector<RenderFeature*>();
-	clearColor = ColorRGB{ .4, .4, .4 };
+	clearColorRGB = ColorRGB{ .4, .4, .4 };
 }
 
 CondorEngine::Rendering::Renderer::~Renderer() {
@@ -349,13 +346,6 @@ CondorEngine::Rendering::Renderer::~Renderer() {
 	for (auto feature : features) {
 		delete feature;
 	}
-}
-
-CondorEngine::Rendering::Renderer* CondorEngine::Rendering::Renderer::Instance() {
-	if (instance == nullptr) {
-		instance = new Renderer();
-	}
-	return instance;
 }
 
 void CondorEngine::Rendering::Renderer::init() {
@@ -378,7 +368,7 @@ void CondorEngine::Rendering::Renderer::init() {
 	glEnable(GL_DEBUG_OUTPUT);
 	glDebugMessageCallback(Debug::GLMessageCallback, 0);
 
-	glClearColor(clearColor.r, clearColor.g, clearColor.b, 1);
+	glClearColor(clearColorRGB.r, clearColorRGB.g, clearColorRGB.b, 1);
 
 	std::string message = "CondorEngine::Application :: [OpenGL Environment]\n";
 	message.append("\t- OpenGL version: " + std::string((const char*)glGetString(GL_VERSION)) + "\n");
@@ -419,3 +409,87 @@ void CondorEngine::Rendering::Renderer::ResetScreen() {
 }
 #pragma endregion
 
+
+void CondorEngine::Rendering::Renderer::viewport(GLint x, GLint y, GLsizei width, GLsizei height) {
+	glViewport(x, y, width, height);
+}
+
+void CondorEngine::Rendering::Renderer::clearColor(ColorRGB color) {
+	glClearColor(color.r, color.g, color.b, 1.0f);
+}
+
+void CondorEngine::Rendering::Renderer::clear(GLbitfield mask) {
+	glClear(mask);
+}
+
+void CondorEngine::Rendering::Renderer::drawElements(GLenum mode, GLsizei count, GLenum type, const void* indices) {
+	glDrawElements(mode, count, type, indices);
+}
+
+void CondorEngine::Rendering::Renderer::genTextures(GLsizei n, GLuint* textures) {
+	glGenTextures(n, textures);
+}
+
+void CondorEngine::Rendering::Renderer::deleteTextures(GLsizei n, const GLuint* textures) {
+	glDeleteTextures(n, textures);
+}
+
+void CondorEngine::Rendering::Renderer::bindTexture(GLenum target, GLuint texture) {
+	glBindTexture(target, texture);
+}
+
+void CondorEngine::Rendering::Renderer::texImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void* data) {
+	glTexImage2D(target, level, internalformat, width, height, border, format, type, data);
+}
+
+void CondorEngine::Rendering::Renderer::texParameteri(GLenum target, GLenum pname, GLint param) {
+	glTexParameteri(target, pname, param);
+}
+
+void CondorEngine::Rendering::Renderer::genRenderbuffers(GLsizei n, GLuint* renderbuffers) {
+	glGenRenderbuffers(n, renderbuffers);
+}
+
+void CondorEngine::Rendering::Renderer::deleteRenderbuffers(GLsizei n, GLuint* renderbuffers) {
+	glDeleteRenderbuffers(n, renderbuffers);
+}
+
+void CondorEngine::Rendering::Renderer::bindRenderbuffer(GLenum target, GLuint renderbuffer) {
+	glBindRenderbuffer(target, renderbuffer);
+}
+
+void CondorEngine::Rendering::Renderer::renderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+	glRenderbufferStorage(target, internalformat, width, height);
+}
+
+void CondorEngine::Rendering::Renderer::framebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+	glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+GLenum CondorEngine::Rendering::Renderer::checkFramebufferStatus(GLenum target) {
+	return glCheckFramebufferStatus(target);
+}
+
+void CondorEngine::Rendering::Renderer::genFramebuffers(GLsizei n, GLuint* framebuffers) {
+	glGenFramebuffers(n, framebuffers);
+}
+
+void CondorEngine::Rendering::Renderer::deleteFramebuffers(GLsizei n, GLuint* framebuffers) {
+	glDeleteFramebuffers(n, framebuffers);
+}
+
+void CondorEngine::Rendering::Renderer::bindFramebuffer(GLenum target, GLuint framebuffer) {
+	glBindFramebuffer(target, framebuffer);
+}
+
+void CondorEngine::Rendering::Renderer::framebufferTexture2D(GLenum target, GLenum attachment, GLenum texTarget, GLuint texture, GLint level) {
+	glFramebufferTexture2D(target, attachment, texTarget, texture, level);
+}
+
+void CondorEngine::Rendering::Renderer::useProgram(GLuint program) {
+	glUseProgram(program);
+}
+
+void CondorEngine::Rendering::Renderer::bindVertexArray(GLuint array) {
+	glBindVertexArray(array);
+}

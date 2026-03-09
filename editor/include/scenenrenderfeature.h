@@ -12,9 +12,14 @@ namespace CondorEditor
     private:
         SceneViewRenderFeature();
         ~SceneViewRenderFeature();
-        static SceneViewRenderFeature* instance;
+        static inline SceneViewRenderFeature* instance = nullptr;
     public:
-        static SceneViewRenderFeature* Instance();
+        static SceneViewRenderFeature* Instance() {
+            if (instance == nullptr) {
+                instance = new SceneViewRenderFeature();
+            }
+            return instance;
+        }
 
         GLuint sceneFBO = 0;
         GLuint sceneColorTex = 0;

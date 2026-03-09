@@ -4,9 +4,8 @@
 // third party
 #include <glm/glm.hpp>
 
-CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
+CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material) : SceneObject("Primitive")
 {
-    this->name = "CondorEngine::Primitive";
     this->rigidbody = new Rigidbody();
     switch (type)
     {
@@ -37,6 +36,8 @@ CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material)
 }
 
 CondorEngine::Primitive::Primitive(PrimitiveType type) : CondorEngine::Primitive::Primitive(type, new Phong(CondorEngine::ResourceManager::LoadTexture("CondorEngine/textures/ColorGrid.png"))) {}
+
+CondorEngine::Primitive::Primitive() : Primitive(PrimitiveType::CubeMesh) {}
 
 CondorEngine::MeshData CondorEngine::Primitive::MakeSimpleCube()
 {

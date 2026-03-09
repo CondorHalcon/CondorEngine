@@ -142,9 +142,11 @@ namespace CondorEngine
 						glm::length(Vector3{(*mat)[0]}),
 						glm::length(Vector3{(*mat)[1]}),
 						glm::length(Vector3{(*mat)[2]}) };
-					ImGui::DragFloat3("position", (float*)&pos);
+					ImGui::DragFloat3("position", (float*)&(*mat)[3]);
+					ImGui::BeginDisabled();
 					ImGui::DragFloat3("rotation", (float*)&rot);
 					ImGui::DragFloat3("scale", (float*)&scale);
+					ImGui::EndDisabled();
 				},
 				nullptr
 			};

@@ -21,6 +21,13 @@ add_library(glad STATIC
     ${CondorEngine_THIRD_PARTY_DIR}/glad/src/glad.c
 )
 target_include_directories(glad PUBLIC ${CondorEngine_THIRD_PARTY_DIR}/glad/include)
+target_compile_definitions(glad
+    PRIVATE  GLAD_API_CALL_EXPORT_BUILD   # exports symbols when compiling glad itself
+    PUBLIC   GLAD_API_CALL_EXPORT         # causes dllimport for all consumers
+)
+set_target_properties(glad PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CondorEngine_FULL_OUTPUT_DIR}
+)
 set_target_properties(glad PROPERTIES FOLDER "EngineLibs")
 
 # glfw
@@ -61,7 +68,7 @@ target_include_directories(imgui PUBLIC
     ${CondorEngine_THIRD_PARTY_DIR}/imgui
     ${CondorEngine_THIRD_PARTY_DIR}/imgui/backends
 )
-target_link_libraries(imgui PUBLIC glfw)
+target_link_libraries(imgui PRIVATE glfw)
 target_compile_definitions(imgui PUBLIC IMGUI_ENABLE_DOCKING)
 target_compile_definitions(imgui PUBLIC IMGUI_USER_CONFIG="${CondorEngine_THIRD_PARTY_DIR}/imconfig.h")
 set_property(TARGET imgui PROPERTY

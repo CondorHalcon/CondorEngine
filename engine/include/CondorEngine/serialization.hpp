@@ -1,4 +1,5 @@
 #pragma once
+#define CondorEngine_Serialization
 #include "CondorEngine/pch.h"
 // std
 #include <string>

@@ -1,10 +1,11 @@
 #include "panels/scenepanel.h"
-#include <imgui.h>
+#include "scenenrenderfeature.h"
+//#include <imgui.h>
 
 void CondorEditor::ScenePanel::OnGui() {
     ImGui::Begin(getTitle());
 
-    /*SceneViewRenderFeature* svrf = SceneViewRenderFeature::Instance();
+    SceneViewRenderFeature* svrf = SceneViewRenderFeature::Instance();
 
     ImVec2 avail = ImGui::GetContentRegionAvail();
     int newWidth = (int)avail.x;
@@ -19,7 +20,7 @@ void CondorEditor::ScenePanel::OnGui() {
         (ImTextureID)(intptr_t)svrf->sceneColorTex,
         ImVec2((float)svrf->sceneSize.x, (float)svrf->sceneSize.y),
         ImVec2(0, 1), ImVec2(1, 0) // Flip Y
-    );*/
+    );
 
     ImGui::End();
 }

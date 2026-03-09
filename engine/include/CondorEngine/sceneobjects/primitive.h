@@ -25,6 +25,7 @@ namespace CondorEngine
 	/// @brief SceneObject with primitive mesh.
 	class DllExport Primitive : public SceneObject
 	{
+		REFLECT_CLASS(CondorEngine::Primitive, SceneObject)
 	public:
 		/// @brief Class constructor.
 		/// @param type Mesh type.
@@ -33,6 +34,8 @@ namespace CondorEngine
 		/// @brief Class constructor.
 		/// @param type Mesh type.
 		Primitive(PrimitiveType type);
+		/// @brief Default class constructor.
+		Primitive();
 		/// @brief Primitive mesh component.
 		Mesh *mesh;
 		/// @brief Primitive rigidbody component.

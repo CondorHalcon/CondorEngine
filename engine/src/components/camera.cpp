@@ -6,10 +6,10 @@
 
 CondorEngine::Camera *CondorEngine::Camera::main = nullptr;
 
-CondorEngine::Camera::Camera() : Camera("Camera") {}
+CondorEngine::Camera::Camera(bool isMain) : Camera("Camera", isMain) {}
 
-CondorEngine::Camera::Camera(std::string name) : Component(name) {
-	if (Camera::main == nullptr) {
+CondorEngine::Camera::Camera(std::string name, bool isMain) : Component(name) {
+	if (Camera::main == nullptr && isMain) {
 		Camera::main = this;
 	}
 
@@ -39,15 +39,23 @@ void CondorEngine::Camera::SetMainCamera(Camera *camera)
 
 CondorEngine::Vector3 CondorEngine::Camera::getPosition()
 {
-	return this->getSceneObject()->getPosition();
+	return this->getSceneObject() != nullptr ? this->getSceneObject()->getPosition() : Vector3{};
+}
+
+CondorEngine::Vector3 CondorEngine::Camera::getForward() {
+	return this->getSceneObject() != nullptr ? this->getSceneObject()->getForward() : Vector3{ 0, 0, 1 };
+}
+
+CondorEngine::Vector3 CondorEngine::Camera::getUp() {
+	return this->getSceneObject() != nullptr ? this->getSceneObject()->getUp() : Vector3{ 0, 1, 0 };
 }
 
 CondorEngine::Transform CondorEngine::Camera::getViewMatrix()
 {
 	return glm::lookAt(
-		this->getSceneObject()->getPosition(),										  // camera position
-		this->getSceneObject()->getPosition() + this->getSceneObject()->getForward(), // look at postion
-		this->getSceneObject()->getUp());											  // up vector
+		getPosition(),					// camera position
+		getPosition() + getForward(),	// look at postion
+		getUp());						// up vector
 }
 
 CondorEngine::Transform CondorEngine::Camera::getProjectionMatrix()

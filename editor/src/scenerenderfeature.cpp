@@ -1,7 +1,6 @@
 #include "scenenrenderfeature.h"
 #include "editor.h"
-
-CondorEditor::SceneViewRenderFeature* CondorEditor::SceneViewRenderFeature::instance = nullptr;
+#include "editorscenecamera.hpp"
 
 CondorEditor::SceneViewRenderFeature::SceneViewRenderFeature() {}
 
@@ -9,44 +8,37 @@ CondorEditor::SceneViewRenderFeature::~SceneViewRenderFeature() {
     if (instance == this) { instance = nullptr; }
 
     // clear buffers & textures
-    glDeleteFramebuffers(1, &sceneFBO);
-    glDeleteTextures(1, &sceneColorTex);
-    glDeleteRenderbuffers(1, &sceneDepthRBO);
-}
-
-CondorEditor::SceneViewRenderFeature* CondorEditor::SceneViewRenderFeature::Instance() {
-    if (instance == nullptr) {
-        instance = new SceneViewRenderFeature();
-    }
-    return instance;
+    Renderer::deleteFramebuffers(1, &sceneFBO);
+    Renderer::deleteTextures(1, &sceneColorTex);
+    Renderer::deleteRenderbuffers(1, &sceneDepthRBO);
 }
 
 void CondorEditor::SceneViewRenderFeature::CreateSceneFramebuffer(int width, int height) {
     // Cleanup old
     if (sceneFBO) {
-        glDeleteFramebuffers(1, &sceneFBO);
-        glDeleteTextures(1, &sceneColorTex);
-        glDeleteRenderbuffers(1, &sceneDepthRBO);
+        Renderer::deleteFramebuffers(1, &sceneFBO);
+        Renderer::deleteTextures(1, &sceneColorTex);
+        Renderer::deleteRenderbuffers(1, &sceneDepthRBO);
     }
 
     sceneSize = { width, height };
 
     GLuint* fbo = &sceneFBO;
-    glGenFramebuffers(1, &sceneFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, sceneFBO);
+    Renderer::genFramebuffers(1, &sceneFBO);
+    Renderer::bindFramebuffer(GL_FRAMEBUFFER, sceneFBO);
 
     // Color texture
-    glGenTextures(1, &sceneColorTex);
-    glBindTexture(GL_TEXTURE_2D, sceneColorTex);
-    glTexImage2D(
+    Renderer::genTextures(1, &sceneColorTex);
+    Renderer::bindTexture(GL_TEXTURE_2D, sceneColorTex);
+    Renderer::texImage2D(
         GL_TEXTURE_2D, 0, GL_RGBA8,
         width, height,
         0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr
     );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    Renderer::texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    Renderer::texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glFramebufferTexture2D(
+    Renderer::framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
@@ -55,34 +47,38 @@ void CondorEditor::SceneViewRenderFeature::CreateSceneFramebuffer(int width, int
     );
 
     // Depth buffer
-    glGenRenderbuffers(1, &sceneDepthRBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, sceneDepthRBO);
-    glRenderbufferStorage(
+    Renderer::genRenderbuffers(1, &sceneDepthRBO);
+    Renderer::bindRenderbuffer(GL_RENDERBUFFER, sceneDepthRBO);
+    Renderer::renderbufferStorage(
         GL_RENDERBUFFER,
         GL_DEPTH24_STENCIL8,
         width, height
     );
 
-    glFramebufferRenderbuffer(
+    Renderer::framebufferRenderbuffer(
         GL_FRAMEBUFFER,
         GL_DEPTH_STENCIL_ATTACHMENT,
         GL_RENDERBUFFER,
         sceneDepthRBO
     );
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    if (Renderer::checkFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         // Handle error
+        Debug::LogError("SceneRenderFeature :: Framebuffer incomplete!");
+    }
+    else {
+        Debug::Log("SceneRenderFeature :: Framebuffer complete.");
     }
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    Renderer::bindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void CondorEditor::SceneViewRenderFeature::SetBuffer() {
-    glBindFramebuffer(GL_FRAMEBUFFER, sceneFBO);
-    glViewport(0, 0, sceneSize.x, sceneSize.y);
+    Renderer::bindFramebuffer(GL_FRAMEBUFFER, sceneFBO);
+    Renderer::viewport(0, 0, sceneSize.x, sceneSize.y);
 
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Renderer::clearColor({0.2f, 0.2f, 0.2f});
+    Renderer::clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void CondorEditor::SceneViewRenderFeature::Render() {
@@ -98,13 +94,13 @@ void CondorEditor::SceneViewRenderFeature::Render() {
 
         // prep shader
         mesh->material->setTransform(mesh->getSceneObject()->getTransform());
-        mesh->material->UpdateMat(Editor::Instance()->sceneCamera);
+        mesh->material->UpdateMat(Editor::Instance()->sceneCamera->camera);
 
         // specify which shader to use
-        glUseProgram(mesh->material->getShader().program);
+        Renderer::useProgram(mesh->material->getShader().program);
         // specify which geometry
-        glBindVertexArray(mesh->data.vao);
+        Renderer::bindVertexArray(mesh->data.vao);
         // draw the geometry with the shader
-        glDrawElements(GL_TRIANGLES, mesh->data.size, GL_UNSIGNED_INT, nullptr);
+        Renderer::drawElements(GL_TRIANGLES, mesh->data.size, GL_UNSIGNED_INT, nullptr);
     }
 }

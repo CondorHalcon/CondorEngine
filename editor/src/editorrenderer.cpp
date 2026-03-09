@@ -2,6 +2,7 @@
 #include "editor.h"
 #include "editorpanel.h"
 #include "editormainmenubar.h"
+#include "scenenrenderfeature.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <backends/imgui_impl_glfw.h>
@@ -62,13 +63,13 @@ void CondorEditor::EditorRenderer::init() {
 
     // initialize render features
     features = std::vector<RenderFeature*>{
-        //DirectionalShadowMappingRenderFeature::Instance(),
-        //SceneViewRenderFeature::Instance(),
+        DirectionalShadowMappingRenderFeature::Instance(),
+        SceneViewRenderFeature::Instance(),
         new EditorRenderFeature() };
 
     // Create GL resources for the scene framebuffer now that the GL context
-    /*SceneViewRenderFeature* sceneFeature = SceneViewRenderFeature::Instance();
+    SceneViewRenderFeature* sceneFeature = SceneViewRenderFeature::Instance();
     if (sceneFeature) {
         sceneFeature->CreateSceneFramebuffer(sceneFeature->sceneSize.x, sceneFeature->sceneSize.y);
-    }*/
+    }
 }
