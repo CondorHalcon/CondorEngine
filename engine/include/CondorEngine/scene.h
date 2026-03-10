@@ -42,9 +42,9 @@ namespace CondorEngine
 
 	public:
 		/// @brief Root SceneObjects in this Scene.
-		FIELD(std::vector<SceneObject*>, hierarchy)
+		REFLECT_FIELD(std::vector<SceneObject*>, hierarchy)
 		/// @brief Scene ambient light.
-		FIELD(ColorRGB, ambientLight)
+		REFLECT_FIELD(ColorRGB, ambientLight)
 		/// @brief *Temporary* Scene directional light.
 		DirectionalLight light;
 #pragma region SceneObject Methods

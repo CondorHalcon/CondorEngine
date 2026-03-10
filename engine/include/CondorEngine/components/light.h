@@ -10,6 +10,7 @@ namespace CondorEngine
 	/// @brief Light component class.
 	class DllExport Light : public Component
 	{
+		REFLECT_CLASS(CondorEngine::Light, Component)
 	public:
 		/// @brief Class constructor.
 		/// @param col Color of the light.
@@ -19,15 +20,15 @@ namespace CondorEngine
 		// TODO add accessors and make private
 	public:
 		/// @brief Light Color.
-		ColorRGB color;
+		REFLECT_FIELD(ColorRGB, color)
 		/// @brief Light direction.
-		Vector3 direction;
-		float range;
-		float intensity;
+		REFLECT_FIELD(Vector3, direction)
+		REFLECT_FIELD(float, range)
+		REFLECT_FIELD(float, intensity)
 		/// @brief 
-		float cutoff;
+		REFLECT_FIELD(float, cutoff)
 		/// @brief 
-		float outerCutoff;
+		REFLECT_FIELD(float, outerCutoff)
 
 	public:
 		virtual void LateUpdate() override;

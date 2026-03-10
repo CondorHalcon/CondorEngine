@@ -18,7 +18,25 @@
 #include "CondorEngine/components/light.h"
 #include "CondorEngine/sceneobject.h"
 
+CondorEngine::Vertex::Vertex(Vector4 position, Color color, Vector2 uv, Vector3 normal) {
+	this->pos = position;
+	this->col = color;
+	this->uv = uv;
+	this->normal = normal;
+}
+
+CondorEngine::Vertex::Vertex() {}
+
 #pragma region MeshData
+
+CondorEngine::MeshData::MeshData(GLuint vao, GLuint vbo, GLuint ibo, GLuint size) {
+	this->vao = vao;
+	this->vbo = vbo;
+	this->ibo = ibo;
+	this->size = size;
+}
+
+CondorEngine::MeshData::MeshData() {}
 
 CondorEngine::MeshData CondorEngine::MeshData::MakeMesh(const Vertex* const verts, GLsizei vertCount, const GLuint* indices, GLsizei indexCount) {
 	MeshData mesh{};
@@ -186,6 +204,12 @@ std::string ReadFile(const char* path) {
 
 #pragma region Shader
 
+CondorEngine::Shader::Shader(GLuint program) {
+	this->program = program;
+}
+
+CondorEngine::Shader::Shader() {}
+
 CondorEngine::Shader CondorEngine::Shader::MakeShader(const char* vertShader, const char* fragShader) {
 	// TODO: add error handling/checking logic to shader process
 
@@ -246,6 +270,15 @@ void CondorEngine::Shader::FreeShader(Shader& shader) {
 #pragma endregion
 
 #pragma region Texture
+
+CondorEngine::Texture::Texture(GLuint handle, unsigned width, unsigned height, unsigned channels) {
+	this->handle = handle;
+	this->width = width;
+	this->height = height;
+	this->channels = channels;
+}
+
+CondorEngine::Texture::Texture() {}
 
 CondorEngine::Texture CondorEngine::Texture::MakeTexture(unsigned width, unsigned height, unsigned channels, const unsigned char* pixels) {
 	GLenum oglFormat = GL_RGBA;
@@ -329,7 +362,7 @@ CondorEngine::DirectionalLight::DirectionalLight() : DirectionalLight(ColorRGB{ 
 std::vector<CondorEngine::Mesh*> CondorEngine::Rendering::Renderer::meshes = std::vector<CondorEngine::Mesh*>();
 std::vector<CondorEngine::Light*> CondorEngine::Rendering::Renderer::lights = std::vector<CondorEngine::Light*>();
 
-CondorEngine::Rendering::Renderer::Renderer() {
+CondorEngine::Rendering::Renderer::Renderer() : Object("Renderer") {
 	features = std::vector<RenderFeature*>();
 	clearColorRGB = ColorRGB{ .4, .4, .4 };
 }

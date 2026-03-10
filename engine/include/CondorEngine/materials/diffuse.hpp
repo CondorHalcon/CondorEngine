@@ -14,15 +14,16 @@ namespace CondorEngine
     /// @brief Diffuse lighting material.
     class Diffuse : public Material
     {
+        REFLECT_CLASS(CondorEngine::Diffuse, Material)
     public:
         /// @brief Maximum number of lights.
         static const int MAX_LIGHTS = 2;
 
         /// @brief Albedo texture.
-        Texture texture;
+        REFLECT_FIELD(Resource<Texture>*, texture)
 
         /// @brief Albedo tint.
-        ColorRGB tint;
+        REFLECT_FIELD(ColorRGB, tint)
 
         Texture shadowMap;
 
@@ -51,7 +52,7 @@ namespace CondorEngine
                 this->shadowMap = shadowRF->shadowTexture;
             }
             else {
-                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
+                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png")->getData();
             }
 
             textureUniform = GetUniformLocation("material.texture");
@@ -69,7 +70,7 @@ namespace CondorEngine
 
         /// @brief Class constructor.
         /// @param texture Albedo texture.
-        Diffuse(Texture tex) : Diffuse() { texture = tex; }
+        Diffuse(Resource<Texture>* tex) : Diffuse() { texture = tex; }
 
         /// @brief Update shader uniforms.
         virtual void UpdateMat(Camera* cam) override {
@@ -117,7 +118,7 @@ namespace CondorEngine
             SetUniform(6, sunDirection);
             SetUniform(shadowMapUniform, shadowMap, 1);
             // material values
-            SetUniform(textureUniform, texture, 0);
+            SetUniform(textureUniform, texture->getData(), 0);
             SetUniform(tintUniform, tint);
         }
     };

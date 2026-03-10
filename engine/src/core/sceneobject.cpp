@@ -15,7 +15,7 @@ CondorEngine::SceneObject::SceneObject(std::string name) : Object(name) {
     this->components = std::vector<Component *>();
     this->children = std::vector<SceneObject *>();
     this->parent = nullptr;
-    this->layer = { 0x1 };
+    this->layer = LayerMask{};
 }
 
 CondorEngine::SceneObject::~SceneObject()
@@ -299,7 +299,7 @@ CondorEngine::Vector3 CondorEngine::SceneObject::getLocalScale()
 }
 
 std::vector<std::string> CondorEngine::SceneObject::getLayerNames() {
-    return Application::GetLayers(layer);
+    return layer.getLayers();
 }
 
 #pragma endregion

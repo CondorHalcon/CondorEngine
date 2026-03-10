@@ -1,7 +1,7 @@
 #include "CondorEngine/rendering/renderfeature.h"
 #include "CondorEngine/application.h"
 
-CondorEngine::Rendering::RenderFeature::RenderFeature() {}
+CondorEngine::Rendering::RenderFeature::RenderFeature() : Object("RenderFeature") {}
 
 void CondorEngine::Rendering::RenderFeature::PostProcess() {
     Vector2Int window = Application::Instance()->getWindowDimensions();

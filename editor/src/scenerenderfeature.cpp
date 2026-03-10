@@ -85,8 +85,9 @@ void CondorEditor::SceneViewRenderFeature::Render() {
     SetBuffer();
 
     for (Mesh* mesh : Renderer::meshes) {
+        if (mesh->meshData == nullptr) { continue; }
         // filter to only render enabled layer
-        if (!mesh->getSceneObject()->layer) { continue; }
+        if (!mesh->getSceneObject()->layer.value) { continue; }
 
         if (mesh->material == nullptr) {
             throw("CondorEngine::Rendering::ColorRenderFeature :: Failed to render: No material set to mesh component.");
@@ -97,10 +98,10 @@ void CondorEditor::SceneViewRenderFeature::Render() {
         mesh->material->UpdateMat(Editor::Instance()->sceneCamera->camera);
 
         // specify which shader to use
-        Renderer::useProgram(mesh->material->getShader().program);
+        Renderer::useProgram(mesh->material->getShader()->getData().program);
         // specify which geometry
-        Renderer::bindVertexArray(mesh->data.vao);
+        Renderer::bindVertexArray(mesh->meshData->getData().vao);
         // draw the geometry with the shader
-        Renderer::drawElements(GL_TRIANGLES, mesh->data.size, GL_UNSIGNED_INT, nullptr);
+        Renderer::drawElements(GL_TRIANGLES, mesh->meshData->getData().size, GL_UNSIGNED_INT, nullptr);
     }
 }

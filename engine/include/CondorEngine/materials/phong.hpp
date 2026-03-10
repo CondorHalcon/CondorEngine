@@ -17,20 +17,21 @@ namespace CondorEngine
     /// @brief Phong lighting material
     class Phong : public Material
     {
+        REFLECT_CLASS(CondorEngine::Phong, Material)
     public:
         /// @brief Maximum number of lights.
         static const int MAX_LIGHTS = 2;
 
         /// @brief Albedo texture.
-        Texture texture;
+        Resource<Texture>* texture = nullptr;
         /// @brief Color tint.
         ColorRGB tint;
         /// @brief Specular texture.
-        Texture specular;
+        Resource<Texture>* specular = nullptr;
         /// @brief Specular multiplayer.
         float specularMul;
         /// @brief Specular smoothness texture.
-        Texture smoothness;
+        Resource<Texture>* smoothness = nullptr;
         /// @brief Specular smoothness multiplayer.
         float smoothnessMul;
         Texture shadowMap;
@@ -53,10 +54,10 @@ namespace CondorEngine
         unsigned int shadowMapUniform{ UINT32_MAX };
 
     public:
-        /// @brief Class constructor.
-        Phong() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/phong.frag")) {
+        /// @brief Default class constructor.
+        Phong(Resource<Texture>* tex) : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/phong.frag")) {
             this->name = "CondorEngine::Phong";
-            texture = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
+            texture = tex;
             tint = ColorRGB(1, 1, 1);
             specular = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Gloss.png");
             specularMul = 1;
@@ -68,7 +69,7 @@ namespace CondorEngine
                 this->shadowMap = shadowRF->shadowTexture;
             }
             else {
-                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
+                this->shadowMap = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png")->getData();
             }
 
             textureUniform = GetUniformLocation("material.texture");
@@ -90,7 +91,7 @@ namespace CondorEngine
 
         /// @brief Class constructor.
         /// @param texture Albedo texture.
-        Phong(Texture tex) : Phong() { texture = tex; }
+        Phong() : Phong(ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png")) {}
 
         /// @brief Update shader uniforms.
         virtual void UpdateMat(Camera* cam) override {
@@ -145,11 +146,11 @@ namespace CondorEngine
             SetUniform(6, sunDirection);
             SetUniform(shadowMapUniform, shadowMap, 3);
             // material values
-            SetUniform(textureUniform, texture, 0);
+            SetUniform(textureUniform, texture->getData(), 0);
             SetUniform(tintUniform, tint);
-            SetUniform(specularUniform, specular, 1);
+            SetUniform(specularUniform, specular->getData(), 1);
             SetUniform(specularMulUniform, specularMul);
-            SetUniform(smoothnessUniform, smoothness, 2);
+            SetUniform(smoothnessUniform, smoothness->getData(), 2);
             SetUniform(smoothnessMulUniform, smoothnessMul);
         }
     };

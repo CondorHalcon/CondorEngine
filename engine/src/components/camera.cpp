@@ -13,6 +13,7 @@ CondorEngine::Camera::Camera(std::string name, bool isMain) : Component(name) {
 		Camera::main = this;
 	}
 
+	this->layerMask = LayerMask{ 0xFD };
 	this->fov = 60.0f;
 	this->nearClippingPlane = .01f;
 	this->farClippingPlane = 100.0f;

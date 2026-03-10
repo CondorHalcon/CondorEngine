@@ -11,6 +11,7 @@ namespace CondorEngine
         /// @brief Engine default renderer.
         class DllExport DefaultRenderer : public Renderer
         {
+            REFLECT_CLASS(CondorEngine::Rendering::DefaultRenderer, Renderer)
         public:
             /// @brief Class constructor.
             DefaultRenderer() {}

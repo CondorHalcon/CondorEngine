@@ -2,6 +2,8 @@
 #include "CondorEngine/pch.h"
 // internal
 #include "CondorEngine/math.hpp"
+#include "CondorEngine/object.h"
+#include "CondorEngine/rendering/renderfeature.h"
 // std
 #include <vector>
 #include <string>
@@ -16,6 +18,10 @@ namespace CondorEngine
 	/// @brief Mesh vertex struct
 	struct DllExport Vertex
 	{
+		REFLECT_STRUCT(CondorEngine::Vertex)
+		Vertex(Vector4 position, Color color, Vector2 uv, Vector3 normal);
+		Vertex();
+
 		/// @brief Vertex position
 		Vector4 pos;
 		/// @brief Vertex color
@@ -29,6 +35,11 @@ namespace CondorEngine
 	/// @brief Mesh data.
 	struct DllExport MeshData
 	{
+		REFLECT_STRUCT(CondorEngine::MeshData)
+		
+		MeshData(GLuint vao, GLuint vbo, GLuint ibo, GLuint size);
+		MeshData();
+
 		/// @brief vertex array object
 		GLuint vao;
 		/// @brief vertex buffer object
@@ -60,6 +71,10 @@ namespace CondorEngine
 	/// @brief Shader reference.
 	struct DllExport Shader
 	{
+		REFLECT_STRUCT(CondorEngine::Shader)
+		
+		Shader(GLuint program);
+		Shader();
 		/// @brief OpenGL shader program.
 		GLuint program;
 
@@ -86,11 +101,15 @@ namespace CondorEngine
 	/// @brief OpenGL texture & metadata.
 	struct DllExport Texture
 	{
+		REFLECT_STRUCT(CondorEngine::Texture)
 		/// @brief OpenGL texture name
 		GLuint handle;
 		unsigned width;
 		unsigned height;
 		unsigned channels;
+
+		Texture(GLuint handle, unsigned width, unsigned height, unsigned channels);
+		Texture();
 
 		/// @brief Make a texture in OpenGL.
 		/// @param width Texture width.
@@ -111,10 +130,11 @@ namespace CondorEngine
 	/// @brief Directional light struct.
 	struct DllExport DirectionalLight
 	{
+		REFLECT_STRUCT(CondorEngine::DirectionalLight)
 		/// @brief Light color.
-		ColorRGB color;
+		REFLECT_FIELD(ColorRGB, color)
 		/// @brief Light direction.
-		Vector3 direction;
+		REFLECT_FIELD(Vector3, direction)
 
 		DirectionalLight(ColorRGB col, Vector3 dir);
 		DirectionalLight();
@@ -125,11 +145,10 @@ namespace CondorEngine
 
 	namespace Rendering
 	{
-		class RenderFeature;
-
 		/// @brief Render handler class.
-		class DllExport Renderer
+		class DllExport Renderer : public Object
 		{
+			REFLECT_CLASS(CondorEngine::Rendering::Renderer, Object)
 		protected:
 			Renderer();
 			~Renderer();
@@ -149,8 +168,8 @@ namespace CondorEngine
 			static std::vector<Light*> lights;
 
 			/// @brief Color to clear the screen buffer.
-			ColorRGB clearColorRGB;
-			std::vector<RenderFeature*> features;
+			REFLECT_FIELD(ColorRGB, clearColorRGB)
+			REFLECT_FIELD(std::vector<RenderFeature*>, features)
 
 			/// @brief Initialize renderer.
 			/// @note When overriding this method, it is recommended to call the base method `Renderer::init()` first then add to it.

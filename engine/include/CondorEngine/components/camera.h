@@ -4,6 +4,7 @@
 // internal
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/component.h"
+#include "CondorEngine/layermask.h"
 
 namespace CondorEngine
 {
@@ -24,14 +25,16 @@ namespace CondorEngine
 		static Camera *main;
 
 	public:
+		/// @brief Camera render layer mask.
+		REFLECT_FIELD(LayerMask, layerMask)
 		/// @brief Camera FOV.
-		FIELD(float, fov)
+		REFLECT_FIELD(float, fov)
 		/// @brief Camera near clipping plane.
-		FIELD(float, nearClippingPlane)
+		REFLECT_FIELD(float, nearClippingPlane)
 		/// @brief Camera far clipping plane.
-		FIELD(float, farClippingPlane)
+		REFLECT_FIELD(float, farClippingPlane)
 		/// @brief Range the light distance the light should render till.
-		FIELD(float, lightClippingPlane)
+		REFLECT_FIELD(float, lightClippingPlane)
 
 	public:
 		/// @brief Get the main camera.

@@ -1,12 +1,14 @@
 #pragma once
 #include "CondorEngine/pch.h"
+#include "CondorEngine/object.h"
 
 namespace CondorEngine
 {
     namespace Rendering
     {
-        class DllExport RenderFeature
+        class DllExport RenderFeature : public Object
         {
+            REFLECT_CLASS(CondorEngine::Rendering::RenderFeature, Object)
         public:
             RenderFeature();
 

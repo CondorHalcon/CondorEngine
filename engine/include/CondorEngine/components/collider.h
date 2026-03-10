@@ -1,4 +1,5 @@
 #pragma once
+#include "CondorEngine/pch.h"
 // internal
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/component.h"
@@ -14,13 +15,22 @@ namespace CondorEngine
         Capsule = 8
     };
 
+    REFLECT_ENUM_BEGIN(ColliderType)
+        REFLECT_ENUM_VALUE(ColliderType, Sphere)
+        REFLECT_ENUM_VALUE(ColliderType, Plane)
+        REFLECT_ENUM_VALUE(ColliderType, AABB)
+        REFLECT_ENUM_VALUE(ColliderType, Capsule)
+        REFLECT_ENUM_END(ColliderType)
+
+
     /// @brief Plane size struct.
     struct DllExport PlaneSize
     {
+        REFLECT_STRUCT(CondorEngine::PlaneSize)
         /// @brief SceneObject local axis the plane is aligned to.
         Axis axis;
         /// @brief Plane size.
-        Vector2 size;
+        REFLECT_FIELD(Vector2, size)
         /// @brief Get the plane world normal.
         /// @param transform SceneObject transform.
         /// @return Global normal vector.
@@ -30,10 +40,11 @@ namespace CondorEngine
     /// @brief Collider component class.
     class DllExport Collider : public Component
     {
+        REFLECT_CLASS(CondorEngine::Collider, Component)
     public:
         /// @brief Class constructor.
         /// @param type Collider type.
-        Collider(ColliderType type);
+        Collider(ColliderType type = ColliderType::AABB);
         /// @brief Class destructor.
         ~Collider();
         /// @brief Collider dimensions.
@@ -47,11 +58,11 @@ namespace CondorEngine
             PlaneSize plane;
         };
         /// @brief Should this collider only trigger OnCollision events?
-        bool isTrigger;
+        REFLECT_FIELD(bool, isTrigger)
 
     private:
         /// @brief Collider type.
-        ColliderType type;
+        REFLECT_FIELD(ColliderType, type)
 
     public:
         /// @brief Get the collider type.

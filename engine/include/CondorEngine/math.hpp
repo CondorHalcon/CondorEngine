@@ -41,7 +41,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::vec2", nullptr, {},
+				"glm::vec2", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::DragFloat2(field.name, (float*)data); },
 				nullptr
@@ -54,7 +54,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::ivec2", nullptr, {},
+				"glm::ivec2", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::InputInt2(field.name, (int*)data); },
 				nullptr
@@ -67,7 +67,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::vec3", nullptr, {},
+				"glm::vec3", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::DragFloat3(field.name, (float*)data); },
 				nullptr
@@ -80,7 +80,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::ivec3", nullptr, {},
+				"glm::ivec3", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::InputInt3(field.name, (int*)data); },
 				nullptr
@@ -93,7 +93,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::vec4", nullptr, {},
+				"glm::vec4", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::DragFloat4(field.name, (float*)data); },
 				nullptr
@@ -106,7 +106,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::ivec4", nullptr, {},
+				"glm::ivec4", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) { ImGui::InputInt4(field.name, (int*)data); },
 				nullptr
@@ -119,7 +119,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::quat", nullptr, {},
+				"glm::quat", nullptr, {}, {},
 				nullptr,
 				nullptr,
 				nullptr
@@ -132,7 +132,7 @@ namespace CondorEngine
 	{
 		static TypeInfo* Get() {
 			static TypeInfo typeInfo = {
-				"glm::mat4", nullptr, {},
+				"glm::mat4", nullptr, {}, {},
 				nullptr,
 				[](FieldInfo& field, void* data) {
 					glm::mat4* mat = (glm::mat4*)data;

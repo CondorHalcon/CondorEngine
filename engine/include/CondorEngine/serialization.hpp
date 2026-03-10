@@ -11,11 +11,17 @@
 namespace CondorEngine
 {
 #pragma region Type and Field Info
-    enum FieldFlags
+    enum class FieldFlags
     {
         None = 0,
         Editable = 1 << 0,
         Save = 1 << 1
+    };
+
+    struct EnumValueInfo
+    {
+        const char* name;
+        int64_t value;
     };
 
     struct DllExport FieldInfo
@@ -36,6 +42,7 @@ namespace CondorEngine
         const char* name;
         TypeInfo* parent;
         std::vector<FieldInfo> fields;
+        std::vector<EnumValueInfo> enumValues;
 
         void* (*CreateInstance)();
         void (*DrawField)(FieldInfo&, void*);
@@ -47,6 +54,10 @@ namespace CondorEngine
             }
 
             out.insert(out.end(), fields.begin(), fields.end());
+        }
+
+        bool isEnum() {
+            return fields.size() == 0 && enumValues.size() > 0;
         }
     };
 #pragma endregion
@@ -92,13 +103,24 @@ namespace CondorEngine
 
             TypeInfo* fieldTypeInfo = TypeResolver<FieldType>::Get();
 
-            typeInfo.fields.push_back({
+            typeInfo.fields.push_back(FieldInfo{
                 name,
                 fieldTypeInfo->name,
                 isPointer,
                 reinterpret_cast<size_t>(&(reinterpret_cast<Class*>(0)->*member)),
                 FieldFlags::None
                 });
+        }
+
+        template<typename T>
+        static void RegisterEnum() {
+            RegisterType<T>();
+        }
+
+        template<typename EnumType>
+        static void RegisterEnumValue(const char* name, int64_t value) {
+            TypeInfo* type = TypeResolver<EnumType>::Get();
+            type->enumValues.push_back(EnumValueInfo{ name, value });
         }
 
         static void RegisterPrimitives() {
@@ -164,6 +186,7 @@ private:                                                     \
         #Type,          /*name*/                             \
         nullptr,        /*parent*/                           \
         {},             /*fields*/                           \
+        {},             /*enumValues*/                       \
         []()->void* {       /*CreateInstance*/               \
             return (char*)CreateInstance();                  \
         },                                                   \
@@ -199,6 +222,7 @@ private:                                                       \
         #Type,                          /*name*/               \
         ParentType::StaticTypeInfo(),   /*parent*/             \
         {},                             /*fields*/             \
+        {},                             /*enumValues*/         \
         []()->void* {                   /*CreateInstance*/     \
             return (char*)CreateInstance();                    \
         },                                                     \
@@ -213,8 +237,11 @@ private:                                                       \
     };                                                         \
     static inline AutoRegister_Self _AutoRegister_Self;
 
-#define FIELD(type, name)                                       \
-    type name;                                                  \
+#define REFLECT_STRUCT(Type)   \
+    REFLECT_ROOT_CLASS(Type)   \
+public:
+
+#define REFLECT_FIELD(type, name)                               \
 private:                                                        \
     struct AutoRegister_##name                                  \
     {                                                           \
@@ -227,7 +254,48 @@ private:                                                        \
         }                                                       \
     };                                                          \
     static inline AutoRegister_##name s_AutoRegister_##name;    \
-public:
+public:                                                         \
+    type name;
+
+#define REFLECT_ENUM_BEGIN(EnumType)                                        \
+template<>                                                                  \
+struct TypeResolver<EnumType>                                               \
+{                                                                           \
+    static TypeInfo* Get()                                                  \
+    {                                                                       \
+        static TypeInfo _TypeInfo = {                                       \
+            typeid(EnumType).name(), nullptr, {}, {},                       \
+            nullptr,                                                        \
+            &TypeResolver<EnumType>::DrawField,                             \
+            &TypeResolver<EnumType>::DrawField                              \
+        };                                                                  \
+        return &_TypeInfo;                                                  \
+    }                                                                       \
+    static void DrawField(FieldInfo& field, void* data) {                   \
+        TypeInfo* type = TypeResolver<EnumType>::Get();                     \
+        EnumType* value = (EnumType*)data;                                  \
+        if (type) {                                                         \
+            std::vector<const char*> names = std::vector<const char*>{};    \
+            for (auto& item : type->enumValues) {                           \
+                names.push_back(item.name);                                 \
+            }                                                               \
+            ImGui::Combo(field.name, (int*)value, names.data(), static_cast<int>(names.size()));\
+        }                                                                   \
+    }                                                                       \
+    struct EnumReflection_##EnumType                                        \
+    {                                                                       \
+        EnumReflection_##EnumType() {                                       \
+            TypeInfo* type = TypeResolver<EnumType>::Get();                 \
+            ReflectionRegistry::RegisterEnum<EnumType>();
+
+#define REFLECT_ENUM_VALUE(EnumType, value)   \
+            ReflectionRegistry::RegisterEnumValue<EnumType>(#value, (int64_t)value);
+
+#define REFLECT_ENUM_END(EnumType)                                      \
+        }                                                               \
+    };                                                                  \
+    static inline EnumReflection_##EnumType _EnumReflection_##EnumType; \
+};
 
 #pragma endregion
 
@@ -257,7 +325,7 @@ public:
     {
         static TypeInfo* Get() {
             static TypeInfo typeInfo = {
-                typeid(std::vector<T>).name(), nullptr, {},
+                typeid(std::vector<T>).name(), nullptr, {}, {},
                 nullptr,
                 &TypeResolver<std::vector<T>>::DrawField,
                 nullptr

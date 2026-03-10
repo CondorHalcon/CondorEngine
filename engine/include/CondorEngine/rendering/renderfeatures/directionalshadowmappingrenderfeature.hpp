@@ -8,6 +8,8 @@
 #include "CondorEngine/materials/shadow.hpp"
 #include "CondorEngine/materials/depth.hpp"
 #include "CondorEngine/application.h"
+#include "CondorEngine/serialization.hpp"
+#include "CondorEngine/layermask.h"
 
 namespace CondorEngine
 {
@@ -15,12 +17,13 @@ namespace CondorEngine
     {
         class DllExport DirectionalShadowMappingRenderFeature : public RenderFeature
         {
+            REFLECT_CLASS(CondorEngine::Rendering::DirectionalShadowMappingRenderFeature, RenderFeature)
         public:
-            unsigned int shadowLayer{ 0xF };
+            REFLECT_FIELD(LayerMask, shadowLayer)
             GLuint shadowMapFBO;
             Texture shadowTexture;
-            Material* material{ nullptr };
-            bool enablePostProcessOverride{ true };
+            REFLECT_FIELD(Material*, material)
+            REFLECT_FIELD(bool, enablePostProcessOverride)
 
         private:
             static DirectionalShadowMappingRenderFeature* instance;
@@ -45,24 +48,25 @@ namespace CondorEngine
                     throw("CondorEngine::Rendering::DirectionalShadowMappingRenderFeature :: Failed to render: No material set to render feature.");
                 }
                 // specify which shader to use
-                glUseProgram(material->getShader().program);
+                glUseProgram(material->getShader()->getData().program);
 
                 glViewport(0, 0, shadowTexture.width, shadowTexture.height);
                 glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFBO);
                 glClear(GL_DEPTH_BUFFER_BIT);
 
                 for (Mesh* mesh : Renderer::meshes) {
+                    if (mesh->meshData == nullptr) { continue; }
                     // filter to only render enabled layer
-                    if (!mesh->getSceneObject()->layer & shadowLayer) { continue; }
+                    if (!mesh->getSceneObject()->layer.value & shadowLayer.value && !mesh->getSceneObject()->layer.value & Camera::Main()->layerMask.value) { continue; }
 
                     // prep shader
                     material->setTransform(mesh->getSceneObject()->getTransform());
                     material->UpdateMat(Camera::Main());
 
                     // specify which geometry
-                    glBindVertexArray(mesh->data.vao);
+                    glBindVertexArray(mesh->meshData->getData().vao);
                     // draw the geometry with the shader
-                    glDrawElements(GL_TRIANGLES, mesh->data.size, GL_UNSIGNED_INT, nullptr);
+                    glDrawElements(GL_TRIANGLES, mesh->meshData->getData().size, GL_UNSIGNED_INT, nullptr);
                 }
             }
 
@@ -84,7 +88,9 @@ namespace CondorEngine
 
         private:
             DirectionalShadowMappingRenderFeature() {
+                shadowLayer = LayerMask{ 0xFD };
                 material = new Shadow();
+                enablePostProcessOverride = true;
 
                 // create shadow framebuffer
                 glGenFramebuffers(1, &shadowMapFBO);

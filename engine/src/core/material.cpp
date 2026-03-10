@@ -4,9 +4,10 @@
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/light.h"
 
-CondorEngine::Material::Material(Shader shader)
+CondorEngine::Material::Material() : Material(nullptr) {}
+
+CondorEngine::Material::Material(Resource<Shader>* shader) : Object("Material")
 {
-    this->name = "CondorEngine::Material";
     this->shader = shader;
     this->transform = glm::identity<Transform>();
 }
@@ -38,12 +39,12 @@ void CondorEngine::Material::UpdateMat(Camera* cam)
     SetUniform(3, sunProjection * sunView);
 }
 
-void CondorEngine::Material::setShader(Shader shader)
+void CondorEngine::Material::setShader(Resource<Shader>* shader)
 {
     this->shader = shader;
 }
 
-CondorEngine::Shader CondorEngine::Material::getShader()
+CondorEngine::Resource<CondorEngine::Shader>* CondorEngine::Material::getShader()
 {
     return this->shader;
 }
@@ -55,11 +56,11 @@ void CondorEngine::Material::setTransform(Transform transform)
 
 unsigned int CondorEngine::Material::GetUniformLocation(const char* name)
 {
-    return glGetUniformLocation(shader.program, name);
+    return glGetUniformLocation(shader->getData().program, name);
 }
 
 void CondorEngine::Material::SetUniform(GLuint location, const float& value) {
-    glProgramUniform1f(shader.program, location, value);
+    glProgramUniform1f(shader->getData().program, location, value);
 }
 
 void CondorEngine::Material::SetUniform(std::string name, const float& value) {
@@ -68,7 +69,7 @@ void CondorEngine::Material::SetUniform(std::string name, const float& value) {
 
 void CondorEngine::Material::SetUniform(GLuint location, const Transform& value)
 {
-    glProgramUniformMatrix4fv(shader.program, location, 1, GL_FALSE, glm::value_ptr(value));
+    glProgramUniformMatrix4fv(shader->getData().program, location, 1, GL_FALSE, glm::value_ptr(value));
 }
 
 void CondorEngine::Material::SetUniform(std::string name, const Transform& value) {
@@ -78,7 +79,7 @@ void CondorEngine::Material::SetUniform(GLuint location, const Texture &value, i
 {
     glActiveTexture(GL_TEXTURE0 + textureSlot);
     glBindTexture(GL_TEXTURE_2D, value.handle);
-    glProgramUniform1i(shader.program, location, textureSlot);
+    glProgramUniform1i(shader->getData().program, location, textureSlot);
 }
 
 void CondorEngine::Material::SetUniform(std::string name, const Texture& value, int textureSlot) {
@@ -87,7 +88,7 @@ void CondorEngine::Material::SetUniform(std::string name, const Texture& value, 
 
 void CondorEngine::Material::SetUniform(GLuint location, const glm::vec3 &value)
 {
-    glProgramUniform3fv(shader.program, location, 1, glm::value_ptr(value));
+    glProgramUniform3fv(shader->getData().program, location, 1, glm::value_ptr(value));
 }
 
 void CondorEngine::Material::SetUniform(std::string name, const glm::vec3& value) {
@@ -96,7 +97,7 @@ void CondorEngine::Material::SetUniform(std::string name, const glm::vec3& value
 
 void CondorEngine::Material::SetUniform(GLuint location, const glm::vec4 &value)
 {
-    glProgramUniform4fv(shader.program, location, 1, glm::value_ptr(value));
+    glProgramUniform4fv(shader->getData().program, location, 1, glm::value_ptr(value));
 }
 
 void CondorEngine::Material::SetUniform(std::string name, const glm::vec4& value) {
@@ -105,7 +106,7 @@ void CondorEngine::Material::SetUniform(std::string name, const glm::vec4& value
 
 void CondorEngine::Material::SetUniform(GLuint location, int count, const glm::vec3 &values)
 {
-    glProgramUniform3fv(shader.program, location, (GLsizei)count, glm::value_ptr(values));
+    glProgramUniform3fv(shader->getData().program, location, (GLsizei)count, glm::value_ptr(values));
 }
 
 void CondorEngine::Material::SetUniform(std::string name, int count, const glm::vec3& values) {

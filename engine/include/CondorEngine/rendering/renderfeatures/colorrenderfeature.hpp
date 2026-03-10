@@ -13,19 +13,18 @@ namespace CondorEngine
         /// @brief Render feature that renders the scene with mesh assigned materials.
         class DllExport ColorRenderFeature : public RenderFeature
         {
+            REFLECT_CLASS(CondorEngine::Rendering::ColorRenderFeature, RenderFeature)
         public:
             /// @brief Class constructor.
             ColorRenderFeature() {}
-
-            /// @brief Render filter's layer mask.
-            unsigned int renderLayer{ 0x1 };
 
             virtual void Render() override {
                 RenderFeature::Render();
 
                 for (Mesh* mesh : Renderer::meshes) {
+                    if (mesh->meshData == nullptr) { continue; }
                     // filter to only render enabled layer
-                    if (!mesh->getSceneObject()->layer & renderLayer) { continue; }
+                    if (!mesh->getSceneObject()->layer.value & Camera::Main()->layerMask.value) { continue; }
 
                     if (mesh->material == nullptr) {
                         throw("CondorEngine::Rendering::ColorRenderFeature :: Failed to render: No material set to mesh component.");
@@ -36,11 +35,11 @@ namespace CondorEngine
                     mesh->material->UpdateMat(Camera::Main());
 
                     // specify which shader to use
-                    glUseProgram(mesh->material->getShader().program);
+                    glUseProgram(mesh->material->getShader()->getData().program);
                     // specify which geometry
-                    glBindVertexArray(mesh->data.vao);
+                    glBindVertexArray(mesh->meshData->getData().vao);
                     // draw the geometry with the shader
-                    glDrawElements(GL_TRIANGLES, mesh->data.size, GL_UNSIGNED_INT, nullptr);
+                    glDrawElements(GL_TRIANGLES, mesh->meshData->getData().size, GL_UNSIGNED_INT, nullptr);
                 }
             }
         };

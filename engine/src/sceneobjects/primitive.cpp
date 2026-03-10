@@ -4,25 +4,31 @@
 // third party
 #include <glm/glm.hpp>
 
+CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::Primitive::simpleCubeMesh = nullptr;
+CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::Primitive::cubeMesh = nullptr;
+CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::Primitive::planeMesh = nullptr;
+CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::Primitive::sphereMesh = nullptr;
+CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::Primitive::cylinderMesh = nullptr;
+
 CondorEngine::Primitive::Primitive(PrimitiveType type, Material *material) : SceneObject("Primitive")
 {
     this->rigidbody = new Rigidbody();
     switch (type)
     {
     case CondorEngine::SimpleCubeMesh:
-        this->mesh = new Mesh(MakeSimpleCube(), material);
+        this->mesh = new Mesh(simpleCubeMesh, material);
         this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::CubeMesh:
-        this->mesh = new Mesh(MakeCube(), material);
+        this->mesh = new Mesh(cubeMesh, material);
         this->collider = new Collider(ColliderType::AABB);
         break;
     case CondorEngine::PlaneMesh:
-        this->mesh = new Mesh(MakePlane(), material);
+        this->mesh = new Mesh(planeMesh, material);
         this->collider = new Collider(ColliderType::Plane);
         break;
     case CondorEngine::SphereMesh:
-        this->mesh = new Mesh(MakeSphere(), material);
+        this->mesh = new Mesh(sphereMesh, material);
         this->collider = new Collider(ColliderType::Sphere);
         break;
     default:

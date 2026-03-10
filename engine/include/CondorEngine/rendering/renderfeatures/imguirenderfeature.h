@@ -8,6 +8,7 @@ namespace CondorEngine
     {
         class DllExport ImGuiRenderFeature : public RenderFeature
         {
+            REFLECT_CLASS(CondorEngine::Rendering::ImGuiRenderFeature, RenderFeature)
         public:
             ImGuiRenderFeature();
 

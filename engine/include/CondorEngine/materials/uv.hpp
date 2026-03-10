@@ -8,6 +8,7 @@ namespace CondorEngine
     /// @brief Texture UV material.
     class UV : public Material
     {
+        REFLECT_CLASS(CondorEngine::UV, Material)
     public:
         UV() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/uv.frag")) {
             this->name = "CondorEngine::UV";

@@ -4,9 +4,8 @@
 // third party
 #include "glm/ext.hpp"
 
-CondorEngine::Rigidbody::Rigidbody() : CondorEngine::Component()
+CondorEngine::Rigidbody::Rigidbody() : CondorEngine::Component("Rigidbody")
 {
-    this->name = "CondorEngine::Rigidbody";
     this->mass = 1.0f;
     this->useGravity = true;
     this->velocity = Vector3{0, 0, 0};

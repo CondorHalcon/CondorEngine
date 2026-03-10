@@ -5,32 +5,38 @@
 #include "CondorEngine/rendering/renderer.h"
 #include "CondorEngine/object.h"
 #include "CondorEngine/components/camera.h"
+#include "CondorEngine/resourcemanager.h"
 
 namespace CondorEngine
 {
 	/// @brief Mesh material class.
 	class DllExport Material : public Object
 	{
+		REFLECT_CLASS(CondorEngine::Material, Object)
+	private:
+		/// @brief Default class constructor.
+		/// @param shader Material shader.
+		Material();
 	public:
 		/// @brief Class constructor.
 		/// @param shader Material shader.
-		Material(Shader shader);
+		Material(Resource<Shader>* shader);
 		/// @brief Update material.
 		virtual void UpdateMat(Camera* cam);
 
 	protected:
 		/// @brief Material Shader reference.
-		Shader shader;
+		REFLECT_FIELD(Resource<Shader>*, shader)
 		/// @brief Model transform matrix.
 		Transform transform;
 
 	public:
 		/// @brief Set material shader.
 		/// @param shader Shader to set.
-		void setShader(Shader shader);
+		void setShader(Resource<Shader>* shader);
 		/// @brief Get material Shader.
 		/// @return Material Shader.
-		Shader getShader();
+		Resource<Shader>* getShader();
 		/// @brief Set model transform matrix.
 		/// @param transform Model transform matrix.
 		void setTransform(Transform transform);

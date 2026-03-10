@@ -8,6 +8,7 @@ namespace CondorEngine
     /// @brief Texture UV material.
     class Depth : public Material
     {
+        REFLECT_CLASS(CondorEngine::Depth, Material)
     public:
         Depth() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/depth.frag")) {
             this->name = "CondorEngine::Depth";

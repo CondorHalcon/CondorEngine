@@ -10,12 +10,12 @@
 #include <assimp/cimport.h>
 #include <glm/ext.hpp>
 
-CondorEngine::Mesh::Mesh(MeshData meshData, Material* material) {
-	this->name = "Mesh";
-	this->data = meshData;
+CondorEngine::Mesh::Mesh(Resource<MeshData>* meshData, Material* material) : Component("Mesh") {
+	this->meshData = meshData;
 	this->material = material;
 }
-CondorEngine::Mesh::Mesh(MeshData meshData) : Mesh(meshData, new Phong()) {}
+CondorEngine::Mesh::Mesh(Resource<MeshData>* meshData) : Mesh(meshData, new Phong()) {}
+CondorEngine::Mesh::Mesh() : Mesh(nullptr) {}
 
 CondorEngine::Mesh::~Mesh()
 {

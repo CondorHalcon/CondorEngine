@@ -5,6 +5,7 @@
 #include "CondorEngine/math.hpp"
 #include "CondorEngine/object.h"
 #include "CondorEngine/component.h"
+#include "CondorEngine/layermask.h"
 // std
 #include <string>
 #include <vector>
@@ -43,7 +44,7 @@ namespace CondorEngine
 
 		/// @brief SceneObject layer mask.
 		/// @note The first for layers (0xF) are enabled by most in built classes.
-		FIELD(unsigned int, layer)
+		REFLECT_FIELD(LayerMask, layer)
 
 	private:
 		/// @brief Check for first update call on the SceneObject. If false, Start should be called first.
@@ -55,13 +56,13 @@ namespace CondorEngine
 		/// @brief This SceneObject's parent if it is not a root object.
 		SceneObject *parent;
 		/// @brief This SceneObject's local transformation matrix.
-		FIELD(Transform, transform)
+		REFLECT_FIELD(Transform, transform)
 
 	public:
 		/// @brief List of Components on this SceneObject.
-		FIELD(std::vector<Component *>, components)
+		REFLECT_FIELD(std::vector<Component *>, components)
 		/// @brief List of child SceneObjects on this SceneObject.
-		FIELD(std::vector<SceneObject *>, children)
+		REFLECT_FIELD(std::vector<SceneObject *>, children)
 
 #pragma region Getters and Setters
 	public:

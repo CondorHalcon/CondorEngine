@@ -31,7 +31,7 @@ namespace CondorEngine
 		/// @brief Renderer object reference to render the scene.
 		static Rendering::Renderer* renderer;
 		/// @brief List of named SceneObject layers.
-		static std::vector<std::string> layerNames;
+		static inline std::vector<std::string> layerNames = std::vector<std::string>{ "Default", "Hidden" };
 		/// @brief Current active scene the application will update.
 		static Scene* activeScene;
 

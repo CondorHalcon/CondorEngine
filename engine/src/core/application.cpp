@@ -15,7 +15,6 @@
 CondorEngine::Rendering::Renderer* CondorEngine::Application::renderer = nullptr;
 CondorEngine::Scene* CondorEngine::Application::activeScene = nullptr;
 CondorEngine::Application* CondorEngine::Application::instance = nullptr;
-std::vector<std::string> CondorEngine::Application::layerNames = std::vector<std::string>{ "Default" };
 
 CondorEngine::Application::Application()
 {
@@ -140,6 +139,8 @@ bool CondorEngine::Application::init(int width, int height, const char* title)
 		renderer = new Rendering::DefaultRenderer();
 	}
 	renderer->init();
+
+	ResourceManager::init();
 
 	return true;
 }

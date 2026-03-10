@@ -10,6 +10,7 @@ namespace CondorEngine
     /// @brief Scene light object.
     class DllExport SceneLight : public SceneObject
     {
+        REFLECT_CLASS(CondorEngine::SceneLight, SceneObject)
     public:
         /// @brief Class constructor
         /// @param lightColor Color of the light.
@@ -19,6 +20,6 @@ namespace CondorEngine
 
     public:
         /// @brief Light component.
-        Light *light;
+        REFLECT_FIELD(Light*, light)
     };
 }

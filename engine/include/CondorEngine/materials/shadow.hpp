@@ -10,6 +10,7 @@ namespace CondorEngine
     {
         class Shadow : public Material
         {
+            REFLECT_CLASS(CondorEngine::Rendering::Shadow, Material)
         public:
             Shadow() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/shadow.frag")) {}
 

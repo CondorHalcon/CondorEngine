@@ -8,6 +8,7 @@ namespace CondorEngine
     /// @brief Object normal material.
     class Normal : public Material
     {
+        REFLECT_CLASS(CondorEngine::Normal, Material)
     public:
         /// @brief Class constructor.
         Normal() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/normal.frag")) {

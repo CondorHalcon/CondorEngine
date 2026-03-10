@@ -75,7 +75,7 @@ void CondorEditor::InspectorPanel::OnGui() {
                         FieldFlags::None
                     };
 
-                    bool componentOpened = ImGui::CollapsingHeader(FieldInfo::AppendId(component->name, component->id).c_str());
+                    bool componentOpened = ImGui::CollapsingHeader(FieldInfo::AppendId(component->name, component->id).c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
                     // right click context menu
                     if (ImGui::BeginPopupContextItem()) {

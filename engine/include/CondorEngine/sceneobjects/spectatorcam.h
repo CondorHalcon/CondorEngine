@@ -17,11 +17,11 @@ namespace CondorEngine
 		/// @brief Class Constructor.
 		SpectatorCam(std::string name);
 		/// @brief Camera component.
-		FIELD(Camera*, camera)
+		REFLECT_FIELD(Camera*, camera)
 		/// @brief Camera move speed.
-		FIELD(float, moveSpeed)
+		REFLECT_FIELD(float, moveSpeed)
 		/// @brief Camera rotation speed.
-		FIELD(float, rotationSpeed)
+		REFLECT_FIELD(float, rotationSpeed)
 		/// @brief Update spectator camera.
 		void Update() override;
 	};

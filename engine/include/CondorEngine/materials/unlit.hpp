@@ -8,9 +8,10 @@ namespace CondorEngine
     /// @brief Unlit material.
     class Unlit : public Material
     {
+        REFLECT_CLASS(CondorEngine::Unlit, Material)
     public:
         /// @brief Albedo texture.
-        Texture texture;
+        Resource<Texture>* texture = nullptr;
         /// @brief Albedo tint.
         ColorRGB tint;
 
@@ -31,19 +32,19 @@ namespace CondorEngine
 
         /// @brief Class constructor.
         /// @param texture Albedo texture.
-        Unlit(Texture tex) : Unlit() { setTexture(tex); }
+        Unlit(Resource<Texture>* tex) : Unlit() { setTexture(tex); }
 
         /// @brief Update shader uniforms.
         virtual void UpdateMat(Camera* cam) override {
             Material::UpdateMat(cam);
             // material values
-            SetUniform(textureUniform, texture, 0);
+            SetUniform(textureUniform, texture->getData(), 0);
             SetUniform(tintUniform, tint);
         }
 
         /// @brief Cleanly set or change the albedo texture.
         /// @param texture New albedo texture.
-        void setTexture(Texture tex) {
+        void setTexture(Resource<Texture>* tex) {
             this->texture = tex;
         }
     };
