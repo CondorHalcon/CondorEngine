@@ -24,6 +24,8 @@ namespace CondorEngine
         int64_t value;
     };
 
+    struct FieldDrawCallbacks;
+
     struct DllExport FieldInfo
     {
         const char* name;
@@ -32,9 +34,14 @@ namespace CondorEngine
         size_t offset;
         FieldFlags flags;
 
-        static void DrawField(FieldInfo& field, void* data);
+        static void DrawField(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks);
         static std::string AppendId(std::string name, unsigned int id);
         static const char* AppendId(const char* name, unsigned int id);
+    };
+
+    struct FieldDrawCallbacks
+    {
+        void (*OnDoubleClick)(FieldInfo&, void*);
     };
 
     struct DllExport TypeInfo
@@ -45,8 +52,8 @@ namespace CondorEngine
         std::vector<EnumValueInfo> enumValues;
 
         void* (*CreateInstance)();
-        void (*DrawField)(FieldInfo&, void*);
-        void (*DrawReference)(FieldInfo&, void*);
+        void (*DrawField)(FieldInfo&, void*, FieldDrawCallbacks*);
+        void (*DrawReference)(FieldInfo&, void*, FieldDrawCallbacks*);
 
         void CollectFields(std::vector<FieldInfo>& out) const {
             if (parent) {
@@ -132,6 +139,10 @@ namespace CondorEngine
         }
 
         static std::vector<TypeInfo*> GetInheritedTypes(const char* base, bool includeSelf = true) {
+            if (base == nullptr) {
+                return {};
+            }
+
             std::vector<TypeInfo*> subTypes = {};
             for (auto entry : registry) {
                 TypeInfo* currentType = entry.second;
@@ -144,7 +155,7 @@ namespace CondorEngine
 
                 while (currentType->parent != nullptr) {
                     if (strcmp(currentType->parent->name, base) == 0) {
-                        subTypes.push_back(currentType);
+                        subTypes.push_back(entry.second);
                         break;
                     }
                     currentType = currentType->parent;
@@ -158,6 +169,30 @@ namespace CondorEngine
                 return {};
             }
             return GetInheritedTypes(base->name, includeSelf);
+        }
+
+        static bool IsInheritedType(const char* current, const char* parent) {
+            if (current == nullptr || parent == nullptr) {
+                return false;
+            }
+            if (strcmp(current, parent) == 0) {
+                return true;
+            }
+
+            std::vector<TypeInfo*> list = GetInheritedTypes(parent);
+            for (TypeInfo*& item : list) {
+                if (strcmp(current, item->name) == 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        static bool IsInheritedType(TypeInfo* current, TypeInfo* parent) {
+            if (current == nullptr || parent == nullptr) {
+                return false;
+            }
+            return IsInheritedType(current->name, parent->name);
         }
     };
 
@@ -271,7 +306,7 @@ struct TypeResolver<EnumType>                                               \
         };                                                                  \
         return &_TypeInfo;                                                  \
     }                                                                       \
-    static void DrawField(FieldInfo& field, void* data) {                   \
+    static void DrawField(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {\
         TypeInfo* type = TypeResolver<EnumType>::Get();                     \
         EnumType* value = (EnumType*)data;                                  \
         if (type) {                                                         \
@@ -332,7 +367,7 @@ struct TypeResolver<EnumType>                                               \
             };
             return &typeInfo;
         }
-        static void DrawField(FieldInfo& field, void* data) {
+        static void DrawField(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
             TypeInfo* itemType = TypeResolver<T>::Get();
 
             if (itemType == nullptr) {
@@ -355,7 +390,7 @@ struct TypeResolver<EnumType>                                               \
                         0,
                         FieldFlags::None
                     };
-                    FieldInfo::DrawField(itemInfo, (void*)itemData);
+                    FieldInfo::DrawField(itemInfo, (void*)itemData, callbacks);
                 }
 
                 ImGui::TreePop();

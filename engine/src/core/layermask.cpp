@@ -14,7 +14,7 @@ std::string CondorEngine::LayerMask::getLabel() {
 }
 
 CondorEngine::LayerMask::AutoRegister_LayerMask_Draw::AutoRegister_LayerMask_Draw() {
-    _TypeInfo.DrawField = [](FieldInfo& field, void* data) {
+    _TypeInfo.DrawField = [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
         LayerMask* layerMask = (LayerMask*)data;
         std::string preview;
 

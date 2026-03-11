@@ -38,12 +38,13 @@ namespace CondorEngine
     {
         REFLECT_CLASS(CondorEngine::Resource<T>, ResourceBase)
         friend ResourceManager;
+    private:
+        /// @brief Default class constructor.
+        Resource() : ResourceBase("null"), data(T{}) {}
     public:
         /// @brief Class constructor.
         /// @param value 
         Resource(T value, std::string filepath) : ResourceBase(filepath), data(value) {}
-    private:
-        Resource() : ResourceBase("null"), data(T{}) {}
 
     private:
         /// @brief Resource data object.
@@ -62,29 +63,17 @@ namespace CondorEngine
             static TypeInfo typeInfo = {
                 typeid(Resource<T>).name(), ResourceBase::StaticTypeInfo(), {}, {},
                 nullptr,
-                &TypeResolver<Resource<T>>::DrawField,
-                &TypeResolver<Resource<T>>::DrawReference
+                nullptr,//&TypeResolver<Resource<T>>::DrawField,
+                nullptr//&TypeResolver<Resource<T>>::DrawReference
             };
             return &typeInfo;
         }
 
-        static void DrawField(FieldInfo& field, void* data) {
-            TypeInfo* type = TypeResolver<Object>::Get();
-            if (type) {
-                type->DrawField(field, data);
-            }
-            else {
-                FieldInfo::DrawField(field, data);
-            }
+        static void DrawField(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
+            FieldInfo::DrawField(field, data, callbacks);
         }
-        static void DrawReference(FieldInfo& field, void* data) {
-            TypeInfo* type = TypeResolver<Object>::Get();
-            if (type) {
-                type->DrawReference(field, data);
-            }
-            else {
-                FieldInfo::DrawField(field, data);
-            }
+        static void DrawReference(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
+            FieldInfo::DrawField(field, data, callbacks);
         }
 
     private:

@@ -26,7 +26,7 @@ std::string CondorEngine::Object::to_string()
 CondorEngine::Object::AutoRegister_Draw::AutoRegister_Draw() {
     TypeInfo* objectType = TypeResolver<Object>::Get();
 
-    objectType->DrawField = [](FieldInfo& field, void* data) {
+    objectType->DrawField = [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
         bool opened = ImGui::TreeNode(field.name);
 
         Object* obj = (Object*)data;
@@ -40,13 +40,13 @@ CondorEngine::Object::AutoRegister_Draw::AutoRegister_Draw() {
 
             for (auto& field : fields) {
                 void* data = (char*)obj + field.offset;
-                FieldInfo::DrawField(field, data);
+                FieldInfo::DrawField(field, data, callbacks);
             }
 
             ImGui::TreePop();
         }
         };
-    objectType->DrawReference = [](FieldInfo& field, void* data) {
+    objectType->DrawReference = [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
         Object* obj = *static_cast<Object* const*>(data);
 
         std::string objName = obj != nullptr ? obj->name : "nullptr";
@@ -56,7 +56,9 @@ CondorEngine::Object::AutoRegister_Draw::AutoRegister_Draw() {
 
         // editor double clicked
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
-            Debug::Log("Object :: Double-clicked Object ref"); // TODO handle double clicked
+            if (callbacks && callbacks->OnDoubleClick) {
+                callbacks->OnDoubleClick(field, data);
+            }
         }
 
         // right click context menu

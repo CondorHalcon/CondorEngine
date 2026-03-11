@@ -56,7 +56,12 @@ void CondorEditor::InspectorPanel::OnGui() {
             if (InspectorPanel::isSpecialFieldName(field.name)) { continue; }
 
             void* data = (char*)selected + field.offset;
-            FieldInfo::DrawField(field, data);
+            if (ReflectionRegistry::IsInheritedType(field.type, TypeResolver<Object>::Get()->name)) {
+                FieldInfo::DrawField(field, data, new FieldDrawCallbacks{ &InspectorPanel::OnObjectDoubleClick });
+            }
+            else {
+                FieldInfo::DrawField(field, data, nullptr);
+            }
         }
 
         // components
@@ -114,14 +119,30 @@ void CondorEditor::InspectorPanel::OnGui() {
 void CondorEditor::InspectorPanel::DrawObjectAsField(FieldInfo& field, void* data) {
     Object* obj = (Object*)data;
 
-    std::vector<FieldInfo> fields;
-    obj->GetTypeInfo()->CollectFields(fields);
+    std::vector<FieldInfo> objFields;
+    obj->GetTypeInfo()->CollectFields(objFields);
 
-    for (auto& field : fields) {
-        if (InspectorPanel::isSpecialFieldName(field.name)) { continue; }
+    for (auto& objField : objFields) {
+        if (InspectorPanel::isSpecialFieldName(objField.name)) { continue; }
 
-        void* data = (char*)obj + field.offset;
-        FieldInfo::DrawField(field, data);
+        void* data = (char*)obj + objField.offset;
+        if (ReflectionRegistry::IsInheritedType(objField.type, TypeResolver<Object>::Get()->name)) {
+            FieldInfo::DrawField(objField, data, new FieldDrawCallbacks{ &InspectorPanel::OnObjectDoubleClick });
+        }
+        else {
+            FieldInfo::DrawField(objField, data, nullptr);
+        }
+    }
+}
+
+void CondorEditor::InspectorPanel::OnObjectDoubleClick(FieldInfo& field, void* data) {
+    if (!ReflectionRegistry::IsInheritedType(field.type, TypeResolver<Object>::Get()->name)) {
+        return;
+    }
+
+    Object* obj = *static_cast<Object* const*>(data);
+    if (obj) {
+        Editor::Instance()->selectedSceneObject = obj;
     }
 }
 
