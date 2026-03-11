@@ -1,6 +1,7 @@
 #include "CondorEngine/resourcemanager.h"
 #include "CondorEngine/debug.hpp"
 #include "CondorEngine/sceneobjects/primitive.h"
+#include <filesystem>
 
 std::vector<CondorEngine::ResourceBase*> CondorEngine::ResourceManager::resources = std::vector<CondorEngine::ResourceBase*>();
 
@@ -14,11 +15,11 @@ CondorEngine::ResourceBase::ResourceBase() : Object("Resource") {
 inline std::string CondorEngine::ResourceBase::getFilepath() { return filepath; }
 
 void CondorEngine::ResourceManager::init() {
-    Primitive::simpleCubeMesh = new Resource<MeshData>(Primitive::MakeSimpleCube(), "Primitive::simpleCubeMesh");
-    Primitive::cubeMesh = new Resource<MeshData>(Primitive::MakeSimpleCube(), "Primitive::cubeMesh");
-    Primitive::planeMesh = new Resource<MeshData>(Primitive::MakeSimpleCube(), "Primitive::planeMesh");
-    Primitive::sphereMesh = new Resource<MeshData>(Primitive::MakeSimpleCube(), "Primitive::sphereMesh");
-    Primitive::cylinderMesh = new Resource<MeshData>(Primitive::MakeSimpleCube(), "Primitive::cylinderMesh");
+    Primitive::simpleCubeMesh = new Resource<MeshData>("Primitive::SimpleCubeMesh", Primitive::MakeSimpleCube(), "CondorEngine::Primitive::simpleCubeMesh");
+    Primitive::cubeMesh = new Resource<MeshData>("Primitive::CubeMesh", Primitive::MakeSimpleCube(), "CondorEngine::Primitive::cubeMesh");
+    Primitive::planeMesh = new Resource<MeshData>("Primitive::PlaneMesh", Primitive::MakeSimpleCube(), "CondorEngine::Primitive::planeMesh");
+    Primitive::sphereMesh = new Resource<MeshData>("Primitive::SphereMesh", Primitive::MakeSimpleCube(), "CondorEngine::Primitive::sphereMesh");
+    Primitive::cylinderMesh = new Resource<MeshData>("Primitive::CylinderMesh", Primitive::MakeSimpleCube(), "CondorEngine::Primitive::cylinderMesh");
 }
 
 void CondorEngine::ResourceManager::cleanup() {
@@ -47,8 +48,10 @@ CondorEngine::Resource<CondorEngine::MeshData>* CondorEngine::ResourceManager::L
     // load from file
     Debug::Log("CondorEngine::ResourceManager :: Loading resource [" + std::string(filepath) + "] as CondorEngine::MeshData");
     resource = new Resource<MeshData>(MeshData::LoadMesh(filepath), filepath);
-    resources.push_back(resource);
+    std::filesystem::path p(filepath);
+    resource->name = p.filename().string();
 
+    resources.push_back(resource);
     return resource;
 }
 
@@ -62,8 +65,11 @@ CondorEngine::Resource<CondorEngine::Shader>* CondorEngine::ResourceManager::Loa
     // load from file
     Debug::Log("CondorEngine::ResourceManager :: Loading resources [" + std::string(vertPath) + "] and [" + std::string(fragPath) + "] as CondorEngine::Shader");
     resource = new Resource<Shader>(Shader::LoadShader(vertPath, fragPath), filepath);
-    resources.push_back(resource);
+    std::filesystem::path vp(vertPath);
+    std::filesystem::path fp(fragPath);
+    resource->name = vp.filename().string() + ";" + fp.filename().string();
 
+    resources.push_back(resource);
     return resource;
 }
 
@@ -75,7 +81,9 @@ CondorEngine::Resource<CondorEngine::Texture>* CondorEngine::ResourceManager::Lo
     // load from file
     Debug::Log("CondorEngine::ResourceManager :: Loading resource [" + std::string(filepath) + "] as CondorEngine::MeshData");
     resource = new Resource<Texture>(Texture::LoadTexture(filepath), filepath);
-    resources.push_back(resource);
+    std::filesystem::path p(filepath);
+    resource->name = p.filename().string();
 
+    resources.push_back(resource);
     return resource;
 }

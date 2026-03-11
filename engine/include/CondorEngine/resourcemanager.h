@@ -45,6 +45,11 @@ namespace CondorEngine
         /// @brief Class constructor.
         /// @param value 
         Resource(T value, std::string filepath) : ResourceBase(filepath), data(value) {}
+        /// @brief Class constructor.
+        /// @param value 
+        Resource(std::string name, T value, std::string filepath) : ResourceBase(filepath), data(value) {
+            this->name = name;
+        }
 
     private:
         /// @brief Resource data object.
@@ -64,12 +69,9 @@ namespace CondorEngine
                 typeid(Resource<T>).name(), ResourceBase::StaticTypeInfo(), {}, {},
                 nullptr,
                 nullptr,
-                nullptr//&TypeResolver<Resource<T>>::DrawReference
+                nullptr
             };
             return &typeInfo;
-        }
-        static void DrawReference(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
-            FieldInfo::DrawField(field, data, callbacks);
         }
 
     private:

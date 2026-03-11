@@ -89,7 +89,14 @@ CondorEngine::TypeInfo* CondorEngine::TypeResolver<std::string>::Get() {
     static TypeInfo typeInfo = {
         "std::string", nullptr, {}, {},
         nullptr,
-        [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) { ImGui::InputText(field.name, (std::string*)data); },
+        [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
+            if (strcmp(field.name, "filepath") == 0 || strcmp(field.name, "file") == 0 || strcmp(field.name, "path") == 0) {
+                ImGui::InputText(field.name, (std::string*)data, ImGuiInputTextFlags_ReadOnly | ImGuiInputTextFlags_ElideLeft);
+            }
+            else {
+                ImGui::InputText(field.name, (std::string*)data);
+            }
+        },
         nullptr
     };
     return &typeInfo;

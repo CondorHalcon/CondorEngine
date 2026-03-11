@@ -1,6 +1,7 @@
 #include "CondorEngine/object.h"
 #include "CondorEngine/serialization.hpp"
 #include "CondorEngine/debug.hpp"
+#include "CondorEngine/resourcemanager.h"
 #include <imgui.h>
 
 CondorEngine::Object::Object(std::string name)
@@ -49,10 +50,17 @@ CondorEngine::Object::AutoRegister_Draw::AutoRegister_Draw() {
     objectType->DrawReference = [](FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
         Object* obj = *static_cast<Object* const*>(data);
 
-        std::string objName = obj != nullptr ? obj->name : "nullptr";
+        std::string displayName = obj != nullptr ? obj->name : "nullptr";
         char buffer[256];
-        strncpy(buffer, objName.c_str(), sizeof(buffer));
-        ImGui::InputText(field.name, buffer, sizeof(buffer), ImGuiInputTextFlags_ReadOnly);
+        strncpy(buffer, displayName.c_str(), sizeof(buffer));
+
+        ResourceBase* rsrc = dynamic_cast<ResourceBase*>(obj);
+        ImGuiInputTextFlags flags = ImGuiInputTextFlags_ReadOnly;
+        if (rsrc) {
+            flags |= ImGuiInputTextFlags_ElideLeft;
+        }
+        ImGui::InputText(field.name, buffer, sizeof(buffer), flags);
+
 
         // editor double clicked
         if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0)) {
