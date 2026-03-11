@@ -10,8 +10,6 @@ namespace CondorEngine
     {
         REFLECT_CLASS(CondorEngine::Depth, Material)
     public:
-        Depth() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/depth.frag")) {
-            this->name = "CondorEngine::Depth";
-        }
+        Depth() : Material("Depth", ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/depth.frag")) {}
     };
 }

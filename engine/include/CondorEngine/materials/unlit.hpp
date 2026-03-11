@@ -21,18 +21,17 @@ namespace CondorEngine
 
     public:
         /// @brief Class constructor.
-        Unlit() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/unlit.frag")) {
-            this->name = "CondorEngine::Unlit";
-            this->texture = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
+        Unlit(Resource<Texture>* tex) : Material("Unlit", ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/unlit.frag")) {
+            this->texture = tex;
             this->tint = ColorRGB(1, 1, 1);
 
             textureUniform = GetUniformLocation("material.texture");
             tintUniform = GetUniformLocation("material.tint");
         }
 
-        /// @brief Class constructor.
+        /// @brief Default lass constructor.
         /// @param texture Albedo texture.
-        Unlit(Resource<Texture>* tex) : Unlit() { setTexture(tex); }
+        Unlit() : Unlit(ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png")) {}
 
         /// @brief Update shader uniforms.
         virtual void UpdateMat(Camera* cam) override {

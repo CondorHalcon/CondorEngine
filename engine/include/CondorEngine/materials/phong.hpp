@@ -55,8 +55,7 @@ namespace CondorEngine
 
     public:
         /// @brief Default class constructor.
-        Phong(Resource<Texture>* tex) : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/phong.frag")) {
-            this->name = "CondorEngine::Phong";
+        Phong(Resource<Texture>* tex) : Material("Phong", ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/phong.frag")) {
             texture = tex;
             tint = ColorRGB(1, 1, 1);
             specular = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Gloss.png");

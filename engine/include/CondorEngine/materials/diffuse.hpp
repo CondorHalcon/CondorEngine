@@ -42,8 +42,7 @@ namespace CondorEngine
 
     public:
         /// @brief Class constructor.
-        Diffuse() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/diffuse.frag")) {
-            this->name = "CondorEngine::Diffuse";
+        Diffuse() : Material("Diffuse", ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/diffuse.frag")) {
             this->texture = ResourceManager::LoadTexture("CondorEngine/textures/PBRBlank/PBRB_Albedo.png");
             this->tint = ColorRGB(1, 1, 1);
 

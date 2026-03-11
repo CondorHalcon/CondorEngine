@@ -12,7 +12,7 @@ namespace CondorEngine
         {
             REFLECT_CLASS(CondorEngine::Rendering::Shadow, Material)
         public:
-            Shadow() : Material(ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/shadow.frag")) {}
+            Shadow() : Material("Shadow", ResourceManager::LoadShader("CondorEngine/shaders/directional.vert", "CondorEngine/shaders/shadow.frag")) {}
 
             virtual void UpdateMat(Camera* cam) override {
                 Transform lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 10.5f);

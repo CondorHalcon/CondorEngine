@@ -16,11 +16,14 @@ namespace CondorEngine
 	private:
 		/// @brief Default class constructor.
 		/// @param shader Material shader.
-		Material();
+		Material(std::string name = "Material");
 	public:
 		/// @brief Class constructor.
 		/// @param shader Material shader.
 		Material(Resource<Shader>* shader);
+		/// @brief Class constructor.
+		/// @param shader Material shader.
+		Material(std::string name, Resource<Shader>* shader);
 		/// @brief Update material.
 		virtual void UpdateMat(Camera* cam);
 

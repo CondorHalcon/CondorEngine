@@ -63,14 +63,10 @@ namespace CondorEngine
             static TypeInfo typeInfo = {
                 typeid(Resource<T>).name(), ResourceBase::StaticTypeInfo(), {}, {},
                 nullptr,
-                nullptr,//&TypeResolver<Resource<T>>::DrawField,
+                nullptr,
                 nullptr//&TypeResolver<Resource<T>>::DrawReference
             };
             return &typeInfo;
-        }
-
-        static void DrawField(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
-            FieldInfo::DrawField(field, data, callbacks);
         }
         static void DrawReference(FieldInfo& field, void* data, FieldDrawCallbacks* callbacks) {
             FieldInfo::DrawField(field, data, callbacks);

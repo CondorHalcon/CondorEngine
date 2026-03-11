@@ -11,8 +11,6 @@ namespace CondorEngine
         REFLECT_CLASS(CondorEngine::VertexColor, Material)
     public:
         /// @brief Class constructor
-        VertexColor() : Material(ResourceManager::LoadShader("CondorEngine/shaders/basic.vert", "CondorEngine/shaders/vertexcolor.frag")) {
-            this->name = "CondorEngine::VertexColor";
-        }
+        VertexColor() : Material("Vertex Color", ResourceManager::LoadShader("CondorEngine/shaders/basic.vert", "CondorEngine/shaders/vertexcolor.frag")) {}
     };
 }

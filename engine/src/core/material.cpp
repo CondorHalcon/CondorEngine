@@ -4,10 +4,11 @@
 #include "CondorEngine/components/camera.h"
 #include "CondorEngine/components/light.h"
 
-CondorEngine::Material::Material() : Material(nullptr) {}
+CondorEngine::Material::Material(std::string name) : Material(name, nullptr) {}
 
-CondorEngine::Material::Material(Resource<Shader>* shader) : Object("Material")
-{
+CondorEngine::Material::Material(Resource<Shader>* shader) : Material("Material", shader) {}
+
+CondorEngine::Material::Material(std::string name, Resource<Shader>* shader) : Object(name) {
     this->shader = shader;
     this->transform = glm::identity<Transform>();
 }
